@@ -1,0 +1,543 @@
+#include "Enemy_Stage1_Boss.h"
+#include	"Enemy_Stage1_Boss.h"
+
+
+/**
+ * コンストラクタ
+ *
+ */
+CEnemy_Stage1_Boss::CEnemy_Stage1_Boss() :
+	m_Texture(),
+	m_Motion(),
+	m_PosX(0.0f),
+	m_PosY(0.0f),
+	m_MoveX(0.0f),
+	m_MoveY(0.0f),
+	m_bShow(true),
+	m_bReverse(false),
+	m_SrcRect() {
+}
+
+/**
+ * デストラクタ
+ *
+ */
+CEnemy_Stage1_Boss::~CEnemy_Stage1_Boss() {
+	Release();
+}
+
+bool CEnemy_Stage1_Boss::Load()
+{
+	if (!m_Texture.Load("Boss 1-1.png"))
+		return false;
+
+	//アニメーションを作成
+	SpriteAnimationCreate anim[] = {
+		{
+			"アイドル",
+			0,0,240,256,TRUE,
+			{{5,0,0}}
+		},
+		{
+			"移動",
+			0,0,240,256,TRUE,
+			{ { 5,0,0 },{ 5,1,0 },{ 5,2,0 },{ 5,3,0 }, }
+		},
+		{
+			"ジャンプ",
+			0,0,240,256,FALSE,
+			{{5,0,0}}
+		},
+		{
+			"ダッシュ攻撃",
+			0,0,240,256,FALSE,
+			{{5,0,0}}
+		},
+		{
+			"ジャンプ攻撃",
+			0,0,240,256,FALSE,
+			{{5,0,0}}
+		},
+		{
+			"斬撃攻撃",
+			0,0,240,256,FALSE,
+			{{5,0,0}}
+		},
+	};
+	m_Motion.Create(anim, MOTION_COUNT);
+
+	return true;
+}
+
+/**
+ * 初期化
+ * パラメーターや座標を初期化する。
+ *
+ * 引数
+ * [in]			px					X座標
+ * [in]			py					Y座標
+ * [in]			type				敵タイプ
+ */
+void CEnemy_Stage1_Boss::Initialize() {
+	this->Load();
+	m_PosX = ENEMY_DEFAULT_RIGHTPOS;
+	m_PosY = 896 - m_Texture.GetHeight();
+	m_MoveX = 0.0f;
+	m_MoveY = 0.0f;
+	m_bReverse = true;
+	m_bShow = true;
+	m_HP = 10;
+	m_MotionWait = ENEMY_MOTION_WAIT;
+	m_bIsEnemyPosLeft = false;
+	m_bIsOnLift = false;
+	m_bJump = false;
+	m_bTouchGround = true;
+}
+
+/**
+ * 更新
+ *
+ */
+void CEnemy_Stage1_Boss::Update() {
+	//非表示
+	if (!m_bShow)
+	{
+		return;
+	}
+
+	//TODO::
+	switch (m_Motion.GetMotionNo())
+	{
+		//待機状態
+	case MOTION_Idle:
+		if (m_MotionWait <= 0)
+		{
+			if (m_bIsOnLift)
+			{
+				//リフト上にいるときの処理
+				if (m_bReverse)
+				{
+					m_MoveX = -ENEMY_ATTACKDASH_SPEED;
+					m_Motion.ChangeMotion(MOTION_ATTACK_DASH);
+				}
+				else
+				{
+					m_MoveX = ENEMY_ATTACKDASH_SPEED;
+					m_Motion.ChangeMotion(MOTION_ATTACK_DASH);
+				}
+			}
+			else
+			{
+				//リフトに乗ってないときの処理
+				//プレイヤーが自分より上にいるとき
+				if (m_TargetPosY < m_PosY)
+				{
+					m_MoveY = ENEMY_JUMP;
+					m_bIsOnLift = true;
+					m_Motion.ChangeMotion(MOTION_JUMP);
+				}
+				else
+				{
+					int rand = CUtilities::Random(2);
+					if (rand == 0)
+					{
+						//ダッシュ攻撃に移行
+						if (m_bReverse)
+						{
+							m_MoveX = -ENEMY_ATTACKDASH_SPEED;
+							m_Motion.ChangeMotion(MOTION_ATTACK_DASH);
+						}
+						else
+						{
+							m_MoveX = ENEMY_ATTACKDASH_SPEED;
+							m_Motion.ChangeMotion(MOTION_ATTACK_DASH);
+						}
+						
+						
+					}
+					else if (rand == 1)
+					{
+						//ジャンプ攻撃に移行
+						if (m_bReverse)
+						{
+							m_MoveX = -ENEMY_ATTACKDASH_SPEED;
+							m_MoveY = ENEMY_JUMP;
+							m_Motion.ChangeMotion(MOTION_ATTACK_JUMP);
+						}
+						else
+						{
+							m_MoveX = ENEMY_ATTACKDASH_SPEED;
+							m_MoveY = ENEMY_JUMP;
+							m_Motion.ChangeMotion(MOTION_ATTACK_JUMP);
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			m_MotionWait--;
+		}
+		break;
+
+		//MOTION_MOVEの状態
+	case MOTION_MOVE:
+		if (m_bReverse)
+		{
+			if (m_PosX + -ENEMY_MOTION_MOVE >= ENEMY_DEFAULT_RIGHTPOS)
+			{
+				m_MoveX = -ENEMY_MOTION_MOVE;
+			}
+			else
+			{
+				m_MoveX = 0;
+				m_MotionWait = ENEMY_MOTION_WAIT;
+				m_Motion.ChangeMotion(MOTION_Idle);
+			}
+		}
+		else
+		{
+			if (m_PosX + ENEMY_MOTION_MOVE <= ENEMY_DEFAULT_LEFTPOS)
+			{
+				m_MoveX = ENEMY_MOTION_MOVE;
+			}
+			else
+			{
+				m_MoveX = 0;
+				m_MotionWait = ENEMY_MOTION_WAIT;
+				m_Motion.ChangeMotion(MOTION_Idle);
+			}
+		}
+		break;
+
+		//MOTION_JUMPの状態
+		//TODO::ジャンプ行動中のプログラム
+	case MOTION_JUMP:
+		if (!m_bJump)
+		{
+			m_MoveX - 0;
+			m_MoveY = ENEMY_JUMP;
+			m_bTouchGround = false;
+			m_bJump = true;
+		}
+
+		if (m_bJump && m_bTouchGround)
+		{
+			m_bJump = false;
+			m_Motion.ChangeMotion(MOTION_ATTACK_DASH);
+		}
+		break;
+
+	case MOTION_ATTACK_DASH:
+		if (m_bReverse)
+		{
+			m_bIsOnLift = false;
+			m_MoveX = -ENEMY_ATTACKDASH_SPEED;
+		}
+		else
+		{
+			m_bIsOnLift = false;
+			m_MoveX = ENEMY_ATTACKDASH_SPEED;
+		}
+		break;
+
+	case MOTION_ATTACK_JUMP:
+		if (!m_bJump)
+		{
+			m_MoveY = 1.2f * ENEMY_JUMP;
+			if (m_bReverse)
+			{
+				m_MoveX = -ENEMY_ATTACKDASH_SPEED;
+				m_bReverse = false;
+				m_bJump = true;
+			}
+			else
+			{
+				m_MoveX = ENEMY_ATTACKDASH_SPEED;
+				m_bReverse = true;
+				m_bJump = true;
+			}
+		}
+		break;
+
+	case MOTION_ATTACK_SLASH:
+		//TODO::ボスの斬撃処理
+		//if()
+		break;
+	}
+
+
+	/*
+	bool bFirstMotionUpd = false;
+	//TODO::アイドル状態の処理
+	if (m_Motion.GetMotionNo() == MOTION_Idle)
+	{
+		if (m_MotionWait <= 0)
+		{
+			//プレイヤーのいる場所とボスのいる場所から次の行動に切り替える
+			//台上に乗ってる時の次の行動
+			if (m_bIsOnLift)
+			{
+				m_Motion.ChangeMotion(MOTION_ATTACK_DASH);
+			}
+			//台下にいるときの次の行動
+			else
+			{
+				//プレイヤーが台に乗っていたら
+				if (m_TargetPosY < m_PosY)
+				{
+					m_Motion.ChangeMotion(MOTION_JUMP);
+				}
+				else
+				{
+					m_Motion.ChangeMotion(MOTION_ATTACK_DASH);
+				}
+			}
+		}
+		else
+			m_MotionWait--;
+
+	}
+	//TODO::移動状態の処理
+	else if (m_Motion.GetMotionNo() == MOTION_MOVE)
+	{
+		//台下に移動後自分が右にいるのか左にいるのかboolをセットしてアイドル状態に戻る
+
+		//左にいるとき
+		if (m_bIsEnemyPosLeft)
+		{
+			if (m_PosX < ENEMY_DEFAULT_LEFTPOS)
+			{
+				m_MoveX += 0.2f;
+			}
+			else
+			{
+				m_MotionWait = ENEMY_MOTION_WAIT;
+				m_Motion.ChangeMotion(MOTION_Idle);
+			}
+		}
+		//右にいるとき
+		else
+		{
+			if (m_PosX > ENEMY_DEFAULT_RIGHTPOS)
+			{
+				m_MoveX -= 0.2f;
+			}
+			else
+			{
+				{
+					m_MotionWait = ENEMY_MOTION_WAIT;
+					m_Motion.ChangeMotion(MOTION_Idle);
+				}
+			}
+		}
+	}
+	//TODO::ジャンプ
+	else if (m_Motion.GetMotionNo() == MOTION_JUMP)
+	{
+		m_MoveY += -13.0f;
+		m_MotionWait = ENEMY_MOTION_WAIT;
+		m_Motion.ChangeMotion(MOTION_Idle);
+	}
+	//TODO::ダッシュ攻撃の処理
+	else if (m_Motion.GetMotionNo() == MOTION_ATTACK_DASH)
+	{
+		//右から左、左から右に行くようにダッシュしてダッシュ後の位置に応じてm_bIsEnemyPosLeftをセット
+		//その後ボスの位置を戻すためにMOTION_MOVEに切り替える
+
+		if (!bFirstMotionUpd)
+		{
+			if (m_bIsEnemyPosLeft)
+			{
+				m_MoveX += 1.0f;
+				m_bIsEnemyPosLeft = false;
+				bFirstMotionUpd = true;
+				m_MotionWait = ENEMY_MOTION_WAIT;
+			}
+			else
+			{
+				m_MoveX -= 1.0f;
+				m_bIsEnemyPosLeft = true;
+				bFirstMotionUpd = true;
+				m_MotionWait = ENEMY_MOTION_WAIT;
+			}
+		}
+
+		if (m_MotionWait <= 0)
+		{
+			m_MotionWait = ENEMY_MOTION_WAIT;
+			bFirstMotionUpd = false;
+			m_Motion.ChangeMotion(MOTION_MOVE);
+		}
+		else
+			m_MotionWait--;
+	}
+	//TODO::ジャンプ攻撃の処理
+	else if (m_Motion.GetMotionNo() == MOTION_ATTACK_JUMP)
+	{
+	if (!bFirstMotionUpd)
+	{
+		m_MoveY += -26.0f;
+		if (m_bIsEnemyPosLeft)
+		{
+			m_MoveX += 0.6f;
+			m_bIsEnemyPosLeft = false;
+			bFirstMotionUpd = true;
+			m_MotionWait = ENEMY_MOTION_WAIT;
+		}
+		else
+		{
+			m_MoveX -= 0.6f;
+			m_bIsEnemyPosLeft = true;
+			bFirstMotionUpd = true;
+			m_MotionWait = ENEMY_MOTION_WAIT;
+		}
+	}
+
+	if (m_MotionWait <= 0)
+	{
+		m_MotionWait = ENEMY_MOTION_WAIT;
+		bFirstMotionUpd = false;
+		m_Motion.ChangeMotion(MOTION_MOVE);
+	}
+	else
+		m_MotionWait--;
+	}
+	*/
+
+	//重力により下に少しずつ下がる
+	m_MoveY += GRAVITY;
+	if (m_MoveY >= 20.0f) { m_MoveY = 20.0f; }
+
+	m_PosX += m_MoveX;
+	m_PosY += m_MoveY;
+
+	//アニメーションの更新
+	m_Motion.AddTimer(CUtilities::GetFrameSecond());
+	m_SrcRect = m_Motion.GetSrcRect();
+}
+
+/**
+ * ステージとの当たり
+ *
+ * 引数
+ * [in]			ox					X埋まり量
+ * [in]			oy					Y埋まり量
+ */
+void CEnemy_Stage1_Boss::CollisionStage(float ox, float oy) {
+	m_PosX += ox;
+	m_PosY += oy;
+	//落下中の下埋まり、ジャンプ中の上埋まりの場合は移動を初期化する。
+	if (oy < 0 && m_MoveY > 0)
+	{
+		m_MoveY = 0;
+	}
+	else if (oy > 0 && m_MoveY < 0)
+	{
+		m_MoveY = 0;
+	}
+	//左移動中の左埋まり、右移動中の右埋まりの場合は移動を初期化する。
+	if (ox < 0 && m_MoveX > 0)
+	{
+		m_MoveX *= -1;
+		//m_bReverse = true;
+	}
+	else if (ox > 0 && m_MoveX < 0)
+	{
+		m_MoveX *= -1;
+		//m_bReverse = false;
+	}
+}
+
+void CEnemy_Stage1_Boss::CollisionWall()
+{
+	if (GetBossMotionNo() == MOTION_ATTACK_DASH)
+	{
+		if (GetReverse())
+			SetReverse(false);
+		else
+			SetReverse(true);
+		SetMotionMove();
+	}
+}
+
+
+void CEnemy_Stage1_Boss::Damage(int dmg, bool bRev) {
+	m_HP -= dmg;
+	/*
+	if (bRev)
+	{
+		m_MoveX = -5.0f;
+		m_bReverse = false;
+	}
+	else
+	{
+		m_MoveX = 5.0f;
+		m_bReverse = true;
+	}
+	*/
+
+	//ダメージエフェクトを発生させる
+	m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_DAMAGE);
+}
+
+/**
+ * 描画
+ *
+ * 引数
+ * [in]			wx					ワールドの変化
+ * [in]			wy					ワールドの変化
+ */
+void CEnemy_Stage1_Boss::Render(float wx, float wy) {
+	//非表示
+	if (!m_bShow)
+	{
+		return;
+	}
+
+	//描画矩形
+	CRectangle dr = m_SrcRect;
+	//反転フラグがONの場合描画矩形を反転させる
+	if (m_bReverse)
+	{
+		float tmp = dr.Right;
+		dr.Right = dr.Left;
+		dr.Left = tmp;
+	}
+	//テクスチャの描画
+	m_Texture.Render(m_PosX - wx, m_PosY - wy, dr);
+}
+
+/**
+ * デバッグ描画
+ *
+ * 引数
+ * [in]			wx					ワールドの変化
+ * [in]			wy					ワールドの変化
+ */
+void CEnemy_Stage1_Boss::RenderDebug(float wx, float wy) {
+	//非表示
+	if (!m_bShow)
+	{
+		return;
+	}
+	//当たり判定の表示
+	CRectangle hr = GetRect();
+	CGraphicsUtilities::RenderRect(hr.Left - wx, hr.Top - wy, hr.Right - wx, hr.Bottom - wy, MOF_XRGB(255, 0, 255));
+
+	//PosX,PosY確認用
+	CGraphicsUtilities::RenderCircle(m_PosX - wx, m_PosY - wy, 2, MOF_XRGB(255, 0, 0));
+	//CGraphicsUtilities::RenderCircle(m_TargetPosX - wx, m_TargetPosY - wy, 2, MOF_XRGB(255, 0, 0));
+	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() * 0.5f, 20, " % .0f", (float)m_Motion.GetMotionNo());
+
+	CGraphicsUtilities::RenderFillRect(GetBossSideRect(), MOF_XRGB(255, 255, 0));
+}
+
+/**
+ * 解放
+ *
+ */
+void CEnemy_Stage1_Boss::Release(void) {
+	m_Motion.Release();
+	m_Texture.Release();
+}
