@@ -193,4 +193,8 @@ private:
 	void NatuChange();
 	//’e‚Ì“Á«Ø‚è‘Ö‚¦
 	void BulletChange();
+
+	Vector2 SetBulletPos() {
+		return Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f);
+	}
 };
