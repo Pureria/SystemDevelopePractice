@@ -1,3 +1,6 @@
 #ファイルの除外設定
 KAINA/*.vs
 KAINA/*.exe
+KAINA/*.pdb
+KAINA/*.ilk
+MofLibrary/
