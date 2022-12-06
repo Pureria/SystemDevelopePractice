@@ -76,7 +76,7 @@ bool CPlayer::Load(void){
 		{
 			"攻撃",
 			0,350,
-			120 + PLAYER_ATTACKWIDTH,128,
+			120,128,
 			FALSE,{{2,0,0},{2,1,0},{2,2,0},{2,3,0},{2,4,0},{2,5,0},{2,6,0}}
 		},
 		{
@@ -116,7 +116,7 @@ void CPlayer::Initialize(void){
 	m_NatuType = NULL;
 	m_DrcType = NULL;
 	//プレイヤーの素材読み込み
-	this->Load();
+	Load();
 	m_NextBossScene = false;
 }
 
@@ -160,6 +160,7 @@ void CPlayer::Update() {
 		UpdatePadKey(m_pGamePad);//ゲームパッドによる動作
 	}//*/
 	}
+
 	//移動更新
 	UpdateMove();
 	//実際に座標を移動させる
@@ -168,20 +169,6 @@ void CPlayer::Update() {
 
 	Fall();
 	
-	/*
-	//地面に接触するとジャンプ終了（いったん画面下端で停止するように設定をする）
-	if (m_PosY + m_SrcRect.GetHeight() >= g_pGraphics->GetTargetHeight())
-	{
-		m_PosY = g_pGraphics->GetTargetHeight() - m_SrcRect.GetHeight();
-		m_MoveY = 0;
-		if (m_bJump)
-		{
-			m_bJump = false;
-			m_Motion.ChangeMotion(MOTION_JUMPEND);
-		}
-	}
-	*/
-
 	//アニメーションの更新
 	m_Motion.AddTimer(CUtilities::GetFrameSecond());
 	m_SrcRect = m_Motion.GetSrcRect();
@@ -263,9 +250,11 @@ void CPlayer::MoveKey() {
 void CPlayer::BulletChange() {
 	if (g_pInput->IsKeyPush(MOFKEY_1)) {
 		m_ShotType = NORMAL;
+		m_NatuType = HEAL;
 	}
 	else if (g_pInput->IsKeyPush(MOFKEY_2)) {
 		m_ShotType = LASER;
+		m_NatuType = FIRE;
 	}
 }
 
@@ -351,24 +340,24 @@ void CPlayer::FireShot() {
 void CPlayer::ShotRev(int i) {
 	if (!m_bReverse) {
 		if (m_bTop) {
-			m_PlShotAry[i].Fire(Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY), RIGHTTOP, m_NatuType);
+			m_PlShotAry[i].Fire(SetBulletPos(), RIGHTTOP, m_NatuType);
 		}
 		else if (m_bBottom) {
-			m_PlShotAry[i].Fire(Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY), RIGHTBOTTOM, m_NatuType);
+			m_PlShotAry[i].Fire(SetBulletPos(), RIGHTBOTTOM, m_NatuType);
 		}
 		else {
-			m_PlShotAry[i].Fire(Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY), RIGHT, m_NatuType);
+			m_PlShotAry[i].Fire(SetBulletPos(), RIGHT, m_NatuType);
 		}
 	}
 	else {
 		if (m_bTop) {
-			m_PlShotAry[i].Fire(Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY), LEFTTOP, m_NatuType);
+			m_PlShotAry[i].Fire(SetBulletPos(), LEFTTOP, m_NatuType);
 		}
 		else if (m_bBottom) {
-			m_PlShotAry[i].Fire(Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY), LEFTBOTTOM, m_NatuType);
+			m_PlShotAry[i].Fire(SetBulletPos(), LEFTBOTTOM, m_NatuType);
 		}
 		else {
-			m_PlShotAry[i].Fire(Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY), LEFT, m_NatuType);
+			m_PlShotAry[i].Fire(SetBulletPos(), LEFT, m_NatuType);
 		}
 	}
 }
@@ -400,24 +389,24 @@ void CPlayer::FireShotLaser() {
 void CPlayer::ShotRevLaser(int i) {
 	if (!m_bReverse) {
 		if (m_bTop) {
-			m_Laser[i].Fire(Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY), RIGHTTOP, m_NatuType);
+			m_Laser[i].Fire(SetBulletPos(), RIGHTTOP, m_NatuType);
 		}
 		else if (m_bBottom) {
-			m_Laser[i].Fire(Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY), RIGHTBOTTOM, m_NatuType);
+			m_Laser[i].Fire(SetBulletPos(), RIGHTBOTTOM, m_NatuType);
 		}
 		else {
-			m_Laser[i].Fire(Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY), RIGHT, m_NatuType);
+			m_Laser[i].Fire(SetBulletPos(), RIGHT, m_NatuType);
 		}
 	}
 	else {
 		if (m_bTop) {
-			m_Laser[i].Fire(Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY), LEFTTOP, m_NatuType);
+			m_Laser[i].Fire(SetBulletPos(), LEFTTOP, m_NatuType);
 		}
 		else if (m_bBottom) {
-			m_Laser[i].Fire(Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY), LEFTBOTTOM, m_NatuType);
+			m_Laser[i].Fire(SetBulletPos(), LEFTBOTTOM, m_NatuType);
 		}
 		else {
-			m_Laser[i].Fire(Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY), LEFT, m_NatuType);
+			m_Laser[i].Fire(SetBulletPos(), LEFT, m_NatuType);
 		}
 	}
 }
