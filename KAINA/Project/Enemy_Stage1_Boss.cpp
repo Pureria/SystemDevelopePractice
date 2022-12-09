@@ -15,7 +15,8 @@ CEnemy_Stage1_Boss::CEnemy_Stage1_Boss() :
 	m_MoveY(0.0f),
 	m_bShow(true),
 	m_bReverse(false),
-	m_SrcRect() {
+	m_SrcRect(),
+	m_AttackSlash(){
 }
 
 /**
@@ -61,7 +62,12 @@ bool CEnemy_Stage1_Boss::Load()
 		{
 			"ŽaŒ‚UŒ‚",
 			0,0,240,256,FALSE,
-			{{5,0,0}}
+			{{60,0,0}}
+		},
+		{
+			"”[“ƒ‚[ƒVƒ‡ƒ“",
+			0,0,240,256,FALSE,
+			{{60,0,0}}
 		},
 	};
 	m_Motion.Create(anim, MOTION_COUNT);
@@ -92,6 +98,7 @@ void CEnemy_Stage1_Boss::Initialize() {
 	m_bIsOnLift = false;
 	m_bJump = false;
 	m_bTouchGround = true;
+	m_AttackSlash = false;
 }
 
 /**
@@ -138,7 +145,7 @@ void CEnemy_Stage1_Boss::Update() {
 				}
 				else
 				{
-					int rand = CUtilities::Random(2);
+					int rand = CUtilities::Random(3);
 					if (rand == 0)
 					{
 						//ƒ_ƒbƒVƒ…UŒ‚‚ÉˆÚs
@@ -170,6 +177,11 @@ void CEnemy_Stage1_Boss::Update() {
 							m_MoveY = ENEMY_JUMP;
 							m_Motion.ChangeMotion(MOTION_ATTACK_JUMP);
 						}
+					}
+					else if (rand == 2)
+					{
+						//ŽaŒ‚UŒ‚‚ÉˆÚs
+						m_Motion.ChangeMotion(MOTION_ATTACK_SLASH_START);
 					}
 				}
 			}
@@ -260,9 +272,33 @@ void CEnemy_Stage1_Boss::Update() {
 		}
 		break;
 
-	case MOTION_ATTACK_SLASH:
+	case MOTION_ATTACK_SLASH_START:
 		//TODO::ƒ{ƒX‚ÌŽaŒ‚ˆ—
-		//if()
+		if (!m_AttackSlash)
+		{
+			if (m_bReverse)
+			{
+				m_AttakSlashRect = CRectangle(m_PosX, m_PosY, m_PosX - ENEMY_ATTACKSLASH_WIDTH, m_PosY + m_SrcRect.GetHeight());
+			}
+			else
+			{
+				m_AttakSlashRect = CRectangle(m_PosX + m_SrcRect.GetWidth(), m_PosY, m_PosX + m_SrcRect.GetWidth() + ENEMY_ATTACKSLASH_WIDTH, m_PosY + m_SrcRect.GetHeight());
+			}
+			m_AttackSlash = true;
+		}
+		//UŒ‚ƒ‚[ƒVƒ‡ƒ“‚ÌI—¹
+		if (m_Motion.IsEndMotion())
+		{
+			m_AttackSlash = false;
+			m_Motion.ChangeMotion(MOTION_ATTACK_SLASH_END);
+		}
+		break;
+
+	case MOTION_ATTACK_SLASH_END:
+		if (m_Motion.IsEndMotion())
+		{
+			m_Motion.ChangeMotion(MOTION_Idle);
+		}
 		break;
 	}
 
@@ -481,6 +517,19 @@ void CEnemy_Stage1_Boss::Damage(int dmg, bool bRev) {
 	m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_DAMAGE);
 }
 
+bool CEnemy_Stage1_Boss::isCollisionBossAttack(CRectangle prec)
+{
+	if (!m_AttackSlash)
+		return false;
+
+	if (prec.CollisionRect(m_AttakSlashRect))
+	{
+		return true;
+	}
+	
+	return false;
+}
+
 /**
  * •`‰æ
  *
@@ -531,6 +580,11 @@ void CEnemy_Stage1_Boss::RenderDebug(float wx, float wy) {
 	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() * 0.5f, 20, " % .0f", (float)m_Motion.GetMotionNo());
 
 	CGraphicsUtilities::RenderFillRect(GetBossSideRect(), MOF_XRGB(255, 255, 0));
+
+	if (m_AttackSlash)
+	{
+		CGraphicsUtilities::RenderFillRect(m_AttakSlashRect, MOF_XRGB(255, 0, 0));
+	}
 }
 
 /**
