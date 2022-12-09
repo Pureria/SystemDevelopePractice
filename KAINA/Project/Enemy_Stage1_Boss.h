@@ -11,6 +11,9 @@
 #define		ENEMY_DEFAULT_LEFTPOS			440
 #define		ENEMY_DEFAULT_RIGHTPOS			1359
 
+#define		PLAYER_Lift_2					350
+#define		PLAYER_Lift_1					606
+
 #define		ENEMY_MOTION_WAIT				60
 #define		ENEMY_MOTION_MOVE				5.0f
 #define		ENEMY_ATTACKDASH_SPEED			10.0f
