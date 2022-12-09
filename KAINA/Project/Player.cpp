@@ -503,17 +503,17 @@ void CPlayer::PlayerDamage(bool flg)
 
 }
 
-bool CPlayer::CollisionEnemy(CEnemy& ene) {
-	if (!ene.GetShow()) 
+bool CPlayer::CollisionEnemy_1(CEnemy& ene) {
+	if (!ene.GetShow())
 		return false;
-	
+
 	//HP‚ª–³‚­‚È‚é‚Æ“–‚½‚è”»’è‚µ‚È‚¢
 	if (m_HP <= 0)
 		return false;
 
 
 	//ƒ_ƒ[ƒW’†‚Ì‚½‚ß“–‚½‚è”»’è‚ğs‚í‚È‚¢
-	if (m_DamageWait > 0 || ene.GetDamageWait() > 0) 
+	if (m_DamageWait > 0)
 		return false;
 
 	//“G‚Ì’ZŒa‚Æ©•ª‚Ì’ZŒa‚Åƒ_ƒ[ƒW
@@ -556,42 +556,6 @@ bool CPlayer::CollisionEnemy(CEnemy& ene) {
 
 	}
 
-	//“G‚Æ’e‚Ì“–‚½‚è”»’è
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-	{
-		if (!IsLaser()) {
-			if (!m_PlShotAry[i].GetShow()) { continue; }
-
-			CRectangle srec = m_PlShotAry[i].GetRect();
-			if (srec.CollisionRect(erec))
-			{
-				switch (m_PlShotAry[i].GetNatu())
-				{
-				case HEAL:
-					m_HP += HEAL_POWER;
-					break;
-
-				case HEAVY:
-					//TODO: Œã‚Å’¼‚µ‚Ä
-					ene.SetShotShow(false, i);
-					break;
-				}
-				ene.Damage(10, m_bReverse);
-				m_PlShotAry[i].SetShow(false);
-				break;
-			}
-		}
-		else {
-			if (!m_Laser[i].GetShow()) { continue; }
-			CRectangle lrec = m_Laser[i].GetRect();
-			if (lrec.CollisionRect(erec))
-			{
-				ene.Damage(10, m_bReverse);
-				break;
-			}
-		}
-	}
-
 	//UŒ‚’†‚Ìê‡‚Ì‚İUŒ‚‚Æ‚Ì“–‚½‚è”»’è‚ğÀs
 	if (m_Motion.GetMotionNo() != MOTION_ATTACK)
 		return false;
@@ -626,7 +590,6 @@ bool CPlayer::CollisionEnemy(CEnemy& ene) {
 	}
 
 	return false;
-
 }
 
 bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {

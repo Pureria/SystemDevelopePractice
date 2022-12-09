@@ -37,6 +37,15 @@ enum tag_NormalNaturalChangeType {
 	FROST,
 };
 
+//敵の種類
+enum tag_EnemyType
+{
+	Enemy_1,
+	Enemy_2,
+
+	EnemyTypeCount,
+};
+
 //弾の反射回数
 #define		REFLECTION_COUNT	5	
 //************************全ステージの重力Define*************************//

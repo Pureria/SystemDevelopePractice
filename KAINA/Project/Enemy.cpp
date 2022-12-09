@@ -9,11 +9,9 @@ m_pTexture(NULL) ,
 m_Motion() ,
 m_PosX(0.0f) ,
 m_PosY(0.0f) ,
-m_MoveX(0.0f) ,
 m_MoveY(0.0f) ,
 m_bShow(false) ,
-m_bReverse(false) ,
-m_SrcRect() {
+m_SrcRect(){
 }
 
 /**
@@ -38,9 +36,6 @@ void CEnemy::Initialize(float px,float py,int type){
 	m_Type = type;
 	m_PosX = px;
 	m_PosY = py;
-	m_MoveX = -3.0f;
-	m_MoveY = 0.0f;
-	m_bReverse = true;
 	m_bShow = true;
 	m_HP = 10;
 	m_DamageWait = 0;
@@ -104,8 +99,9 @@ void CEnemy::Update(float wx){
 				//爆発エフェクトを発生させる
 				m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_EXPLOSION01);
 			}
-			m_MoveX = ((m_bReverse) ? -3.0f : 3.0f);
+			//m_MoveX = ((m_bReverse) ? -3.0f : 3.0f);
 		}
+		/*
 		else
 		{
 			if (m_MoveX > 0)
@@ -125,13 +121,13 @@ void CEnemy::Update(float wx){
 				}
 			}
 		}
+		*/
 	}
 
 	//重力により下に少しずつ下がる
 	m_MoveY += GRAVITY;
 	if ( m_MoveY >= 20.0f ) { m_MoveY = 20.0f; }
 
-	m_PosX += m_MoveX;
 	m_PosY += m_MoveY;
 
 	//アニメーションの更新
@@ -149,26 +145,29 @@ void CEnemy::Update(float wx){
 	{
 		for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
 		{
-			if (m_ShotArray[i].GetShow())
-				continue;
-			m_ShotWait = ENEMY_SHOT_WAIT;
-			Vector2 cv = m_SrcRect.GetCenter();
-			//弾の発射位置
-			float stx = m_PosX + 30;
-			float sty = m_PosY + 30;
-			//目標地点に向かうための方向
-			float dx = m_TargetPosX - stx;
-			float dy = m_TargetPosY - sty;
-			//目標地点までの距離を求める
-			float d = sqrt(dx * dx + dy * dy);
-			//距離が0以下 = 完全に同じ位置の場合は発射しない
-			if (d <= 0)
+			if (m_PosX > m_TargetPos.x)
+			{
+				if (m_ShotArray[i].GetShow())
+					continue;
+				m_ShotWait = ENEMY_SHOT_WAIT;
+				Vector2 cv = m_SrcRect.GetCenter();
+				//弾の発射位置
+				float stx = m_PosX + 30;
+				float sty = m_PosY + 30;
+				//目標地点に向かうための方向
+				float dx = m_TargetPosX - stx;
+				float dy = m_TargetPosY - sty;
+				//目標地点までの距離を求める
+				float d = sqrt(dx * dx + dy * dy);
+				//距離が0以下 = 完全に同じ位置の場合は発射しない
+				if (d <= 0)
+					break;
+				//方向を正規化
+				dx /= d;
+				dy /= d;
+				m_ShotArray[i].Fire(stx, sty, dx * 5, dy * 5);
 				break;
-			//方向を正規化
-			dx /= d;
-			dy /= d;
-			m_ShotArray[i].Fire(stx, sty, dx * 5, dy * 5);
-			break;
+			}
 		}
 	}
 	else
@@ -198,37 +197,6 @@ void CEnemy::CollisionStage(float ox,float oy){
 	{
 		m_MoveY = 0;
 	}
-	//左移動中の左埋まり、右移動中の右埋まりの場合は移動を初期化する。
-	if(ox < 0 && m_MoveX > 0)
-	{
-		m_MoveX *= -1;
-		m_bReverse = true;
-	}
-	else if(ox > 0 && m_MoveX < 0)
-	{
-		m_MoveX *= -1;
-		m_bReverse = false;
-	}
-}
-
-
-void CEnemy::Damage(int dmg, bool bRev) {
-	m_HP -= dmg;
-	m_DamageWait = 60;
-	if (bRev)
-	{
-		m_MoveX = -5.0f;
-		m_bReverse = false;
-	}
-	else
-	{
-		m_MoveX = 5.0f;
-		m_bReverse = true;
-	}
-	m_Motion.ChangeMotion(MOTION_DAMAGE);
-
-	//ダメージエフェクトを発生させる
-	m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_DAMAGE);
 }
 
 /**
@@ -252,13 +220,6 @@ void CEnemy::Render(float wx,float wy){
 
 	//描画矩形
 	CRectangle dr = m_SrcRect;
-	//反転フラグがONの場合描画矩形を反転させる
-	if(m_bReverse)
-	{
-		float tmp = dr.Right;
-		dr.Right = dr.Left;
-		dr.Left = tmp;
-	}
 	//テクスチャの描画
 	m_pTexture->Render(m_PosX - wx,m_PosY - wy,dr);
 

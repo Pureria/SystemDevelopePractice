@@ -103,6 +103,7 @@
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyShot.cpp" />
+    <ClCompile Include="Enemy_2.cpp" />
     <ClCompile Include="Enemy_Stage1_Boss.cpp" />
     <ClCompile Include="Laser.cpp" />
     <ClCompile Include="Shot_Base.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyShot.h" />
+    <ClInclude Include="Enemy_2.h" />
     <ClInclude Include="Enemy_Stage1_Boss.h" />
     <ClInclude Include="Laser.h" />
     <ClInclude Include="Shot_Base.h" />
