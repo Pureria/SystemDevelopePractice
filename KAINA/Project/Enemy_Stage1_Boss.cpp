@@ -136,8 +136,26 @@ void CEnemy_Stage1_Boss::Update() {
 			else
 			{
 				//リフトに乗ってないときの処理
-				//プレイヤーが自分より上にいるとき
-				if (m_TargetPosY < m_PosY)
+				//プレイヤーが自分より上にいるときに60%の確率で「ジャンプ攻撃」、「リフト上にジャンプ」状態に移行する
+				int rand = CUtilities::Random(100);
+				//一番上のリフトにプレイヤーがいるとき60%の確率で「ジャンプ攻撃」状態に移行
+				if (m_TargetPosY <= PLAYER_Lift_2 && rand < 60)
+				{
+					if (m_bReverse)
+					{
+						m_MoveX = -ENEMY_ATTACKDASH_SPEED;
+						m_MoveY = ENEMY_JUMP;
+						m_Motion.ChangeMotion(MOTION_ATTACK_JUMP);
+					}
+					else
+					{
+						m_MoveX = ENEMY_ATTACKDASH_SPEED;
+						m_MoveY = ENEMY_JUMP;
+						m_Motion.ChangeMotion(MOTION_ATTACK_JUMP);
+					}
+				}
+				//真ん中のリフトにプレイヤーがいるとき60%の確率で「リフト上にジャンプ」状態に移行
+				else if (m_TargetPosY <= PLAYER_Lift_1 && rand < 60)
 				{
 					m_MoveY = ENEMY_JUMP;
 					m_bIsOnLift = true;
@@ -145,7 +163,8 @@ void CEnemy_Stage1_Boss::Update() {
 				}
 				else
 				{
-					int rand = CUtilities::Random(3);
+					//ランダムでダッシュ攻撃、ジャンプ攻撃、斬撃攻撃、リフト上にジャンプに移行
+					int rand = CUtilities::Random(4);
 					if (rand == 0)
 					{
 						//ダッシュ攻撃に移行
@@ -182,6 +201,14 @@ void CEnemy_Stage1_Boss::Update() {
 					{
 						//斬撃攻撃に移行
 						m_Motion.ChangeMotion(MOTION_ATTACK_SLASH_START);
+					}
+
+					else if (rand == 3)
+					{
+						//リフト上にジャンプ
+						m_MoveY = ENEMY_JUMP;
+						m_bIsOnLift = true;
+						m_Motion.ChangeMotion(MOTION_JUMP);
 					}
 				}
 			}
@@ -223,7 +250,6 @@ void CEnemy_Stage1_Boss::Update() {
 		break;
 
 		//MOTION_JUMPの状態
-		//TODO::ジャンプ行動中のプログラム
 	case MOTION_JUMP:
 		if (!m_bJump)
 		{
@@ -240,6 +266,7 @@ void CEnemy_Stage1_Boss::Update() {
 		}
 		break;
 
+		//ダッシュ攻撃の状態
 	case MOTION_ATTACK_DASH:
 		if (m_bReverse)
 		{
@@ -253,6 +280,7 @@ void CEnemy_Stage1_Boss::Update() {
 		}
 		break;
 
+		//ジャンプ攻撃の状態
 	case MOTION_ATTACK_JUMP:
 		if (!m_bJump)
 		{
@@ -272,13 +300,13 @@ void CEnemy_Stage1_Boss::Update() {
 		}
 		break;
 
+		//斬撃攻撃の状態
 	case MOTION_ATTACK_SLASH_START:
-		//TODO::ボスの斬撃処理
 		if (!m_AttackSlash)
 		{
 			if (m_bReverse)
 			{
-				m_AttakSlashRect = CRectangle(m_PosX, m_PosY, m_PosX - ENEMY_ATTACKSLASH_WIDTH, m_PosY + m_SrcRect.GetHeight());
+				m_AttakSlashRect = CRectangle(m_PosX - ENEMY_ATTACKSLASH_WIDTH, m_PosY, m_PosX, m_PosY + m_SrcRect.GetHeight());
 			}
 			else
 			{
@@ -294,6 +322,7 @@ void CEnemy_Stage1_Boss::Update() {
 		}
 		break;
 
+		//納刀の状態
 	case MOTION_ATTACK_SLASH_END:
 		if (m_Motion.IsEndMotion())
 		{
