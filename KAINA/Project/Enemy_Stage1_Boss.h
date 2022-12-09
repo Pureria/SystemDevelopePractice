@@ -13,8 +13,9 @@
 
 #define		ENEMY_MOTION_WAIT				60
 #define		ENEMY_MOTION_MOVE				5.0f
-#define		ENEMY_ATTACKDASH_SPEED			10.0f;
-#define		ENEMY_JUMP						-13.0f;
+#define		ENEMY_ATTACKDASH_SPEED			10.0f
+#define		ENEMY_JUMP						-13.0f
+#define		ENEMY_ATTACKSLASH_WIDTH			150.0f
 
 class CEnemy_Stage1_Boss {
 private:
@@ -25,12 +26,16 @@ private:
 	float					m_MoveX;
 	float					m_MoveY;
 	bool					m_bShow;
+	//m_bRevese 　 true : 左向き	false : 右向き
 	bool					m_bReverse;
 	bool					m_bIsEnemyPosLeft;
 	bool					m_bIsOnLift;
 	bool					m_bJump;
 	bool					m_bTouchGround;
+	bool					m_AttackSlash;
+
 	CRectangle				m_SrcRect;
+	CRectangle				m_AttakSlashRect;
 
 	int						m_HP;
 	int						m_MotionWait;
@@ -44,7 +49,8 @@ private:
 		MOTION_JUMP,
 		MOTION_ATTACK_DASH,
 		MOTION_ATTACK_JUMP,
-		MOTION_ATTACK_SLASH,
+		MOTION_ATTACK_SLASH_START,
+		MOTION_ATTACK_SLASH_END,
 
 
 		MOTION_COUNT,
@@ -101,5 +107,8 @@ public:
 		m_bJump = false;
 		m_Motion.ChangeMotion(MOTION_MOVE);
 	}
+
+	//ボススラッシュ攻撃の判定
+	bool isCollisionBossAttack(CRectangle prec);
 };
 
