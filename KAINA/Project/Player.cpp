@@ -24,7 +24,11 @@ m_bTop(false),
 m_bBottom(false),
 m_ShotType(NORMAL),
 m_NatuType(FIRE),
-m_PlShotAry() {
+m_DrcType(RIGHT),
+m_HP(0),
+m_bGoal(false),
+m_PlShotAry(),
+m_NextBossScene(false){
 }
 
 /**
@@ -39,11 +43,11 @@ bool CPlayer::Load(void){
 
 	if (!m_HPTexture.Load("HP.png"))	  {		return false;	}
 	
-	if (!m_ShotTex.Load("P_missile.png"))	  { return false; }
+	if (!m_ShotHealTex.Load("P_missile.png"))	  { return false; }
 
-	//f (!m_LaserTex.Load("Shot.png")) { return false; }
+	//if (!m_LaserTex.Load("Shot.png")) { return false; }
 
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++) { m_PlShotAry[i].SetTexture(&m_ShotTex); }
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++) { m_PlShotAry[i].SetHealTexture(&m_ShotHealTex); }
 
 	//for (int i = 0; i < PLAYERSHOT_COUNT; i++) { m_Laser[i].SetTexture(&m_LaserTex); }
 
@@ -251,11 +255,17 @@ void CPlayer::BulletChange() {
 	if (g_pInput->IsKeyPush(MOFKEY_1)) {
 		m_ShotType = NORMAL;
 		m_NatuType = HEAL;
+		Change();
 	}
 	else if (g_pInput->IsKeyPush(MOFKEY_2)) {
 		m_ShotType = LASER;
 		m_NatuType = FIRE;
+		Change();
 	}
+}
+
+void CPlayer::Change() {
+	
 }
 
 //弾の特性を変える処理
@@ -340,24 +350,24 @@ void CPlayer::FireShot() {
 void CPlayer::ShotRev(int i) {
 	if (!m_bReverse) {
 		if (m_bTop) {
-			m_PlShotAry[i].Fire(SetBulletPos(), RIGHTTOP, m_NatuType);
+			m_PlShotAry[i].Fire(SetStartPos(), RIGHTTOP, m_NatuType);
 		}
 		else if (m_bBottom) {
-			m_PlShotAry[i].Fire(SetBulletPos(), RIGHTBOTTOM, m_NatuType);
+			m_PlShotAry[i].Fire(SetStartPos(), RIGHTBOTTOM, m_NatuType);
 		}
 		else {
-			m_PlShotAry[i].Fire(SetBulletPos(), RIGHT, m_NatuType);
+			m_PlShotAry[i].Fire(SetStartPos(), RIGHT, m_NatuType);
 		}
 	}
 	else {
 		if (m_bTop) {
-			m_PlShotAry[i].Fire(SetBulletPos(), LEFTTOP, m_NatuType);
+			m_PlShotAry[i].Fire(SetStartPos(), LEFTTOP, m_NatuType);
 		}
 		else if (m_bBottom) {
-			m_PlShotAry[i].Fire(SetBulletPos(), LEFTBOTTOM, m_NatuType);
+			m_PlShotAry[i].Fire(SetStartPos(), LEFTBOTTOM, m_NatuType);
 		}
 		else {
-			m_PlShotAry[i].Fire(SetBulletPos(), LEFT, m_NatuType);
+			m_PlShotAry[i].Fire(SetStartPos(), LEFT, m_NatuType);
 		}
 	}
 }
@@ -367,7 +377,7 @@ void CPlayer::FireShotLaser() {
 
 	if (m_ShotWait <= 0)
 	{
-		if (g_pInput->IsKeyPush(MOFKEY_SPACE))
+		if (g_pInput->IsKeyPush(MOFKEY_P))
 		{
 			m_Motion.ChangeMotion(MOTION_ATTACK);
 
@@ -389,24 +399,24 @@ void CPlayer::FireShotLaser() {
 void CPlayer::ShotRevLaser(int i) {
 	if (!m_bReverse) {
 		if (m_bTop) {
-			m_Laser[i].Fire(SetBulletPos(), RIGHTTOP, m_NatuType);
+			m_Laser[i].Fire(SetStartPos(), RIGHTTOP, m_NatuType);
 		}
 		else if (m_bBottom) {
-			m_Laser[i].Fire(SetBulletPos(), RIGHTBOTTOM, m_NatuType);
+			m_Laser[i].Fire(SetStartPos(), RIGHTBOTTOM, m_NatuType);
 		}
 		else {
-			m_Laser[i].Fire(SetBulletPos(), RIGHT, m_NatuType);
+			m_Laser[i].Fire(SetStartPos(), RIGHT, m_NatuType);
 		}
 	}
 	else {
 		if (m_bTop) {
-			m_Laser[i].Fire(SetBulletPos(), LEFTTOP, m_NatuType);
+			m_Laser[i].Fire(SetStartPos(), LEFTTOP, m_NatuType);
 		}
 		else if (m_bBottom) {
-			m_Laser[i].Fire(SetBulletPos(), LEFTBOTTOM, m_NatuType);
+			m_Laser[i].Fire(SetStartPos(), LEFTBOTTOM, m_NatuType);
 		}
 		else {
-			m_Laser[i].Fire(SetBulletPos(), LEFT, m_NatuType);
+			m_Laser[i].Fire(SetStartPos(), LEFT, m_NatuType);
 		}
 	}
 }
@@ -493,12 +503,12 @@ void CPlayer::PlayerDamage(bool flg)
 	if (m_HP <= 0)
 	{
 		//爆発エフェクトを発生させる
-		m_pEndEffect = m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_EXPLOSION02);
+		m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
 	}
 	else
 	{
 		//ダメージエフェクトを発生させる
-		m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_DAMAGE);
+		m_pEffectManager->Start(SetStartPos(), EFC_DAMAGE);
 	}
 
 }
@@ -519,6 +529,35 @@ bool CPlayer::CollisionEnemy(CEnemy& ene) {
 	//敵の短径と自分の短径でダメージ
 	CRectangle prec = GetRect();
 	CRectangle erec = ene.GetRect();
+
+	if (prec.CollisionRect(erec))
+	{
+		m_HP -= 5;
+		m_DamageWait = 60;
+		if (prec.Left < erec.Left)
+		{
+			m_MoveX = -5.0f;
+			m_bReverse = false;
+		}
+		else
+		{
+			m_MoveX = 5.0f;
+			m_bReverse = true;
+		}
+		m_Motion.ChangeMotion(MOTION_DAMAGE);
+
+		if (m_HP <= 0)
+		{
+			//爆発エフェクトを発生させる
+			m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+		}
+		else
+		{
+			//ダメージエフェクトを発生させる
+			m_pEffectManager->Start(SetStartPos(), EFC_DAMAGE);
+		}
+		return true;
+	}
 
 	//敵の弾との当たり判定
 	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
@@ -545,16 +584,17 @@ bool CPlayer::CollisionEnemy(CEnemy& ene) {
 			if (m_HP <= 0)
 			{
 				//爆発エフェクトを発生させる
-				m_pEndEffect = m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_EXPLOSION02);
+				m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
 			}
 			else
 			{
 				//ダメージエフェクトを発生させる
-				m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_DAMAGE);
+				m_pEffectManager->Start(SetStartPos(), EFC_DAMAGE);
 			}
 		}
 
 	}
+
 
 	//敵と弾の当たり判定
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
@@ -572,11 +612,10 @@ bool CPlayer::CollisionEnemy(CEnemy& ene) {
 					break;
 
 				case HEAVY:
-					//TODO: 後で直して
 					ene.SetShotShow(false, i);
+					ene.Damage(10, m_bReverse);
 					break;
 				}
-				ene.Damage(10, m_bReverse);
 				m_PlShotAry[i].SetShow(false);
 				break;
 			}
@@ -592,38 +631,29 @@ bool CPlayer::CollisionEnemy(CEnemy& ene) {
 		}
 	}
 
-	//攻撃中の場合のみ攻撃との当たり判定を実行
-	if (m_Motion.GetMotionNo() != MOTION_ATTACK)
-		return false;
-
-	if (prec.CollisionRect(erec))
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
-		m_HP -= 5;
-		m_DamageWait = 60;
-		if (prec.Left < erec.Left)
-		{
-			m_MoveX = -5.0f;
-			m_bReverse = false;
-		}
-		else
-		{
-			m_MoveX = 5.0f;
-			m_bReverse = true;
-		}
-		m_Motion.ChangeMotion(MOTION_DAMAGE);
+		if (!m_PlShotAry[i].GetShow()) { continue; }
 
-		if (m_HP <= 0)
+		CRectangle srec = m_PlShotAry[i].GetRect();
+		CRectangle esrec = ene.ShotArrayRect(i);
+		if (srec.CollisionRect(esrec))
 		{
-			//爆発エフェクトを発生させる
-			m_pEndEffect = m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_EXPLOSION02);
+			switch (m_PlShotAry[i].GetNatu())
+			{
+			case HEAL:
+ 				m_PlShotAry[i].SetShow(false);
+				ene.SetShotShow(false, i);
+				break;
+
+			case HEAVY:
+				ene.SetShotShow(false, i);
+				break;
+			}
+			break;
 		}
-		else
-		{
-			//ダメージエフェクトを発生させる
-			m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_DAMAGE);
-		}
-		return true;
 	}
+
 
 	return false;
 
@@ -665,12 +695,12 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 		if (m_HP <= 0)
 		{
 			//爆発エフェクトを発生させる
-			m_pEndEffect = m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_EXPLOSION02);
+			m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
 		}
 		else
 		{
 			//ダメージエフェクトを発生させる
-			m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_DAMAGE);
+			m_pEffectManager->Start(SetStartPos(), EFC_DAMAGE);
 		}
 		return true;
 	}
@@ -737,18 +767,6 @@ bool CPlayer::CollisionAttackItem(CItem& itm)
 			return true;
 		}
 	}
-	/*
-	if (prec.CollisionRect(irec) && IsAttack())
-	{
-		switch (itm.GetType())
-		{
-		case ITEM_SPIDERWEB:
-			itm.SetShow(false);
-			break;
-		}
-		return true;
-	}
-	*/
 	return false;
 }
 
@@ -774,7 +792,7 @@ void CPlayer::Fall() {
 	{
 		m_HP = 0;
 		//爆発エフェクトを発生させる
-		m_pEndEffect = m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_EXPLOSION02);
+		m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
 	}
 }
 
@@ -814,8 +832,6 @@ void CPlayer::Render(float wx,float wy){
 	}
 	//テクスチャの描画
 	m_Texture.Render(px, py, dr);
-	
-	
 }
 
 void CPlayer::RenderStatus(void) {
@@ -879,13 +895,10 @@ void CPlayer::RenderDebug(float wx, float wy){
 	CRectangle hr = GetRect();
 	CGraphicsUtilities::RenderRect(hr.Left - wx, hr.Top - wy, hr.Right - wx, hr.Bottom - wy, MOF_XRGB(0, 255, 0));
 
-	//TODO::弾の発射位置と向かう方向がおかしい
-	//CGraphicsUtilities::RenderCircle(m_PosX - wx, m_PosY - wy, 2, MOF_XRGB(255, 0, 0));
-	//Vector2 cv = m_SrcRect;
-	//CGraphicsUtilities::RenderCircle(cv.x + m_PosX - wx, cv.y + m_PosY - wy, 2, MOF_XRGB(255, 0, 0));
 	CGraphicsUtilities::RenderCircle(m_PosX - wx + 30,m_PosY - wy + 30, 2, MOF_XRGB(255, 0, 0));
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
 		m_PlShotAry[i].RenderDebug(wx, wy);
+		m_Laser[i].RenderDebug(wx,wy);
 	}
 }
 
@@ -898,5 +911,5 @@ void CPlayer::Release(void){
 	m_Motion.Release();
 	m_FrameTexture.Release();
 	m_HPTexture.Release();
-	m_ShotTex.Release();
+	m_ShotHealTex.Release();
 }

@@ -1,3 +1,7 @@
-﻿  Enemy_Stage1_Boss.cpp
-C:\Users\ryuto\Desktop\授業関連\GitHub\SystemDevelopePractice\KAINA\Project\Enemy_Stage1_Boss.cpp(256,12): warning C4552: '-': 式の結果が使用されていません
-  ProjectVS2017.vcxproj -> C:\Users\ryuto\Desktop\授業関連\GitHub\SystemDevelopePractice\KAINA\ProjectVS2017.exe
+﻿  BaseStage.cpp
+  GameApp.cpp
+  Player.cpp
+  Stage1.cpp
+  Stage1_BOSS.cpp
+  コードを生成中...
+  ProjectVS2017.vcxproj -> D:\個人用\制作中のゲーム\github\SystemDevelopePractice\KAINA\ProjectVS2017.exe

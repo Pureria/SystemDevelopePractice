@@ -46,7 +46,8 @@ private:
 
 	bool					m_bGoal;
 
-	CTexture                m_ShotTex;
+	CTexture                m_ShotHeavyTex;
+	CTexture				m_ShotHealTex;
 
 	//弾の配列
 	CPlayerShot 			m_PlShotAry[PLAYERSHOT_COUNT];
@@ -73,10 +74,12 @@ private:
 
 
 	//レーザーのテクスチャ
-	CTexture                m_LaserTex;
+	CTexture                m_LaserFireTex;
+	CTexture                m_LaserFrostTex;
 
 	//ボス部屋用フラグ
 	bool					m_NextBossScene;
+
 
 public:
 	CPlayer();
@@ -94,14 +97,14 @@ public:
 	void Render(float wx,float wy);
 	void RenderDebug(float wx,float wy);
 	void Release(void);
-	bool IsAttack(){ return m_Motion.GetMotionNo() == MOTION_ATTACK; }
+	bool IsAttack()												{		return m_Motion.GetMotionNo() == MOTION_ATTACK;			}
 	CRectangle GetRect() {
 		return CRectangle(m_PosX + PLAYER_RECTDECREASE,
 			m_PosY + PLAYER_RECTDECREASE,
 			m_PosX + m_SrcRect.GetWidth() - PLAYER_RECTDECREASE,
 			m_PosY + m_SrcRect.GetHeight());
 	}
-	int	 GetLaserDirec(int i) { return m_PlShotAry[i].GetDirec(); }
+	int	 GetLaserDirec(int i)									{		return m_PlShotAry[i].GetDirec();						}
 
 	CRectangle GetLaserRect(int i) {
 		return m_PlShotAry[i].GetRect();
@@ -194,7 +197,8 @@ private:
 	//弾の特性切り替え
 	void BulletChange();
 
-	Vector2 SetBulletPos() {
-		return Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f);
+	void Change();
+	Vector2 SetStartPos() {
+		return Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f - 20);
 	}
 };
