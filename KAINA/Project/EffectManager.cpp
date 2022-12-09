@@ -76,6 +76,22 @@ CEffect* CEffectManager::Start(float px,float py,int type){
 	return NULL;
 }
 
+CEffect* CEffectManager::Start(Vector2 p, int type) {
+	for (int i = 0; i < EFFECTCOUNT; i++)
+	{
+		//未使用のエフェクトかどうか確認
+		if (m_Effect[i][type].GetShow())
+		{
+			continue;
+		}
+		//エフェクトのStartを呼び出す
+		m_Effect[i][type].Start(p.x, p.y);
+		//開始したエフェクトのポインタを返す
+		return &m_Effect[i][type];
+	}
+	return NULL;
+}
+
 /**
  * 更新
  *

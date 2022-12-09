@@ -244,6 +244,10 @@ void CEnemy::Render(float wx,float wy){
 	{
 		return;
 	}
+	//’e‚Ì•`‰æ
+	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
+		m_ShotArray[i].Render(wx,wy);
+
 	//ƒCƒ“ƒ^[ƒoƒ‹2ƒtƒŒ[ƒ€‚²‚Æ‚É•`‰æ‚ð‚µ‚È‚¢
 	if (m_DamageWait % 4 >= 2)
 	{
@@ -262,9 +266,6 @@ void CEnemy::Render(float wx,float wy){
 	//ƒeƒNƒXƒ`ƒƒ‚Ì•`‰æ
 	m_pTexture->Render(m_PosX - wx,m_PosY - wy,dr);
 
-	//’e‚Ì•`‰æ
-	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
-		m_ShotArray[i].Render(wx,wy);
 
 }
 

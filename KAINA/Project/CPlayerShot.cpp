@@ -2,8 +2,6 @@
 
 /*********コンストラクタ*********/
 CPlayerShot::CPlayerShot() :
-	m_ScrollX(0),
-	m_ScrollY(0),
 	m_RefCount(0),
 	m_MoveX(0.0),
 	m_MoveY(0.0) {};

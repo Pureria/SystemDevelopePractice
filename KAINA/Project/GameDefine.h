@@ -74,6 +74,8 @@ enum tag_NormalNaturalChangeType {
 
 #define		LAZER_REVCOUNT			3
 
+#define		LASER_FIRE_COUNT		3
+
 
 #define		ENEMY_ATTAK_POWER		10
 
@@ -95,7 +97,7 @@ enum tag_NormalNaturalChangeType {
 #define		FADE_ALPHA_MAX			255
 
 //敵の弾最大数
-#define		ENEMY_SHOT_COUNT		5
+#define		ENEMY_SHOT_COUNT		20
 #define		ENEMY_SHOT_WAIT			100
 
 //FireBarインターバル

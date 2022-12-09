@@ -32,7 +32,7 @@ bool CGameOver::Load(void){
  * ó‘Ô‚ð‰Šú‰»‚µ‚½‚¢‚Æ‚«‚ÉŽÀs‚·‚éB
  */
 void CGameOver::Initialize(void){
-	this->Load();
+	Load();
 }
 
 /**

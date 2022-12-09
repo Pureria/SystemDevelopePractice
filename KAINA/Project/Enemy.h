@@ -44,8 +44,6 @@ private:
 	float					m_TargetPosX;
 	float					m_TargetPosY;
 
-
-
 public:
 	CEnemy();
 	~CEnemy();
