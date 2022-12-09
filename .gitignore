@@ -3,4 +3,5 @@ KAINA/*.vs
 KAINA/*.exe
 KAINA/*.pdb
 KAINA/*.ilk
+KAINA/Project/Debug
 MofLibrary/
