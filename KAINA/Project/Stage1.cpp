@@ -128,7 +128,13 @@ void CGame::Update(void){
 	//当たり判定の実行
 	for (int i = 0; i < m_Stage.GetEnemyCount(); i++)
 	{
-		m_Player.CollisionEnemy(m_EnemyArray[i]);
+		m_Player.CollisionEnemy_1(m_EnemyArray[i]);
+	}
+
+	//Enemy1にプレイヤーの座標をセット
+	for (int i = 0; i < m_Stage.GetEnemyCount(); i++)
+	{
+		m_EnemyArray[i].SetPlayerPos(Vector2(m_Player.GetPosX(), m_Player.GetPosY()));
 	}
 
 	for (int i = 0; i < m_Stage.GetItemCount(); i++)

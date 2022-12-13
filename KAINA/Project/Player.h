@@ -123,7 +123,7 @@ public:
 	}
 
 	void CollisionStage(float ox, float oy);
-	bool CollisionEnemy(CEnemy& ene);
+	bool CollisionEnemy_1(CEnemy& ene);
 	bool Collision_Stage1_Boss(CEnemy_Stage1_Boss& ene);
 	void RenderStatus(void);
 

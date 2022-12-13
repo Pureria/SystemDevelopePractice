@@ -76,6 +76,9 @@
     <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player\Player_obj\Shot_Base">
       <UniqueIdentifier>{8c6db5d2-126a-4f06-b3d9-45d94b65ecfc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_2">
+      <UniqueIdentifier>{b6cfb2fc-d334-4b86-8d3f-41b87bc6c443}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Title.cpp">
@@ -140,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="Laser.cpp">
       <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player\Player_obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_2.cpp">
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="Laser.h">
       <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player\Player_obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_2.h">
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

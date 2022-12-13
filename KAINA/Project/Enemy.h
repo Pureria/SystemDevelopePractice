@@ -1,6 +1,5 @@
 #pragma once
 
-#include	"Mof.h"
 #include	"GameDefine.h"
 #include	"EffectManager.h"
 #include	"EnemyShot.h"
@@ -9,17 +8,18 @@
 //当たり判定減衰幅
 #define		ENEMY_RECTDECREASE		10
 
-class CEnemy {
+class CEnemy{
 private:
 	CTexture*				m_pTexture;
 	CSpriteMotionController	m_Motion;
 	int						m_Type;
 	float					m_PosX;
 	float					m_PosY;
-	float					m_MoveX;
 	float					m_MoveY;
+
+	Vector2					m_TargetPos;
+
 	bool					m_bShow;
-	bool					m_bReverse;
 	CRectangle				m_SrcRect;
 
 	int						m_HP;
@@ -60,9 +60,6 @@ public:
 	CRectangle GetRect(){
 		return CRectangle(m_PosX + ENEMY_RECTDECREASE,m_PosY + ENEMY_RECTDECREASE,m_PosX + m_SrcRect.GetWidth() - ENEMY_RECTDECREASE,m_PosY + m_SrcRect.GetHeight());
 	}
-
-	void Damage(int dmg, bool bRev);
-	int GetDamageWait(void) { return m_DamageWait; }
 	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
 
 	//プレイヤーの座標セット
@@ -74,5 +71,8 @@ public:
 
 	//弾のShowをセットする
 	void	   SetShotShow(bool flg, int i) { m_ShotArray[i].SetShow(flg); }
+
+	//プレイヤーの座標をセットする
+	void	   SetPlayerPos(Vector2 ppos) { m_TargetPos = ppos; }
 
 };

@@ -138,6 +138,8 @@ bool CStage::Load(char* pName , int nowscene){
 				}
 			}
 		}
+
+		//敵2のテクスチャ読み込み
 	}
 	else if (nowscene == SCENENO_GAME_STAGE1_BOSS)
 	{
