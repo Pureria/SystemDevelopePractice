@@ -99,6 +99,7 @@ void CEnemy_Stage1_Boss::Initialize() {
 	m_bJump = false;
 	m_bTouchGround = true;
 	m_AttackSlash = false;
+	m_OldMotionNo = MOTION_Idle;
 }
 
 /**
@@ -217,10 +218,18 @@ void CEnemy_Stage1_Boss::Update() {
 		{
 			m_MotionWait--;
 		}
+
+		m_OldMotionNo = MOTION_Idle;
 		break;
 
 		//MOTION_MOVEの状態
 	case MOTION_MOVE:
+
+		if (m_OldMotionNo == MOTION_ATTACK_JUMP)
+		{
+			m_bReverse = !m_bReverse;
+		}
+
 		if (m_bReverse)
 		{
 			if (m_PosX + -ENEMY_MOTION_MOVE >= ENEMY_DEFAULT_RIGHTPOS)
@@ -247,6 +256,8 @@ void CEnemy_Stage1_Boss::Update() {
 				m_Motion.ChangeMotion(MOTION_Idle);
 			}
 		}
+
+		m_OldMotionNo = MOTION_MOVE;
 		break;
 
 		//MOTION_JUMPの状態
@@ -264,6 +275,7 @@ void CEnemy_Stage1_Boss::Update() {
 			m_bJump = false;
 			m_Motion.ChangeMotion(MOTION_ATTACK_DASH);
 		}
+		m_OldMotionNo = MOTION_JUMP;
 		break;
 
 		//ダッシュ攻撃の状態
@@ -278,6 +290,7 @@ void CEnemy_Stage1_Boss::Update() {
 			m_bIsOnLift = false;
 			m_MoveX = ENEMY_ATTACKDASH_SPEED;
 		}
+		m_OldMotionNo = MOTION_ATTACK_DASH;
 		break;
 
 		//ジャンプ攻撃の状態
@@ -287,17 +300,18 @@ void CEnemy_Stage1_Boss::Update() {
 			m_MoveY = 1.2f * ENEMY_JUMP;
 			if (m_bReverse)
 			{
-				m_MoveX = -ENEMY_ATTACKDASH_SPEED;
-				m_bReverse = false;
+				m_MoveX = -ENEMY_ATTACKDASH_SPEED * 0.95f;
+				//m_bReverse = false;
 				m_bJump = true;
 			}
 			else
 			{
-				m_MoveX = ENEMY_ATTACKDASH_SPEED;
-				m_bReverse = true;
+				m_MoveX = ENEMY_ATTACKDASH_SPEED * 0.95f;
+				//m_bReverse = true;
 				m_bJump = true;
 			}
 		}
+		m_OldMotionNo = MOTION_ATTACK_JUMP;
 		break;
 
 		//斬撃攻撃の状態
@@ -306,10 +320,12 @@ void CEnemy_Stage1_Boss::Update() {
 		{
 			if (m_bReverse)
 			{
+				//m_MoveX = -ENEMY_ATTACKSLASH_MOVE;
 				m_AttakSlashRect = CRectangle(m_PosX - ENEMY_ATTACKSLASH_WIDTH, m_PosY, m_PosX, m_PosY + m_SrcRect.GetHeight());
 			}
 			else
 			{
+				//m_MoveX = ENEMY_ATTACKSLASH_MOVE;
 				m_AttakSlashRect = CRectangle(m_PosX + m_SrcRect.GetWidth(), m_PosY, m_PosX + m_SrcRect.GetWidth() + ENEMY_ATTACKSLASH_WIDTH, m_PosY + m_SrcRect.GetHeight());
 			}
 			m_AttackSlash = true;
@@ -320,6 +336,8 @@ void CEnemy_Stage1_Boss::Update() {
 			m_AttackSlash = false;
 			m_Motion.ChangeMotion(MOTION_ATTACK_SLASH_END);
 		}
+
+		m_OldMotionNo = MOTION_ATTACK_SLASH_START;
 		break;
 
 		//納刀の状態
@@ -328,6 +346,7 @@ void CEnemy_Stage1_Boss::Update() {
 		{
 			m_Motion.ChangeMotion(MOTION_Idle);
 		}
+		m_OldMotionNo = MOTION_ATTACK_SLASH_END;
 		break;
 	}
 
@@ -471,15 +490,23 @@ void CEnemy_Stage1_Boss::Update() {
 	*/
 
 	//重力により下に少しずつ下がる
-	m_MoveY += GRAVITY;
-	if (m_MoveY >= 20.0f) { m_MoveY = 20.0f; }
+m_MoveY += GRAVITY;
+if (m_MoveY >= 20.0f) { m_MoveY = 20.0f; }
 
-	m_PosX += m_MoveX;
-	m_PosY += m_MoveY;
+m_PosX += m_MoveX;
+m_PosY += m_MoveY;
 
-	//アニメーションの更新
-	m_Motion.AddTimer(CUtilities::GetFrameSecond());
-	m_SrcRect = m_Motion.GetSrcRect();
+/*
+if (m_OldMotionNo == MOTION_ATTACK_SLASH_START)
+{
+	m_MoveX = 0;
+}
+*/
+
+
+//アニメーションの更新
+m_Motion.AddTimer(CUtilities::GetFrameSecond());
+m_SrcRect = m_Motion.GetSrcRect();
 }
 
 /**
@@ -527,8 +554,27 @@ void CEnemy_Stage1_Boss::CollisionWall()
 }
 
 
-void CEnemy_Stage1_Boss::Damage(int dmg, bool bRev) {
-	m_HP -= dmg;
+void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
+
+	if (direction)
+	{
+		if (!(m_HP - dmg - ENEMY_BOSS_FRONT_DEF) <= -1)
+		{
+			m_HP -= dmg - ENEMY_BOSS_FRONT_DEF;
+		}
+	}
+	else
+	{
+		if (!(m_HP - dmg - ENEMY_BOSS_BACK_DEF) <= -1)
+		{
+			m_HP -= dmg - ENEMY_BOSS_BACK_DEF;
+}
+	}
+
+	if (m_HP <= 0)
+	{
+		m_bShow = false;
+	}
 	/*
 	if (bRev)
 	{
@@ -543,7 +589,7 @@ void CEnemy_Stage1_Boss::Damage(int dmg, bool bRev) {
 	*/
 
 	//ダメージエフェクトを発生させる
-	m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_DAMAGE);
+	//m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_DAMAGE);
 }
 
 bool CEnemy_Stage1_Boss::isCollisionBossAttack(CRectangle prec)
@@ -605,6 +651,7 @@ void CEnemy_Stage1_Boss::RenderDebug(float wx, float wy) {
 
 	//PosX,PosY確認用
 	CGraphicsUtilities::RenderCircle(m_PosX - wx, m_PosY - wy, 2, MOF_XRGB(255, 0, 0));
+	CGraphicsUtilities::RenderFillRect(GetBossFrontRect(), MOF_XRGB(0, 0, 255));
 	//CGraphicsUtilities::RenderCircle(m_TargetPosX - wx, m_TargetPosY - wy, 2, MOF_XRGB(255, 0, 0));
 	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() * 0.5f, 20, " % .0f", (float)m_Motion.GetMotionNo());
 

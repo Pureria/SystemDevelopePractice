@@ -127,6 +127,7 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyShot.h" />
+    <ClInclude Include="EnemyStateDefine.h" />
     <ClInclude Include="Enemy_2.h" />
     <ClInclude Include="Enemy_Stage1_Boss.h" />
     <ClInclude Include="Laser.h" />
