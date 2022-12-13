@@ -2,8 +2,8 @@
 
 Laser::Laser() :
 	//m_FmTime(0)		,
-	m_LazerHitPos(0, 0),
-	m_LaserRange(0) {};
+	m_LaserHitPos(0, 0),
+	m_LaserRange(0){};
 
 
 void Laser::Initialize() {
@@ -93,49 +93,54 @@ CRectangle Laser::GetRect() {
 	return Rec;
 }
 
-CRectangle Laser::GetFireRect() {
-	CRectangle rec = GetRect();
-
-	CRectangle FireRec[3] = { CRectangle(rec.Left, rec.Top - 50, rec.Right, rec.Bottom - 60),
-							  CRectangle(rec.Left, rec.Top - 5, rec.Right, rec.Bottom + 5),
-							  CRectangle(rec.Left, rec.Top + 60, rec.Right, rec.Bottom + 70),
-	};
-	for (int j = 0; j < 3; j++)
-	{
-		MofU32 Color[3] = {
-			MOF_COLOR_RED,
-			MOF_COLOR_GREEN,
-			MOF_COLOR_BLUE,
-		};
-
-		CGraphicsUtilities::RenderRect(FireRec[j], Color[j]);
-	}
-
-	return *FireRec;
-}
-
 void Laser::DirecPosSet() {
 	CRectangle rec = GetRect();
 
 	switch (GetDirec())
 	{
 	case RIGHT:
-		m_LazerHitPos.x = rec.Right;
-		m_LazerHitPos.y = rec.Top;
+		m_LaserHitPos.x = rec.Right;
+		m_LaserHitPos.y = rec.Top;
 		break;
 	case LEFT:
-		m_LazerHitPos.x = rec.Left;
-		m_LazerHitPos.y = rec.Bottom;
+		m_LaserHitPos.x = rec.Left;
+		m_LaserHitPos.y = rec.Bottom;
 		break;
 	}
 }
+
+CRectangle Laser::GetFireRect() {
+	CRectangle rec = GetRect();
+
+	CRectangle FireRec[3] =	{ CRectangle(rec.Left, m_LaserHitPos.y - 50, m_LaserHitPos.x, rec.Bottom - 50),
+							CRectangle(rec.Left, m_LaserHitPos.y - 5, m_LaserHitPos.x, rec.Bottom + 5),
+							CRectangle(rec.Left, m_LaserHitPos.y + 60, m_LaserHitPos.x, rec.Bottom + 60),
+	};
+	 
+	for (int i = 0; i < 3; i++)
+	{
+
+		m_FireRec[i] = FireRec[i];
+
+		MofU32 Color[3] = {
+			MOF_COLOR_RED,
+			MOF_COLOR_GREEN,
+			MOF_COLOR_BLUE,
+		};
+
+		CGraphicsUtilities::RenderRect(m_FireRec[i], Color[i]);
+	}
+	
+	return *m_FireRec;
+}
+
 
 void Laser::OutRange() {
 	//Á‚¦‚éˆ—
 	CRectangle lzrec = GetRect();
 
 	lzrec.Left += m_LaserRange;
-	if (lzrec.Left >= lzrec.Top) {
+	if (lzrec.Left >= lzrec.Right) {
 		m_bShow = false;
 	}
 }

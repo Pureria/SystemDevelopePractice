@@ -207,9 +207,7 @@ void CGame::StgCollPlayer() {
 		float ox = 0, oy = 0;
 		if (m_Stage.Collision(m_Player.GetLaserRect(i), ox, oy))
 		{
-			if (m_Player.IsLaser()) {
-				m_Player.SetWallLaser(i);
-			}
+			m_Player.SetWallLaser(i);
 		}
 
 		//êÖÇ∆íeÇÃîªíË
@@ -421,23 +419,7 @@ void CGame::Render(void){
 	{
 		if (m_Stage.Collision(m_Player.GetLaserRect(i)))
 		{
-			//TODO: âŒíåÇÃèàóù
-			CRectangle rec = m_Player.GetLaserRect(i);
-
-			CRectangle FireRec[3] = { CRectangle(rec.Left -= LASER_ATTACKWIDTH, rec.Top - 50, rec.Right, rec.Bottom - 60),
-									  CRectangle(rec.Left, rec.Top - 5, rec.Right, rec.Bottom + 5),
-									  CRectangle(rec.Left, rec.Top + 60, rec.Right, rec.Bottom + 70),
-			};
-			for (int j = 0; j < 3; j++)
-			{
-				MofU32 Color[3] = {
-					MOF_COLOR_RED,
-					MOF_COLOR_GREEN,
-					MOF_COLOR_BLUE,
-				};
-
-				CGraphicsUtilities::RenderFillRect(FireRec[j], Color[j]);
-			}
+			
 		}
 	}
 

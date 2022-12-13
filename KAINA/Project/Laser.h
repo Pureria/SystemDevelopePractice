@@ -5,12 +5,14 @@ class Laser : public Shot_Base
 {
 private:
 	//レーザーの当たった座標の保管
-	Vector2			m_LazerHitPos;
+	Vector2			m_LaserHitPos;
 
 	//float			m_FmTime;
 
 	//レーザーの拡張範囲
 	int				m_LaserRange;
+
+	CRectangle		m_FireRec[LASER_FIRE_COUNT];
 
 public:
 	Laser();
@@ -37,8 +39,6 @@ public:
 
 	//処理を省略するための関数
 private:
-	//FPSの速度処理
-	float FpsSpd();
 
 	//Lazerの処理
 	void ShotLaser();

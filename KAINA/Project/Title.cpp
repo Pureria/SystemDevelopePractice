@@ -110,7 +110,7 @@ void CTitle::UpdateMenu() {
  */
 void CTitle::Render(void){
 	CGraphicsUtilities::RenderFillRect(0, 0, 1024, 768, MOF_COLOR_WHITE);
-	m_BackImage.Render(0, 200);
+	m_BackImage.Render(0, 0);
 
 	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() / 2.5, g_pGraphics->GetTargetHeight() / 1.3, MOF_XRGB( 0, 0, 0), "ゲームスタート");
 	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() / 2.2, g_pGraphics->GetTargetHeight() / 1.2, MOF_XRGB(0, 0, 0), "終了");

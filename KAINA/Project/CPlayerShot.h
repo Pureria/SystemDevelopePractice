@@ -4,7 +4,6 @@
 class CPlayerShot : public Shot_Base
 {
 private:
-	float		m_ScrollX, m_ScrollY;
 	int			m_RefCount;
 	float		m_MoveX;
 	float		m_MoveY;
@@ -25,8 +24,6 @@ public:
 	void Fire(Vector2& pos, int tb, int natuyype);
 	void Render(float wx, float wy);
 	void RenderDebug(float wx, float wy);
-
-	void SetScroll(float wx, float wy) { m_ScrollX = wx; m_ScrollY = wy; }
 
 	CRectangle GetRect()
 	{
