@@ -218,6 +218,9 @@
     <ClInclude Include="Enemy_2.h">
       <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_2</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyStateDefine.h">
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">

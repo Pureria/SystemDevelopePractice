@@ -3,6 +3,7 @@
 #include	"Mof.h"
 #include	"GameDefine.h"
 #include	"EffectManager.h"
+#include	"EnemyStateDefine.h"
 
 //当たり判定減衰幅
 #define		ENEMY_RECTDECREASE		10
@@ -19,6 +20,7 @@
 #define		ENEMY_ATTACKDASH_SPEED			10.0f
 #define		ENEMY_JUMP						-13.0f
 #define		ENEMY_ATTACKSLASH_WIDTH			150.0f
+#define		ENEMY_ATTACKSLASH_MOVE			90
 
 class CEnemy_Stage1_Boss {
 private:
@@ -40,8 +42,11 @@ private:
 	CRectangle				m_SrcRect;
 	CRectangle				m_AttakSlashRect;
 
+
+	//ボスのHP
 	int						m_HP;
 	int						m_MotionWait;
+	int						m_OldMotionNo;
 
 	CEffectManager* m_pEffectManager;
 
@@ -81,19 +86,35 @@ public:
 		return CRectangle(m_PosX + ENEMY_RECTDECREASE, m_PosY + ENEMY_RECTDECREASE, m_PosX + m_SrcRect.GetWidth() - ENEMY_RECTDECREASE, m_PosY + m_SrcRect.GetHeight());
 	}
 
-	void Damage(int dmg, bool bRev);
+	//ボスのダメージ処理
+	//引数 : dmg = ダメージ : direction = 盾に当たった場合true、当たらなかった場合false
+	void Damage(int dmg, bool direction);
 	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
 
 	//プレイヤーの座標セット
 	void SetTargetPos(float tx, float ty) { m_TargetPosX = tx; m_TargetPosY = ty; }
 
 	int GetBossMotionNo() { return m_Motion.GetMotionNo(); }
+
 	CRectangle GetBossBottomRect() { return CRectangle(m_SrcRect.Left, m_SrcRect.Bottom - 1, m_SrcRect.Right, m_SrcRect.Bottom); }
 	CRectangle GetBossSideRect() 
 	{
 		CRectangle hr = GetRect();
 		return CRectangle(hr.Left - ENEMY_RECTDECREASE, (hr.Top + 80), hr.Right + ENEMY_RECTDECREASE, (hr.Bottom - 80));
 	}
+	//ボスのフロントRect
+	CRectangle GetBossFrontRect()
+	{
+		if (m_bReverse)
+		{
+			return CRectangle(m_PosX + ENEMY_RECTDECREASE, m_PosY + ENEMY_RECTDECREASE, m_PosX + ENEMY_BOSS_FRONTDEF_DIRECTION, m_PosY + m_SrcRect.GetHeight());
+		}
+		else
+		{
+			return CRectangle((m_PosX + m_SrcRect.GetWidth() - ENEMY_BOSS_FRONTDEF_DIRECTION), m_PosY + ENEMY_RECTDECREASE, m_PosX + m_SrcRect.GetWidth() - ENEMY_RECTDECREASE, m_PosY + m_SrcRect.GetHeight());
+		}
+	}
+
 	void SetMotionMove() { m_Motion.ChangeMotion(MOTION_MOVE); }
 	void SetReverse(bool reverse) { m_bReverse = reverse; }
 	bool GetReverse() { return m_bReverse; }

@@ -608,6 +608,19 @@ void CStage::StageAttackCollision(CRectangle r)
 	if (rc >= m_XCount) { rc = m_XCount - 1; }
 	if (bc >= m_YCount) { bc = m_YCount - 1; }
 
+	/*
+	int lc = m_ScrollX / m_ChipSize;
+	int rc = (g_pGraphics->GetTargetWidth() + m_ScrollX) / m_ChipSize;
+	int tc = m_ScrollY / m_ChipSize;
+	int bc = (g_pGraphics->GetTargetHeight() + m_ScrollY) / m_ChipSize;
+
+	//ステージの範囲外にはならないようにする
+	if (lc < 0) { lc = 0; }
+	if (tc < 0) { tc = 0; }
+	if (rc >= m_XCount) { rc = m_XCount - 1; }
+	if (bc >= m_YCount) { bc = m_YCount - 1; }
+	*/
+
 	//当たり判定以外をする短径の左上から右下の範囲のみ当たり判定を行う
 	//それ以外の番号は当たることはないので判定が必要ない
 	for (int y = tc; y <= bc; y++)
@@ -637,6 +650,18 @@ void CStage::StageAttackCollision(CRectangle r)
 
 void CStage::CollisionFreezeWater(CRectangle r)
 {
+	int lc = m_ScrollX / m_ChipSize;
+	int rc = (g_pGraphics->GetTargetWidth() + m_ScrollX) / m_ChipSize;
+	int tc = m_ScrollY / m_ChipSize;
+	int bc = (g_pGraphics->GetTargetHeight() + m_ScrollY) / m_ChipSize;
+
+	//ステージの範囲外にはならないようにする
+	if (lc < 0) { lc = 0; }
+	if (tc < 0) { tc = 0; }
+	if (rc >= m_XCount) { rc = m_XCount - 1; }
+	if (bc >= m_YCount) { bc = m_YCount - 1; }
+
+	/*
 	int lc = r.Left / m_ChipSize;
 	int rc = r.Right / m_ChipSize;
 	int tc = r.Top / m_ChipSize;
@@ -646,6 +671,7 @@ void CStage::CollisionFreezeWater(CRectangle r)
 	if (tc < 0) { tc = 0; }
 	if (rc >= m_XCount) { rc = m_XCount - 1; }
 	if (bc >= m_YCount) { bc = m_YCount - 1; }
+	*/
 
 	for (int y = tc; y <= bc; y++)
 	{
@@ -687,6 +713,18 @@ void CStage::CollisionFreezeWater(CRectangle r)
 
 void CStage::CollisionIceFroe(CRectangle r)
 {
+	int lc = m_ScrollX / m_ChipSize;
+	int rc = (g_pGraphics->GetTargetWidth() + m_ScrollX) / m_ChipSize;
+	int tc = m_ScrollY / m_ChipSize;
+	int bc = (g_pGraphics->GetTargetHeight() + m_ScrollY) / m_ChipSize;
+
+	//ステージの範囲外にはならないようにする
+	if (lc < 0) { lc = 0; }
+	if (tc < 0) { tc = 0; }
+	if (rc >= m_XCount) { rc = m_XCount - 1; }
+	if (bc >= m_YCount) { bc = m_YCount - 1; }
+
+	/*
 	int lc = r.Left / m_ChipSize;
 	int rc = r.Right / m_ChipSize;
 	int tc = r.Top / m_ChipSize;
@@ -696,6 +734,7 @@ void CStage::CollisionIceFroe(CRectangle r)
 	if (tc < 0) { tc = 0; }
 	if (rc >= m_XCount) { rc = m_XCount - 1; }
 	if (bc >= m_YCount) { bc = m_YCount - 1; }
+	*/
 
 	for (int y = tc; y <= bc; y++)
 	{

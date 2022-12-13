@@ -110,6 +110,12 @@ void CStage1_Boss::Update(void) {
 	//敵の更新
 	StgCollEne();
 
+	//TODO::ボスのダメージ判定
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
+	{
+		
+	}
+
 	//アイテムの更新
 	StgCollItm();
 
