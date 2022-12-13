@@ -513,7 +513,7 @@ void CPlayer::PlayerDamage(bool flg)
 
 }
 
-bool CPlayer::CollisionEnemy(CEnemy& ene) {
+bool CPlayer::CollisionEnemy_1(CEnemy& ene) {
 	if (!ene.GetShow()) 
 		return false;
 	
@@ -523,7 +523,7 @@ bool CPlayer::CollisionEnemy(CEnemy& ene) {
 
 
 	//ƒ_ƒ[ƒW’†‚Ì‚½‚ß“–‚½‚è”»’è‚ğs‚í‚È‚¢
-	if (m_DamageWait > 0 || ene.GetDamageWait() > 0) 
+	if (m_DamageWait > 0) 
 		return false;
 
 	//“G‚Ì’ZŒa‚Æ©•ª‚Ì’ZŒa‚Åƒ_ƒ[ƒW
@@ -613,7 +613,6 @@ bool CPlayer::CollisionEnemy(CEnemy& ene) {
 
 				case HEAVY:
 					ene.SetShotShow(false, i);
-					ene.Damage(10, m_bReverse);
 					break;
 				}
 				m_PlShotAry[i].SetShow(false);
@@ -625,7 +624,6 @@ bool CPlayer::CollisionEnemy(CEnemy& ene) {
 			CRectangle lrec = m_Laser[i].GetRect();
 			if (lrec.CollisionRect(erec))
 			{
-				ene.Damage(10, m_bReverse);
 				break;
 			}
 		}
