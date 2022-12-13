@@ -26,6 +26,7 @@ m_ShotType(NORMAL),
 m_NatuType(FIRE),
 m_DrcType(RIGHT),
 m_HP(0),
+m_SP(0),
 m_bGoal(false),
 m_PlShotAry(),
 m_NextBossScene(false){
@@ -37,16 +38,25 @@ m_NextBossScene(false){
  */
 bool CPlayer::Load(void){
 	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-	if (!m_Texture.Load("player.png"))    {		return false;	}
+	if (!m_Texture.Load("player.png"))				{		return false;	}
 
-	if (!m_FrameTexture.Load("Frame.png")){		return false;	}
+	if (!m_FrameTexture.Load("Frame.png"))			{		return false;	}
 
-	if (!m_HPTexture.Load("HP.png"))	  {		return false;	}
+	if (!m_HPTexture.Load("HP.png"))				{		return false;	}
+
+	if (!m_HPBarTexture.Load("HPBAR.png"))			{		return false;	}	
 	
-	if (!m_ShotHealTex.Load("P_missile.png"))	  { return false; }
+	if (!m_SPTexture.Load("SP.png"))				{		return false;	}
+
+	if (!m_SPBarTexture.Load("SPBAR.png"))			{		return false;	}
+
+	if (!m_ShotHealTex.Load("P_missile.png"))		{		return false;	}
+
+	if (!m_ShotHeavyTex.Load("HeavyAmmo.png"))		{		return false;	}
 
 	//if (!m_LaserTex.Load("Shot.png")) { return false; }
 
+	//TODO: FireŠÖ”‚ÉˆÚ“®
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++) { m_PlShotAry[i].SetHealTexture(&m_ShotHealTex); }
 
 	//for (int i = 0; i < PLAYERSHOT_COUNT; i++) { m_Laser[i].SetTexture(&m_LaserTex); }
@@ -177,6 +187,10 @@ void CPlayer::Update() {
 	m_Motion.AddTimer(CUtilities::GetFrameSecond());
 	m_SrcRect = m_Motion.GetSrcRect();
 
+	if (m_HP >= 100) {
+		m_HP = 100;
+	}
+
 	//ƒ_ƒ[ƒW‚ÌƒCƒ“ƒ^[ƒoƒ‹‚ğŒ¸‚ç‚·
 	if (m_DamageWait > 0)
 	{
@@ -252,25 +266,31 @@ void CPlayer::MoveKey() {
 
 //’e‚Ìí—Ş‚ğ•Ï‚¦‚éˆ—
 void CPlayer::BulletChange() {
-	if (g_pInput->IsKeyPush(MOFKEY_1)) {
-		m_ShotType = NORMAL;
-		m_NatuType = HEAL;
-		Change();
-	}
-	else if (g_pInput->IsKeyPush(MOFKEY_2)) {
-		m_ShotType = LASER;
-		m_NatuType = FIRE;
+	if (g_pInput->IsKeyPush(MOFKEY_I)) {
 		Change();
 	}
 }
 
 void CPlayer::Change() {
-	
+	if (m_ShotType == NORMAL) {
+		m_ShotType = LASER;
+		m_NatuType = FIRE;
+		for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
+			m_Laser[i].SetBullet(m_ShotType, m_DrcType, m_NatuType);
+		}
+	}
+	else {
+		m_ShotType = NORMAL;
+		m_NatuType = HEAL;
+		for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
+			m_PlShotAry[i].SetBullet(m_ShotType, m_DrcType, m_NatuType);
+		}
+	}
 }
 
 //’e‚Ì“Á«‚ğ•Ï‚¦‚éˆ—
 void CPlayer::NatuChange() {
-	if (g_pInput->IsKeyPush(MOFKEY_Q)) {
+	if (g_pInput->IsKeyPush(MOFKEY_O)) {
 		switch (m_NatuType)
 		{
 		case FIRE:
@@ -634,21 +654,23 @@ bool CPlayer::CollisionEnemy_1(CEnemy& ene) {
 		if (!m_PlShotAry[i].GetShow()) { continue; }
 
 		CRectangle srec = m_PlShotAry[i].GetRect();
-		CRectangle esrec = ene.ShotArrayRect(i);
-		if (srec.CollisionRect(esrec))
-		{
-			switch (m_PlShotAry[i].GetNatu())
+		for (int j = 0; j < ENEMY_SHOT_COUNT; j++) {
+			CRectangle esrec = ene.ShotArrayRect(j);
+			if (srec.CollisionRect(esrec))
 			{
-			case HEAL:
- 				m_PlShotAry[i].SetShow(false);
-				ene.SetShotShow(false, i);
-				break;
+				switch (m_PlShotAry[i].GetNatu())
+				{
+				case HEAL:
+					m_PlShotAry[i].SetShow(false);
+					ene.SetShotShow(false, j);
+					break;
 
-			case HEAVY:
-				ene.SetShotShow(false, i);
+				case HEAVY:
+					ene.SetShotShow(false, j);
+					break;
+				}
 				break;
 			}
-			break;
 		}
 	}
 
@@ -794,52 +816,6 @@ void CPlayer::Fall() {
 	}
 }
 
-/**
- * •`‰æ
- *
- */
-void CPlayer::Render(float wx,float wy){
-	//’e‚Ì•`‰æ
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-	{
-		m_Laser[i].Render(wx, wy);
-		m_PlShotAry[i].Render(wx, wy);
-	}
-
-	//ƒCƒ“ƒ^[ƒoƒ‹2ƒtƒŒ[ƒ€‚²‚Æ‚É•`‰æ‚ğ‚µ‚È‚¢
-	if (m_DamageWait % 4 >= 2)
-	{
-		return;
-	}
-
-	//•`‰æ’ZŒa
-	CRectangle dr = m_SrcRect;
-	//•`‰æˆÊ’u
-	float px = m_PosX - wx;
-	float py = m_PosY - wy;
-	//”½“]ƒtƒ‰ƒO‚ªON‚Ìê‡•`‰æ’ZŒa‚ğ”½“]‚³‚¹‚é
-	if (m_bReverse)
-	{
-		float tmp = dr.Right;
-		dr.Right = dr.Left;
-		dr.Left = tmp;
-		if (m_Motion.GetMotionNo() == MOTION_ATTACK)
-		{
-			px -= PLAYER_ATTACKWIDTH;
-		}
-	}
-	//ƒeƒNƒXƒ`ƒƒ‚Ì•`‰æ
-	m_Texture.Render(px, py, dr);
-}
-
-void CPlayer::RenderStatus(void) {
-	//HP‚É‰‚¶‚Ä’ZŒa‚Ì•‚ğ•Ï‰»‚³‚¹‚é
-	CRectangle rec(0, 0, 1064 * (m_HP * 0.01f), 64);
-	m_HPTexture.Render(248, 20, rec);
-	//ƒtƒŒ[ƒ€‚ğã•”‚É•`‰æ
-	m_FrameTexture.Render(0, 0);
-}
-
 //ƒXƒe[ƒW‚Æ‚Ì“–‚½‚è”»’è
 void CPlayer::CollisionStage(float ox, float oy)
 {
@@ -879,6 +855,56 @@ bool CPlayer::IsJump()
 }
 
 /**
+ * •`‰æ
+ *
+ */
+void CPlayer::Render(float wx,float wy){
+	//’e‚Ì•`‰æ
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
+	{
+		m_Laser[i].Render(wx, wy);
+		m_PlShotAry[i].Render(wx, wy);
+	}
+
+	//ƒCƒ“ƒ^[ƒoƒ‹2ƒtƒŒ[ƒ€‚²‚Æ‚É•`‰æ‚ğ‚µ‚È‚¢
+	if (m_DamageWait % 4 >= 2)
+	{
+		return;
+	}
+
+	//•`‰æ’ZŒa
+	CRectangle dr = m_SrcRect;
+	//•`‰æˆÊ’u
+	float px = m_PosX - wx;
+	float py = m_PosY - wy;
+	//”½“]ƒtƒ‰ƒO‚ªON‚Ìê‡•`‰æ’ZŒa‚ğ”½“]‚³‚¹‚é
+	if (m_bReverse)
+	{
+		float tmp = dr.Right;
+		dr.Right = dr.Left;
+		dr.Left = tmp;
+		if (m_Motion.GetMotionNo() == MOTION_ATTACK)
+		{
+			px -= PLAYER_ATTACKWIDTH;
+		}
+	}
+	//ƒeƒNƒXƒ`ƒƒ‚Ì•`‰æ
+	m_Texture.Render(px, py, dr);
+}
+
+void CPlayer::RenderStatus(void) {
+	m_HPTexture.Render(50,0);
+	//HP‚É‰‚¶‚Ä’ZŒa‚Ì•‚ğ•Ï‰»‚³‚¹‚é
+	CRectangle hprec(0, 0, 1064 * (m_HP * 0.01f), 64);
+	m_HPBarTexture.Render(248, 20, hprec);
+	m_SPTexture.Render(50, 50);
+	CRectangle sprec(0, 0, 1064 * (m_SP * 0.01f), 64);
+	m_SPBarTexture.Render(248, 20, sprec);
+	//ƒtƒŒ[ƒ€‚ğã•”‚É•`‰æ
+	m_FrameTexture.Render(0, 0);
+}
+
+/**
  * ƒfƒoƒbƒO•`‰æ
  *
  */
@@ -909,5 +935,8 @@ void CPlayer::Release(void){
 	m_Motion.Release();
 	m_FrameTexture.Release();
 	m_HPTexture.Release();
+	m_HPBarTexture.Release();
+	m_SPTexture.Release();
+	m_SPBarTexture.Release();
 	m_ShotHealTex.Release();
 }

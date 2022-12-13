@@ -69,6 +69,6 @@ public:
 
 	void		SetScroll(float wx, float wy)		{		m_ScrollX = wx; m_ScrollY = wy; }
 
-	void SetBullet(int Stype, int drc, int natu)	{		m_ShotType = Stype; m_DrcType = drc; m_NatuType = natu; }
+	void SetBullet(int type, int drc, int natu)		{		m_ShotType = type; m_DrcType = drc; m_NatuType = natu; }
 };
 

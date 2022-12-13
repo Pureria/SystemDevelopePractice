@@ -37,6 +37,8 @@ public:
 
 	CRectangle GetFireRect();
 
+	//CRectangle GetSlopeRect();
+
 	//ˆ—‚ğÈ—ª‚·‚é‚½‚ß‚ÌŠÖ”
 private:
 
