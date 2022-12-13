@@ -23,10 +23,14 @@ private:
 	CRectangle				m_SrcRect;
 	
 	int						m_HP;
+	int						m_SP;
 	int						m_DamageWait;
 
 	CTexture				m_FrameTexture;
 	CTexture				m_HPTexture;
+	CTexture				m_HPBarTexture;
+	CTexture				m_SPTexture;
+	CTexture				m_SPBarTexture;
 
 	CEffectManager*			m_pEffectManager;
 

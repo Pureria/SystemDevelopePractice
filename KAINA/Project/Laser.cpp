@@ -67,10 +67,7 @@ CRectangle Laser::GetRect() {
 			m_ShotPos.y + 50);
 		break;
 	case RIGHTTOP:
-		Rec = CRectangle(m_ShotPos.x,
-			m_ShotPos.y,
-			m_ShotPos.x + m_LaserRange,
-			m_ShotPos.y + 50);
+		//Rec = CRectangle(GetSlopeRect());
 		break;
 	case LEFTTOP:
 		Rec = CRectangle(m_ShotPos.x - m_LaserRange,
@@ -133,6 +130,10 @@ CRectangle Laser::GetFireRect() {
 	
 	return *m_FireRec;
 }
+
+/*CRectangle Laser::GetSlopeRect() {
+	return;
+}*/
 
 
 void Laser::OutRange() {

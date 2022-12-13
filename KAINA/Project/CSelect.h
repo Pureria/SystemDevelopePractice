@@ -5,15 +5,16 @@
 class CSelect : public Scene_Base
 {
 private:
-	CTexture	m_SlctTex;
+	CTexture	m_SelectTex;
 	int m_NowSelect;
 public:
-	CSelect() : m_SlctTex(), m_NowSelect(0) {};
+	CSelect() : m_SelectTex(), m_NowSelect(0) {};
 	~CSelect();
+	bool Load();
 	void Initialize();
 	void Update();
 	void Render();
 	void RenderDebug();
-	void Release() { m_SlctTex.Release(); }
+	void Release() { m_SelectTex.Release(); }
 };
 

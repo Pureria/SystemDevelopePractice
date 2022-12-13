@@ -6,7 +6,14 @@
 
 CSelect::~CSelect() {}
 
+bool CSelect::Load() {
+	if (!m_SelectTex.Load("stage select kari.png")) { return false; }
+
+	return true;
+}
+
 void CSelect::Initialize() {
+	Load();
 	m_NowSelect = 0;
 	m_Alpha = 0;
 }
@@ -46,6 +53,9 @@ void CSelect::Update() {
 }
 
 void CSelect::Render() {
+
+	m_SelectTex.Render(0,0);
+
 	const char* MenuString[COUNT_NO] = {
 		"ステージ1",
 		"ステージ2",
@@ -62,7 +72,7 @@ void CSelect::Render() {
 
 
 	for (int i = 0; i < COUNT_NO; ++i) {
-		CGraphicsUtilities::RenderString((i >= 2) ? ((i == 2) ? 100 : 100 * i) : 100 + 200 * i, (i >= 2) ? 400 : 350, color[i], MenuString[i]);
+		CGraphicsUtilities::RenderString(100 + 450 * i,(i == 1) ? 100 + 600 * i : (i == 3) ? 700 : 300, color[i], MenuString[i]);
 	}
 }
 
