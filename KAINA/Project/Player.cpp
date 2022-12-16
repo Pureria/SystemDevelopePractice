@@ -491,7 +491,7 @@ void CPlayer::UpdateMove(void){
 	}
 }
 
-void CPlayer::PlayerDamage(bool flg)
+void CPlayer::PlayerDamage(bool flg,float damage)
 {
 	//HP‚ª–³‚­‚È‚é‚Æ“–‚½‚è”»’è‚µ‚È‚¢
 	if (m_HP <= 0)
@@ -502,7 +502,7 @@ void CPlayer::PlayerDamage(bool flg)
 	if (m_DamageWait > 0)
 		return;
 
-	m_HP -= 5;
+	m_HP -= damage;
 	m_DamageWait = 60;
 	if (flg)
 	{

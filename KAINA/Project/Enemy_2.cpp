@@ -10,7 +10,8 @@ CEnemy_2::CEnemy_2() :
 	m_bShow(NULL),
 	m_bWidthOut(NULL),
 	m_pEffectManager(),
-	m_bFallFlg(false){}
+	m_bReverse(false),
+	m_bFallFlg(true){}
 
 CEnemy_2::~CEnemy_2(){}
 
@@ -35,11 +36,6 @@ void CEnemy_2::Initialize(float px, float py, int type)
 
 	//アニメーションを作成
 	SpriteAnimationCreate anim[] = {
-		{
-			"待機",
-			0,0,192,64,TRUE,
-			{{5,0,0}},
-		},
 		{
 			"移動",
 			0,0,192,64,TRUE,
@@ -95,16 +91,6 @@ void CEnemy_2::Update(float wx)
 		//TODO::余裕があればダメージ中のノックバック
 	}
 
-	//重力
-	m_Move.y += GRAVITY;
-	if (m_Move.y >= 20.0f) { m_Move.y = 20.0f; }
-
-	m_Pos.y += m_Move.y;
-
-	//アニメーションの更新
-	m_Motion.AddTimer(CUtilities::GetFrameSecond());
-	m_SrcRect = m_Motion.GetSrcRect();
-
 	//ダメージのインターバルを減らす
 	if ((m_DamageWait > 0))
 	{
@@ -123,7 +109,20 @@ void CEnemy_2::Update(float wx)
 
 			if (m_bShotTarget)
 			{
-				m_ShotArray[i].Fire(m_Pos.x + 30, m_Pos.x + 30, 10, 0);
+				if (m_bReverse)
+				{
+					if (m_Pos.x < m_TargetPosX)
+					{
+						m_ShotArray[i].Fire(m_Pos.x + m_SrcRect.GetWidth(), m_Pos.y + 30, 8, 0);
+					}
+				}
+				else
+				{
+					if (m_Pos.x > m_TargetPosX)
+					{
+						m_ShotArray[i].Fire(m_Pos.x + 30, m_Pos.y + 30, -8, 0);
+					}
+				}
 				break;
 			}
 			else
@@ -151,6 +150,32 @@ void CEnemy_2::Update(float wx)
 	{
 		m_ShotWait--;
 	}
+
+	//弾の更新
+	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
+	{
+		m_ShotArray[i].Update(wx);
+	}
+
+	if (m_bReverse)
+	{
+		m_Move.x = 5.0f;
+	}
+	else
+	{
+		m_Move.x = -5.0f;
+	}
+
+	//重力
+	m_Move.y += GRAVITY;
+	if (m_Move.y >= 20.0f) { m_Move.y = 20.0f; }
+
+	//m_Pos.y += m_Move.y;
+	m_Pos += m_Move;
+
+	//アニメーションの更新
+	m_Motion.AddTimer(CUtilities::GetFrameSecond());
+	m_SrcRect = m_Motion.GetSrcRect();
 }
 
 /**
@@ -163,6 +188,10 @@ void CEnemy_2::Update(float wx)
 
 void CEnemy_2::CollisionStage(float ox, float oy)
 {
+	if (ox != 0)
+	{
+		m_bReverse = !m_bReverse;
+	}
 	m_Pos.x += ox;
 	m_Pos.y += oy;
 	//落下中の下埋まり、ジャンプ中の上埋まりの場合は移動を初期化する
@@ -203,6 +232,12 @@ void CEnemy_2::Render(float wx, float wy)
 
 	//描画短径
 	CRectangle dr = m_SrcRect;
+	if (m_bReverse)
+	{
+		float tmp = dr.Right;
+		dr.Right = dr.Left;
+		dr.Left = tmp;
+	}
 	//テクスチャの描画
 	m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr);
 }

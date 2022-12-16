@@ -76,8 +76,8 @@ void CEnemy::Update(float wx){
 	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
 		m_ShotArray[i].Update(wx);
 
-	if (!m_WidthOut)
-		return;
+	//if (!m_WidthOut)
+		//return;
 
 	//”ñ•\Ž¦
 	if(!m_bShow)

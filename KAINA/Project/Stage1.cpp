@@ -139,6 +139,47 @@ void CGame::Update(void){
 	for (int i = 0; i < m_Stage.GetEnemy2Count(); i++)
 	{
 		//TODO::PlayerにCollisionEnemy2の追加
+		if (!m_Enemy2Array[i].GetShow())
+			continue;
+
+		if (m_Enemy2Array[i].GetRect().CollisionRect(m_Player.GetRect()))
+		{
+			if (m_Enemy2Array[i].GetPos().x > m_Player.GetPosX())
+			{
+				//TODO::ダメージ量はあとからEnemyDefineに持たせる
+				m_Player.PlayerDamage(true,10);
+			}
+			else
+			{
+				m_Player.PlayerDamage(false, 10);
+			}
+		}
+
+		//弾との判定
+		for (int j = 0; j < ENEMY_SHOT_COUNT; j++)
+		{
+			if (!m_Enemy2Array[i].GetShotShow(j))
+				continue;
+
+			if (m_Enemy2Array[i].GetShotRect(j).CollisionRect(m_Player.GetRect()))
+			{
+				m_Enemy2Array[i].SetShotShow(false, j);
+				if (m_Enemy2Array[i].GetShotPos(j).x > m_Player.GetPosX())
+				{
+					//TODO::上と同様にダメージ量はEnemyDefineに持たせる
+					m_Player.PlayerDamage(true, 10);
+				}
+				else
+				{
+					m_Player.PlayerDamage(false, 10);
+				}
+			}
+		}
+
+		//TODO::敵とプレイヤーの弾の当たり判定
+		//TODO::プレイヤーの弾と敵の弾の当たり判定
+
+
 		m_Enemy2Array[i].SetTargetPos(m_Player.GetPosX(), m_Player.GetPosY());
 	}
 
@@ -244,11 +285,11 @@ void CGame::StgCollPlayer() {
 
 		if (m_Stage.FireBar(CRectangle(-m_Stage.GetScrollX() + m_Player.GetRect().Left, -m_Stage.GetScrollY() + m_Player.GetRect().Top, -m_Stage.GetScrollX() + m_Player.GetRect().GetCenter().x - 10, -m_Stage.GetScrollY() + m_Player.GetRect().Bottom), bFireEffect))
 		{
-			m_Player.PlayerDamage(false);
+			m_Player.PlayerDamage(false, 5);
 		}
 		if (m_Stage.FireBar(CRectangle(-m_Stage.GetScrollX() + m_Player.GetRect().GetCenter().x + 10, -m_Stage.GetScrollY() + m_Player.GetRect().Top, -m_Stage.GetScrollX() + m_Player.GetRect().Right, -m_Stage.GetScrollY() + m_Player.GetRect().Bottom), bFireEffect))
 		{
-			m_Player.PlayerDamage(true);
+			m_Player.PlayerDamage(true, 5);
 		}
 
 		if (m_intervalFire <= 0)
@@ -350,10 +391,33 @@ void CGame::StgCollEne() {
 			//敵の弾とステージの当たり判定
 			for (int j = 0; j < ENEMY_SHOT_COUNT; j++)
 			{
-				ox = 0, oy = 0;
-				if (m_Stage.Collision(m_EnemyArray[i].ShotArrayRect(j), ox, oy))
+				if (m_Stage.Collision(m_EnemyArray[i].ShotArrayRect(j)))
 				{
 					m_EnemyArray[i].SetShotShow(false, j);
+				}
+			}
+		}
+	}
+
+	for (int i = 0; i < m_Stage.GetEnemy2Count(); i++)
+	{
+		if (!m_Enemy2Array[i].GetShow())
+		{
+			continue;
+		}
+		m_Enemy2Array[i].SetTargetPos(PPosX, PPosY);
+		m_Enemy2Array[i].Update(m_Stage.GetScrollX());
+		float ox = 0, oy = 0;
+		if (m_Stage.Collision(m_Enemy2Array[i].GetRect(), ox, oy))
+		{
+			m_Enemy2Array[i].CollisionStage(ox, oy);
+
+			//敵の弾とステージの当たり判定
+			for (int j = 0; j < ENEMY_SHOT_COUNT; j++)
+			{
+				if (m_Stage.Collision(m_Enemy2Array[i].ShotArrayRect(j)))
+				{
+					m_Enemy2Array[i].SetShotShow(false, j);
 				}
 			}
 		}
@@ -399,6 +463,12 @@ void CGame::Render(void){
 	for (int i = 0; i < m_Stage.GetEnemy1Count(); i++)
 	{
 		m_EnemyArray[i].Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
+	}
+
+	//敵2の描画
+	for (int i = 0; i < m_Stage.GetEnemy2Count(); i++)
+	{
+		m_Enemy2Array[i].Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
 	}
 
 	//アイテムの描画
@@ -447,6 +517,11 @@ void CGame::RenderDebug(void){
 	{
 		m_EnemyArray[i].RenderDebug(m_Stage.GetScrollX(), m_Stage.GetScrollY());
 	}
+	//敵2のデバッグ描画
+	for (int i = 0; i < m_Stage.GetEnemy2Count(); i++)
+	{
+		m_Enemy2Array[i].RenderDebug(m_Stage.GetScrollX(), m_Stage.GetScrollY());
+	}
 	//アイテムのデバッグ描画
 	for (int i = 0; i < m_Stage.GetItemCount(); i++)
 	{
@@ -471,6 +546,12 @@ void CGame::Release(void){
 	{
 		delete[] m_EnemyArray;
 		m_EnemyArray = NULL;
+	}
+	//敵2の開放
+	if (m_Enemy2Array)
+	{
+		delete[] m_Enemy2Array;
+		m_Enemy2Array = NULL;
 	}
 	//アイテムの解放
 	if (m_ItemArray)
