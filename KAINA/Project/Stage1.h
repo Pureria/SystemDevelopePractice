@@ -2,6 +2,7 @@
 #include	"Player.h"
 #include	"BaseStage.h"
 #include	"Enemy.h"
+#include	"Enemy_2.h"
 #include	"Item.h"
 #include	"EffectManager.h"
 #include    "CMenu.h"
@@ -19,6 +20,7 @@ private:
 
 	//敵のポインタ配列
 	CEnemy*		    m_EnemyArray;
+	CEnemy_2*		m_Enemy2Array;
 
 	//エフェクト
 	CEffectManager	m_EffectManager;

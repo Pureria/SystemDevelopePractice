@@ -1,12 +1,18 @@
 #pragma once
 #include	"Mof.h"
 #include	"EffectManager.h"
+#include	"EnemyShot.h"
 
 //当たり判定減衰幅
 #define			ENEMY_RECTDECREALSE		20
 
 class CEnemy_2{
 private:
+	//fallFlg : TRUE 落下する : FALSE 落下しない
+	bool					m_bFallFlg;
+	//ShotTarget : TRUE 弾の軌道がまっすぐ	FALSE : 弾の軌道がプレイヤーに向かって
+	bool					m_bShotTarget;
+
 	CTexture*				m_pTexture;
 	CSpriteMotionController m_Motion;
 	CRectangle				m_SrcRect;
@@ -16,12 +22,20 @@ private:
 	int m_DamageWait;
 
 	Vector2		m_Pos;
+	Vector2		m_Move;
 
 	bool		m_bShow;
 	//TRUE : 画面内		FALSE : 画面外
 	bool		m_bWidthOut;
 
 	CEffectManager* m_pEffectManager;
+
+	//弾用変数
+	CEnemyShot				m_ShotArray[ENEMY_SHOT_COUNT];
+	int						m_ShotWait;
+
+	float					m_TargetPosX;
+	float					m_TargetPosY;
 
 	//モーション種類定義
 	enum tag_Motion {
@@ -43,8 +57,22 @@ public:
 	void Release();
 	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
 
-	bool GetShow() { return m_bShow; }
+	void SetTexture(CTexture* pt, CTexture* st);
 
-	CRectangle GetRect() { return CRectangle(m_Pos.x + ENEMY_RECTDECREALSE, m_Pos.y + ENEMY_RECTDECREALSE, m_Pos.x + m_SrcRect.GetWidth() - ENEMY_RECTDECREALSE, m_Pos.y + m_SrcRect.GetHeight()); }
+	bool		GetShow() { return m_bShow; }
+
+	CRectangle  GetRect() { return CRectangle(m_Pos.x + ENEMY_RECTDECREALSE, m_Pos.y + ENEMY_RECTDECREALSE, m_Pos.x + m_SrcRect.GetWidth() - ENEMY_RECTDECREALSE, m_Pos.y + m_SrcRect.GetHeight()); }
+
+	//プレイヤーの座標セット
+	void		SetTargetPos(float tx, float ty) { m_TargetPosX = tx; m_TargetPosY = ty; }
+
+	//弾のShow・Rectangleを返す
+	bool		ShotArrayBool(int i) { return m_ShotArray[i].GetShow(); }
+	CRectangle  ShotArrayRect(int i) { return m_ShotArray[i].GetRect(); }
+
+	//弾のShowをセットする
+	void		SetShotShow(bool flg, int i) { m_ShotArray[i].SetShow(flg); }
+
+	void		SetFallFlg(bool flg) { m_bFallFlg = flg; }
 };
 
