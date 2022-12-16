@@ -57,7 +57,9 @@ bool CPlayer::Load(void){
 	//if (!m_LaserTex.Load("Shot.png")) { return false; }
 
 	//TODO: FireŠÖ”‚ÉˆÚ“®
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++) { m_PlShotAry[i].SetHealTexture(&m_ShotHealTex); }
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
+		m_PlShotAry[i].SetHealTexture(&m_ShotHealTex); 
+	}
 
 	//for (int i = 0; i < PLAYERSHOT_COUNT; i++) { m_Laser[i].SetTexture(&m_LaserTex); }
 
@@ -275,16 +277,10 @@ void CPlayer::Change() {
 	if (m_ShotType == NORMAL) {
 		m_ShotType = LASER;
 		m_NatuType = FIRE;
-		for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
-			m_Laser[i].SetBullet(m_ShotType, m_DrcType, m_NatuType);
-		}
 	}
 	else {
 		m_ShotType = NORMAL;
 		m_NatuType = HEAL;
-		for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
-			m_PlShotAry[i].SetBullet(m_ShotType, m_DrcType, m_NatuType);
-		}
 	}
 }
 
@@ -299,7 +295,6 @@ void CPlayer::NatuChange() {
 		case FROST:
 			m_NatuType = FIRE;
 			break;
-
 		case HEAL:
 			m_NatuType = HEAVY;
 			break;
@@ -621,7 +616,6 @@ bool CPlayer::CollisionEnemy_1(CEnemy& ene) {
 	{
 		if (!IsLaser()) {
 			if (!m_PlShotAry[i].GetShow()) { continue; }
-
 			CRectangle srec = m_PlShotAry[i].GetRect();
 			if (srec.CollisionRect(erec))
 			{
@@ -642,6 +636,7 @@ bool CPlayer::CollisionEnemy_1(CEnemy& ene) {
 		else {
 			if (!m_Laser[i].GetShow()) { continue; }
 			CRectangle lrec = m_Laser[i].GetRect();
+			
 			if (lrec.CollisionRect(erec))
 			{
 				break;
@@ -649,6 +644,7 @@ bool CPlayer::CollisionEnemy_1(CEnemy& ene) {
 		}
 	}
 
+	//ƒvƒŒƒCƒ„[‚Æ“G‚Ì’e“¯m‚Ì“–‚½‚è”»’è
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
 		if (!m_PlShotAry[i].GetShow()) { continue; }
@@ -698,7 +694,7 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 
 	if (prec.CollisionRect(erec))
 	{
-		m_HP -= 5;
+		DeffenceProc(5);
 		m_DamageWait = 60;
 		if (prec.Left < erec.Left)
 		{
@@ -893,11 +889,11 @@ void CPlayer::Render(float wx,float wy){
 }
 
 void CPlayer::RenderStatus(void) {
-	m_HPTexture.Render(50,0);
+	m_HPTexture.Render(0,0);
+	m_SPTexture.Render(0,0);
 	//HP‚É‰‚¶‚Ä’ZŒa‚Ì•‚ğ•Ï‰»‚³‚¹‚é
 	CRectangle hprec(0, 0, 1064 * (m_HP * 0.01f), 64);
-	m_HPBarTexture.Render(248, 20, hprec);
-	m_SPTexture.Render(50, 50);
+	m_HPBarTexture.Render(0, 0, hprec);
 	CRectangle sprec(0, 0, 1064 * (m_SP * 0.01f), 64);
 	m_SPBarTexture.Render(248, 20, sprec);
 	//ƒtƒŒ[ƒ€‚ğã•”‚É•`‰æ
@@ -939,4 +935,5 @@ void CPlayer::Release(void){
 	m_SPTexture.Release();
 	m_SPBarTexture.Release();
 	m_ShotHealTex.Release();
+	m_ShotHeavyTex.Release();
 }

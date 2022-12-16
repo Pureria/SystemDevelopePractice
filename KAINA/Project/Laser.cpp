@@ -67,24 +67,27 @@ CRectangle Laser::GetRect() {
 			m_ShotPos.y + 50);
 		break;
 	case RIGHTTOP:
-		//Rec = CRectangle(GetSlopeRect());
+		Rec = CRectangle(m_ShotPos.x,
+			m_ShotPos.y - m_LaserRange,
+			m_ShotPos.x + 50,
+			m_ShotPos.y);
 		break;
 	case LEFTTOP:
-		Rec = CRectangle(m_ShotPos.x - m_LaserRange,
-			m_ShotPos.y,
-			m_ShotPos.x,
-			m_ShotPos.y + 50);
+		Rec = CRectangle(m_ShotPos.x,
+			m_ShotPos.y - m_LaserRange,
+			m_ShotPos.x + 50,
+			m_ShotPos.y);
 	case RIGHTBOTTOM:
 		Rec = CRectangle(m_ShotPos.x,
 			m_ShotPos.y,
-			m_ShotPos.x + m_LaserRange,
-			m_ShotPos.y + 50);
+			m_ShotPos.x + 50,
+			m_ShotPos.y + m_LaserRange);
 		break;
 	case LEFTBOTTOM:
-		Rec = CRectangle(m_ShotPos.x - m_LaserRange,
+		Rec = CRectangle(m_ShotPos.x,
 			m_ShotPos.y,
-			m_ShotPos.x,
-			m_ShotPos.y + 50);
+			m_ShotPos.x + 50,
+			m_ShotPos.y + m_LaserRange);
 		break;
 	}
 	return Rec;

@@ -84,6 +84,8 @@ private:
 	//ボス部屋用フラグ
 	bool					m_NextBossScene;
 
+	int						m_Deffence;
+
 
 public:
 	CPlayer();
@@ -110,38 +112,30 @@ public:
 	}
 	int	 GetLaserDirec(int i)									{		return m_PlShotAry[i].GetDirec();						}
 
-	CRectangle GetLaserRect(int i) {
-		return m_PlShotAry[i].GetRect();
-	}
+	CRectangle GetLaserRect(int i)								{		return m_PlShotAry[i].GetRect();						}
 
-	CRectangle GetLaserFireRect(int i) { 
-		return m_Laser[i].GetFireRect(); 
-	}
+	CRectangle GetLaserFireRect(int i)							{ 		return m_Laser[i].GetFireRect();						}
 
-	CRectangle GetNormalRect(int i) { 
-		return m_PlShotAry[i].GetRect();
-	}
+	CRectangle GetNormalRect(int i)								{ 		return m_PlShotAry[i].GetRect();						}
 
-	bool GetNormalShow(int i) { 
-		return m_PlShotAry[i].GetShow(); 
-	}
+	bool GetNormalShow(int i)									{ 		return m_PlShotAry[i].GetShow();						}
 
 	void CollisionStage(float ox, float oy);
 	bool CollisionEnemy_1(CEnemy& ene);
 	bool Collision_Stage1_Boss(CEnemy_Stage1_Boss& ene);
 	void RenderStatus(void);
 
-	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
+	void SetEffectManager(CEffectManager* pmng)					{ 		m_pEffectManager = pmng; 								}
 
 
 	//プレイヤー死亡時の処理
 	void PlayerEnd();
-	bool IsEnd(void) { return m_bDead; }
+	bool IsEnd(void)											{		return m_bDead;											}
 
 	bool ColisionItem(CItem& itm);
 	bool CollisionAttackItem(CItem& itm);
 
-	bool IsGoal(void) { return m_bGoal; }
+	bool IsGoal(void)											{		return m_bGoal;											}
 	//画面外で落下
 	void Fall();
 	//弾の向きを撃つ瞬間にセット
@@ -151,10 +145,10 @@ public:
 	void FireShot();
 	void FireShotLaser();
 
-	float GetPosX() { return m_PosX; }
-	float GetPosY() { return m_PosY; }
+	float GetPosX()												{		return m_PosX;											}
+	float GetPosY()												{		return m_PosY;											}
 
-	bool GetNextBossScene() { return m_NextBossScene; }
+	bool GetNextBossScene()										{		return m_NextBossScene;									}
 
 	//上昇中　: true
 	bool IsJump();
@@ -162,21 +156,21 @@ public:
 	void ShotManager();
 
 	//PlayerPosセット
-	void SetPlayerPos(float PosX, float PosY) { m_PosX = PosX; m_PosY = PosY; }
+	void SetPlayerPos(float PosX, float PosY)					{ m_PosX = PosX; m_PosY = PosY;									}
 
 	//引数 false : 左	true : 右
 	void PlayerDamage(bool flg);
 
 	//弾の反射
-	void ShotRefLeft(int i) { m_PlShotAry[i].SetPowerLeft(); }
+	void ShotRefLeft(int i)										{ m_PlShotAry[i].SetPowerLeft();								}
 
-	void ShotRefTop(int i) { m_PlShotAry[i].SetPowerTop(); }
+	void ShotRefTop(int i)										{ m_PlShotAry[i].SetPowerTop();									}
 
-	void ShotRefRight(int i) { m_PlShotAry[i].SetPowerRight(); }
+	void ShotRefRight(int i)									{ m_PlShotAry[i].SetPowerRight();								}
 
-	void ShotRefBottom(int i) { m_PlShotAry[i].SetPowerBottom(); }
+	void ShotRefBottom(int i)									{ m_PlShotAry[i].SetPowerBottom();								}
 
-	void SetWallLaser(int i) { m_Laser[i].SetWallHitLaser(); }
+	void SetWallLaser(int i)									{ m_Laser[i].SetWallHitLaser();									}
 
 	void SetScroll(float wx, float wy, int i) { m_PlShotAry[i].SetScroll(wx, wy); }
 
@@ -205,4 +199,12 @@ private:
 	Vector2 SetStartPos() {
 		return Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f - 20);
 	}
+
+	void DeffenceProc(int dmg) {
+		m_Deffence = 3;
+		float deff = m_Deffence - dmg;
+		if (deff > 0) {
+			m_HP += deff;
+		}
+	};
 };

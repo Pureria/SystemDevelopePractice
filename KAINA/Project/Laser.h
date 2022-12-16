@@ -42,7 +42,7 @@ public:
 	//ˆ—‚ğÈ—ª‚·‚é‚½‚ß‚ÌŠÖ”
 private:
 
-	//Lazer‚Ìˆ—
+	//Laser‚Ìˆ—
 	void ShotLaser();
 
 	//Á‹ˆ—
