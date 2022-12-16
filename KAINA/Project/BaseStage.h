@@ -2,6 +2,7 @@
 
 #include	"Player.h"
 #include	"Enemy.h"
+#include	"Enemy_2.h"
 #include	"Item.h"
 #include	"EffectManager.h"
 
@@ -37,7 +38,8 @@ private:
 	CTexture*				m_pEnemyTexture;
 	CTexture*				m_pEnemyShotTexture;
 	char*					m_pEnemyData;
-	int						m_EnemyCount;
+	int						m_Enemy1Count;
+	int						m_Enemy2_1Count;
 
 	int						m_ItemTextureCount;
 	CTexture*				m_pItemTexture;
@@ -59,7 +61,7 @@ public:
 	CStage();
 	~CStage();
 	bool Load(char* pName , int nowscene);
-	void Initialize(CEnemy* pEnemy,CItem* pItem);
+	void Initialize(CEnemy* pEnemy,CEnemy_2* pEnemy2,CItem* pItem);
 	void Initialize(CItem* pItem);
 	void Update(CPlayer& pl);
 	void Render(void);
@@ -73,7 +75,8 @@ public:
 	//引数　：　プレイヤーの攻撃Rect		プレイヤーがステージに攻撃した時の処理(氷処理)
 	void StageAttackCollision(CRectangle r);
 
-	int GetEnemyCount() { return m_EnemyCount; }
+	int GetEnemy1Count() { return m_Enemy1Count; }
+	int GetEnemy2Count() { return m_Enemy2_1Count; }
 	int GetItemCount() { return m_ItemCount; }
 
 	void ButtonGimmic(int DelBlockCnt);

@@ -21,7 +21,10 @@ bool CGame::Load(){
 	//ステージの素材読み込み
 	m_Stage.Load("1-1MAP_noWall.txt",m_NowSceneNo);
 	//敵メモリ確保
-	m_EnemyArray = new CEnemy[m_Stage.GetEnemyCount()];
+	int a = m_Stage.GetEnemy1Count();
+	m_EnemyArray = new CEnemy[m_Stage.GetEnemy1Count()];
+	a = m_Stage.GetEnemy2Count();
+	m_Enemy2Array = new CEnemy_2[m_Stage.GetEnemy2Count()];
 	//アイテムメモリ確保
 	m_ItemArray = new CItem[m_Stage.GetItemCount()];
 	//エフェクトの素材読み込み
@@ -42,12 +45,12 @@ void CGame::Initialize(){
 	m_Player.Initialize();
 	m_Player.SetPlayerPos(m_Stage.GetIniPlayerPos().x, m_Stage.GetIniPlayerPos().y);
 	//ステージの状態初期化
-	m_Stage.Initialize(m_EnemyArray,m_ItemArray);
+	m_Stage.Initialize(m_EnemyArray, m_Enemy2Array, m_ItemArray);
 	//エフェクトの状態初期化
 	m_EffectManager.Initialize();
 	//プレイヤーと敵にエフェクトクラスの設定
 	m_Player.SetEffectManager(&m_EffectManager);
-	for (int i = 0; i < m_Stage.GetEnemyCount(); i++)
+	for (int i = 0; i < m_Stage.GetEnemy1Count(); i++)
 	{
 		m_EnemyArray[i].SetEffectManager(&m_EffectManager);
 	}
@@ -125,16 +128,18 @@ void CGame::Update(void){
 	StgCollItm();
 
 
-	//当たり判定の実行
-	for (int i = 0; i < m_Stage.GetEnemyCount(); i++)
+	//当たり判定の実行・プレイヤーの座標をセット
+	for (int i = 0; i < m_Stage.GetEnemy1Count(); i++)
 	{
 		m_Player.CollisionEnemy_1(m_EnemyArray[i]);
+		m_EnemyArray[i].SetPlayerPos(Vector2(m_Player.GetPosX(), m_Player.GetPosY()));
 	}
 
-	//Enemy1にプレイヤーの座標をセット
-	for (int i = 0; i < m_Stage.GetEnemyCount(); i++)
+	//当たり判定の実行・Enemy2にプレイヤーの座標をセット
+	for (int i = 0; i < m_Stage.GetEnemy2Count(); i++)
 	{
-		m_EnemyArray[i].SetPlayerPos(Vector2(m_Player.GetPosX(), m_Player.GetPosY()));
+		//TODO::PlayerにCollisionEnemy2の追加
+		m_Enemy2Array[i].SetTargetPos(m_Player.GetPosX(), m_Player.GetPosY());
 	}
 
 	for (int i = 0; i < m_Stage.GetItemCount(); i++)
@@ -228,8 +233,6 @@ void CGame::StgCollPlayer() {
 		}
 	}
 
-	
-	//TODO::elseの判定でスクロール値が動いた分当たり判定も変化する
 	//炎の判定
 	if (m_bFire)
 	{
@@ -331,7 +334,7 @@ void CGame::StgCollEne() {
 	float PPosX = m_Player.GetPosX() + 30;
 	float PPosY = m_Player.GetPosY() + 30;
 
-	for (int i = 0; i < m_Stage.GetEnemyCount(); i++)
+	for (int i = 0; i < m_Stage.GetEnemy1Count(); i++)
 	{
 		if (!m_EnemyArray[i].GetShow())
 		{
@@ -393,7 +396,7 @@ void CGame::Render(void){
 	m_Player.Render(m_Stage.GetScrollX(),m_Stage.GetScrollY());
 
 	//敵の描画
-	for (int i = 0; i < m_Stage.GetEnemyCount(); i++)
+	for (int i = 0; i < m_Stage.GetEnemy1Count(); i++)
 	{
 		m_EnemyArray[i].Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
 	}
@@ -440,7 +443,7 @@ void CGame::RenderDebug(void){
 	//プレイヤーデバッグ描画
 	m_Player.RenderDebug(m_Stage.GetScrollX(),m_Stage.GetScrollY());
 	//敵のデバッグ描画
-	for (int i = 0; i < m_Stage.GetEnemyCount(); i++)
+	for (int i = 0; i < m_Stage.GetEnemy1Count(); i++)
 	{
 		m_EnemyArray[i].RenderDebug(m_Stage.GetScrollX(), m_Stage.GetScrollY());
 	}

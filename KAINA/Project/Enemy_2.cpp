@@ -4,15 +4,241 @@ CEnemy_2::CEnemy_2() :
 	m_Type(NULL),
 	m_HP(NULL),
 	m_DamageWait(NULL),
-	m_pTexture(),
+	m_pTexture(NULL),
 	m_Motion(),
 	m_SrcRect(),
-	m_Pos(NULL),
 	m_bShow(NULL),
 	m_bWidthOut(NULL),
-	m_pEffectManager(){
-}
+	m_pEffectManager(),
+	m_bFallFlg(false){}
 
 CEnemy_2::~CEnemy_2(){}
 
 //TODO::Enemy_2の処理
+
+void CEnemy_2::Initialize(float px, float py, int type)
+{
+	m_Type = type;
+	m_Pos.x = px;
+	m_Pos.y = py;
+	m_Move.x = 0;
+	m_Move.y = 0;
+	m_bShow = true;
+	m_HP = 10;
+	m_DamageWait = 0;
+	m_bWidthOut = true;
+
+	m_bShotTarget = m_bFallFlg;
+
+	//弾用変数のInitialize
+	m_ShotWait = ENEMY_SHOT_WAIT;
+
+	//アニメーションを作成
+	SpriteAnimationCreate anim[] = {
+		{
+			"待機",
+			0,0,192,64,TRUE,
+			{{5,0,0}},
+		},
+		{
+			"移動",
+			0,0,192,64,TRUE,
+			{{5,0,0}}
+		},
+		{
+			"ダメージ",
+			0,0,192,64,FALSE,
+			{{5,0,0}}
+		},
+	};
+	m_Motion.Create(anim, MOTION_COUNT);
+}
+
+/**
+*更新
+*
+* [in] wx:スクリーン座標
+**/
+void CEnemy_2::Update(float wx)
+{
+	if (m_Pos.x - wx + m_pTexture->GetWidth() <= 0 || m_Pos.x - wx > g_pGraphics->GetTargetWidth())
+	{
+		m_bWidthOut = false;
+	}
+	else
+	{
+		m_bWidthOut = true;
+	}
+
+	if (!m_bWidthOut)
+		return;
+
+	if (!m_bShow)
+		return;
+
+	//ダメージ中の動作
+	if (m_Motion.GetMotionNo() == MOTION_DAMAGE)
+	{
+		m_ShotWait = ENEMY_SHOT_WAIT;
+
+		//ダメージモーション終了で元に戻す
+		if (m_Motion.IsEndMotion())
+		{
+			m_Motion.ChangeMotion(MOTION_MOVE);
+			if (m_HP <= 0)
+			{
+				m_bShow = false;
+				//爆発エフェクトを発生させる
+				m_pEffectManager->Start(m_Pos.x + m_SrcRect.GetWidth() * 0.5f, m_Pos.y + m_SrcRect.GetHeight() * 0.5f, EFC_EXPLOSION01);
+			}
+		}
+		//TODO::余裕があればダメージ中のノックバック
+	}
+
+	//重力
+	m_Move.y += GRAVITY;
+	if (m_Move.y >= 20.0f) { m_Move.y = 20.0f; }
+
+	m_Pos.y += m_Move.y;
+
+	//アニメーションの更新
+	m_Motion.AddTimer(CUtilities::GetFrameSecond());
+	m_SrcRect = m_Motion.GetSrcRect();
+
+	//ダメージのインターバルを減らす
+	if ((m_DamageWait > 0))
+	{
+		m_DamageWait--;
+	}
+
+	//弾の発射
+	if (m_ShotWait <= 0)
+	{
+		for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
+		{
+			if (m_ShotArray[i].GetShow())
+				continue;
+
+			m_ShotWait = ENEMY_SHOT_WAIT;
+
+			if (m_bShotTarget)
+			{
+				m_ShotArray[i].Fire(m_Pos.x + 30, m_Pos.x + 30, 10, 0);
+				break;
+			}
+			else
+			{
+				//弾の発射位置
+				float stx = m_Pos.x + 30;
+				float sty = m_Pos.y + 30;
+				//目標地点に向かうための方向
+				float dx = m_TargetPosX - stx;
+				float dy = m_TargetPosY - sty;
+				//目標地点までの距離を求める
+				float d = sqrt(dx * dx + dy * dy);
+				//距離が0以下 = 完全に同じ位置の場合は発射しない
+				if (d <= 0)
+					break;
+				//方向を正規化
+				dx /= d;
+				dy /= d;
+				m_ShotArray[i].Fire(stx, sty, dx * 5, dy * 5);
+				break;
+			}
+		}
+	}
+	else
+	{
+		m_ShotWait--;
+	}
+}
+
+/**
+*ステージとの当たり
+*
+*引数
+*[in]		ox		x埋まり量
+*[in]		oy		y埋まり量
+*/
+
+void CEnemy_2::CollisionStage(float ox, float oy)
+{
+	m_Pos.x += ox;
+	m_Pos.y += oy;
+	//落下中の下埋まり、ジャンプ中の上埋まりの場合は移動を初期化する
+	if (oy < 0 && m_Move.y > 0)
+	{
+		m_Move.y = 0;
+	}
+	else if (oy > 0 && m_Move.y < 0)
+	{
+		m_Move.y = 0;
+	}
+}
+
+/**
+*描画
+*
+*引数
+*[in]		wx		スクロール値x
+*[in]		wy		スクロール値y
+*/
+void CEnemy_2::Render(float wx, float wy)
+{
+	//非表示
+	if (!m_bShow)
+		return;
+
+	//弾の描画
+	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
+	{
+		m_ShotArray[i].Render(wx, wy);
+	}
+
+	//インターバル2フレームごとに描画をしない
+	if (m_DamageWait % 4 >= 2)
+	{
+		return;
+	}
+
+	//描画短径
+	CRectangle dr = m_SrcRect;
+	//テクスチャの描画
+	m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr);
+}
+
+/**
+*デバッグ
+*
+*引数
+*[in]		wx		スクロール値x
+*[in]		wy		スクロール値y
+*/
+void CEnemy_2::RenderDebug(float wx, float wy)
+{
+	if (!m_bShow)
+		return;
+
+	//当たり判定の表示
+	CRectangle hr = GetRect();
+	CGraphicsUtilities::RenderRect(hr.Left - wx, hr.Top - wy, hr.Right - wx, hr.Bottom - wy, MOF_XRGB(255, 0, 0));
+
+	//弾の描画
+	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
+		m_ShotArray[i].RenderDebug(wx, wy);
+}
+
+void CEnemy_2::SetTexture(CTexture* pt, CTexture* st)
+{
+	m_pTexture = pt;
+	for (int i = 0; i < ENEMY_SHOT_COUNT; i++) { m_ShotArray[i].SetTexture(st); }
+}
+
+/**
+*解放
+*
+*/
+void CEnemy_2::Release()
+{
+	m_Motion.Release();
+}
