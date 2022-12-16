@@ -12,6 +12,8 @@ private:
 	bool					m_bFallFlg;
 	//ShotTarget : TRUE 弾の軌道がまっすぐ	FALSE : 弾の軌道がプレイヤーに向かって
 	bool					m_bShotTarget;
+	//false : 左向き	true : 右向き
+	bool					m_bReverse;
 
 	CTexture*				m_pTexture;
 	CSpriteMotionController m_Motion;
@@ -39,7 +41,6 @@ private:
 
 	//モーション種類定義
 	enum tag_Motion {
-		MOTION_IDLE,
 		MOTION_MOVE,
 		MOTION_DAMAGE,
 		
@@ -62,6 +63,7 @@ public:
 	bool		GetShow() { return m_bShow; }
 
 	CRectangle  GetRect() { return CRectangle(m_Pos.x + ENEMY_RECTDECREALSE, m_Pos.y + ENEMY_RECTDECREALSE, m_Pos.x + m_SrcRect.GetWidth() - ENEMY_RECTDECREALSE, m_Pos.y + m_SrcRect.GetHeight()); }
+	Vector2		GetPos() { return m_Pos; }
 
 	//プレイヤーの座標セット
 	void		SetTargetPos(float tx, float ty) { m_TargetPosX = tx; m_TargetPosY = ty; }
@@ -72,6 +74,12 @@ public:
 
 	//弾のShowをセットする
 	void		SetShotShow(bool flg, int i) { m_ShotArray[i].SetShow(flg); }
+	//弾のShowを返す
+	bool		GetShotShow(int i) { return m_ShotArray[i].GetShow(); }
+	//弾のRectを返す
+	CRectangle	GetShotRect(int i) { return m_ShotArray[i].GetRect(); }
+	//弾のポジションを返す
+	Vector2		GetShotPos(int i) { return m_ShotArray[i].GetPos(); }
 
 	void		SetFallFlg(bool flg) { m_bFallFlg = flg; }
 };

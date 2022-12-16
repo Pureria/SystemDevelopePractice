@@ -158,8 +158,8 @@ public:
 	//PlayerPosセット
 	void SetPlayerPos(float PosX, float PosY)					{ m_PosX = PosX; m_PosY = PosY;									}
 
-	//引数 false : 左	true : 右
-	void PlayerDamage(bool flg);
+	//引数 ダメージ判定のものがプレイヤーより false : 右	true : 左
+	void PlayerDamage(bool flg, float damage);
 
 	//弾の反射
 	void ShotRefLeft(int i)										{ m_PlShotAry[i].SetPowerLeft();								}

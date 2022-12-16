@@ -22,6 +22,8 @@ public:
 	bool GetShow() { return m_bShow; }
 	void SetShow(bool bs) { m_bShow = bs; }
 
+	Vector2 GetPos() { return m_Pos; }
+
 	CRectangle GetRect() { return CRectangle(m_Pos.x, m_Pos.y, m_Pos.x + m_pTexture->GetWidth(), m_Pos.y + m_pTexture->GetHeight()); }
 };
 
