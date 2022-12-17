@@ -15,7 +15,13 @@
 //氷チップ
 #define		ICE				11
 //ボタンチップ
-#define		BUTTON			10
+#define		BUTTON_RED		10
+#define		BUTTON_BLUE		16
+#define		BUTTON_YELLOW	15
+//ボタン対応ブロック
+#define		BUTTON_BLOCK_RED	17
+#define		BUTTON_BLOCK_BLUE	18
+#define		BUTTON_BLOCK_YELLOW	19
 //バーナーチップ
 #define		BURNER			13
 //リフトチップ
@@ -56,6 +62,11 @@ private:
 
 	CEffectManager*			m_pEffectManager;
 
+	//ボタン判定
+	bool					m_bButtonRed;
+	bool					m_bButtonBlue;
+	bool					m_bButtonYellow;
+
 	//テスト用
 	CRectangle				FireRec;
 
@@ -74,14 +85,14 @@ public:
 	bool Collision(CRectangle r);
 	bool Collision(CRectangle r, float& ox, float& oy);
 
-	//引数　：　プレイヤーの攻撃Rect		プレイヤーがステージに攻撃した時の処理(氷処理)
-	void StageAttackCollision(CRectangle r);
+	//引数　：　プレイヤーの攻撃Rect		プレイヤーがステージに攻撃した時の処理(ボタン処理)
+	bool StageAttackCollision(CRectangle r);
 
 	int GetEnemy1Count() { return m_Enemy1Count; }
 	int GetEnemy2Count() { return m_Enemy2_1Count + m_Enemy2_2Count; }
 	int GetItemCount() { return m_ItemCount; }
 
-	void ButtonGimmic(int DelBlockCnt);
+	void ButtonGimmic();
 
 	//水を氷にする	引数：弾のRect
 	void CollisionFreezeWater(CRectangle r);
