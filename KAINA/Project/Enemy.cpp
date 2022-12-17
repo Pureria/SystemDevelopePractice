@@ -92,7 +92,7 @@ void CEnemy::Update(float wx){
 	{
 		for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
 		{
-			if (m_PosX > m_TargetPos.x)
+			if (m_PosX - 50.0f > m_TargetPos.x)
 			{
 				if (m_ShotArray[i].GetShow())
 					continue;
