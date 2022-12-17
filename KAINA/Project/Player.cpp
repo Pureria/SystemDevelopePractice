@@ -545,6 +545,8 @@ bool CPlayer::CollisionEnemy_1(CEnemy& ene) {
 	CRectangle prec = GetRect();
 	CRectangle erec = ene.GetRect();
 
+	//–C‘ä‚Æ‚Ì“–‚½‚è”»’è
+	/*
 	if (prec.CollisionRect(erec))
 	{
 		m_HP -= 5;
@@ -573,6 +575,7 @@ bool CPlayer::CollisionEnemy_1(CEnemy& ene) {
 		}
 		return true;
 	}
+	*/
 
 	//“G‚Ì’e‚Æ‚Ì“–‚½‚è”»’è
 	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
