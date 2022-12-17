@@ -492,6 +492,9 @@ bool CStage::Collision(CRectangle r) {
 			if (cn == LIFT)
 				continue;
 
+			if (cn == WATER)
+				continue;
+
 			//マップチップの短径
 			CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
 			if (cr.CollisionRect(r))

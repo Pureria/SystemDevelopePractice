@@ -421,6 +421,15 @@ void CGame::StgCollEne() {
 				}
 			}
 		}
+
+		if (m_Enemy2Array[i].GetFallFlg())
+		{
+			continue;
+		}
+		if (!m_Stage.Collision(m_Enemy2Array[i].GetLedgeCheckRect()))
+		{
+			m_Enemy2Array[i].Flip();
+		}
 	}
 }
 
