@@ -82,6 +82,11 @@ public:
 	//弾のポジションを返す
 	Vector2		GetShotPos(int i) { return m_ShotArray[i].GetPos(); }
 
+	//崖判定用Rectを返す
+	CRectangle	GetLedgeCheckRect();
+	void		Flip() { m_bReverse = !m_bReverse; }
+	bool		GetFallFlg() { return m_bFallFlg; }
+
 	void		SetFallFlg(bool flg) { m_bFallFlg = flg; }
 };
 

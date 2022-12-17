@@ -227,6 +227,23 @@ void CEnemy_2::CollisionStage(float ox, float oy)
 }
 
 /**
+*ŠR”»’è—pRect‚ğ•Ô‚·
+*
+*/
+
+CRectangle CEnemy_2::GetLedgeCheckRect()
+{
+	if (!m_bReverse)
+	{
+		return CRectangle(m_Pos.x - 10, m_Pos.y + m_SrcRect.GetHeight(), m_Pos.x, m_Pos.y + m_SrcRect.GetHeight() + 64);
+	}
+	else
+	{
+		return CRectangle(m_Pos.x + m_SrcRect.GetWidth(), m_Pos.y + m_SrcRect.GetHeight(), m_Pos.x + m_SrcRect.GetWidth() + 10, m_Pos.y + m_SrcRect.GetHeight() + 64);
+	}
+}
+
+/**
 *•`‰æ
 *
 *ˆø”
@@ -278,6 +295,10 @@ void CEnemy_2::RenderDebug(float wx, float wy)
 	//“–‚½‚è”»’è‚Ì•\¦
 	CRectangle hr = GetRect();
 	CGraphicsUtilities::RenderRect(hr.Left - wx, hr.Top - wy, hr.Right - wx, hr.Bottom - wy, MOF_XRGB(255, 0, 0));
+
+	//ŠRƒ`ƒFƒbƒN‚ÌRect
+	hr = GetLedgeCheckRect();
+	CGraphicsUtilities::RenderFillRect(hr.Left - wx, hr.Top - wy, hr.Right - wx, hr.Bottom - wy, MOF_XRGB(255, 255, 0));
 
 	//’e‚Ì•`‰æ
 	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
