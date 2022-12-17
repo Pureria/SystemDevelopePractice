@@ -67,6 +67,7 @@ public:
 
 	//プレイヤーの座標セット
 	void		SetTargetPos(float tx, float ty) { m_TargetPosX = tx; m_TargetPosY = ty; }
+	bool		ShotTarget(int i);
 
 	//弾のShow・Rectangleを返す
 	bool		ShotArrayBool(int i) { return m_ShotArray[i].GetShow(); }
