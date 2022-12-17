@@ -22,9 +22,6 @@ private:
 	bool					m_bShow;
 	CRectangle				m_SrcRect;
 
-	int						m_HP;
-	int						m_DamageWait;
-
 	CEffectManager*			m_pEffectManager;
 
 	//“G‚ª‰æ–Ê“à‚É‚¢‚é‚©‚Ì”»’è
@@ -33,8 +30,8 @@ private:
 	
 	//ƒ‚[ƒVƒ‡ƒ“í—Ş’è‹`
 	enum tag_MOTION {
-		MOTION_MOVE,
-		MOTION_DAMAGE,
+		MOTION_IDLE,
+
 		MOTION_COUNT,
 	};
 

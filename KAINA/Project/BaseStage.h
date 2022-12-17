@@ -35,11 +35,13 @@ private:
 	float					m_ScrollY;
 
 	int						m_EnemyTextureCount;
+	int						m_EnemyShotTextureCount;
 	CTexture*				m_pEnemyTexture;
 	CTexture*				m_pEnemyShotTexture;
 	char*					m_pEnemyData;
 	int						m_Enemy1Count;
 	int						m_Enemy2_1Count;
+	int						m_Enemy2_2Count;
 
 	int						m_ItemTextureCount;
 	CTexture*				m_pItemTexture;
@@ -76,7 +78,7 @@ public:
 	void StageAttackCollision(CRectangle r);
 
 	int GetEnemy1Count() { return m_Enemy1Count; }
-	int GetEnemy2Count() { return m_Enemy2_1Count; }
+	int GetEnemy2Count() { return m_Enemy2_1Count + m_Enemy2_2Count; }
 	int GetItemCount() { return m_ItemCount; }
 
 	void ButtonGimmic(int DelBlockCnt);

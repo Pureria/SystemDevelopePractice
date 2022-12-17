@@ -37,8 +37,6 @@ void CEnemy::Initialize(float px,float py,int type){
 	m_PosX = px;
 	m_PosY = py;
 	m_bShow = true;
-	m_HP = 10;
-	m_DamageWait = 0;
 	m_WidthOut = true;
 
 	//弾用変数のInitialize
@@ -48,15 +46,9 @@ void CEnemy::Initialize(float px,float py,int type){
 	//アニメーションを作成
 	SpriteAnimationCreate anim[ ] = {
 		{
-			"移動",
-			0,0,120,128,TRUE,
+			"待機状態",
+			0,0,256,128,TRUE,
 			{ { 5,0,0 },{ 5,1,0 },{ 5,2,0 },{ 5,3,0 }, }
-		},
-		{
-			"ダメージ",
-			0,210,
-			120,128,
-			FALSE,{{20,0,0}}
 		},
 	};
 	m_Motion.Create( anim, MOTION_COUNT );
@@ -84,45 +76,6 @@ void CEnemy::Update(float wx){
 	{
 		return;
 	}
-	//ダメージ中の動作
-	if (m_Motion.GetMotionNo() == MOTION_DAMAGE)
-	{
-		m_ShotWait = ENEMY_SHOT_WAIT;
-
-		//終了で待機に戻す
-		if (m_Motion.IsEndMotion())
-		{
-			m_Motion.ChangeMotion(MOTION_MOVE);
-			if (m_HP <= 0)
-			{
-				m_bShow = false;
-				//爆発エフェクトを発生させる
-				m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_EXPLOSION01);
-			}
-			//m_MoveX = ((m_bReverse) ? -3.0f : 3.0f);
-		}
-		/*
-		else
-		{
-			if (m_MoveX > 0)
-			{
-				m_MoveX -= 0.2f;
-				if (m_MoveX <= 0)
-				{
-					m_MoveX = 0;
-				}
-			}
-			else if (m_MoveX < 0)
-			{
-				m_MoveX += 0.2f;
-				if (m_MoveX >= 0)
-				{
-					m_MoveX = 0;
-				}
-			}
-		}
-		*/
-	}
 
 	//重力により下に少しずつ下がる
 	m_MoveY += GRAVITY;
@@ -133,12 +86,6 @@ void CEnemy::Update(float wx){
 	//アニメーションの更新
 	m_Motion.AddTimer( CUtilities::GetFrameSecond( ) );
 	m_SrcRect = m_Motion.GetSrcRect( );
-
-	//ダメージのインターバルを減らす
-	if ((m_DamageWait > 0))
-	{
-		m_DamageWait--;
-	}
 
 	//弾の発射
 	if (m_ShotWait <= 0)
@@ -215,12 +162,6 @@ void CEnemy::Render(float wx,float wy){
 	//弾の描画
 	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
 		m_ShotArray[i].Render(wx,wy);
-
-	//インターバル2フレームごとに描画をしない
-	if (m_DamageWait % 4 >= 2)
-	{
-		return;
-	}
 
 	//描画矩形
 	CRectangle dr = m_SrcRect;

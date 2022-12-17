@@ -15,9 +15,12 @@ m_pChipData(NULL) ,
 m_ScrollX(0) ,
 m_ScrollY(0),
 m_EnemyTextureCount(0),
+m_EnemyShotTextureCount(0),
 m_pEnemyTexture(NULL),
+m_pEnemyShotTexture(NULL),
 m_Enemy1Count(0),
 m_Enemy2_1Count(0),
+m_Enemy2_2Count(0),
 m_ItemTextureCount(0),
 m_pItemTexture(NULL),
 m_ItemCount(0),
@@ -118,13 +121,16 @@ bool CStage::Load(char* pName , int nowscene){
 		}
 
 		//敵の弾のテクスチャ読み込み
-		pstr = strtok(NULL, ",");
-		m_pEnemyShotTexture = new CTexture[m_EnemyTextureCount * ENEMY_SHOT_COUNT * 2];
-		for (int i = 0; i < m_EnemyTextureCount * ENEMY_SHOT_COUNT; i++)
+		m_EnemyShotTextureCount = atoi(strtok(NULL, ","));
+		//弾のテクスチャのロード
+		m_pEnemyShotTexture = new CTexture[m_EnemyShotTextureCount];
+		for (int i = 0; i < m_EnemyShotTextureCount; i++)
 		{
+			pstr = strtok(NULL, ",");
 			if (!m_pEnemyShotTexture[i].Load(pstr))
 				return false;
 		}
+
 		//配置データの読み込み
 		m_pEnemyData = (char*)malloc(m_XCount * m_YCount);
 		m_Enemy1Count = 0;
@@ -141,6 +147,10 @@ bool CStage::Load(char* pName , int nowscene){
 				else if (m_pEnemyData[y * m_XCount + x] == 2)
 				{
 					m_Enemy2_1Count++;
+				}
+				else if (m_pEnemyData[y * m_XCount + x] == 3)
+				{
+					m_Enemy2_2Count++;
 				}
 			}
 		}
@@ -224,8 +234,26 @@ void CStage::Initialize(CEnemy* pEnemy,CEnemy_2* pEnemy2, CItem* pItem){
 			{
 				continue;
 			}
-			pEnemy2[n].SetTexture(&m_pEnemyTexture[on], &m_pEnemyShotTexture[ENEMY_SHOT_COUNT + on]);
+			pEnemy2[n].SetTexture(&m_pEnemyTexture[on], &m_pEnemyShotTexture[on]);
 			pEnemy2[n++].Initialize(x * m_ChipSize, y * m_ChipSize, on);
+		}
+	}
+
+	n = 0;
+	for (int y = 0; y < m_YCount; y++)
+	{
+		for (int x = 0; x < m_XCount; x++)
+		{
+			//配置番号
+			//番号0は配置しない
+			char on = m_pEnemyData[y * m_XCount + x] - 1;
+			if (on != 2)
+			{
+				continue;
+			}
+			pEnemy2[m_Enemy2_1Count + n].SetTexture(&m_pEnemyTexture[on - 1], &m_pEnemyShotTexture[on - 1]);
+			pEnemy2[m_Enemy2_1Count + n].SetFallFlg(true);
+			pEnemy2[m_Enemy2_1Count + n++].Initialize(x * m_ChipSize, y * m_ChipSize, on);
 		}
 	}
 

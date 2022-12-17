@@ -11,7 +11,7 @@ CEnemy_2::CEnemy_2() :
 	m_bWidthOut(NULL),
 	m_pEffectManager(),
 	m_bReverse(false),
-	m_bFallFlg(true){}
+	m_bFallFlg(false){}
 
 CEnemy_2::~CEnemy_2(){}
 
@@ -64,6 +64,21 @@ void CEnemy_2::Update(float wx)
 	else
 	{
 		m_bWidthOut = true;
+	}
+
+	//弾の更新
+	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
+	{
+		m_ShotArray[i].Update(wx);
+	}
+
+	if (m_bReverse)
+	{
+		m_Move.x = 5.0f;
+	}
+	else
+	{
+		m_Move.x = -5.0f;
 	}
 
 	if (!m_bWidthOut)
@@ -149,21 +164,6 @@ void CEnemy_2::Update(float wx)
 	else
 	{
 		m_ShotWait--;
-	}
-
-	//弾の更新
-	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
-	{
-		m_ShotArray[i].Update(wx);
-	}
-
-	if (m_bReverse)
-	{
-		m_Move.x = 5.0f;
-	}
-	else
-	{
-		m_Move.x = -5.0f;
 	}
 
 	//重力
