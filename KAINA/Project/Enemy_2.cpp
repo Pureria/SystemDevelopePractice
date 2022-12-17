@@ -142,21 +142,22 @@ void CEnemy_2::Update(float wx)
 			}
 			else
 			{
-				//弾の発射位置
-				float stx = m_Pos.x + 30;
-				float sty = m_Pos.y + 30;
-				//目標地点に向かうための方向
-				float dx = m_TargetPosX - stx;
-				float dy = m_TargetPosY - sty;
-				//目標地点までの距離を求める
-				float d = sqrt(dx * dx + dy * dy);
-				//距離が0以下 = 完全に同じ位置の場合は発射しない
-				if (d <= 0)
-					break;
-				//方向を正規化
-				dx /= d;
-				dy /= d;
-				m_ShotArray[i].Fire(stx, sty, dx * 5, dy * 5);
+				if (m_bReverse)
+				{
+					if (m_Pos.x < m_TargetPosX)
+					{
+						if (!ShotTarget(i))
+							break;
+					}
+				}
+				else
+				{
+					if (m_Pos.x > m_TargetPosX)
+					{
+						if (!ShotTarget(i))
+							break;
+					}
+				}
 				break;
 			}
 		}
@@ -176,6 +177,26 @@ void CEnemy_2::Update(float wx)
 	//アニメーションの更新
 	m_Motion.AddTimer(CUtilities::GetFrameSecond());
 	m_SrcRect = m_Motion.GetSrcRect();
+}
+
+bool CEnemy_2::ShotTarget(int i)
+{
+	//弾の発射位置
+	float stx = m_Pos.x + 30;
+	float sty = m_Pos.y + 30;
+	//目標地点に向かうための方向
+	float dx = m_TargetPosX - stx;
+	float dy = m_TargetPosY - sty;
+	//目標地点までの距離を求める
+	float d = sqrt(dx * dx + dy * dy);
+	//距離が0以下 = 完全に同じ位置の場合は発射しない
+	if (d <= 0)
+		return false;
+	//方向を正規化
+	dx /= d;
+	dy /= d;
+	m_ShotArray[i].Fire(stx, sty, dx * 5, dy * 5);
+	return true;
 }
 
 /**
