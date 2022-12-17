@@ -24,7 +24,10 @@ m_Enemy2_2Count(0),
 m_ItemTextureCount(0),
 m_pItemTexture(NULL),
 m_ItemCount(0),
-m_IniPlayerPos(Vector2(0,0)){
+m_IniPlayerPos(Vector2(0,0)),
+m_bButtonRed(false),
+m_bButtonBlue(false),
+m_bButtonYellow(false){
 }
 
 /**
@@ -384,40 +387,58 @@ void CStage::Update(CPlayer& pl){
 	}
 	*/
 
-	if (ButtonCount == 2 && NextBlockDel == 0)
-	{
-		ButtonGimmic(4);
-	}
-
-	if (ButtonCount == 3 && NextBlockDel == 1)
-	{
-		ButtonGimmic(1);
-	}
-
-	if (ButtonCount == 4 && NextBlockDel == 2)
-	{
-		ButtonGimmic(2);
-	}
+	ButtonGimmic();
 }
 
-void CStage::ButtonGimmic(int DelBlockCnt)
+void CStage::ButtonGimmic()
 {
-	for (int x = 0; x < m_XCount; x++)
+	if (m_bButtonRed)
 	{
-		for (int y = 0; y < m_YCount; y++)
+		for (int x = 0; x < m_XCount; x++)
 		{
-			char cn = m_pChipData[y * m_XCount + x] - 1;
-			if (DelBlockCnt > 0)
+			for (int y = 0; y < m_YCount; y++)
 			{
-				if (cn == 7)
+				char cn = m_pChipData[y * m_XCount + x] - 1;
+				if (cn == BUTTON_BLOCK_RED)
 				{
 					m_pChipData[y * m_XCount + x] = 0;
-					DelBlockCnt -= 1;
 				}
 			}
 		}
+		m_bButtonRed = false;
 	}
-	NextBlockDel += 1;
+
+	if (m_bButtonBlue)
+	{
+		for (int x = 0; x < m_XCount; x++)
+		{
+			for (int y = 0; y < m_YCount; y++)
+			{
+				char cn = m_pChipData[y * m_XCount + x] - 1;
+				if (cn == BUTTON_BLOCK_BLUE)
+				{
+					m_pChipData[y * m_XCount + x] = 0;
+				}
+			}
+		}
+		m_bButtonBlue = false;
+	}
+
+	if (m_bButtonYellow)
+	{
+		for (int x = 0; x < m_XCount; x++)
+		{
+			for (int y = 0; y < m_YCount; y++)
+			{
+				char cn = m_pChipData[y * m_XCount + x] - 1;
+				if (cn == BUTTON_BLOCK_YELLOW)
+				{
+					m_pChipData[y * m_XCount + x] = 0;
+				}
+			}
+		}
+		m_bButtonYellow = false;
+	}
 }
 
 /**
@@ -489,16 +510,37 @@ bool CStage::Collision(CRectangle r) {
 			}
 
 			//リフトの当たり判定
-			if (cn == LIFT)
-				continue;
+			//if (cn == LIFT)
+				//continue;
 
 			if (cn == WATER)
 				continue;
+
+			/*
+			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
+			{
+				continue;
+			}
+			*/
 
 			//マップチップの短径
 			CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
 			if (cr.CollisionRect(r))
 			{
+				if (cn == BUTTON_RED)
+				{
+					m_bButtonRed = true;
+				}
+
+				else if (cn == BUTTON_BLUE)
+				{
+					m_bButtonBlue = true;
+				}
+
+				else if (cn == BUTTON_YELLOW)
+				{
+					m_bButtonYellow = true;
+				}
 				return true;
 			}
 		}
@@ -542,7 +584,7 @@ bool CStage::Collision(CRectangle r, float& ox, float& oy) {
 			}
 
 			//ボタンの当たり判定
-			if (cn == BUTTON)
+			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
 			{
 				continue;
 			}
@@ -647,8 +689,9 @@ bool CStage::Collision(CRectangle r, float& ox, float& oy) {
 	return re;
 }
 
-void CStage::StageAttackCollision(CRectangle r)
+bool CStage::StageAttackCollision(CRectangle r)
 {
+	//当たり判定する短径の左上と右下のチップ位置を求める
 	int lc = m_ScrollX / m_ChipSize;
 	int rc = (g_pGraphics->GetTargetWidth() + m_ScrollX) / m_ChipSize;
 	int tc = m_ScrollY / m_ChipSize;
@@ -659,19 +702,6 @@ void CStage::StageAttackCollision(CRectangle r)
 	if (tc < 0) { tc = 0; }
 	if (rc >= m_XCount) { rc = m_XCount - 1; }
 	if (bc >= m_YCount) { bc = m_YCount - 1; }
-
-	/*
-	int lc = m_ScrollX / m_ChipSize;
-	int rc = (g_pGraphics->GetTargetWidth() + m_ScrollX) / m_ChipSize;
-	int tc = m_ScrollY / m_ChipSize;
-	int bc = (g_pGraphics->GetTargetHeight() + m_ScrollY) / m_ChipSize;
-
-	//ステージの範囲外にはならないようにする
-	if (lc < 0) { lc = 0; }
-	if (tc < 0) { tc = 0; }
-	if (rc >= m_XCount) { rc = m_XCount - 1; }
-	if (bc >= m_YCount) { bc = m_YCount - 1; }
-	*/
 
 	//当たり判定以外をする短径の左上から右下の範囲のみ当たり判定を行う
 	//それ以外の番号は当たることはないので判定が必要ない
@@ -683,20 +713,42 @@ void CStage::StageAttackCollision(CRectangle r)
 			//チップ番号0は当たり判定しない
 			char cn = m_pChipData[y * m_XCount + x] - 1;
 			if (cn < 0)
-				continue;
-
-			//ボタンギミック用
-			if (cn == BUTTON)
 			{
-				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
+				continue;
+			}
+			//マップチップの短径
+			CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
+
+			if (cn == WATER)
+			{
+				continue;
+			}
+
+			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
+			{
 				if (cr.CollisionRect(r))
 				{
-					ButtonCount += 1;
 					m_pChipData[y * m_XCount + x] = 0;
-				}
+					if (cn == BUTTON_RED)
+					{
+						m_bButtonRed = true;
+					}
+
+					else if (cn == BUTTON_BLUE)
+					{
+						m_bButtonBlue = true;
+					}
+
+					else if (cn == BUTTON_YELLOW)
+					{
+						m_bButtonYellow = true;
+					}
+					return true;
+			}
 			}
 		}
 	}
+	return false;
 }
 
 
@@ -713,18 +765,6 @@ void CStage::CollisionFreezeWater(CRectangle r)
 	if (rc >= m_XCount) { rc = m_XCount - 1; }
 	if (bc >= m_YCount) { bc = m_YCount - 1; }
 
-	/*
-	int lc = r.Left / m_ChipSize;
-	int rc = r.Right / m_ChipSize;
-	int tc = r.Top / m_ChipSize;
-	int bc = r.Bottom / m_ChipSize;
-
-	if (lc < 0) { lc = 0; }
-	if (tc < 0) { tc = 0; }
-	if (rc >= m_XCount) { rc = m_XCount - 1; }
-	if (bc >= m_YCount) { bc = m_YCount - 1; }
-	*/
-
 	for (int y = tc; y <= bc; y++)
 	{
 		for (int x = lc; x <= rc; x++)
@@ -732,30 +772,34 @@ void CStage::CollisionFreezeWater(CRectangle r)
 			char cn = m_pChipData[y * m_XCount + x] - 1;
 			if (cn == WATER)
 			{
-				m_pChipData[y * m_XCount + x] = 12;
-
-				//左の水
-				if (m_pChipData[y * m_XCount + (x - 1)] - 1 == WATER)
+				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
+				if (cr.CollisionRect(r))
 				{
-					m_pChipData[y * m_XCount + (x - 1)] = 12;
-				}
+					m_pChipData[y * m_XCount + x] = 12;
 
-				//右の水
-				if (m_pChipData[y * m_XCount + (x + 1)] - 1 == WATER)
-				{
-					m_pChipData[y * m_XCount + (x + 1)] = 12;
-				}
+					//左の水
+					if (m_pChipData[y * m_XCount + (x - 1)] - 1 == WATER)
+					{
+						m_pChipData[y * m_XCount + (x - 1)] = 12;
+					}
 
-				//上の水
-				if (m_pChipData[(y - 1) * m_XCount + x] - 1 == WATER)
-				{
-					m_pChipData[(y - 1) * m_XCount + x] = 12;
-				}
+					//右の水
+					if (m_pChipData[y * m_XCount + (x + 1)] - 1 == WATER)
+					{
+						m_pChipData[y * m_XCount + (x + 1)] = 12;
+					}
 
-				//下の水
-				if (m_pChipData[(y + 1) * m_XCount + x] - 1 == WATER)
-				{
-					m_pChipData[(y + 1) * m_XCount + x] = 12;
+					//上の水
+					if (m_pChipData[(y - 1) * m_XCount + x] - 1 == WATER)
+					{
+						m_pChipData[(y - 1) * m_XCount + x] = 12;
+					}
+
+					//下の水
+					if (m_pChipData[(y + 1) * m_XCount + x] - 1 == WATER)
+					{
+						m_pChipData[(y + 1) * m_XCount + x] = 12;
+					}
 				}
 			}
 		}

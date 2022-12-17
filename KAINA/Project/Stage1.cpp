@@ -259,18 +259,12 @@ void CGame::StgCollPlayer() {
 		//…‚Æ’e‚Ì”»’è
 		if (m_Player.GetNatuLaser(i) == FROST)
 		{
-			for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-			{
-				m_Stage.CollisionFreezeWater(m_Player.GetLaserRect(i));
-			}
+			m_Stage.CollisionFreezeWater(m_Player.GetLaserRect(i));
 		}
 		//•X‚Æ’e‚Ì”»’è
 		if (m_Player.GetNatuLaser(i) == FIRE)
 		{
-			for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-			{
-				m_Stage.CollisionIceFroe(m_Player.GetLaserRect(i));
-			}
+			m_Stage.CollisionIceFroe(m_Player.GetLaserRect(i));
 		}
 	}
 
@@ -327,6 +321,12 @@ void CGame::StgCollBullet() {
 			}
 
 			CRectangle psrec = m_Player.GetNormalRect(i);
+			if (m_Stage.StageAttackCollision(psrec))
+			{
+				m_Player.SetNormalShotShow(false, i);
+				continue;
+			}
+
 			//ã‚Ì”»’è
 			psrec.Bottom = psrec.Top + 1;
 			psrec.Expansion(-15, 0);
