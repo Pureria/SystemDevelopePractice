@@ -6,7 +6,7 @@
 
 
 //ìñÇΩÇËîªíËå∏êäïù
-#define		ENEMY_RECTDECREASE		10
+#define		ENEMY_RECT_WIDTH_DECREASE		10
 
 class CEnemy{
 private:
@@ -55,7 +55,7 @@ public:
 
 	bool GetShow(void){ return m_bShow; }
 	CRectangle GetRect(){
-		return CRectangle(m_PosX + ENEMY_RECTDECREASE,m_PosY + ENEMY_RECTDECREASE,m_PosX + m_SrcRect.GetWidth() - ENEMY_RECTDECREASE,m_PosY + m_SrcRect.GetHeight());
+		return CRectangle(m_PosX + ENEMY_RECT_WIDTH_DECREASE,m_PosY + ENEMY_RECT_WIDTH_DECREASE,m_PosX + m_SrcRect.GetWidth() - ENEMY_RECT_WIDTH_DECREASE,m_PosY + m_SrcRect.GetHeight());
 	}
 	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
 

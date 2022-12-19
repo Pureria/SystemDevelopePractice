@@ -6,7 +6,8 @@
 #include	"EnemyStateDefine.h"
 
 //当たり判定減衰幅
-#define		ENEMY_RECTDECREASE		10
+#define		ENEMY_RECT_WIDTH_DECREASE		50.0f
+#define		ENEMY_RECT_HEIGHT_DECREASE		5.0f
 
 //ボス基本定位置
 #define		ENEMY_DEFAULT_LEFTPOS			440
@@ -83,7 +84,7 @@ public:
 
 	bool GetShow(void) { return m_bShow; }
 	CRectangle GetRect() {
-		return CRectangle(m_PosX + ENEMY_RECTDECREASE, m_PosY + ENEMY_RECTDECREASE, m_PosX + m_SrcRect.GetWidth() - ENEMY_RECTDECREASE, m_PosY + m_SrcRect.GetHeight());
+		return CRectangle(m_PosX + ENEMY_RECT_WIDTH_DECREASE, m_PosY + ENEMY_RECT_HEIGHT_DECREASE, m_PosX + m_SrcRect.GetWidth() - ENEMY_RECT_WIDTH_DECREASE, m_PosY + m_SrcRect.GetHeight());
 	}
 
 	//ボスのダメージ処理
@@ -100,18 +101,18 @@ public:
 	CRectangle GetBossSideRect() 
 	{
 		CRectangle hr = GetRect();
-		return CRectangle(hr.Left - ENEMY_RECTDECREASE, (hr.Top + 80), hr.Right + ENEMY_RECTDECREASE, (hr.Bottom - 80));
+		return CRectangle(hr.Left - 10, (hr.Top + 120), hr.Right + 10, (hr.Bottom - 120));
 	}
 	//ボスのフロントRect
 	CRectangle GetBossFrontRect()
 	{
 		if (m_bReverse)
 		{
-			return CRectangle(m_PosX + ENEMY_RECTDECREASE, m_PosY + ENEMY_RECTDECREASE, m_PosX + ENEMY_BOSS_FRONTDEF_DIRECTION, m_PosY + m_SrcRect.GetHeight());
+			return CRectangle(m_PosX + ENEMY_RECT_WIDTH_DECREASE, m_PosY + ENEMY_RECT_HEIGHT_DECREASE, m_PosX +  + ENEMY_RECT_WIDTH_DECREASE + ENEMY_BOSS_FRONTDEF_DIRECTION, m_PosY + m_SrcRect.GetHeight());
 		}
 		else
 		{
-			return CRectangle((m_PosX + m_SrcRect.GetWidth() - ENEMY_BOSS_FRONTDEF_DIRECTION), m_PosY + ENEMY_RECTDECREASE, m_PosX + m_SrcRect.GetWidth() - ENEMY_RECTDECREASE, m_PosY + m_SrcRect.GetHeight());
+			return CRectangle((m_PosX + m_SrcRect.GetWidth() - ENEMY_BOSS_FRONTDEF_DIRECTION - ENEMY_RECT_WIDTH_DECREASE), m_PosY + ENEMY_RECT_HEIGHT_DECREASE, m_PosX + m_SrcRect.GetWidth() - ENEMY_RECT_WIDTH_DECREASE, m_PosY + m_SrcRect.GetHeight());
 		}
 	}
 

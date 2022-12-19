@@ -83,6 +83,7 @@ public:
 	float GetScrollX(){ return m_ScrollX; }
 	float GetScrollY(){ return m_ScrollY; }
 	bool Collision(CRectangle r);
+	bool CollisionBoss1(CRectangle r);
 	bool Collision(CRectangle r, float& ox, float& oy);
 
 	//引数　：　プレイヤーの攻撃Rect		プレイヤーがステージに攻撃した時の処理(ボタン処理)
