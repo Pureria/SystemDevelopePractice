@@ -90,7 +90,7 @@ void CEnemy_Stage1_Boss::Initialize() {
 	m_PosY = 896 - m_Texture.GetHeight();
 	m_MoveX = 0.0f;
 	m_MoveY = 0.0f;
-	m_bReverse = true;
+	m_bReverse = false;
 	m_bShow = true;
 	m_HP = 10;
 	m_MotionWait = ENEMY_MOTION_WAIT;
@@ -122,7 +122,7 @@ void CEnemy_Stage1_Boss::Update() {
 			if (m_bIsOnLift)
 			{
 				//リフト上にいるときの処理
-				if (m_bReverse)
+				if (!m_bReverse)
 				{
 					m_MoveX = -ENEMY_ATTACKDASH_SPEED;
 					m_Motion.ChangeMotion(MOTION_ATTACK_DASH);
@@ -141,7 +141,7 @@ void CEnemy_Stage1_Boss::Update() {
 				//一番上のリフトにプレイヤーがいるとき60%の確率で「ジャンプ攻撃」状態に移行
 				if (m_TargetPosY <= PLAYER_Lift_2 && rand < 60)
 				{
-					if (m_bReverse)
+					if (!m_bReverse)
 					{
 						m_MoveX = -ENEMY_ATTACKDASH_SPEED;
 						m_MoveY = ENEMY_JUMP;
@@ -168,7 +168,7 @@ void CEnemy_Stage1_Boss::Update() {
 					if (rand == 0)
 					{
 						//ダッシュ攻撃に移行
-						if (m_bReverse)
+						if (!m_bReverse)
 						{
 							m_MoveX = -ENEMY_ATTACKDASH_SPEED;
 							m_Motion.ChangeMotion(MOTION_ATTACK_DASH);
@@ -184,7 +184,7 @@ void CEnemy_Stage1_Boss::Update() {
 					else if (rand == 1)
 					{
 						//ジャンプ攻撃に移行
-						if (m_bReverse)
+						if (!m_bReverse)
 						{
 							m_MoveX = -ENEMY_ATTACKDASH_SPEED;
 							m_MoveY = ENEMY_JUMP;
@@ -229,7 +229,7 @@ void CEnemy_Stage1_Boss::Update() {
 			m_bReverse = !m_bReverse;
 		}
 
-		if (m_bReverse)
+		if (!m_bReverse)
 		{
 			if (m_PosX + -ENEMY_MOTION_MOVE >= ENEMY_DEFAULT_RIGHTPOS)
 			{
@@ -279,7 +279,7 @@ void CEnemy_Stage1_Boss::Update() {
 
 		//ダッシュ攻撃の状態
 	case MOTION_ATTACK_DASH:
-		if (m_bReverse)
+		if (!m_bReverse)
 		{
 			m_bIsOnLift = false;
 			m_MoveX = -ENEMY_ATTACKDASH_SPEED;
@@ -297,7 +297,7 @@ void CEnemy_Stage1_Boss::Update() {
 		if (!m_bJump)
 		{
 			m_MoveY = 1.2f * ENEMY_JUMP;
-			if (m_bReverse)
+			if (!m_bReverse)
 			{
 				m_MoveX = -ENEMY_ATTACKDASH_SPEED * 0.95f;
 				//m_bReverse = false;
@@ -317,7 +317,7 @@ void CEnemy_Stage1_Boss::Update() {
 	case MOTION_ATTACK_SLASH_START:
 		if (!m_AttackSlash)
 		{
-			if (m_bReverse)
+			if (!m_bReverse)
 			{
 				//m_MoveX = -ENEMY_ATTACKSLASH_MOVE;
 				m_AttakSlashRect = CRectangle(m_PosX - ENEMY_ATTACKSLASH_WIDTH + ENEMY_RECT_WIDTH_DECREASE, m_PosY, m_PosX + ENEMY_RECT_WIDTH_DECREASE, m_PosY + m_SrcRect.GetHeight());
