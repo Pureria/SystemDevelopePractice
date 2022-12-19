@@ -19,7 +19,7 @@ bool CGame::Load(){
 	//プレイヤーの素材読み込み
 	m_Player.Load();
 	//ステージの素材読み込み
-	m_Stage.Load("1-1MAP_noWall.txt",m_NowSceneNo);
+	m_Stage.Load("ChipData/1-1MAP_noWall.txt",m_NowSceneNo);
 	//敵メモリ確保
 	int a = m_Stage.GetEnemy1Count();
 	m_EnemyArray = new CEnemy[m_Stage.GetEnemy1Count()];
