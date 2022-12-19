@@ -106,7 +106,7 @@ public:
 	//ボスのフロントRect
 	CRectangle GetBossFrontRect()
 	{
-		if (m_bReverse)
+		if (!m_bReverse)
 		{
 			return CRectangle(m_PosX + ENEMY_RECT_WIDTH_DECREASE, m_PosY + ENEMY_RECT_HEIGHT_DECREASE, m_PosX +  + ENEMY_RECT_WIDTH_DECREASE + ENEMY_BOSS_FRONTDEF_DIRECTION, m_PosY + m_SrcRect.GetHeight());
 		}
