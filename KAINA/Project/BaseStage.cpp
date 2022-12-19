@@ -548,6 +548,72 @@ bool CStage::Collision(CRectangle r) {
 	return false;
 }
 
+bool CStage::CollisionBoss1(CRectangle r) {
+	//当たり判定する短径の左上と右下のチップ位置を求める
+	int lc = r.Left / m_ChipSize;
+	int rc = r.Right / m_ChipSize;
+	int tc = r.Top / m_ChipSize;
+	int bc = r.Bottom / m_ChipSize;
+
+	//ステージの範囲外にはならないようにする
+	if (lc < 0) { lc = 0; }
+	if (tc < 0) { tc = 0; }
+	if (rc >= m_XCount) { rc = m_XCount - 1; }
+	if (bc >= m_YCount) { bc = m_YCount - 1; }
+
+	//当たり判定以外をする短径の左上から右下の範囲のみ当たり判定を行う
+	//それ以外の番号は当たることはないので判定が必要ない
+	for (int y = tc; y <= bc; y++)
+	{
+		for (int x = lc; x <= rc; x++)
+		{
+			//描画するチップ番号
+			//チップ番号0は当たり判定しない
+			char cn = m_pChipData[y * m_XCount + x] - 1;
+			if (cn < 0)
+			{
+				continue;
+			}
+
+			//リフトの当たり判定
+			if (cn == LIFT)
+				continue;
+
+			if (cn == WATER)
+				continue;
+
+			
+			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
+			{
+				continue;
+			}
+			
+
+			//マップチップの短径
+			CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
+			if (cr.CollisionRect(r))
+			{
+				if (cn == BUTTON_RED)
+				{
+					m_bButtonRed = true;
+				}
+
+				else if (cn == BUTTON_BLUE)
+				{
+					m_bButtonBlue = true;
+				}
+
+				else if (cn == BUTTON_YELLOW)
+				{
+					m_bButtonYellow = true;
+				}
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 bool CStage::Collision(CRectangle r, float& ox, float& oy) {
 	bool re = false;
 

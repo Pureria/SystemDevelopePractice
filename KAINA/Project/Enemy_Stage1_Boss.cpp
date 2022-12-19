@@ -29,7 +29,7 @@ CEnemy_Stage1_Boss::~CEnemy_Stage1_Boss() {
 
 bool CEnemy_Stage1_Boss::Load()
 {
-	if (!m_Texture.Load("Boss 1-1.png"))
+	if (!m_Texture.Load("Stage1_Boss.jpg"))
 		return false;
 
 	//アニメーションを作成
@@ -320,12 +320,12 @@ void CEnemy_Stage1_Boss::Update() {
 			if (m_bReverse)
 			{
 				//m_MoveX = -ENEMY_ATTACKSLASH_MOVE;
-				m_AttakSlashRect = CRectangle(m_PosX - ENEMY_ATTACKSLASH_WIDTH, m_PosY, m_PosX, m_PosY + m_SrcRect.GetHeight());
+				m_AttakSlashRect = CRectangle(m_PosX - ENEMY_ATTACKSLASH_WIDTH + ENEMY_RECT_WIDTH_DECREASE, m_PosY, m_PosX + ENEMY_RECT_WIDTH_DECREASE, m_PosY + m_SrcRect.GetHeight());
 			}
 			else
 			{
 				//m_MoveX = ENEMY_ATTACKSLASH_MOVE;
-				m_AttakSlashRect = CRectangle(m_PosX + m_SrcRect.GetWidth(), m_PosY, m_PosX + m_SrcRect.GetWidth() + ENEMY_ATTACKSLASH_WIDTH, m_PosY + m_SrcRect.GetHeight());
+				m_AttakSlashRect = CRectangle(m_PosX + m_SrcRect.GetWidth() - ENEMY_RECT_WIDTH_DECREASE, m_PosY, m_PosX + m_SrcRect.GetWidth() + ENEMY_ATTACKSLASH_WIDTH - ENEMY_RECT_WIDTH_DECREASE, m_PosY + m_SrcRect.GetHeight());
 			}
 			m_AttackSlash = true;
 		}

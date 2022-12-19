@@ -278,7 +278,7 @@ void CStage1_Boss::StgCollEne()
 	//4 = ÉWÉÉÉìÉvçUåÇ
 	if (m_Boss.GetBossMotionNo() == 4)
 	{
-		if (m_Stage.Collision(CRectangle(m_Boss.GetRect().Left, m_Boss.GetRect().Bottom - 1, m_Boss.GetRect().Right, m_Boss.GetRect().Bottom)))
+		if (m_Stage.CollisionBoss1(CRectangle(m_Boss.GetRect().Left, m_Boss.GetRect().Bottom - 1, m_Boss.GetRect().Right, m_Boss.GetRect().Bottom)))
 		{
 			m_Boss.SetJumpAttackEnd();
 		}
