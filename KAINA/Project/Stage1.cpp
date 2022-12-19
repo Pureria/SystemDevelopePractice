@@ -250,7 +250,7 @@ void CGame::StgCollPlayer() {
 
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
-		float ox = 0, oy = 0;
+		ox = 0, oy = 0;
 		if (m_Stage.Collision(m_Player.GetLaserRect(i), ox, oy))
 		{
 			m_Player.SetWallLaser(i);
@@ -266,6 +266,17 @@ void CGame::StgCollPlayer() {
 		{
 			m_Stage.CollisionIceFroe(m_Player.GetLaserRect(i));
 		}
+	}
+
+	//–C‘ä‚ÆƒvƒŒƒCƒ„[‚Ì“–‚½‚è”»’è
+	for (int i = 0; i < m_Stage.GetEnemy1Count(); i++)
+	{
+		ox = 0; oy = 0;
+		if (EnemyOnPlayer(m_EnemyArray[i].GetRect(), m_Player.GetRect(), ox, oy))
+		{
+			m_Player.CollisionStage(ox, oy);
+		}
+
 	}
 
 	//‰Š‚Ì”»’è
@@ -448,6 +459,61 @@ void CGame::StgCollItm() {
 		}
 	}
 }
+
+bool CGame::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox, float& oy)
+{
+	bool re = false;
+
+	CRectangle brec = playerRect;
+	brec.Top = brec.Bottom - 1;
+	brec.Expansion(-6, -0);
+	//‰º‚Æ“–‚½‚è”»’è
+	if (eneRect.CollisionRect(brec))
+	{
+		re = true;
+		oy += eneRect.Top - playerRect.Bottom;
+		playerRect.Top += eneRect.Top - brec.Bottom;
+		playerRect.Bottom += eneRect.Top - brec.Bottom;
+	}
+
+	//ã‚Ì“–‚½‚è”»’è
+	CRectangle trec = playerRect;
+	trec.Bottom = trec.Top + 1;
+	trec.Expansion(-12, 0);
+	if (eneRect.CollisionRect(trec))
+	{
+		re = true;
+		oy += eneRect.Bottom - trec.Top;
+		playerRect.Top += eneRect.Bottom - trec.Top;
+		playerRect.Bottom += eneRect.Bottom - trec.Top;
+	}
+
+	//¶‰E‚Ì“–‚½‚è”»’è
+	CRectangle lrec = playerRect;
+	lrec.Right = lrec.Left + 1;
+	lrec.Expansion(0, -12);
+	CRectangle rrec = playerRect;
+	rrec.Left = rrec.Right - 1;
+	rrec.Expansion(0, -12);
+
+	if (eneRect.CollisionRect(lrec))
+	{
+		re = true;
+		ox += eneRect.Right - lrec.Left;
+		playerRect.Left += eneRect.Right - lrec.Left;
+		playerRect.Right += eneRect.Right - lrec.Left;
+	}
+	else if (eneRect.CollisionRect(rrec))
+	{
+		re = true;
+		ox += eneRect.Left - rrec.Right;
+		playerRect.Left += eneRect.Left - rrec.Right;
+		playerRect.Right += eneRect.Left - rrec.Right;
+	}
+
+	return re;
+}
+
 /**
  * •`‰æ
  *

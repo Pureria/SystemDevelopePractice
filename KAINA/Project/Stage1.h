@@ -54,4 +54,6 @@ private:
 	void StgCollEne();
 	void StgCollItm();
 	void StgCollBullet();
+
+	bool EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox, float& oy);
 };
