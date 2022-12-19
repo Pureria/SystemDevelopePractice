@@ -17,7 +17,7 @@ CStage1_Boss::~CStage1_Boss() {
  */
 bool CStage1_Boss::Load() {
 	//ステージの素材読み込み
-	m_Stage.Load("1-1bossmap.txt",m_NowSceneNo);
+	m_Stage.Load("ChipData/1-1bossmap.txt",m_NowSceneNo);
 	//アイテムメモリ確保
 	m_ItemArray = new CItem[m_Stage.GetItemCount()];
 	//エフェクトの素材読み込み

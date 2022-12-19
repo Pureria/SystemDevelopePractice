@@ -29,7 +29,7 @@ CEnemy_Stage1_Boss::~CEnemy_Stage1_Boss() {
 
 bool CEnemy_Stage1_Boss::Load()
 {
-	if (!m_Texture.Load("Stage1_Boss.jpg"))
+	if (!m_Texture.Load("Enemy/Stage1Boss/Stage1_Boss.jpg"))
 		return false;
 
 	//アニメーションを作成
