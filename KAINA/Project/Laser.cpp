@@ -159,7 +159,7 @@ void Laser::Render(float wx, float wy) {
 	lzrec.Bottom -= wy;
 
 	MofU32 Color = 0;
-
+	
 	switch (GetNatu())
 	{
 	case FIRE:
