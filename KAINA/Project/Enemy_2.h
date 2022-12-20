@@ -4,7 +4,7 @@
 #include	"EnemyShot.h"
 
 //“–‚½‚è”»’èŒ¸Š•
-#define			ENEMY_RECTDECREALSE		20
+#define			ENEMY_RECTDECREALSE		10
 
 class CEnemy_2{
 private:

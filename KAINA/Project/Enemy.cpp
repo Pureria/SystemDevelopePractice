@@ -97,22 +97,7 @@ void CEnemy::Update(float wx){
 				if (m_ShotArray[i].GetShow())
 					continue;
 				m_ShotWait = ENEMY_SHOT_WAIT;
-				Vector2 cv = m_SrcRect.GetCenter();
-				//弾の発射位置
-				float stx = m_PosX + 30;
-				float sty = m_PosY + 30;
-				//目標地点に向かうための方向
-				float dx = m_TargetPosX - stx;
-				float dy = m_TargetPosY - sty;
-				//目標地点までの距離を求める
-				float d = sqrt(dx * dx + dy * dy);
-				//距離が0以下 = 完全に同じ位置の場合は発射しない
-				if (d <= 0)
-					break;
-				//方向を正規化
-				dx /= d;
-				dy /= d;
-				m_ShotArray[i].Fire(stx, sty, dx * 5, dy * 5);
+				m_ShotArray[i].Fire(m_PosX, m_PosY + 20, -5, 0);
 				break;
 			}
 		}
