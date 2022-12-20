@@ -10,7 +10,7 @@
 
 
 
-class CGame : public Scene_Base{
+class CStage1 : public Scene_Base{
 private:
 	//ÉvÉåÉCÉÑÅ[
 	CPlayer			m_Player;
@@ -40,8 +40,8 @@ private:
 
 
 public:
-	CGame() : m_Player(),m_Stage(),m_EnemyArray(),m_EffectManager(),m_ItemArray(),m_Menu(),m_NowSceneNo(SCENENO_GAME_STAGE1){};
-	~CGame();
+	CStage1() : m_Player(),m_Stage(),m_EnemyArray(),m_EffectManager(),m_ItemArray(),m_Menu(),m_NowSceneNo(SCENENO_GAME_STAGE1){};
+	~CStage1();
 	bool Load();
 	void Initialize();
 	void Update(void);

@@ -905,7 +905,11 @@ void CStage::CollisionIceFroe(CRectangle r)
 			char cn = m_pChipData[y * m_XCount + x] - 1;
 			if (cn == ICE)
 			{
-				m_pChipData[y * m_XCount + x] = 13;
+				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
+				if (cr.CollisionRect(r))
+				{
+					m_pChipData[y * m_XCount + x] = 13;
+				}
 			}
 		}
 	}

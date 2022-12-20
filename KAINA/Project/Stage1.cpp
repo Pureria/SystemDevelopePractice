@@ -8,14 +8,14 @@
  * デストラクタ
  *
  */
-CGame::~CGame(){
+CStage1::~CStage1(){
 }
 
 /**
  * 読み込み
  * 利用するテクスチャを読み込む。
  */
-bool CGame::Load(){
+bool CStage1::Load(){
 	//プレイヤーの素材読み込み
 	m_Player.Load();
 	//ステージの素材読み込み
@@ -38,7 +38,7 @@ bool CGame::Load(){
  * パラメーターや座標を初期化する。
  * 状態を初期化したいときに実行する。
  */
-void CGame::Initialize(){
+void CStage1::Initialize(){
 	
 	Load();
 	//プレイヤーの状態初期化
@@ -74,7 +74,7 @@ void CGame::Initialize(){
  * 更新
  *
  */
-void CGame::Update(void){
+void CStage1::Update(void){
 	UpdateExitkey();
 	//メニュー画面の表示
 	if (m_Menu.IsShow()) {
@@ -233,7 +233,7 @@ void CGame::Update(void){
 	}
 }
 
-void CGame::StgCollPlayer() {
+void CStage1::StgCollPlayer() {
 	float ox = 0, oy = 0;
 	if (m_Stage.Collision(m_Player.GetRect(), ox, oy))
 	{
@@ -251,6 +251,7 @@ void CGame::StgCollPlayer() {
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
 		if (!m_Player.GetLaserShotShow(i)) { continue; }
+
 		ox = 0, oy = 0;
 		if (m_Stage.Collision(m_Player.GetLaserRect(i), ox, oy))
 		{
@@ -262,6 +263,7 @@ void CGame::StgCollPlayer() {
 		{
 			m_Stage.CollisionFreezeWater(m_Player.GetLaserRect(i));
 		}
+
 		//氷と弾の判定
 		if (m_Player.GetNatuLaser(i) == FIRE)
 		{
@@ -322,7 +324,7 @@ void CGame::StgCollPlayer() {
 
 }
 
-void CGame::StgCollBullet() {
+void CStage1::StgCollBullet() {
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
 		float ox = 0, oy = 0;
@@ -383,7 +385,7 @@ void CGame::StgCollBullet() {
 	}
 }
 
-void CGame::StgCollEne() {
+void CStage1::StgCollEne() {
 	float PPosX = m_Player.GetPosX() + 30;
 	float PPosY = m_Player.GetPosY() + 30;
 
@@ -445,7 +447,7 @@ void CGame::StgCollEne() {
 	}
 }
 
-void CGame::StgCollItm() {
+void CStage1::StgCollItm() {
 	for (int i = 0; i < m_Stage.GetItemCount(); i++)
 	{
 		if (!m_ItemArray[i].GetShow())
@@ -461,7 +463,7 @@ void CGame::StgCollItm() {
 	}
 }
 
-bool CGame::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox, float& oy)
+bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox, float& oy)
 {
 	bool re = false;
 
@@ -519,7 +521,7 @@ bool CGame::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox, 
  * 描画
  *
  */
-void CGame::Render(void){
+void CStage1::Render(void){
 	//ステージの描画
 	m_Stage.Render();
 
@@ -583,7 +585,7 @@ void CGame::Render(void){
  * デバッグ描画
  *
  */
-void CGame::RenderDebug(void){
+void CStage1::RenderDebug(void){
 	//ステージデバッグ描画
 	m_Stage.RenderDebug();
 	//プレイヤーデバッグ描画
@@ -612,7 +614,7 @@ void CGame::RenderDebug(void){
  * 解放
  *
  */
-void CGame::Release(void){
+void CStage1::Release(void){
 	//ステージの開放
 	m_Stage.Release(m_NowSceneNo);
 	//プレイヤーの開放

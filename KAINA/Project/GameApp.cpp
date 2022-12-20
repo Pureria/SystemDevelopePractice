@@ -77,7 +77,7 @@ MofBool CGameApp::Update(void){
 			g_pScene = new CSelect();
 			break;
 		case SCENENO_GAME_STAGE1:
-			g_pScene = new CGame();
+			g_pScene = new CStage1();
 			break;
 		case SCENENO_GAME_STAGE1_BOSS:
 			g_pScene = new CStage1_Boss();
