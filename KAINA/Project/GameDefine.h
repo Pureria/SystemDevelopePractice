@@ -85,6 +85,8 @@ enum tag_EnemyType
 
 #define		LASER_FIRE_COUNT		3
 
+#define		LASER_DELAY				0.5
+
 
 #define		ENEMY_ATTAK_POWER		10
 
