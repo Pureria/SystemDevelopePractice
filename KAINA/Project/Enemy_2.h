@@ -60,5 +60,7 @@ public:
 	bool		GetFallFlg() { return m_bFallFlg; }
 
 	void		SetFallFlg(bool flg) { m_bFallFlg = flg; }
+
+	void Damage(float dmg);
 };
 

@@ -1,5 +1,10 @@
 #pragma once
 
+enum tas_EnemyType {
+	Turret,
+	Bike,
+};
+
 /*ステージ1ボスのステータス*/
 #define		ENEMY_BOSS_HP				50
 #define		ENEMY_BOSS_FRONT_DEF		10

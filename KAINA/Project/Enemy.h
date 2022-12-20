@@ -1,6 +1,4 @@
 #pragma once
-
-
 #include	"CEnemyBase_Shot.h"
 
 //“–‚½‚è”»’èŒ¸Š•
@@ -29,6 +27,7 @@ public:
 	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
 
 	void SetTexture(CTexture* pt, CTexture* st);
+	void Damage(float dmg);
 
 	bool GetShow(void){ return m_bShow; }
 	CRectangle GetRect(){

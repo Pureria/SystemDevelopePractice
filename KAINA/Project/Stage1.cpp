@@ -128,58 +128,14 @@ void CStage1::Update(void){
 	StgCollItm();
 
 
-	//当たり判定の実行・プレイヤーの座標をセット
 	for (int i = 0; i < m_Stage.GetEnemy1Count(); i++)
 	{
-		m_Player.CollisionEnemy_1(m_EnemyArray[i]);
+		m_Player.CollisionEnemy(m_EnemyArray[i], m_EnemyArray[i].GetEnemyType());
 	}
 
-	//当たり判定の実行・Enemy2にプレイヤーの座標をセット
 	for (int i = 0; i < m_Stage.GetEnemy2Count(); i++)
 	{
-		//TODO::PlayerにCollisionEnemy2の追加
-		if (!m_Enemy2Array[i].GetShow())
-			continue;
-
-		if (m_Enemy2Array[i].GetRect().CollisionRect(m_Player.GetRect()))
-		{
-			if (m_Enemy2Array[i].GetPos().x > m_Player.GetPosX())
-			{
-				//TODO::ダメージ量はあとからEnemyDefineに持たせる
-				m_Player.PlayerDamage(true,10);
-			}
-			else
-			{
-				m_Player.PlayerDamage(false, 10);
-			}
-		}
-
-		//弾との判定
-		for (int j = 0; j < ENEMY_SHOT_COUNT; j++)
-		{
-			if (!m_Enemy2Array[i].GetShotShow(j))
-				continue;
-
-			if (m_Enemy2Array[i].GetShotRect(j).CollisionRect(m_Player.GetRect()))
-			{
-				m_Enemy2Array[i].SetShotShow(false, j);
-				if (m_Enemy2Array[i].GetShotPos(j).x > m_Player.GetPosX())
-				{
-					//TODO::上と同様にダメージ量はEnemyDefineに持たせる
-					m_Player.PlayerDamage(true, 10);
-				}
-				else
-				{
-					m_Player.PlayerDamage(false, 10);
-				}
-			}
-		}
-
-		//TODO::敵とプレイヤーの弾の当たり判定
-		//TODO::プレイヤーの弾と敵の弾の当たり判定
-
-
-		m_Enemy2Array[i].SetTargetPos(m_Player.GetPosX(), m_Player.GetPosY());
+		m_Player.CollisionEnemy(m_Enemy2Array[i], m_Enemy2Array[i].GetEnemyType());
 	}
 
 	for (int i = 0; i < m_Stage.GetItemCount(); i++)

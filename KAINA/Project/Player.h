@@ -3,6 +3,7 @@
 #include	"Mof.h"
 #include	"GameDefine.h"
 #include	"CEnemyBase_Shot.h"
+#include	"EnemyStateDefine.h"
 #include	"Enemy_Stage1_Boss.h"
 #include	"EffectManager.h"
 #include	"Item.h"
@@ -123,7 +124,7 @@ public:
 	bool GetNormalShow(int i)									{ 		return m_PlShotAry[i].GetShow();						}
 
 	void CollisionStage(float ox, float oy);
-	bool CollisionEnemy_1(CEnemyBase_Shot& ene);
+	bool CollisionEnemy(CEnemyBase_Shot& ene, int eneType);
 	bool Collision_Stage1_Boss(CEnemy_Stage1_Boss& ene);
 	void RenderStatus(void);
 

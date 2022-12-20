@@ -550,54 +550,58 @@ void CPlayer::PlayerDamage(bool flg,float damage)
 
 }
 
-bool CPlayer::CollisionEnemy_1(CEnemyBase_Shot& ene) {
+bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
+	bool flg = false;
+
 	if (!ene.GetShow()) 
-		return false;
+		return flg;
 	
 	//HPが無くなると当たり判定しない
 	if (m_HP <= 0)
-		return false;
+		return flg;
 
 
 	//ダメージ中のため当たり判定を行わない
 	if (m_DamageWait > 0) 
-		return false;
+		return flg;
 
 	//敵の短径と自分の短径でダメージ
 	CRectangle prec = GetRect();
 	CRectangle erec = ene.GetRect();
 
-	//砲台との当たり判定
-	/*
-	if (prec.CollisionRect(erec))
-	{
-		m_HP -= 5;
-		m_DamageWait = 60;
-		if (prec.Left < erec.Left)
-		{
-			m_MoveX = -5.0f;
-			m_bReverse = false;
-		}
-		else
-		{
-			m_MoveX = 5.0f;
-			m_bReverse = true;
-		}
-		m_Motion.ChangeMotion(MOTION_DAMAGE);
+	//敵との当たり判定
 
-		if (m_HP <= 0)
+	if (eneType != Turret)
+	{
+		if (prec.CollisionRect(erec))
 		{
-			//爆発エフェクトを発生させる
-			m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+			m_HP -= 5;
+			m_DamageWait = 60;
+			if (prec.Left < erec.Left)
+			{
+				m_MoveX = -5.0f;
+				m_bReverse = false;
+			}
+			else
+			{
+				m_MoveX = 5.0f;
+				m_bReverse = true;
+			}
+			m_Motion.ChangeMotion(MOTION_DAMAGE);
+
+			if (m_HP <= 0)
+			{
+				//爆発エフェクトを発生させる
+				m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+			}
+			else
+			{
+				//ダメージエフェクトを発生させる
+				m_pEffectManager->Start(SetStartPos(), EFC_DAMAGE);
+			}
+			flg = true;
 		}
-		else
-		{
-			//ダメージエフェクトを発生させる
-			m_pEffectManager->Start(SetStartPos(), EFC_DAMAGE);
-		}
-		return true;
 	}
-	*/
 
 	//敵の弾との当たり判定
 	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
@@ -639,13 +643,43 @@ bool CPlayer::CollisionEnemy_1(CEnemyBase_Shot& ene) {
 	//敵と弾の当たり判定
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
-		if (!IsLaser()) {
-			if (!m_PlShotAry[i].GetShow()) { continue; }
-			CRectangle srec = m_PlShotAry[i].GetRect();
-			if (srec.CollisionRect(erec))
+		if (!m_PlShotAry[i].GetShow()) { continue; }
+		CRectangle srec = m_PlShotAry[i].GetRect();
+		if (srec.CollisionRect(erec))
+		{
+			if (eneType != Turret)
 			{
-				m_PlShotAry[i].SetShow(false);
+				if (m_PlShotAry[i].GetNatu() == HEAL)
+				{
+					//TODO::回復弾の回復量
+					m_HP += 10;
+					//TODO::ダメージ量
+					ene.Damage(5);
+				}
+				else if (m_PlShotAry[i].GetNatu() == HEAVY)
+				{
+					//TODO::ダメージ量
+					ene.Damage(10);
+				}
 			}
+			m_PlShotAry[i].SetShow(false);
+		}
+
+	}
+
+	//敵とレーザーの当たり判定
+	//TODO::1フレームに1HP減るため敵側でDamageWaitの追加必須
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
+	{
+		if (!m_Laser[i].GetShow()) { continue; }
+
+		CRectangle srec = m_Laser[i].GetRect();
+		if (srec.CollisionRect(erec))
+		{
+			if (eneType == Turret)
+				continue;
+
+			ene.Damage(1);
 		}
 	}
 
@@ -676,7 +710,7 @@ bool CPlayer::CollisionEnemy_1(CEnemyBase_Shot& ene) {
 	}
 
 
-	return false;
+	return flg;
 
 }
 
