@@ -1,5 +1,6 @@
 #pragma once
 #include	"Mof.h"
+#include	"EnemyStateDefine.h"
 #include	"EffectManager.h"
 
 class CEnemy_Base
@@ -13,6 +14,7 @@ protected:
 	CRectangle				m_SrcRect;
 
 	int m_Type;
+	int m_EnemyType;
 	int m_HP;
 	int m_DamageWait;
 
@@ -38,6 +40,9 @@ public:
 
 	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
 	bool GetShow() { return m_bShow; }
+	int	 GetEnemyType() { return m_EnemyType; }
+	
+	void virtual Damage(float dmg) = 0;
 
 
 };

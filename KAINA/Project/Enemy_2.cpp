@@ -18,6 +18,7 @@ void CEnemy_2::Initialize(float px, float py, int type)
 	m_HP = 10;
 	m_DamageWait = 0;
 	m_bWidthOut = true;
+	m_EnemyType = Bike;
 
 	m_bShotTarget = m_bFallFlg;
 
@@ -231,6 +232,14 @@ CRectangle CEnemy_2::GetLedgeCheckRect()
 	{
 		return CRectangle(m_Pos.x + m_SrcRect.GetWidth(), m_Pos.y + m_SrcRect.GetHeight(), m_Pos.x + m_SrcRect.GetWidth() + 10, m_Pos.y + m_SrcRect.GetHeight() + 64);
 	}
+}
+
+void CEnemy_2::Damage(float dmg)
+{
+	m_HP -= dmg;
+
+	if (m_HP <= 0)
+		m_bShow = false;
 }
 
 /**

@@ -30,6 +30,7 @@ void CEnemy::Initialize(float px,float py,int type){
 	m_Pos.y = py;
 	m_bShow = true;
 	m_bWidthOut = true;
+	m_EnemyType = Turret;
 
 	//íeópïœêîÇÃInitialize
 	m_ShotWait = ENEMY_SHOT_WAIT;
@@ -84,7 +85,12 @@ void CEnemy::Update(float wx){
 	{
 		for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
 		{
+			if (m_ShotArray[i].GetShow())
+				continue;
+
 			m_ShotArray[i].Fire(m_Pos.x, m_Pos.y + 20, -5, 0);
+			m_ShotWait = ENEMY_SHOT_WAIT;
+			break;
 		}
 	}
 	else
@@ -114,6 +120,11 @@ void CEnemy::CollisionStage(float ox,float oy){
 	{
 		m_Move.y = 0;
 	}
+}
+
+void CEnemy::Damage(float dmg)
+{
+	return;
 }
 
 /**
