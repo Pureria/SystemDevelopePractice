@@ -28,6 +28,8 @@ void Laser::Fire(Vector2& pos, int tb, int natuyype) {
 	m_NatuType = natuyype;
 	m_bHitWall = false;
 	m_LaserRange = 0;
+	m_LaserDecrealse = 0;
+	m_StopCount = LASER_DELAY;
 }
 
 /*float Laser::FpsSpd() {
@@ -48,14 +50,12 @@ void Laser::ShotLaser() {
 }
 
 CRectangle Laser::GetRect() {
-	CRectangle Rec = CRectangle(m_ShotPos.x,
-		m_ShotPos.y,
-		m_ShotPos.x + m_LaserRange,
-		m_ShotPos.y + 50);
+	CRectangle Rec;
+
 	switch (GetDirec())
 	{
 	case RIGHT:
-		Rec = CRectangle(m_ShotPos.x,
+		Rec = CRectangle(m_ShotPos.x + m_LaserDecrealse,
 			m_ShotPos.y,
 			m_ShotPos.x + m_LaserRange,
 			m_ShotPos.y + 50);
@@ -63,29 +63,29 @@ CRectangle Laser::GetRect() {
 	case LEFT:
 		Rec = CRectangle(m_ShotPos.x - m_LaserRange,
 			m_ShotPos.y,
-			m_ShotPos.x,
+			m_ShotPos.x - m_LaserDecrealse,
 			m_ShotPos.y + 50);
 		break;
 	case RIGHTTOP:
 		Rec = CRectangle(m_ShotPos.x,
 			m_ShotPos.y - m_LaserRange,
 			m_ShotPos.x + 50,
-			m_ShotPos.y);
+			m_ShotPos.y - m_LaserDecrealse);
 		break;
 	case LEFTTOP:
 		Rec = CRectangle(m_ShotPos.x,
 			m_ShotPos.y - m_LaserRange,
 			m_ShotPos.x + 50,
-			m_ShotPos.y);
+			m_ShotPos.y - m_LaserDecrealse);
 	case RIGHTBOTTOM:
 		Rec = CRectangle(m_ShotPos.x,
-			m_ShotPos.y,
+			m_ShotPos.y + m_LaserDecrealse,
 			m_ShotPos.x + 50,
 			m_ShotPos.y + m_LaserRange);
 		break;
 	case LEFTBOTTOM:
 		Rec = CRectangle(m_ShotPos.x,
-			m_ShotPos.y,
+			m_ShotPos.y + m_LaserDecrealse,
 			m_ShotPos.x + 50,
 			m_ShotPos.y + m_LaserRange);
 		break;
@@ -142,11 +142,18 @@ CRectangle* Laser::GetFireRect() {
 
 void Laser::OutRange() {
 	//Á‚¦‚éˆ—
-	CRectangle lzrec = GetRect();
 
-	lzrec.Left += m_LaserRange;
-	if (lzrec.Left > lzrec.Right) {
-		m_bShow = false;
+	if (m_StopCount <= 0)
+	{
+		m_LaserDecrealse += LASER_ATTACKWIDTH * 0.5;
+		if (GetRect().Left > GetRect().Right || GetRect().Top > GetRect().Bottom) {
+			m_bShow = false;
+			m_bHitWall = false;
+		}
+	}
+	else
+	{
+		m_StopCount -= CUtilities::GetFrameSecond();
 	}
 }
 

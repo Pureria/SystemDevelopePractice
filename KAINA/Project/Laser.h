@@ -9,6 +9,10 @@ private:
 
 	//float			m_FmTime;
 
+	//レーザー減衰幅
+	float		m_LaserDecrealse;
+	float		m_StopCount;
+
 	//レーザーの拡張範囲
 	int				m_LaserRange;
 
