@@ -2,19 +2,13 @@
 
 #include	"Mof.h"
 #include	"GameDefine.h"
-#include	"Enemy.h"
+#include	"CEnemyBase_Shot.h"
 #include	"Enemy_Stage1_Boss.h"
 #include	"EffectManager.h"
 #include	"Item.h"
 #include	"CPlayerShot.h"
 #include	"Laser.h"
 
-__interface IInterface
-{
-	void Damage(int dmg) {
-		int i = dmg;
-	};
-};
 
 class CPlayer {
 private:
@@ -129,7 +123,7 @@ public:
 	bool GetNormalShow(int i)									{ 		return m_PlShotAry[i].GetShow();						}
 
 	void CollisionStage(float ox, float oy);
-	bool CollisionEnemy_1(CEnemy& ene);
+	bool CollisionEnemy_1(CEnemyBase_Shot& ene);
 	bool Collision_Stage1_Boss(CEnemy_Stage1_Boss& ene);
 	void RenderStatus(void);
 

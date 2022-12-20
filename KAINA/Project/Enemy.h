@@ -1,32 +1,13 @@
 #pragma once
 
-#include	"GameDefine.h"
-#include	"EffectManager.h"
-#include	"EnemyShot.h"
 
+#include	"CEnemyBase_Shot.h"
 
 //当たり判定減衰幅
 #define		ENEMY_RECT_WIDTH_DECREASE		10
 
-class CEnemy{
+class CEnemy : public CEnemyBase_Shot{
 private:
-	CTexture*				m_pTexture;
-	CSpriteMotionController	m_Motion;
-	int						m_Type;
-	float					m_PosX;
-	float					m_PosY;
-	float					m_MoveY;
-
-	Vector2					m_TargetPos;
-
-	bool					m_bShow;
-	CRectangle				m_SrcRect;
-
-	CEffectManager*			m_pEffectManager;
-
-	//敵が画面内にいるかの判定
-	//TRUE :　画面内	FALSE : 画面外
-	bool					m_WidthOut;
 	
 	//モーション種類定義
 	enum tag_MOTION {
@@ -35,11 +16,6 @@ private:
 		MOTION_COUNT,
 	};
 
-	//弾用変数
-	CEnemyShot				m_ShotArray[ENEMY_SHOT_COUNT];
-	int						m_ShotWait;
-	float					m_TargetPosX;
-	float					m_TargetPosY;
 
 public:
 	CEnemy();
@@ -50,26 +26,12 @@ public:
 	void Render(float wx,float wy);
 	void RenderDebug(float wx,float wy);
 	void Release(void);
+	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
 
 	void SetTexture(CTexture* pt, CTexture* st);
 
 	bool GetShow(void){ return m_bShow; }
 	CRectangle GetRect(){
-		return CRectangle(m_PosX + ENEMY_RECT_WIDTH_DECREASE,m_PosY + ENEMY_RECT_WIDTH_DECREASE,m_PosX + m_SrcRect.GetWidth() - ENEMY_RECT_WIDTH_DECREASE,m_PosY + m_SrcRect.GetHeight());
+		return CRectangle(m_Pos.x + ENEMY_RECT_WIDTH_DECREASE,m_Pos.y + ENEMY_RECT_WIDTH_DECREASE,m_Pos.x + m_SrcRect.GetWidth() - ENEMY_RECT_WIDTH_DECREASE,m_Pos.y + m_SrcRect.GetHeight());
 	}
-	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
-
-	//プレイヤーの座標セット
-	void SetTargetPos(float tx, float ty) { m_TargetPosX = tx; m_TargetPosY = ty; }
-
-	//弾のShow・Rectangleを返す
-	bool	   ShotArrayBool(int i) { return m_ShotArray[i].GetShow(); }
-	CRectangle ShotArrayRect(int i) { return m_ShotArray[i].GetRect(); }
-
-	//弾のShowをセットする
-	void	   SetShotShow(bool flg, int i) { m_ShotArray[i].SetShow(flg); }
-
-	//プレイヤーの座標をセットする
-	void	   SetPlayerPos(Vector2 ppos) { m_TargetPos = ppos; }
-
 };

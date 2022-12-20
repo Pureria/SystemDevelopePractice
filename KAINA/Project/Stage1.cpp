@@ -132,7 +132,6 @@ void CStage1::Update(void){
 	for (int i = 0; i < m_Stage.GetEnemy1Count(); i++)
 	{
 		m_Player.CollisionEnemy_1(m_EnemyArray[i]);
-		m_EnemyArray[i].SetPlayerPos(Vector2(m_Player.GetPosX(), m_Player.GetPosY()));
 	}
 
 	//当たり判定の実行・Enemy2にプレイヤーの座標をセット
@@ -395,7 +394,6 @@ void CStage1::StgCollEne() {
 		{
 			continue;
 		}
-		m_EnemyArray[i].SetTargetPos(PPosX, PPosY);
 		m_EnemyArray[i].Update(m_Stage.GetScrollX());
 		float ox = 0, oy = 0;
 		if (m_Stage.Collision(m_EnemyArray[i].GetRect(), ox, oy))

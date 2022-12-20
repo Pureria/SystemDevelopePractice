@@ -79,6 +79,9 @@
     <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_2">
       <UniqueIdentifier>{b6cfb2fc-d334-4b86-8d3f-41b87bc6c443}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Base">
+      <UniqueIdentifier>{8e4f3bd9-45e3-4e52-832a-89459e22fa80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Title.cpp">
@@ -146,6 +149,12 @@
     </ClCompile>
     <ClCompile Include="Enemy_2.cpp">
       <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_2</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy_Base.cpp">
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyBase_Shot.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +229,12 @@
     </ClInclude>
     <ClInclude Include="EnemyStateDefine.h">
       <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy_Base.h">
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyBase_Shot.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

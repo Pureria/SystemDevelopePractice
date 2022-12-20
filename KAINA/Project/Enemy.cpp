@@ -4,15 +4,7 @@
  * コンストラクタ
  *
  */
-CEnemy::CEnemy() :
-m_pTexture(NULL) ,
-m_Motion() ,
-m_PosX(0.0f) ,
-m_PosY(0.0f) ,
-m_MoveY(0.0f) ,
-m_bShow(false) ,
-m_SrcRect(){
-}
+CEnemy::CEnemy(){}
 
 /**
  * デストラクタ
@@ -34,10 +26,10 @@ CEnemy::~CEnemy(){
  */
 void CEnemy::Initialize(float px,float py,int type){
 	m_Type = type;
-	m_PosX = px;
-	m_PosY = py;
+	m_Pos.x = px;
+	m_Pos.y = py;
 	m_bShow = true;
-	m_WidthOut = true;
+	m_bWidthOut = true;
 
 	//弾用変数のInitialize
 	m_ShotWait = ENEMY_SHOT_WAIT;
@@ -59,10 +51,10 @@ void CEnemy::Initialize(float px,float py,int type){
  *
  */
 void CEnemy::Update(float wx){
-	if (m_PosX - wx + m_pTexture->GetWidth() <= 0 || m_PosX - wx > g_pGraphics->GetTargetWidth())
-		m_WidthOut = false;
+	if (m_Pos.x - wx + m_pTexture->GetWidth() <= 0 || m_Pos.x - wx > g_pGraphics->GetTargetWidth())
+		m_bWidthOut = false;
 	else
-		m_WidthOut = true;
+		m_bWidthOut = true;
 
 	//弾の更新
 	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
@@ -78,10 +70,10 @@ void CEnemy::Update(float wx){
 	}
 
 	//重力により下に少しずつ下がる
-	m_MoveY += GRAVITY;
-	if ( m_MoveY >= 20.0f ) { m_MoveY = 20.0f; }
+	m_Move.y += GRAVITY;
+	if ( m_Move.y >= 20.0f ) { m_Move.y = 20.0f; }
 
-	m_PosY += m_MoveY;
+	m_Pos.y += m_Move.y;
 
 	//アニメーションの更新
 	m_Motion.AddTimer( CUtilities::GetFrameSecond( ) );
@@ -92,14 +84,7 @@ void CEnemy::Update(float wx){
 	{
 		for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
 		{
-			if (m_PosX - 50.0f > m_TargetPos.x)
-			{
-				if (m_ShotArray[i].GetShow())
-					continue;
-				m_ShotWait = ENEMY_SHOT_WAIT;
-				m_ShotArray[i].Fire(m_PosX, m_PosY + 20, -5, 0);
-				break;
-			}
+			m_ShotArray[i].Fire(m_Pos.x, m_Pos.y + 20, -5, 0);
 		}
 	}
 	else
@@ -118,16 +103,16 @@ void CEnemy::Update(float wx){
  * [in]			oy					Y埋まり量
  */
 void CEnemy::CollisionStage(float ox,float oy){
-	m_PosX += ox;
-	m_PosY += oy;
+	m_Pos.x += ox;
+	m_Pos.y += oy;
 	//落下中の下埋まり、ジャンプ中の上埋まりの場合は移動を初期化する。
-	if(oy < 0 && m_MoveY > 0)
+	if(oy < 0 && m_Move.y > 0)
 	{
-		m_MoveY = 0;
+		m_Move.y = 0;
 	}
-	else if(oy > 0 && m_MoveY < 0)
+	else if(oy > 0 && m_Move.y < 0)
 	{
-		m_MoveY = 0;
+		m_Move.y = 0;
 	}
 }
 
@@ -151,7 +136,7 @@ void CEnemy::Render(float wx,float wy){
 	//描画矩形
 	CRectangle dr = m_SrcRect;
 	//テクスチャの描画
-	m_pTexture->Render(m_PosX - wx,m_PosY - wy,dr);
+	m_pTexture->Render(m_Pos.x - wx,m_Pos.y - wy,dr);
 
 
 }
@@ -178,7 +163,7 @@ void CEnemy::RenderDebug(float wx,float wy){
 		m_ShotArray[i].RenderDebug(wx, wy);
 
 	//PosX,PosY確認用
-	CGraphicsUtilities::RenderCircle(m_PosX - wx, m_PosY - wy, 2, MOF_XRGB(255, 0, 0));
+	CGraphicsUtilities::RenderCircle(m_Pos.x - wx, m_Pos.y - wy, 2, MOF_XRGB(255, 0, 0));
 	//CGraphicsUtilities::RenderCircle(m_TargetPosX - wx, m_TargetPosY - wy, 2, MOF_XRGB(255, 0, 0));
 }
 
