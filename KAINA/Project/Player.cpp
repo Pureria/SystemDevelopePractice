@@ -830,6 +830,7 @@ void CPlayer::CollisionStage(float ox, float oy)
 			m_Motion.ChangeMotion(MOTION_JUMPEND);
 		}
 	}
+	
 	else if (oy > 0 && m_MoveY < 0)
 	{
 		m_MoveY = 0;
@@ -896,7 +897,7 @@ void CPlayer::RenderStatus(void) {
 	m_SPTexture.Render(0,0);
 	//HP‚É‰ž‚¶‚Ä’ZŒa‚Ì•‚ð•Ï‰»‚³‚¹‚é
 	CRectangle hprec(0, 0, 1064 * (m_HP * 0.01f), 64);
-	m_HPBarTexture.Render(0, 0, hprec);
+	m_HPBarTexture.Render(10, 0, hprec);
 	CRectangle sprec(0, 0, 1064 * (m_SP * 0.01f), 64);
 	m_SPBarTexture.Render(248, 20, sprec);
 	//ƒtƒŒ[ƒ€‚ðã•”‚É•`‰æ

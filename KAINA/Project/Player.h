@@ -9,6 +9,13 @@
 #include	"CPlayerShot.h"
 #include	"Laser.h"
 
+__interface IInterface
+{
+	void Damage(int dmg) {
+		int i = dmg;
+	};
+};
+
 class CPlayer {
 private:
 	CTexture				m_Texture;
@@ -44,6 +51,7 @@ private:
 		MOTION_DAMAGE,
 		MOTION_COUNT,
 	};
+
 
 	CEffect*				m_pEndEffect;
 	bool					m_bDead;
