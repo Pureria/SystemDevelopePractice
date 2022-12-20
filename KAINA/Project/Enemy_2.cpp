@@ -277,7 +277,10 @@ void CEnemy_2::Render(float wx, float wy)
 		dr.Left = tmp;
 	}
 	//テクスチャの描画
-	m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr);
+	if(m_bFallFlg)
+		m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr);
+	else
+		m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(255, 255, 100));
 }
 
 /**
