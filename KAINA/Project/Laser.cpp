@@ -109,18 +109,19 @@ void Laser::DirecPosSet() {
 	}
 }
 
-CRectangle Laser::GetFireRect() {
+CRectangle* Laser::GetFireRect() {
 	CRectangle rec = GetRect();
 
 	CRectangle FireRec[3] =	{ CRectangle(rec.Left, m_LaserHitPos.y - 50, m_LaserHitPos.x, rec.Bottom - 50),
-							CRectangle(rec.Left, m_LaserHitPos.y - 5, m_LaserHitPos.x, rec.Bottom + 5),
-							CRectangle(rec.Left, m_LaserHitPos.y + 60, m_LaserHitPos.x, rec.Bottom + 60),
+							  CRectangle(rec.Left, m_LaserHitPos.y - 5, m_LaserHitPos.x, rec.Bottom + 5),
+							  CRectangle(rec.Left, m_LaserHitPos.y + 60, m_LaserHitPos.x, rec.Bottom + 60),
 	};
 	 
 	for (int i = 0; i < 3; i++)
 	{
 
-		m_FireRec[i] = FireRec[i];
+		/*m_FireRec[i] = FireRec[i];
+
 
 		MofU32 Color[3] = {
 			MOF_COLOR_RED,
@@ -128,10 +129,10 @@ CRectangle Laser::GetFireRect() {
 			MOF_COLOR_BLUE,
 		};
 
-		CGraphicsUtilities::RenderRect(m_FireRec[i], Color[i]);
+		CGraphicsUtilities::RenderRect(m_FireRec[i], Color[i]);*/
+	    return &m_FireRec[i];
 	}
 	
-	return *m_FireRec;
 }
 
 /*CRectangle Laser::GetSlopeRect() {
@@ -144,7 +145,7 @@ void Laser::OutRange() {
 	CRectangle lzrec = GetRect();
 
 	lzrec.Left += m_LaserRange;
-	if (lzrec.Left >= lzrec.Right) {
+	if (lzrec.Left > lzrec.Right) {
 		m_bShow = false;
 	}
 }
@@ -169,7 +170,7 @@ void Laser::Render(float wx, float wy) {
 		Color = MOF_XRGB(0, 255, 255);
 		break;
 	}
-	CGraphicsUtilities::RenderFillRect(lzrec, Color);
+	CGraphicsUtilities::RenderFillRect(lzrec, Color,MOF_COLOR_BLACK,MOF_COLOR_BLUE,MOF_COLOR_RED);
 
 
 	return;

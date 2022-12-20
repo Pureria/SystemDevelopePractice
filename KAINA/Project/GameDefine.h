@@ -90,6 +90,8 @@ enum tag_EnemyType
 
 
 #define		HEAL_POWER				5
+
+#define		PLAYER_DEFFENCE_POWER	3
 //************************ステージシーンで使うDefine*************************//
 //ステージ選択画面の最大数
 #define     COUNT_NO				4
