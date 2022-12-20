@@ -250,6 +250,7 @@ void CGame::StgCollPlayer() {
 
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
+		if (!m_Player.GetLaserShotShow(i)) { continue; }
 		ox = 0, oy = 0;
 		if (m_Stage.Collision(m_Player.GetLaserRect(i), ox, oy))
 		{

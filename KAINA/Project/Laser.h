@@ -35,7 +35,7 @@ public:
 public:
 	CRectangle GetRect();
 
-	CRectangle GetFireRect();
+	CRectangle* GetFireRect();
 
 	//CRectangle GetSlopeRect();
 

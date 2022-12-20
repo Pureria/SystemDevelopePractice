@@ -118,11 +118,11 @@ public:
 			m_PosX + m_SrcRect.GetWidth() - PLAYER_RECTDECREASE,
 			m_PosY + m_SrcRect.GetHeight());
 	}
-	int	 GetLaserDirec(int i)									{		return m_PlShotAry[i].GetDirec();						}
+	int	 GetLaserDirec(int i)									{		return m_Laser[i].GetDirec();						}
 
-	CRectangle GetLaserRect(int i)								{		return m_PlShotAry[i].GetRect();						}
+	CRectangle GetLaserRect(int i)								{		return m_Laser[i].GetRect();						}
 
-	CRectangle GetLaserFireRect(int i)							{ 		return m_Laser[i].GetFireRect();						}
+	CRectangle* GetLaserFireRect(int i)							{ 		return m_Laser[i].GetFireRect();						}
 
 	CRectangle GetNormalRect(int i)								{ 		return m_PlShotAry[i].GetRect();						}
 
@@ -163,53 +163,83 @@ public:
 
 	void ShotManager();
 
-	//PlayerPosセット
-	void SetPlayerPos(float PosX, float PosY)					{ m_PosX = PosX; m_PosY = PosY;									}
 
 	//引数 ダメージ判定のものがプレイヤーより false : 右	true : 左
 	void PlayerDamage(bool flg, float damage);
 
 	//弾の反射
-	void ShotRefLeft(int i)										{ m_PlShotAry[i].SetPowerLeft();								}
+	void ShotRefLeft(int i)										{		m_PlShotAry[i].SetPowerLeft();							}
 
-	void ShotRefTop(int i)										{ m_PlShotAry[i].SetPowerTop();									}
+	void ShotRefTop(int i)										{		m_PlShotAry[i].SetPowerTop();							}
 
-	void ShotRefRight(int i)									{ m_PlShotAry[i].SetPowerRight();								}
+	void ShotRefRight(int i)									{		m_PlShotAry[i].SetPowerRight();							}
 
-	void ShotRefBottom(int i)									{ m_PlShotAry[i].SetPowerBottom();								}
+	void ShotRefBottom(int i)									{		m_PlShotAry[i].SetPowerBottom();						}
 
-	void SetWallLaser(int i)									{ m_Laser[i].SetWallHitLaser();									}
 
-	void SetScroll(float wx, float wy, int i) { m_PlShotAry[i].SetScroll(wx, wy); }
 
-	int GetType() { return m_ShotType; }
 
-	bool IsLaser() { return m_ShotType == LASER; }
 
-	void SetLaserShotShow(bool flg, int i) { m_Laser[i].SetShow(flg); }
 
-	void SetNormalShotShow(bool flg, int i) { m_PlShotAry[i].SetShow(flg); }
 
-	bool IsWallLaser(int i) { return m_Laser[i].IsHitWall(); }
+	/************************************************Get関数************************************************/
 
-	int	 GetDirec() { return m_DrcType; }
 
-	int GetNatuShot(int i) { return m_PlShotAry[i].GetNatu(); }
+	int GetType()												{		return m_ShotType;										}
 
-	int GetNatuLaser(int i) { return m_Laser[i].GetNatu(); }
+	int GetDirec()												{		return m_DrcType;										}
 
+	int GetNatuShot(int i)										{		return m_PlShotAry[i].GetNatu();						}
+
+	int GetNatuLaser(int i)										{		return m_Laser[i].GetNatu();							}
+
+	bool GetLaserShotShow(int i)								{		return m_Laser[i].GetShow();							}
+
+
+
+	/************************************************Set関数************************************************/
+	
+
+
+	void SetNormalShotShow(bool flg, int i)						{		m_PlShotAry[i].SetShow(flg);							}
+	
+
+	void SetScroll(float wx, float wy, int i)					{		m_PlShotAry[i].SetScroll(wx, wy);						}
+
+	//PlayerPosセット
+	void SetPlayerPos(float PosX, float PosY)					{		m_PosX = PosX; m_PosY = PosY;							}
+
+	void SetLaserShotShow(bool flg, int i)						{		m_Laser[i].SetShow(flg);								}
+
+	void SetWallLaser(int i)									{		m_Laser[i].SetWallHitLaser();							}
+	
+	
+	/************************************************Is関数*************************************************/
+	
+	
+	bool IsLaser()												{		return m_ShotType == LASER;								}
+	
+	bool IsWallLaser(int i)										{		return m_Laser[i].IsHitWall();							}
+	
+	
+	
+	/************************************************Other関数**********************************************/
 private:
+
 	void NatuChange();
+
 	//弾の特性切り替え
 	void BulletChange();
 
-	void Change();
+	void TypeChange();
+
+	//発生位置
 	Vector2 SetStartPos() {
 		return Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f - 20);
 	}
 
 	void DeffenceProc(int dmg) {
-		m_Deffence = 3;
+		m_Deffence = PLAYER_DEFFENCE_POWER;
 		float deff = m_Deffence - dmg;
 		if (deff > 0) {
 			m_HP += deff;

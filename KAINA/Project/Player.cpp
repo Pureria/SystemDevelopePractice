@@ -96,6 +96,18 @@ bool CPlayer::Load(void){
 			FALSE,{{2,0,0},{2,1,0},{2,2,0},{2,3,0},{2,4,0},{2,5,0},{2,6,0}}
 		},
 		{
+			"銃口上げる",
+			480,0,
+			120,128,
+			FALSE,{{20,0,0}}
+		},
+		{
+			"銃口下げる",
+			480,0,
+			120,128,
+			FALSE,{{20,0,0}}
+		},
+		{
 			"ダメージ",
 			480,0,
 			120,128,
@@ -136,10 +148,9 @@ void CPlayer::Initialize(void){
 	m_NextBossScene = false;
 }
 
-/**
- * 更新
- *
- */
+//更新
+#pragma region Update関数
+
 void CPlayer::Update() {
 	UpdateShot();
 	//TODO: ゲームパッド使用時
@@ -201,10 +212,6 @@ void CPlayer::Update() {
 
 }
 
-/**
- * キー入力による動作更新
- *
- */
 void CPlayer::UpdateKey( void ) {
 	//キーボードでの移動処理
 	MoveKey();
@@ -222,6 +229,15 @@ void CPlayer::UpdateKey( void ) {
 	ShotManager();
 
 }
+
+
+#pragma endregion
+
+
+/**
+ * キー入力による動作更新
+ *
+ */
 
 //プレイヤーの動きの制限
 void CPlayer::MoveKey() {
@@ -266,14 +282,16 @@ void CPlayer::MoveKey() {
 	}
 }
 
-//弾の種類を変える処理
+
+#pragma region Change関数
+
 void CPlayer::BulletChange() {
 	if (g_pInput->IsKeyPush(MOFKEY_I)) {
-		Change();
+		TypeChange();
 	}
 }
 
-void CPlayer::Change() {
+void CPlayer::TypeChange() {
 	if (m_ShotType == NORMAL) {
 		m_ShotType = LASER;
 		m_NatuType = FIRE;
@@ -304,6 +322,10 @@ void CPlayer::NatuChange() {
 		}
 	}
 }
+
+#pragma endregion
+
+//弾の種類を変える処理
 
 void CPlayer::ShotManager() {
 	if (IsLaser()) {
@@ -660,6 +682,7 @@ bool CPlayer::CollisionEnemy_1(CEnemy& ene) {
 				switch (m_PlShotAry[i].GetNatu())
 				{
 				case HEAL:
+
 					m_PlShotAry[i].SetShow(false);
 					ene.SetShotShow(false, j);
 					break;
@@ -731,16 +754,7 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 	return false;
 
 }
-/**当たり判定
-* 引数のアイテムに対して短径同士の当たり判定を実行する
-* 当たっていた場合はプレイヤーの状態を変更する
-* 
-* 引数
-* [in]			itm			判定を行うアイテム
-* 
-* 戻り値
-* 当たっている場合はtrue、当たっていなければfalseを返す
-* */
+
 bool CPlayer::ColisionItem(CItem& itm)
 {
 	if (!itm.GetShow())
@@ -789,10 +803,6 @@ bool CPlayer::CollisionAttackItem(CItem& itm)
 	return false;
 }
 
-/**
- * プレイヤー死亡時の処理
- *
- */
 void CPlayer::PlayerEnd() {
 	if (m_HP <= 0)
 	{
@@ -854,10 +864,9 @@ bool CPlayer::IsJump()
 		return false;
 }
 
-/**
- * 描画
- *
- */
+//描画
+#pragma region Render関数
+
 void CPlayer::Render(float wx,float wy){
 	//弾の描画
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
@@ -904,10 +913,6 @@ void CPlayer::RenderStatus(void) {
 	m_FrameTexture.Render(0, 0);
 }
 
-/**
- * デバッグ描画
- *
- */
 void CPlayer::RenderDebug(float wx, float wy){
 	//位置の描画
 	CGraphicsUtilities::RenderString(10,70,"プレイヤー位置 X : %.0f , Y : %.0f , Move_Y : %.0f",m_PosX,m_PosY,m_MoveY);
@@ -926,10 +931,12 @@ void CPlayer::RenderDebug(float wx, float wy){
 	}
 }
 
-/**
- * 解放
- *
- */
+#pragma endregion
+
+
+//解放
+#pragma region Release関数
+
 void CPlayer::Release(void){
 	m_Texture.Release();
 	m_Motion.Release();
@@ -941,3 +948,6 @@ void CPlayer::Release(void){
 	m_ShotHealTex.Release();
 	m_ShotHeavyTex.Release();
 }
+
+#pragma endregion
+
