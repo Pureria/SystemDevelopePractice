@@ -1,40 +1,18 @@
 #pragma once
-#include	"Mof.h"
-#include	"EffectManager.h"
+
 #include	"EnemyShot.h"
+#include	"CEnemyBase_Shot.h"
 
 //“–‚½‚è”»’èŒ¸Š•
 #define			ENEMY_RECTDECREALSE		10
 
-class CEnemy_2{
+class CEnemy_2 : public CEnemyBase_Shot{
 private:
 	//fallFlg : TRUE —‰º‚·‚é : FALSE —‰º‚µ‚È‚¢
 	bool					m_bFallFlg;
 	//ShotTarget : TRUE ’e‚Ì‹O“¹‚ª‚Ü‚Á‚·‚®	FALSE : ’e‚Ì‹O“¹‚ªƒvƒŒƒCƒ„[‚ÉŒü‚©‚Á‚Ä
 	bool					m_bShotTarget;
-	//false : ¶Œü‚«	true : ‰EŒü‚«
-	bool					m_bReverse;
 
-	CTexture*				m_pTexture;
-	CSpriteMotionController m_Motion;
-	CRectangle				m_SrcRect;
-	
-	int m_Type;
-	int m_HP;
-	int m_DamageWait;
-
-	Vector2		m_Pos;
-	Vector2		m_Move;
-
-	bool		m_bShow;
-	//TRUE : ‰æ–Ê“à		FALSE : ‰æ–ÊŠO
-	bool		m_bWidthOut;
-
-	CEffectManager* m_pEffectManager;
-
-	//’e—p•Ï”
-	CEnemyShot				m_ShotArray[ENEMY_SHOT_COUNT];
-	int						m_ShotWait;
 
 	float					m_TargetPosX;
 	float					m_TargetPosY;
@@ -69,12 +47,6 @@ public:
 	void		SetTargetPos(float tx, float ty) { m_TargetPosX = tx; m_TargetPosY = ty; }
 	bool		ShotTarget(int i);
 
-	//’e‚ÌShowERectangle‚ğ•Ô‚·
-	bool		ShotArrayBool(int i) { return m_ShotArray[i].GetShow(); }
-	CRectangle  ShotArrayRect(int i) { return m_ShotArray[i].GetRect(); }
-
-	//’e‚ÌShow‚ğƒZƒbƒg‚·‚é
-	void		SetShotShow(bool flg, int i) { m_ShotArray[i].SetShow(flg); }
 	//’e‚ÌShow‚ğ•Ô‚·
 	bool		GetShotShow(int i) { return m_ShotArray[i].GetShow(); }
 	//’e‚ÌRect‚ğ•Ô‚·

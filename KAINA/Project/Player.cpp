@@ -550,7 +550,7 @@ void CPlayer::PlayerDamage(bool flg,float damage)
 
 }
 
-bool CPlayer::CollisionEnemy_1(CEnemy& ene) {
+bool CPlayer::CollisionEnemy_1(CEnemyBase_Shot& ene) {
 	if (!ene.GetShow()) 
 		return false;
 	
@@ -644,27 +644,7 @@ bool CPlayer::CollisionEnemy_1(CEnemy& ene) {
 			CRectangle srec = m_PlShotAry[i].GetRect();
 			if (srec.CollisionRect(erec))
 			{
-				switch (m_PlShotAry[i].GetNatu())
-				{
-				case HEAL:
-					m_HP += HEAL_POWER;
-					break;
-
-				case HEAVY:
-					ene.SetShotShow(false, i);
-					break;
-				}
 				m_PlShotAry[i].SetShow(false);
-				break;
-			}
-		}
-		else {
-			if (!m_Laser[i].GetShow()) { continue; }
-			CRectangle lrec = m_Laser[i].GetRect();
-			
-			if (lrec.CollisionRect(erec))
-			{
-				break;
 			}
 		}
 	}
@@ -682,7 +662,6 @@ bool CPlayer::CollisionEnemy_1(CEnemy& ene) {
 				switch (m_PlShotAry[i].GetNatu())
 				{
 				case HEAL:
-
 					m_PlShotAry[i].SetShow(false);
 					ene.SetShotShow(false, j);
 					break;

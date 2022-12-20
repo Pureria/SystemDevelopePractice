@@ -26,7 +26,6 @@ Scene_Base*				g_pScene = NULL;
 //デバッグ表示フラグ
 bool					g_bDebug = false;
 
-
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
 		@param			None
@@ -41,7 +40,6 @@ MofBool CGameApp::Initialize(void){
 	
 	g_pScene = new CTitle();
 	g_pScene->Initialize();
-
 	
 	return TRUE;
 }

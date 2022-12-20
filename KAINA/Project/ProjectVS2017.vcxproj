@@ -95,6 +95,8 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CEnemyBase_Shot.cpp" />
+    <ClCompile Include="CEnemy_Base.cpp" />
     <ClCompile Include="CMenu.cpp" />
     <ClCompile Include="CPlayerShot.cpp" />
     <ClCompile Include="CResult.cpp" />
@@ -119,6 +121,8 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CEnemyBase_Shot.h" />
+    <ClInclude Include="CEnemy_Base.h" />
     <ClInclude Include="CMenu.h" />
     <ClInclude Include="CPlayerShot.h" />
     <ClInclude Include="CResult.h" />

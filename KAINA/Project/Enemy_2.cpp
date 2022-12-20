@@ -1,16 +1,6 @@
 #include "Enemy_2.h"
 
 CEnemy_2::CEnemy_2() :
-	m_Type(NULL),
-	m_HP(NULL),
-	m_DamageWait(NULL),
-	m_pTexture(NULL),
-	m_Motion(),
-	m_SrcRect(),
-	m_bShow(NULL),
-	m_bWidthOut(NULL),
-	m_pEffectManager(),
-	m_bReverse(false),
 	m_bFallFlg(false){}
 
 CEnemy_2::~CEnemy_2(){}

@@ -64,6 +64,7 @@ void CStage1_Boss::Initialize() {
  *
  */
 void CStage1_Boss::Update(void) {
+	UpdateExitkey();
 	//ƒƒjƒ…[‰æ–Ê‚Ì•\¦
 	if (m_Menu.IsShow()) {
 		m_Menu.Update();
