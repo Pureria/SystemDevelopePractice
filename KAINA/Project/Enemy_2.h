@@ -61,6 +61,6 @@ public:
 
 	void		SetFallFlg(bool flg) { m_bFallFlg = flg; }
 
-	void Damage(float dmg);
+	void Damage(float dmg) override;
 };
 

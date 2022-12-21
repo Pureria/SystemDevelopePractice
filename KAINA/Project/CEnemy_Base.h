@@ -42,7 +42,7 @@ public:
 	bool GetShow() { return m_bShow; }
 	int	 GetEnemyType() { return m_EnemyType; }
 	
-	void virtual Damage(float dmg) = 0;
+	void virtual Damage(float dmg) { return; }
 
 
 };

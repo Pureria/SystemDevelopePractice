@@ -122,11 +122,6 @@ void CEnemy::CollisionStage(float ox,float oy){
 	}
 }
 
-void CEnemy::Damage(float dmg)
-{
-	return;
-}
-
 /**
  * •`‰æ
  *
