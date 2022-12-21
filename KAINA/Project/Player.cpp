@@ -690,6 +690,8 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 
 		CRectangle srec = m_PlShotAry[i].GetRect();
 		for (int j = 0; j < ENEMY_SHOT_COUNT; j++) {
+			if (!ene.ShotArrayBool(i))
+				continue;
 			CRectangle esrec = ene.ShotArrayRect(j);
 			if (srec.CollisionRect(esrec))
 			{

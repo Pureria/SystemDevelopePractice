@@ -529,16 +529,19 @@ bool CStage::Collision(CRectangle r) {
 			{
 				if (cn == BUTTON_RED)
 				{
+					m_pChipData[y * m_XCount + x] = 0;
 					m_bButtonRed = true;
 				}
 
 				else if (cn == BUTTON_BLUE)
 				{
+					m_pChipData[y * m_XCount + x] = 0;
 					m_bButtonBlue = true;
 				}
 
 				else if (cn == BUTTON_YELLOW)
 				{
+					m_pChipData[y * m_XCount + x] = 0;
 					m_bButtonYellow = true;
 				}
 				return true;
@@ -755,6 +758,7 @@ bool CStage::Collision(CRectangle r, float& ox, float& oy) {
 	return re;
 }
 
+
 bool CStage::StageAttackCollision(CRectangle r)
 {
 	//当たり判定する短径の左上と右下のチップ位置を求める
@@ -768,6 +772,7 @@ bool CStage::StageAttackCollision(CRectangle r)
 	if (tc < 0) { tc = 0; }
 	if (rc >= m_XCount) { rc = m_XCount - 1; }
 	if (bc >= m_YCount) { bc = m_YCount - 1; }
+
 
 	//当たり判定以外をする短径の左上から右下の範囲のみ当たり判定を行う
 	//それ以外の番号は当たることはないので判定が必要ない
@@ -791,7 +796,7 @@ bool CStage::StageAttackCollision(CRectangle r)
 			}
 
 			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
-			{
+			{				
 				if (cr.CollisionRect(r))
 				{
 					m_pChipData[y * m_XCount + x] = 0;
@@ -816,6 +821,7 @@ bool CStage::StageAttackCollision(CRectangle r)
 	}
 	return false;
 }
+
 
 
 void CStage::CollisionFreezeWater(CRectangle r)

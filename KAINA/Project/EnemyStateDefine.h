@@ -5,6 +5,11 @@ enum tas_EnemyType {
 	Bike,
 };
 
+/************敵共通**********/
+#define		ENEMY_KNOCKBACK_POWER_Y	5.0f
+#define		ENEMY_KNOCKBACK_TIME	0.5f
+/***************************/
+
 /*ステージ1ボスのステータス*/
 #define		ENEMY_BOSS_HP				50
 #define		ENEMY_BOSS_FRONT_DEF		10

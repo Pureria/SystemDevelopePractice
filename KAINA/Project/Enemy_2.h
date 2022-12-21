@@ -12,10 +12,15 @@ private:
 	bool					m_bFallFlg;
 	//ShotTarget : TRUE 弾の軌道がまっすぐ	FALSE : 弾の軌道がプレイヤーに向かって
 	bool					m_bShotTarget;
+	//KnockBack : TRUE ノックバック中 : FALSE : ノックバック無し
+	bool					m_bKnockback;
 
 
 	float					m_TargetPosX;
 	float					m_TargetPosY;
+	float					m_KnockbackTime;
+
+	Vector2					m_CurrentMove;
 
 	//モーション種類定義
 	enum tag_Motion {
@@ -60,6 +65,7 @@ public:
 	bool		GetFallFlg() { return m_bFallFlg; }
 
 	void		SetFallFlg(bool flg) { m_bFallFlg = flg; }
+	void		KnockBack();
 
 	void Damage(float dmg) override;
 };
