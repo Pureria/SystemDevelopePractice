@@ -146,13 +146,6 @@ void CStage1::Update(void){
 
 	//ステージの更新
 	m_Stage.Update(m_Player);
-	if (m_Player.IsAttack())
-	{
-		for (int i = 0;i < PLAYERSHOT_COUNT; i++)
-		{
-			m_Stage.StageAttackCollision(m_Player.GetLaserRect(i));
-		}
-	}
 
 	//エフェクトの更新
 	m_EffectManager.Update();
@@ -280,6 +273,15 @@ void CStage1::StgCollPlayer() {
 }
 
 void CStage1::StgCollBullet() {
+
+	if (m_Player.IsAttack())
+	{
+		for (int i = 0; i < PLAYERSHOT_COUNT; i++)
+		{
+			m_Stage.StageAttackCollision(m_Player.GetLaserRect(i));
+		}
+	}
+
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
 		float ox = 0, oy = 0;

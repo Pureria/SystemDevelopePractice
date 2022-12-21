@@ -19,6 +19,9 @@ void CEnemy_2::Initialize(float px, float py, int type)
 	m_DamageWait = 0;
 	m_bWidthOut = true;
 	m_EnemyType = Bike;
+	m_CurrentMove = m_Move;
+	m_bKnockback = false;
+	m_KnockbackTime = 0;
 
 	m_bShotTarget = m_bFallFlg;
 
@@ -77,6 +80,13 @@ void CEnemy_2::Update(float wx)
 
 	if (!m_bShow)
 		return;
+
+	if (m_bKnockback)
+	{
+		//TODO::ノックバック中の処理
+		KnockBack();
+		return;
+	}
 
 	//ダメージ中の動作
 	if (m_Motion.GetMotionNo() == MOTION_DAMAGE)
@@ -162,6 +172,7 @@ void CEnemy_2::Update(float wx)
 	m_Move.y += GRAVITY;
 	if (m_Move.y >= 20.0f) { m_Move.y = 20.0f; }
 
+	m_CurrentMove = m_Move;
 	//m_Pos.y += m_Move.y;
 	m_Pos += m_Move;
 
@@ -237,9 +248,31 @@ CRectangle CEnemy_2::GetLedgeCheckRect()
 void CEnemy_2::Damage(float dmg)
 {
 	m_HP -= dmg;
-
 	if (m_HP <= 0)
+	{
 		m_bShow = false;
+	}
+	else
+	{
+		m_bKnockback = true;
+		m_Move.y = -ENEMY_KNOCKBACK_POWER_Y;
+	}
+}
+
+void CEnemy_2::KnockBack()
+{
+	m_KnockbackTime += CUtilities::GetFrameSecond();
+	m_Move.y += GRAVITY;
+	if (m_Move.y >= 20.0f) { m_Move.y = 20.0f; }
+	m_Move.x = m_CurrentMove.x * -1;
+	m_Pos += m_Move;
+
+	if (m_KnockbackTime >= ENEMY_KNOCKBACK_TIME)
+	{
+		m_bKnockback = false;
+		m_KnockbackTime = 0;
+		m_Move = m_CurrentMove;
+	}
 }
 
 /**

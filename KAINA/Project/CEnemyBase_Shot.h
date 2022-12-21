@@ -12,8 +12,9 @@ protected:
 public:
 	CEnemyBase_Shot() : m_ShotArray(),m_ShotWait(0) {};
 	virtual ~CEnemyBase_Shot() {};
-	//弾のShow・Rectangleを返す
+	//弾のShowを返す
 	bool	   ShotArrayBool(int i) { return m_ShotArray[i].GetShow(); }
+	//弾のShow・Rectangleを返す
 	CRectangle ShotArrayRect(int i) { return m_ShotArray[i].GetRect(); }
 	//弾のShowをセットする
 	void	   SetShotShow(bool flg, int i) { m_ShotArray[i].SetShow(flg); }
