@@ -527,23 +527,6 @@ bool CStage::Collision(CRectangle r) {
 			CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
 			if (cr.CollisionRect(r))
 			{
-				if (cn == BUTTON_RED)
-				{
-					m_pChipData[y * m_XCount + x] = 0;
-					m_bButtonRed = true;
-				}
-
-				else if (cn == BUTTON_BLUE)
-				{
-					m_pChipData[y * m_XCount + x] = 0;
-					m_bButtonBlue = true;
-				}
-
-				else if (cn == BUTTON_YELLOW)
-				{
-					m_pChipData[y * m_XCount + x] = 0;
-					m_bButtonYellow = true;
-				}
 				return true;
 			}
 		}

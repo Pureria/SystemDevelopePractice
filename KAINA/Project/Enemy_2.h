@@ -12,8 +12,6 @@ private:
 	bool					m_bFallFlg;
 	//ShotTarget : TRUE 弾の軌道がまっすぐ	FALSE : 弾の軌道がプレイヤーに向かって
 	bool					m_bShotTarget;
-	//KnockBack : TRUE ノックバック中 : FALSE : ノックバック無し
-	bool					m_bKnockback;
 
 
 	float					m_TargetPosX;

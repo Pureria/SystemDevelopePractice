@@ -393,10 +393,9 @@ void CStage1::StgCollEne() {
 		}
 
 		if (m_Enemy2Array[i].GetFallFlg())
-		{
 			continue;
-		}
-		if (!m_Stage.Collision(m_Enemy2Array[i].GetLedgeCheckRect()))
+
+		if (!m_Stage.Collision(m_Enemy2Array[i].GetLedgeCheckRect()) && !m_Enemy2Array[i].GetKnockback())
 		{
 			m_Enemy2Array[i].Flip();
 		}

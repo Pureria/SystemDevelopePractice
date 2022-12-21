@@ -25,6 +25,8 @@ protected:
 	bool		m_bShow;
 	//TRUE : 画面内		FALSE : 画面外
 	bool		m_bWidthOut;
+	//KnockBack : TRUE ノックバック中 : FALSE : ノックバック無し
+	bool		m_bKnockback;
 
 	float		m_KnockbackTime;
 
@@ -44,6 +46,7 @@ public:
 
 	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
 	bool GetShow() { return m_bShow; }
+	bool GetKnockback() { return m_bKnockback; }
 	int	 GetEnemyType() { return m_EnemyType; }
 	
 	void virtual Damage(float dmg) { return; }
