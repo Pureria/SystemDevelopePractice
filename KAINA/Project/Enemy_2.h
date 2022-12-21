@@ -18,9 +18,7 @@ private:
 
 	float					m_TargetPosX;
 	float					m_TargetPosY;
-	float					m_KnockbackTime;
 
-	Vector2					m_CurrentMove;
 
 	//ƒ‚[ƒVƒ‡ƒ“í—Ş’è‹`
 	enum tag_Motion {
@@ -65,8 +63,8 @@ public:
 	bool		GetFallFlg() { return m_bFallFlg; }
 
 	void		SetFallFlg(bool flg) { m_bFallFlg = flg; }
-	void		KnockBack();
 
 	void Damage(float dmg) override;
+	void KnockBack() override;
 };
 

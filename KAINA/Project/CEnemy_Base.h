@@ -20,10 +20,14 @@ protected:
 
 	Vector2		m_Pos;
 	Vector2		m_Move;
+	Vector2		m_CurrentMove;
 
 	bool		m_bShow;
 	//TRUE : ‰æ–Ê“à		FALSE : ‰æ–ÊŠO
 	bool		m_bWidthOut;
+
+	float		m_KnockbackTime;
+
 
 	CEffectManager* m_pEffectManager;
 
@@ -43,6 +47,7 @@ public:
 	int	 GetEnemyType() { return m_EnemyType; }
 	
 	void virtual Damage(float dmg) { return; }
+	void virtual KnockBack() { return; }
 
 
 };
