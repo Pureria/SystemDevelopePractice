@@ -211,7 +211,7 @@ bool CEnemy_2::ShotTarget(int i)
 
 void CEnemy_2::CollisionStage(float ox, float oy)
 {
-	if (ox != 0)
+	if (ox != 0 && !m_bKnockback)
 	{
 		m_bReverse = !m_bReverse;
 	}
@@ -247,6 +247,9 @@ CRectangle CEnemy_2::GetLedgeCheckRect()
 
 void CEnemy_2::Damage(float dmg)
 {
+	if (m_bKnockback)
+		return;
+
 	m_HP -= dmg;
 	if (m_HP <= 0)
 	{
@@ -255,6 +258,7 @@ void CEnemy_2::Damage(float dmg)
 	else
 	{
 		m_bKnockback = true;
+		Flip();
 		m_Move.y = -ENEMY_KNOCKBACK_POWER_Y;
 	}
 }
