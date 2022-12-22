@@ -707,7 +707,6 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 	}
 
 	//敵とレーザーの当たり判定
-	//TODO::1フレームに1HP減るため敵側でDamageWaitの追加必須
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
 		if (!m_Laser[i].GetShow()) { continue; }
@@ -718,6 +717,7 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 			if (eneType == Turret)
 				continue;
 
+			//TODO::レーザーのダメージ
 			ene.Damage(1);
 		}
 	}

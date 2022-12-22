@@ -17,6 +17,7 @@ private:
 	float					m_TargetPosX;
 	float					m_TargetPosY;
 
+	CEffect*				m_pEndEffect;
 
 	//ƒ‚[ƒVƒ‡ƒ“í—Ş’è‹`
 	enum tag_Motion {
@@ -35,7 +36,6 @@ public:
 	void Render(float wx, float wy);
 	void RenderDebug(float wx, float wy);
 	void Release();
-	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
 
 	void SetTexture(CTexture* pt, CTexture* st);
 

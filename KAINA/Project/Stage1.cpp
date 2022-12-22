@@ -66,6 +66,12 @@ void CStage1::Initialize(){
 	m_intervalFire = FIREBAR_INTERVAL;
 	m_bFire = false;
 
+	//Enemy2にエフェクトクラスの設定
+	for (int i = 0; i < m_Stage.GetEnemy2Count(); i++)
+	{
+		m_Enemy2Array[i].SetEffectManager(&m_EffectManager);
+	}
+
 	//ステージにエフェクトクラスの設定
 	m_Stage.SetEffectManager(&m_EffectManager);
 }
