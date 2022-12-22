@@ -1,9 +1,8 @@
 #include	"Player.h"
 
-/**
- * コンストラクタ
- *
- */
+// 特殊な呼び出しがされる処理
+#pragma region 特殊関数
+
 CPlayer::CPlayer() :
 m_Texture() ,
 m_Motion() ,
@@ -29,14 +28,16 @@ m_HP(0),
 m_SP(0),
 m_bGoal(false),
 m_PlShotAry(),
-m_NextBossScene(false){
-}
+m_NextBossScene(false),
+m_Deffence(0){}
 
-/**
- * 読み込み
- * 利用するテクスチャを読み込む。
- */
-bool CPlayer::Load(void){
+#pragma endregion
+
+
+//読み込み処理
+#pragma region Load関数
+
+bool CPlayer::Load(){
 	//テクスチャの読み込み
 	if (!m_Texture.Load("player.png"))				{		return false;	}
 
@@ -119,12 +120,14 @@ bool CPlayer::Load(void){
 	return true;
 }
 
-/**
- * 初期化
- * パラメーターや座標を初期化する。
- * プレイヤーの位置など状態を初期化したいときに実行する。
- */
-void CPlayer::Initialize(void){
+#pragma endregion
+
+
+//初期化処理
+#pragma region Initialize関数
+
+
+void CPlayer::Initialize(){
 	m_PosX = 200;
 	m_PosY = 0;
 	m_bMove = false;
@@ -147,6 +150,10 @@ void CPlayer::Initialize(void){
 	Load();
 	m_NextBossScene = false;
 }
+
+
+#pragma endregion
+
 
 //更新
 #pragma region Update関数
@@ -212,20 +219,68 @@ void CPlayer::Update() {
 
 }
 
-void CPlayer::UpdateKey( void ) {
-	//キーボードでの移動処理
+
+void CPlayer::UpdateShot() {
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
+	{
+		m_Laser[i].Update();
+		m_PlShotAry[i].Update();
+	}
+}
+
+
+void CPlayer::UpdateMove(){
+	//このフレームでの移動入力がなければ減速処理を実行する
+	if (!m_bMove)
+	{
+		if (m_MoveX > 0)
+		{
+			m_MoveX -= PLAYER_SPEED;
+			if (m_MoveX <= 0)
+			{
+				m_MoveX = 0;
+			}
+		}
+		else if (m_MoveX < 0)
+		{
+			m_MoveX += PLAYER_SPEED;
+			if (m_MoveX >= 0)
+			{
+				m_MoveX = 0;
+			}
+		}
+		else if (m_Motion.GetMotionNo() == MOTION_MOVE)
+		{
+			m_Motion.ChangeMotion(MOTION_WAIT);
+		}
+	}
+	//重力により少しずつ下がる
+	if (IsJump())
+	{
+		m_MoveY += GRAVITY;
+	}
+	else
+	{
+		m_MoveY += GRAVITY + 0.2f;
+	}
+
+	if (m_MoveY >= 20.0f)
+	{
+		m_MoveY = 20.0f;
+	}
+}
+
+
+void CPlayer::UpdateKey() {
+
 	MoveKey();
 
-	//弾の特性切り替え
 	BulletChange();
 
-	//銃口の向く処理
-	DirecTpBtm();
+	DirecTpBtmChange();
 
-	//弾の特性変化の処理
 	NatuChange();
 
-	//SPACEキーで攻撃
 	ShotManager();
 
 }
@@ -234,12 +289,10 @@ void CPlayer::UpdateKey( void ) {
 #pragma endregion
 
 
-/**
- * キー入力による動作更新
- *
- */
+//キー入力による動作更新/
+#pragma region Move関数
 
-//プレイヤーの動きの制限
+
 void CPlayer::MoveKey() {
 	//入力で直接座標を動かすのではなく、速度を変化させる
 	//攻撃中は移動できないようにする
@@ -283,6 +336,10 @@ void CPlayer::MoveKey() {
 }
 
 
+#pragma endregion
+
+
+//変える処理
 #pragma region Change関数
 
 void CPlayer::BulletChange() {
@@ -302,7 +359,6 @@ void CPlayer::TypeChange() {
 	}
 }
 
-//弾の特性を変える処理
 void CPlayer::NatuChange() {
 	if (g_pInput->IsKeyPush(MOFKEY_O)) {
 		switch (m_NatuType)
@@ -323,21 +379,7 @@ void CPlayer::NatuChange() {
 	}
 }
 
-#pragma endregion
-
-//弾の種類を変える処理
-
-void CPlayer::ShotManager() {
-	if (IsLaser()) {
-		FireShotLaser();
-	}
-	else {
-		FireShot();
-	}
-}
-
-//弾の方向を変える処理
-void CPlayer::DirecTpBtm() {
+void CPlayer::DirecTpBtmChange() {
 	if (g_pInput->IsKeyPush(MOFKEY_W) && !m_bTop) {
 		m_bTop = true;
 		m_bBottom = false;
@@ -354,6 +396,29 @@ void CPlayer::DirecTpBtm() {
 		m_bBottom = false;
 	}
 }
+
+#pragma endregion
+
+
+
+//処理の管理
+#pragma region Manager処理
+
+void CPlayer::ShotManager() {
+	if (IsLaser()) {
+		FireShotLaser();
+	}
+	else {
+		FireShot();
+	}
+}
+
+#pragma endregion
+
+
+//反射弾の処理
+#pragma region Shot関数
+
 
 //弾を撃つ処理
 void CPlayer::FireShot() {
@@ -409,6 +474,11 @@ void CPlayer::ShotRev(int i) {
 	}
 }
 
+#pragma endregion
+
+//レーザーの処理
+#pragma region Laser関数
+
 void CPlayer::FireShotLaser() {
 	//弾の発射
 
@@ -458,60 +528,11 @@ void CPlayer::ShotRevLaser(int i) {
 	}
 }
 
+#pragma endregion
 
-//弾の更新
-void CPlayer::UpdateShot() {
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-	{
-		m_Laser[i].Update();
-		m_PlShotAry[i].Update();
-	}
-}
 
-/**
- * 移動更新
- *
- */
-void CPlayer::UpdateMove(void){
-	//このフレームでの移動入力がなければ減速処理を実行する
-	if (!m_bMove)
-	{
-		if (m_MoveX > 0)
-		{
-			m_MoveX -= PLAYER_SPEED;
-			if (m_MoveX <= 0)
-			{
-				m_MoveX = 0;
-			}
-		}
-		else if (m_MoveX < 0)
-		{
-			m_MoveX += PLAYER_SPEED;
-			if (m_MoveX >= 0)
-			{
-				m_MoveX = 0;
-			}
-		}
-		else if (m_Motion.GetMotionNo() == MOTION_MOVE)
-		{
-			m_Motion.ChangeMotion(MOTION_WAIT);
-		}
-	}
-	//重力により少しずつ下がる
-	if (IsJump())
-	{
-		m_MoveY += GRAVITY;
-	}
-	else
-	{
-		m_MoveY += GRAVITY + 0.2f;
-	}
-
-	if (m_MoveY >= 20.0f)
-	{
-		m_MoveY = 20.0f;
-	}
-}
+//Playerに影響を与える関数
+#pragma region Player関数
 
 void CPlayer::PlayerDamage(bool flg,float damage)
 {
@@ -549,6 +570,24 @@ void CPlayer::PlayerDamage(bool flg,float damage)
 	}
 
 }
+
+void CPlayer::PlayerEnd() {
+	if (m_HP <= 0)
+	{
+		if (!m_pEndEffect || !m_pEndEffect->GetShow())
+		{
+			m_bDead = true;
+		}
+		return;
+	}
+}
+
+#pragma endregion
+
+
+//当たり判定の関数
+#pragma region Collision関数
+
 
 bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 	bool flg = false;
@@ -818,29 +857,6 @@ bool CPlayer::CollisionAttackItem(CItem& itm)
 	return false;
 }
 
-void CPlayer::PlayerEnd() {
-	if (m_HP <= 0)
-	{
-		if (!m_pEndEffect || !m_pEndEffect->GetShow())
-		{
-			m_bDead = true;
-		}
-		return;
-	}
-}
-
-//プレイヤーの落下処理
-void CPlayer::Fall() {
-	//画面外で落下としてHPを0にする
-	if (m_PosY >= g_pGraphics->GetTargetHeight() && m_HP > 0)
-	{
-		m_HP = 0;
-		//爆発エフェクトを発生させる
-		m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
-	}
-}
-
-//ステージとの当たり判定
 void CPlayer::CollisionStage(float ox, float oy)
 {
 	m_PosX += ox;
@@ -871,6 +887,13 @@ void CPlayer::CollisionStage(float ox, float oy)
 	}
 }
 
+
+#pragma endregion
+
+
+//期待値を返す関数
+#pragma region Is関数
+
 bool CPlayer::IsJump()
 {
 	if (m_MoveY < 0)
@@ -878,6 +901,9 @@ bool CPlayer::IsJump()
 	else
 		return false;
 }
+
+#pragma endregion
+
 
 //描画
 #pragma region Render関数
@@ -916,7 +942,7 @@ void CPlayer::Render(float wx,float wy){
 	m_Texture.Render(px, py, dr);
 }
 
-void CPlayer::RenderStatus(void) {
+void CPlayer::RenderStatus() {
 	m_HPTexture.Render(0,0);
 	m_SPTexture.Render(0,0);
 	//HPに応じて短径の幅を変化させる
@@ -952,7 +978,7 @@ void CPlayer::RenderDebug(float wx, float wy){
 //解放
 #pragma region Release関数
 
-void CPlayer::Release(void){
+void CPlayer::Release(){
 	m_Texture.Release();
 	m_Motion.Release();
 	m_FrameTexture.Release();
@@ -966,3 +992,28 @@ void CPlayer::Release(void){
 
 #pragma endregion
 
+
+//その他の関数
+#pragma region Other関数
+
+
+void CPlayer::Fall() {
+	//画面外で落下としてHPを0にする
+	if (m_PosY >= g_pGraphics->GetTargetHeight() && m_HP > 0)
+	{
+		m_HP = 0;
+		//爆発エフェクトを発生させる
+		m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+	}
+}
+
+
+void CPlayer::DeffenceProc(int dmg) {
+	m_Deffence = PLAYER_DEFFENCE_POWER;
+
+	float deff = m_Deffence - dmg;
+
+	if (deff > 0) {		m_HP += deff;		}
+}
+
+#pragma endregion
