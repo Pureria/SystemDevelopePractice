@@ -51,7 +51,5 @@ public:
 	
 	void virtual Damage(float dmg) { return; }
 	void virtual KnockBack() { return; }
-
-
 };
 

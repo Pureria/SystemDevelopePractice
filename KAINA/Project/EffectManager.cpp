@@ -77,7 +77,7 @@ CEffect* CEffectManager::Start(float px,float py,int type){
 }
 
 CEffect* CEffectManager::Start(Vector2 p, int type) {
-	for (int i = 0; i < EFFECTCOUNT; i++)
+ 	for (int i = 0; i < EFFECTCOUNT; i++)
 	{
 		//未使用のエフェクトかどうか確認
 		if (m_Effect[i][type].GetShow())
