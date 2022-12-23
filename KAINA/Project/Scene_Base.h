@@ -17,7 +17,9 @@ protected:
 	//
 	int			m_Alpha;
 	//
-	bool        m_bChange;
+	bool			m_bChange;
+
+	static float	m_Time;
 
 public:
 	Scene_Base() : m_bEnd(false), m_SceneNo(SCENENO_TITLE), m_NowScene(NULL), m_Alpha(255),m_bChange(false){};
@@ -54,5 +56,11 @@ public:
 			exit(0);
 		}
 	}
+
+	float Time() {
+
+		return m_Time += CUtilities::GetFrameSecond();
+	}
+
 };
 

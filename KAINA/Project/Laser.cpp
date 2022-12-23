@@ -119,17 +119,6 @@ CRectangle* Laser::GetFireRect() {
 	 
 	for (int i = 0; i < 3; i++)
 	{
-
-		/*m_FireRec[i] = FireRec[i];
-
-
-		MofU32 Color[3] = {
-			MOF_COLOR_RED,
-			MOF_COLOR_GREEN,
-			MOF_COLOR_BLUE,
-		};
-
-		CGraphicsUtilities::RenderRect(m_FireRec[i], Color[i]);*/
 	    return &m_FireRec[i];
 	}
 	
