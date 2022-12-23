@@ -47,11 +47,12 @@ enum tag_EnemyType
 };
 
 //弾の反射回数
-#define		REFLECTION_COUNT	5	
+#define		REFLECTION_COUNT		5	
 //************************全ステージの重力Define*************************//
 //重力
-#define		GRAVITY		0.3f
+#define		GRAVITY					0.3f
 
+#define		DAMAGE_WAIT				60
 //************************プレイヤーで使うDefine*************************//
 //移動速度
 #define		PLAYER_SPEED			0.3f

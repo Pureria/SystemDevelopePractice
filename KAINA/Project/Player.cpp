@@ -640,7 +640,12 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 				continue;
 
 			//TODO::レーザーのダメージ
-			ene.Damage(1);
+			if (m_Laser[i].GetNatu() == FIRE) {
+				ene.Damage(10);
+			}
+			else if (m_Laser[i].GetNatu() == FROST) {
+				ene.Damage(12);
+			}
 		}
 	}
 
@@ -655,7 +660,7 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 		if (prec.CollisionRect(erec))
 		{
 			m_HP -= 5;
-			m_DamageWait = 60;
+			m_DamageWait = DAMAGE_WAIT;
 			if (prec.Left < erec.Left)
 			{
 				m_MoveX = -5.0f;
@@ -691,7 +696,7 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 		if (prec.CollisionRect(esrec))
 		{
 			m_HP -= 5;
-			m_DamageWait = 60;
+			m_DamageWait = DAMAGE_WAIT;
 			if (prec.Left < erec.Left)
 			{
 				m_MoveX = -5.0f;
@@ -715,7 +720,6 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 				m_pEffectManager->Start(SetStartPos(), EFC_DAMAGE);
 			}
 		}
-
 	}
 
 
@@ -773,7 +777,7 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 	if (prec.CollisionRect(erec))
 	{
 		m_HP -= ENEMY_ATTAK_POWER;
-		m_DamageWait = 60;
+		m_DamageWait = DAMAGE_WAIT;
 		if (prec.Left < erec.Left)
 		{
 			m_MoveX = -5.0f;

@@ -413,7 +413,6 @@ void CEnemy_Stage1_Boss::CollisionWall()
 	}
 }
 
-
 void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 
 
@@ -430,21 +429,6 @@ void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 	{
 		m_bShow = false;
 	}
-	/*
-	if (bRev)
-	{
-		m_MoveX = -5.0f;
-		m_bReverse = false;
-	}
-	else
-	{
-		m_MoveX = 5.0f;
-		m_bReverse = true;
-	}
-	*/
-
-	//ダメージエフェクトを発生させる
-	//m_pEffectManager->Start(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f, EFC_DAMAGE);
 }
 
 bool CEnemy_Stage1_Boss::isCollisionBossAttack(CRectangle prec)
