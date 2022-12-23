@@ -7,8 +7,8 @@
 #include	"CEnemy_Base.h"
 
 //当たり判定減衰幅
-#define		BOSS1_RECT_WIDTH_DECREASE		50.0f
-#define		BOSS1_RECT_HEIGHT_DECREASE		5.0f
+#define		BOSS1_RECT_WIDTH_DECREASE		100.0f
+#define		BOSS1_RECT_HEIGHT_DECREASE		100.0f
 
 //ボス基本定位置
 #define		ENEMY_DEFAULT_LEFTPOS			440
@@ -102,7 +102,7 @@ public:
 	CRectangle GetBossSideRect() 
 	{
 		CRectangle hr = GetRect();
-		return CRectangle(hr.Left - 10, (hr.Top + 120), hr.Right + 10, (hr.Bottom - 120));
+		return CRectangle(hr.Left - 10, (hr.Top + 100), hr.Right + 10, (hr.Bottom - 100));
 	}
 	//ボスのフロントRect
 	CRectangle GetBossFrontRect()

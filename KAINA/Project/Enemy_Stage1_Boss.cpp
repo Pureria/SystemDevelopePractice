@@ -55,7 +55,7 @@ bool CEnemy_Stage1_Boss::Load()
 		},
 		{
 			"É_ÉbÉVÉÖçUåÇ",
-			0,0,240,256,FALSE,
+			0,0,320,320,FALSE,
 			{{5,0,0}}
 		},
 		{
@@ -324,12 +324,12 @@ void CEnemy_Stage1_Boss::Update() {
 			if (!m_bReverse)
 			{
 				//m_MoveX = -ENEMY_ATTACKSLASH_MOVE;
-				m_AttakSlashRect = CRectangle(m_PosX - ENEMY_ATTACKSLASH_WIDTH + BOSS1_RECT_WIDTH_DECREASE, m_PosY, m_PosX + BOSS1_RECT_WIDTH_DECREASE, m_PosY + m_SrcRect.GetHeight());
+				m_AttakSlashRect = CRectangle(m_PosX - ENEMY_ATTACKSLASH_WIDTH + BOSS1_RECT_WIDTH_DECREASE, m_PosY + BOSS1_RECT_HEIGHT_DECREASE, m_PosX + BOSS1_RECT_WIDTH_DECREASE, m_PosY + m_SrcRect.GetHeight());
 			}
 			else
 			{
 				//m_MoveX = ENEMY_ATTACKSLASH_MOVE;
-				m_AttakSlashRect = CRectangle(m_PosX + m_SrcRect.GetWidth() - BOSS1_RECT_WIDTH_DECREASE, m_PosY, m_PosX + m_SrcRect.GetWidth() + ENEMY_ATTACKSLASH_WIDTH - BOSS1_RECT_WIDTH_DECREASE, m_PosY + m_SrcRect.GetHeight());
+				m_AttakSlashRect = CRectangle(m_PosX + m_SrcRect.GetWidth() - BOSS1_RECT_WIDTH_DECREASE, m_PosY + BOSS1_RECT_HEIGHT_DECREASE, m_PosX + m_SrcRect.GetWidth() + ENEMY_ATTACKSLASH_WIDTH - BOSS1_RECT_WIDTH_DECREASE, m_PosY + m_SrcRect.GetHeight());
 			}
 			m_AttackSlash = true;
 		}
