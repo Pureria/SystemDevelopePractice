@@ -32,4 +32,5 @@ public:
 	CRectangle GetRect(){
 		return CRectangle(m_Pos.x + ENEMY_RECT_WIDTH_DECREASE,m_Pos.y + ENEMY_RECT_WIDTH_DECREASE,m_Pos.x + m_SrcRect.GetWidth() - ENEMY_RECT_WIDTH_DECREASE,m_Pos.y + m_SrcRect.GetHeight());
 	}
+
 };

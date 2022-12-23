@@ -416,19 +416,14 @@ void CEnemy_Stage1_Boss::CollisionWall()
 
 void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 
+
 	if (direction)
 	{
-		if (!(m_HP - dmg - ENEMY_BOSS_FRONT_DEF) <= -1)
-		{
-			m_HP -= dmg - ENEMY_BOSS_FRONT_DEF;
-		}
+		DeffenceProc(dmg, ENEMY_BOSS_FRONT_DEF);
 	}
 	else
 	{
-		if (!(m_HP - dmg - ENEMY_BOSS_BACK_DEF) <= -1)
-		{
-			m_HP -= dmg - ENEMY_BOSS_BACK_DEF;
-}
+		DeffenceProc(dmg, ENEMY_BOSS_BACK_DEF);
 	}
 
 	if (m_HP <= 0)
@@ -463,6 +458,15 @@ bool CEnemy_Stage1_Boss::isCollisionBossAttack(CRectangle prec)
 	}
 	
 	return false;
+}
+
+
+void CEnemy_Stage1_Boss::DeffenceProc(int dmg,int deff) {
+	m_Deffence = deff;
+
+	float def = m_Deffence - dmg;
+
+	if (def < 0) { m_HP += def; }
 }
 
 /**

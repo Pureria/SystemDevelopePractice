@@ -87,8 +87,6 @@ private:
 	//ボス部屋用フラグ
 	bool					m_NextBossScene;
 
-	int						m_Deffence;
-
 
 public:
 	CPlayer();
@@ -252,6 +250,4 @@ private:
 	Vector2 SetStartPos() {
 		return Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f - 20);
 	}
-
-	void DeffenceProc(int dmg);
 };

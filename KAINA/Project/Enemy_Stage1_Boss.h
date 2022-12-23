@@ -4,6 +4,7 @@
 #include	"GameDefine.h"
 #include	"EffectManager.h"
 #include	"EnemyStateDefine.h"
+#include	"CEnemy_Base.h"
 
 //当たり判定減衰幅
 #define		BOSS1_RECT_WIDTH_DECREASE		50.0f
@@ -23,7 +24,7 @@
 #define		ENEMY_ATTACKSLASH_WIDTH			150.0f
 #define		ENEMY_ATTACKSLASH_MOVE			90
 
-class CEnemy_Stage1_Boss {
+class CEnemy_Stage1_Boss : public CEnemy_Base {
 private:
 	CTexture				m_Texture;
 	CSpriteMotionController	m_Motion;
@@ -135,5 +136,11 @@ public:
 
 	//ボススラッシュ攻撃の判定
 	bool isCollisionBossAttack(CRectangle prec);
+
+	void DeffenceProc(int dmg, int deff) override;
+
+	//TODO: どうにかしよう
+	void Initialize(float px, float py, int type) {};
+	void Update(float wx) {};
 };
 

@@ -13,26 +13,27 @@ protected:
 	CSpriteMotionController m_Motion;
 	CRectangle				m_SrcRect;
 
-	int m_Type;
-	int m_EnemyType;
-	int m_HP;
-	int m_DamageWait;
+	int						m_Type;
+	int						m_EnemyType;
+	int						m_HP;
+	int						m_DamageWait;
 
-	Vector2		m_Pos;
-	Vector2		m_Move;
-	Vector2		m_CurrentMove;
+	Vector2					m_Pos;
+	Vector2					m_Move;
+	Vector2					m_CurrentMove;
 
-	bool		m_bShow;
+	bool					m_bShow;
 	//TRUE : 画面内		FALSE : 画面外
-	bool		m_bWidthOut;
+	bool					m_bWidthOut;
 	//KnockBack : TRUE ノックバック中 : FALSE : ノックバック無し
-	bool		m_bKnockback;
+	bool					m_bKnockback;
 
-	float		m_KnockbackTime;
+	float					m_KnockbackTime;
 
 
-	CEffectManager* m_pEffectManager;
+	CEffectManager*			m_pEffectManager;
 
+	int						m_Deffence;
 public:
 	void virtual Initialize(float px, float py, int type)	= 0;
 	void virtual Update(float wx)							= 0;
@@ -40,9 +41,11 @@ public:
 	void virtual Render(float wx, float wy)					= 0;
 	void virtual RenderDebug(float wx, float wy)			= 0;
 	void virtual Release()									= 0;
-	void virtual SetTexture(CTexture* pt, CTexture* st)		= 0;
 	CRectangle virtual GetRect()							= 0;
 
+	void virtual SetTexture(CTexture* pt, CTexture* st) { return; }
+	void virtual DeffenceProc(int dmg) { return; }
+	void virtual DeffenceProc(int dmg,int deff) { return; }
 
 	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
 	bool GetShow() { return m_bShow; }
@@ -51,5 +54,6 @@ public:
 	
 	void virtual Damage(float dmg) { return; }
 	void virtual KnockBack() { return; }
+
 };
 
