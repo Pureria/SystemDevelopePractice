@@ -14,6 +14,7 @@
 #define		WATER			12
 //氷チップ
 #define		ICE				11
+#define		ICE2			30
 //ボタンチップ
 #define		BUTTON_RED		10
 #define		BUTTON_BLUE		16

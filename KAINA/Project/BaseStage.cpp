@@ -875,18 +875,6 @@ void CStage::CollisionIceFroe(CRectangle r)
 	if (rc >= m_XCount) { rc = m_XCount - 1; }
 	if (bc >= m_YCount) { bc = m_YCount - 1; }
 
-	/*
-	int lc = r.Left / m_ChipSize;
-	int rc = r.Right / m_ChipSize;
-	int tc = r.Top / m_ChipSize;
-	int bc = r.Bottom / m_ChipSize;
-
-	if (lc < 0) { lc = 0; }
-	if (tc < 0) { tc = 0; }
-	if (rc >= m_XCount) { rc = m_XCount - 1; }
-	if (bc >= m_YCount) { bc = m_YCount - 1; }
-	*/
-
 	for (int y = tc; y <= bc; y++)
 	{
 		for (int x = lc; x <= rc; x++)
@@ -898,6 +886,14 @@ void CStage::CollisionIceFroe(CRectangle r)
 				if (cr.CollisionRect(r))
 				{
 					m_pChipData[y * m_XCount + x] = 13;
+				}
+			}
+			else if (cn == ICE2)
+			{
+				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
+				if (cr.CollisionRect(r))
+				{
+					m_pChipData[y * m_XCount + x] = 0;
 				}
 			}
 		}
