@@ -1,16 +1,17 @@
 #include "Laser.h"
 
 Laser::Laser() :
-	//m_FmTime(0)		,
 	m_LaserHitPos(0, 0),
-	m_LaserRange(0){};
+	m_LaserRange(0),
+	m_LaserDecrealse(0),
+	m_StopCount(0)
+{};
 
 
 void Laser::Initialize() {
 	m_ShotPos = Vector2(0, 0);
 	m_bShow = false;
 	m_DrcType = RIGHT;
-	//m_FmTime = 0.0f;
 	m_bHitWall = false;
 }
 
@@ -31,10 +32,6 @@ void Laser::Fire(Vector2& pos, int tb, int natuyype) {
 	m_LaserDecrealse = 0;
 	m_StopCount = LASER_DELAY;
 }
-
-/*float Laser::FpsSpd() {
-	return m_FmTime = CUtilities::GetFrameSecond();
-}*/
 
 void Laser::ShotLaser() {
 
@@ -77,6 +74,7 @@ CRectangle Laser::GetRect() {
 			m_ShotPos.y - m_LaserRange,
 			m_ShotPos.x + 50,
 			m_ShotPos.y - m_LaserDecrealse);
+		break;
 	case RIGHTBOTTOM:
 		Rec = CRectangle(m_ShotPos.x,
 			m_ShotPos.y + m_LaserDecrealse,
