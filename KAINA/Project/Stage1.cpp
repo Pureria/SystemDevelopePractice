@@ -136,6 +136,7 @@ void CStage1::Update(void){
 
 	for (int i = 0; i < m_Stage.GetEnemy1Count(); i++)
 	{
+		m_EnemyArray[i].SetTime(Time());
 		m_Player.CollisionEnemy(m_EnemyArray[i], m_EnemyArray[i].GetEnemyType());
 	}
 
@@ -358,6 +359,8 @@ void CStage1::StgCollEne() {
 		{
 			continue;
 		}
+
+		m_EnemyArray[i].SetTime(Time());
 		m_EnemyArray[i].Update(m_Stage.GetScrollX());
 		float ox = 0, oy = 0;
 		if (m_Stage.Collision(m_EnemyArray[i].GetRect(), ox, oy))
@@ -381,6 +384,7 @@ void CStage1::StgCollEne() {
 		{
 			continue;
 		}
+		m_Enemy2Array[i].SetTime(Time());
 		m_Enemy2Array[i].SetTargetPos(PPosX, PPosY);
 		m_Enemy2Array[i].Update(m_Stage.GetScrollX());
 		float ox = 0, oy = 0;

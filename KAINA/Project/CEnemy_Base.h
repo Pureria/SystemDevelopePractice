@@ -34,6 +34,8 @@ protected:
 	CEffectManager*			m_pEffectManager;
 
 	int						m_Deffence;
+
+	float					m_EneTime;
 public:
 	void virtual Initialize(float px, float py, int type)	= 0;
 	void virtual Update(float wx)							= 0;
@@ -48,12 +50,13 @@ public:
 	void virtual DeffenceProc(int dmg,int deff) { return; }
 
 	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
+	void SetTime(float time) { m_EneTime = time; }
+	
 	bool GetShow() { return m_bShow; }
 	bool GetKnockback() { return m_bKnockback; }
 	int	 GetEnemyType() { return m_EnemyType; }
 	
 	void virtual Damage(float dmg) { return; }
 	void virtual KnockBack() { return; }
-
 };
 
