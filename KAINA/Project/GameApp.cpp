@@ -26,6 +26,8 @@ Scene_Base*				g_pScene = NULL;
 //デバッグ表示フラグ
 bool					g_bDebug = false;
 
+float					gTimer = 0.0f;
+
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
 		@param			None
@@ -57,6 +59,8 @@ MofBool CGameApp::Update(void){
 	int		Change;
 	
 	g_pScene->Update();
+	gTimer += CUtilities::GetFrameSecond();
+	g_pScene->SetTime(gTimer);
 
 	if (g_pScene->IsEnd()) {
 		g_pScene->Release();
