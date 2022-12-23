@@ -254,7 +254,7 @@ void CEnemy_2::Damage(float dmg)
 	if (m_bKnockback || m_pEndEffect)
 		return;
 
-	m_HP -= dmg;
+	DeffenceProc(dmg);
 	if (m_HP <= 0)
 	{
 		m_pEndEffect = m_pEffectManager->Start(m_Pos.x + (m_SrcRect.GetWidth() * 0.5), m_Pos.y + (m_SrcRect.GetHeight() * 0.5), EFC_EXPLOSION01);
@@ -355,6 +355,13 @@ void CEnemy_2::SetTexture(CTexture* pt, CTexture* st)
 	for (int i = 0; i < ENEMY_SHOT_COUNT; i++) { m_ShotArray[i].SetTexture(st); }
 }
 
+void CEnemy_2::DeffenceProc(int dmg) {
+	m_Deffence = ENEMY_DEFFENCE_POWER;
+
+	float deff = m_Deffence - dmg;
+
+	if (deff < 0) { m_HP += deff; }
+}
 /**
 *‰ð•ú
 *

@@ -64,5 +64,6 @@ public:
 
 	void Damage(float dmg) override;
 	void KnockBack() override;
+	void DeffenceProc(int dmg) override;
 };
 
