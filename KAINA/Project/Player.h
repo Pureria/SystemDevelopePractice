@@ -179,8 +179,6 @@ public:
 	//PlayerPosƒZƒbƒg
 	void SetPlayerPos(float PosX, float PosY)					{		m_PosX = PosX; m_PosY = PosY;							}
 
-	void SetLaserShotShow(bool flg, int i)						{		m_Laser[i].SetShow(flg);								}
-
 	void SetWallLaser(int i)									{		m_Laser[i].SetWallHitLaser();							}
 	
 #pragma endregion	

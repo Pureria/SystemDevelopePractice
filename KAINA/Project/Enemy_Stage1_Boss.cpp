@@ -96,7 +96,7 @@ void CEnemy_Stage1_Boss::Initialize() {
 	m_MoveY = 0.0f;
 	m_bReverse = false;
 	m_bShow = true;
-	m_HP = 10;
+	m_HP = 100;
 	m_MotionWait = ENEMY_MOTION_WAIT;
 	m_bIsEnemyPosLeft = false;
 	m_bIsOnLift = false;
@@ -447,7 +447,6 @@ bool CEnemy_Stage1_Boss::isCollisionBossAttack(CRectangle prec)
 	
 	return false;
 }
-
 
 void CEnemy_Stage1_Boss::DeffenceProc(int dmg,int deff) {
 	m_Deffence = deff;

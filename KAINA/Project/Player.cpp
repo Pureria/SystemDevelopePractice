@@ -386,6 +386,8 @@ void CPlayer::DirecTpBtmChange() {
 	}
 	else if (g_pInput->IsKeyPush(MOFKEY_W) && m_bTop) {
 		m_bTop = false;//eŒû‚ðŒ³‚É–ß‚·
+		m_bBottom = false;
+
 	}
 	if (g_pInput->IsKeyPush(MOFKEY_S) && !m_bBottom) {
 		m_bBottom = true;
@@ -393,6 +395,7 @@ void CPlayer::DirecTpBtmChange() {
 	}
 	else if (g_pInput->IsKeyPush(MOFKEY_S) && m_bBottom) {
 		m_bBottom = false;
+		m_bTop = false;
 	}
 }
 

@@ -10,8 +10,8 @@ private:
 	//float			m_FmTime;
 
 	//レーザー減衰幅
-	float		m_LaserDecrealse;
-	float		m_StopCount;
+	float			m_LaserDecrealse;
+	float			m_StopCount;
 
 	//レーザーの拡張範囲
 	int				m_LaserRange;
@@ -30,7 +30,6 @@ public:
 	//発射する情報をセット
 	void Fire(Vector2& pos, int tb, int natuyype);
 	void SetTexture(CTexture* pt) { m_pShotTex = pt; }
-	void SetShow(bool bs) { m_bShow = bs; }
 	//ステージに当たった場合　true	: false
 	void SetWallHitLaser() { m_bHitWall = true; }
 	//当たった座標をセット
