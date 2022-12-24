@@ -40,6 +40,7 @@ private:
 	bool					m_bJump;
 	bool					m_bTouchGround;
 	bool					m_AttackSlash;
+	bool					m_bEliminated;
 
 	CRectangle				m_SrcRect;
 	CRectangle				m_AttakSlashRect;
@@ -136,6 +137,8 @@ public:
 
 	//ボススラッシュ攻撃の判定
 	bool isCollisionBossAttack(CRectangle prec);
+	//ボス討伐判定
+	bool isBossEliminated() { return m_bEliminated; }
 
 	void DeffenceProc(int dmg, int deff) override;
 

@@ -16,7 +16,8 @@ CEnemy_Stage1_Boss::CEnemy_Stage1_Boss() :
 	m_bShow(true),
 	m_bReverse(false),
 	m_SrcRect(),
-	m_AttackSlash(){
+	m_AttackSlash(),
+	m_bEliminated(false){
 }
 
 /**
@@ -104,6 +105,7 @@ void CEnemy_Stage1_Boss::Initialize() {
 	m_bTouchGround = true;
 	m_AttackSlash = false;
 	m_OldMotionNo = MOTION_Idle;
+	m_bEliminated = false;
 }
 
 /**
@@ -431,6 +433,7 @@ void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 
 	if (m_HP <= 0)
 	{
+		m_bEliminated = true;
 		m_bShow = false;
 	}
 }

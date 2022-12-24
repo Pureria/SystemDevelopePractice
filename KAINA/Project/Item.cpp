@@ -12,7 +12,8 @@ m_PosY(0.0f) ,
 m_MoveX(0.0f) ,
 m_MoveY(0.0f) ,
 m_bShow(false) ,
-m_SrcRect() {
+m_SrcRect(),
+m_bBossEliminated(false){
 }
 
 /**
@@ -40,6 +41,7 @@ void CItem::Initialize(float px,float py,int type){
 	m_MoveX = 0.0f;
 	m_MoveY = 0.0f;
 	m_bShow = true;
+	m_bBossEliminated = false;
 	//アニメーションを作成
 	if (m_Type == BOSS_DOOR)
 	{
@@ -103,7 +105,7 @@ void CItem::Effect(int& hp, bool& gl,bool jump, bool& BScene,float& PMoveX,float
 		SetShow(false);
 		break;
 	case BOSS_DOOR:
-		if (g_pInput->IsKeyPush(MOFKEY_W) && !jump)
+		if (g_pInput->IsKeyPush(MOFKEY_W) && !jump && m_bBossEliminated)
 			BScene = true;
 		break;
 	case ITEM_GOAL:
@@ -175,8 +177,17 @@ void CItem::Render(float wx,float wy){
 	{
 		return;
 	}
-	//テクスチャの描画
-	m_pTexture->Render(m_PosX - wx,m_PosY - wy,m_SrcRect);
+
+	if (m_Type == BOSS_DOOR)
+	{
+		if (m_bBossEliminated)
+			m_pTexture->Render(m_PosX - wx, m_PosY - wy, m_SrcRect);
+	}
+	else
+	{
+		//テクスチャの描画
+		m_pTexture->Render(m_PosX - wx,m_PosY - wy,m_SrcRect);
+	}
 }
 
 /**
