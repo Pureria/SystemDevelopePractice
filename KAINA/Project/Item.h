@@ -23,6 +23,7 @@ private:
 	float					m_MoveX;
 	float					m_MoveY;
 	bool					m_bShow;
+	bool					m_bBossEliminated;
 	CRectangle				m_SrcRect;
 public:
 	CItem();
@@ -43,4 +44,7 @@ public:
 	bool IsEndDoorAnimation();
 
 	void Effect(int& hp, bool& gl, bool jump, bool& BScene, float& PMovex, float& PMoveY);
+
+	//ボスがいないステージでは常にTRUE、ボスがいるステージではボスの討伐情報
+	void SetBossEliminated(bool flg) { m_bBossEliminated = flg; }
 };

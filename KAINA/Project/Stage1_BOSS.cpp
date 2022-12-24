@@ -111,7 +111,6 @@ void CStage1_Boss::Update(void) {
 	//敵の更新
 	StgCollEne();
 
-	//TODO::ボスのダメージ判定
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
 		if (!m_Player.IsLaser()) {
@@ -367,6 +366,7 @@ void CStage1_Boss::StgCollItm()
 		{
 			continue;
 		}
+		m_ItemArray[i].SetBossEliminated(m_Boss.isBossEliminated());
 		m_ItemArray[i].Update();
 		float ox = 0, oy = 0;
 		if (m_Stage.Collision(m_ItemArray[i].GetRect(), ox, oy))

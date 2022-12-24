@@ -419,6 +419,7 @@ void CStage1::StgCollItm() {
 		{
 			continue;
 		}
+		m_ItemArray[i].SetBossEliminated(true);
 		m_ItemArray[i].Update();
 		float ox = 0, oy = 0;
 		if (m_Stage.Collision(m_ItemArray[i].GetRect(), ox, oy))
