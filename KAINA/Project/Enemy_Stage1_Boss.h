@@ -27,14 +27,6 @@
 class CEnemy_Stage1_Boss : public CEnemy_Base {
 private:
 	CTexture				m_Texture;
-	CSpriteMotionController	m_Motion;
-	float					m_PosX;
-	float					m_PosY;
-	float					m_MoveX;
-	float					m_MoveY;
-	bool					m_bShow;
-	//m_bRevese 　 true : 左向き	false : 右向き
-	bool					m_bReverse;
 	bool					m_bIsEnemyPosLeft;
 	bool					m_bIsOnLift;
 	bool					m_bJump;
@@ -42,16 +34,12 @@ private:
 	bool					m_AttackSlash;
 	bool					m_bEliminated;
 
-	CRectangle				m_SrcRect;
 	CRectangle				m_AttakSlashRect;
 
 
 	//ボスのHP
-	int						m_HP;
 	int						m_MotionWait;
 	int						m_OldMotionNo;
-
-	CEffectManager* m_pEffectManager;
 
 	//モーション種類定義
 	enum tag_MOTION {
@@ -62,6 +50,10 @@ private:
 		MOTION_ATTACK_JUMP,
 		MOTION_ATTACK_SLASH_START,
 		MOTION_ATTACK_SLASH_END,
+		MOTION_FALL,
+		MOTION_ATTACK_SLASH_READY,
+		MOTION_ATTACK_DASH_READY,
+		MOTION_ATTACK_DASH_END,
 
 
 		MOTION_COUNT,
@@ -86,7 +78,7 @@ public:
 
 	bool GetShow(void) { return m_bShow; }
 	CRectangle GetRect() {
-		return CRectangle(m_PosX + BOSS1_RECT_WIDTH_DECREASE, m_PosY + BOSS1_RECT_HEIGHT_DECREASE, m_PosX + m_SrcRect.GetWidth() - BOSS1_RECT_WIDTH_DECREASE, m_PosY + m_SrcRect.GetHeight());
+		return CRectangle(m_Pos.x + BOSS1_RECT_WIDTH_DECREASE, m_Pos.y + BOSS1_RECT_HEIGHT_DECREASE, m_Pos.x + m_SrcRect.GetWidth() - BOSS1_RECT_WIDTH_DECREASE, m_Pos.y + m_SrcRect.GetHeight());
 	}
 
 	//ボスのダメージ処理
@@ -110,20 +102,18 @@ public:
 	{
 		if (!m_bReverse)
 		{
-			return CRectangle(m_PosX + BOSS1_RECT_WIDTH_DECREASE, m_PosY + BOSS1_RECT_HEIGHT_DECREASE, m_PosX +  + BOSS1_RECT_WIDTH_DECREASE + ENEMY_BOSS_FRONTDEF_DIRECTION, m_PosY + m_SrcRect.GetHeight());
+			return CRectangle(m_Pos.x + BOSS1_RECT_WIDTH_DECREASE, m_Pos.y + BOSS1_RECT_HEIGHT_DECREASE, m_Pos.x +  + BOSS1_RECT_WIDTH_DECREASE + ENEMY_BOSS_FRONTDEF_DIRECTION, m_Pos.y + m_SrcRect.GetHeight());
 		}
 		else
 		{
-			return CRectangle((m_PosX + m_SrcRect.GetWidth() - ENEMY_BOSS_FRONTDEF_DIRECTION - BOSS1_RECT_WIDTH_DECREASE), m_PosY + BOSS1_RECT_HEIGHT_DECREASE, m_PosX + m_SrcRect.GetWidth() - BOSS1_RECT_WIDTH_DECREASE, m_PosY + m_SrcRect.GetHeight());
+			return CRectangle((m_Pos.x + m_SrcRect.GetWidth() - ENEMY_BOSS_FRONTDEF_DIRECTION - BOSS1_RECT_WIDTH_DECREASE), m_Pos.y + BOSS1_RECT_HEIGHT_DECREASE, m_Pos.x + m_SrcRect.GetWidth() - BOSS1_RECT_WIDTH_DECREASE, m_Pos.y + m_SrcRect.GetHeight());
 		}
 	}
-
-	void SetMotionMove() { m_Motion.ChangeMotion(MOTION_MOVE); }
 	void SetReverse(bool reverse) { m_bReverse = reverse; }
 	bool GetReverse() { return m_bReverse; }
 	bool IsJump()
 	{
-		if (m_MoveY <= 0)
+		if (m_Move.y <= 0)
 			return true;
 		else
 			return false;
@@ -132,7 +122,7 @@ public:
 	void SetJumpAttackEnd()
 	{
 		m_bJump = false;
-		m_Motion.ChangeMotion(MOTION_MOVE);
+		m_Motion.ChangeMotion(MOTION_FALL);
 	}
 
 	//ボススラッシュ攻撃の判定
