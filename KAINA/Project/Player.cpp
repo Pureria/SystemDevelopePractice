@@ -38,21 +38,21 @@ m_NextBossScene(false){}
 
 bool CPlayer::Load(){
 	//テクスチャの読み込み
-	if (!m_Texture.Load("player.png"))				{		return false;	}
+	if (!m_Texture.Load("Player/chara_ren.png"))				{		return false;	}
 
-	if (!m_FrameTexture.Load("Frame.png"))			{		return false;	}
+	if (!m_FrameTexture.Load("Player/Frame.png"))			{		return false;	}
 
-	if (!m_HPTexture.Load("HP.png"))				{		return false;	}
+	if (!m_HPTexture.Load("Player/HP.png"))				{		return false;	}
 
-	if (!m_HPBarTexture.Load("HPBAR.png"))			{		return false;	}	
+	if (!m_HPBarTexture.Load("Player/HPBAR.png"))			{		return false;	}	
 	
-	if (!m_SPTexture.Load("SP.png"))				{		return false;	}
+	if (!m_SPTexture.Load("Player/SP.png"))				{		return false;	}
 
-	if (!m_SPBarTexture.Load("SPBAR.png"))			{		return false;	}
+	if (!m_SPBarTexture.Load("Player/SPBAR.png"))			{		return false;	}
 
-	if (!m_ShotHealTex.Load("P_missile.png"))		{		return false;	}
+	if (!m_ShotHealTex.Load("Player/healammo.png"))		{		return false;	}
 
-	if (!m_ShotHeavyTex.Load("HeavyAmmo.png"))		{		return false;	}
+	if (!m_ShotHeavyTex.Load("Player/heavyammo.png"))		{		return false;	}
 
 	//if (!m_LaserTex.Load("Shot.png")) { return false; }
 
