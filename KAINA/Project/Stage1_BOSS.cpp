@@ -33,11 +33,12 @@ bool CStage1_Boss::Load() {
  */
 void CStage1_Boss::Initialize() {
 
-	this->Load();
+	Load();
 	//プレイヤーの状態初期化
 	m_Player.Initialize();
 	m_Player.SetPlayerPos(m_Stage.GetIniPlayerPos().x, m_Stage.GetIniPlayerPos().y);
-
+	GetSaveToFile();
+	m_Player.SetHp(m_PlayerHp);
 	//ボスの状態初期化
 	m_Boss.Initialize();
 
@@ -80,7 +81,7 @@ void CStage1_Boss::Update(void) {
 	else if (g_pInput->IsKeyPush(MOFKEY_RETURN)) {
 		m_Menu.Show(Vector2(g_pGraphics->GetTargetWidth() * 0.5f, g_pGraphics->GetTargetHeight() * 0.5f));
 	}
-
+	
 	//ボス部屋ドアアニメーション
 	if (m_Player.GetNextBossScene())
 	{

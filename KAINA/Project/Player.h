@@ -173,6 +173,8 @@ public:
 
 	bool GetLaserShotShow(int i)								{		return m_Laser[i].GetShow();							}
 
+	int GetHp()													{		return m_HP;											}
+
 #pragma endregion
 	/************************************************public Setä÷êî************************************************/
 #pragma region Setä÷êî
@@ -188,6 +190,7 @@ public:
 
 	void SetWallLaser(int i)									{		m_Laser[i].SetWallHitLaser();							}
 	
+	void SetHp(int hp)											{		m_HP = hp;												}
 #pragma endregion	
 	/************************************************public Isä÷êî*************************************************/
 #pragma region Isä÷êî
@@ -215,6 +218,7 @@ public:
 	void PlayerDamage(bool flg, float damage);
 
 #pragma endregion
+
 private:
 
 	void ShotManager();

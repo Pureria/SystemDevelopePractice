@@ -72,13 +72,13 @@ void CMenu::Update() {
 		return;
 	}
 	//ã‰º‚ÌƒL[‚Å‘I‘ð
-	if (g_pInput->IsKeyPush(MOFKEY_UP)) {
+	if (g_pInput->IsKeyPush(MOFKEY_W)) {
 		m_Select--;
 		if (m_Select < 0) {
 			m_Select = m_Count - 1;
 		}
 	}
-	else if (g_pInput->IsKeyPush(MOFKEY_DOWN)) {
+	else if (g_pInput->IsKeyPush(MOFKEY_S)) {
 		m_Select++;
 		if (m_Select >= m_Count) {
 			m_Select = 0;

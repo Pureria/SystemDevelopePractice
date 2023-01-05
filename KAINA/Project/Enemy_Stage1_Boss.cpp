@@ -9,8 +9,7 @@
 CEnemy_Stage1_Boss::CEnemy_Stage1_Boss() :
 	m_Texture(),
 	m_AttackSlash(),
-	m_bEliminated(false){
-}
+	m_bEliminated(false) {};
 
 /**
  * デストラクタ

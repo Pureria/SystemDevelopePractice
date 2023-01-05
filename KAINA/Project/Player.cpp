@@ -195,9 +195,9 @@ void CPlayer::Initialize(){
 	m_ShotType = NORMAL;
 	m_NatuType = NULL;
 	m_DrcType = NULL;
+	m_NextBossScene = false;
 	//ƒvƒŒƒCƒ„[‚Ì‘fÞ“Ç‚Ýž‚Ý
 	Load();
-	m_NextBossScene = false;
 }
 
 
@@ -523,8 +523,7 @@ void CPlayer::FireShot() {
 	{
 		if (g_pInput->IsKeyPush(MOFKEY_P))
 		{
-			m_Motion.ChangeMotion(MOTION_ATTACK);
-			//DirecMotionChange();
+			DirecMotionChange();
 			for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
 
 				if (m_PlShotAry[i].GetShow())	{		continue;		}

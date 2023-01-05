@@ -112,6 +112,9 @@ void CStage1::Update(void){
 			{
 				m_bEnd = true;
 				m_SceneNo = SCENENO_GAME_STAGE1_BOSS;
+				m_PlayerHp = m_Player.GetHp();
+				SetSaveToFile();
+				break;
 			}
 		}
 		return;
@@ -156,15 +159,6 @@ void CStage1::Update(void){
 
 	//エフェクトの更新
 	m_EffectManager.Update();
-
-	//デバッグ用
-
-	//プレイヤーのゴールフラグでリザルト画面へ
-	if (m_Player.IsGoal())
-	{
-		m_bEnd = true;
-		m_SceneNo = SCENENO_RESULT;
-	}
 
 	//F2キーでリザルト画面へ
 	if (g_pInput->IsKeyPush(MOFKEY_F2))
