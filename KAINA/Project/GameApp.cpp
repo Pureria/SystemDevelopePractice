@@ -56,7 +56,6 @@ MofBool CGameApp::Update(void){
 	//キーの更新
 	g_pInput->RefreshKey();
 	
-	int		Change;
 	
 	g_pScene->Update();
 	gTimer += CUtilities::GetFrameSecond();
@@ -65,7 +64,7 @@ MofBool CGameApp::Update(void){
 	if (g_pScene->IsEnd()) {
 		g_pScene->Release();
 
-		Change = g_pScene->GetNextScene();
+		int	Change = g_pScene->GetNextScene();
 		
 		delete  g_pScene;
 
