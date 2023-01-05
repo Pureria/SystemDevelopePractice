@@ -115,10 +115,7 @@ CRectangle* Laser::GetFireRect() {
 							  CRectangle(rec.Left, m_LaserHitPos.y + 60, m_LaserHitPos.x, rec.Bottom + 60),
 	};
 	 
-	for (int i = 0; i < 3; i++)
-	{
-	    return &m_FireRec[i];
-	}
+	return m_FireRec;
 	
 }
 

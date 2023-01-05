@@ -22,7 +22,6 @@ void CPlayerShot::Update() {
 	SpeedSave();
 	m_ShotPos.x += m_MoveX;
 	m_ShotPos.y += m_MoveY;
-	OutRange();
 }
 
 //発射する情報をセット
@@ -80,11 +79,6 @@ void CPlayerShot::SpeedSave() {
 	else if (m_MoveY > PLAYERSHOT_SPEED) {
 		m_MoveY = PLAYERSHOT_SPEED;
 	}
-}
-
-void CPlayerShot::OutRange() {
-	//画面外の処理
-
 }
 
 void CPlayerShot::SetPowerLeft() {

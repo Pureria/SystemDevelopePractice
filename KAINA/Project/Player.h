@@ -43,10 +43,10 @@ private:
 		MOTION_JUMPSTART,
 		MOTION_JUMPEND,
 		MOTION_ATTACK,
-		MOTION_MUZZLEUP,
-		MOTION_MUZZLEDOWN,
-		MOTION_MUZZLETOP,
-		MOTION_MUZZLEBOTTOM,
+		MOTION_NORMAL_MUZZLETOP,
+		MOTION_NORMAL_MUZZLEBOTTOM,
+		MOTION_LASER_MUZZLETOP,
+		MOTION_LASER_MUZZLEBOTTOM,
 		MOTION_DAMAGE,
 
 		MOTION_COUNT,
@@ -161,8 +161,10 @@ public:
 
 	bool GetNextBossScene()										{		return m_NextBossScene;									}
 
+	//íeÇÃéÌóﬁ
 	int  GetType()												{		return m_ShotType;										}
 
+	//èeå˚ÇÃå¸Ç´
 	int  GetDirec()												{		return m_DrcType;										}
 
 	int  GetNatuShot(int i)										{		return m_PlShotAry[i].GetNatu();						}
@@ -253,4 +255,7 @@ private:
 	Vector2 SetStartPos() {
 		return Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f - 20);
 	}
+
+	void DirecMotionChange();
+
 };

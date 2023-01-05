@@ -40,19 +40,19 @@ bool CPlayer::Load(){
 	//テクスチャの読み込み
 	if (!m_Texture.Load("Player/chara_ren.png"))				{		return false;	}
 
-	if (!m_FrameTexture.Load("Player/Frame.png"))			{		return false;	}
+	if (!m_FrameTexture.Load("Player/Frame.png"))				{		return false;	}
 
-	if (!m_HPTexture.Load("Player/HP.png"))				{		return false;	}
+	if (!m_HPTexture.Load("Player/HP.png"))						{		return false;	}
 
-	if (!m_HPBarTexture.Load("Player/HPBAR.png"))			{		return false;	}	
+	if (!m_HPBarTexture.Load("Player/HPBAR.png"))				{		return false;	}	
 	
-	if (!m_SPTexture.Load("Player/SP.png"))				{		return false;	}
+	if (!m_SPTexture.Load("Player/SP.png"))						{		return false;	}
 
-	if (!m_SPBarTexture.Load("Player/SPBAR.png"))			{		return false;	}
+	if (!m_SPBarTexture.Load("Player/SPBAR.png"))				{		return false;	}
 
-	if (!m_ShotHealTex.Load("Player/healammo.png"))		{		return false;	}
+	if (!m_ShotHealTex.Load("Player/healammo.png"))				{		return false;	}
 
-	if (!m_ShotHeavyTex.Load("Player/heavyammo.png"))		{		return false;	}
+	if (!m_ShotHeavyTex.Load("Player/heavyammo.png"))			{		return false;	}
 
 	//if (!m_LaserTex.Load("Shot.png")) { return false; }
 
@@ -111,7 +111,16 @@ bool CPlayer::Load(){
 		},
 		{
 			"攻撃",
-			0,3,
+			0,640,
+			128,128,
+			FALSE,
+			{
+					{5,24,0},{5,24,1},{5,24,2},{5,24,3}
+			}
+		},
+		{
+			"通常弾の銃口上げる",
+			0,0,
 			128,128,
 			FALSE,
 			{
@@ -119,8 +128,8 @@ bool CPlayer::Load(){
 			}
 		},
 		{
-			"銃口上げる",
-			480,0,
+			"通常弾の銃口下げる",
+			0,0,
 			128,128,
 			FALSE,
 			{
@@ -128,8 +137,17 @@ bool CPlayer::Load(){
 			}
 		},
 		{
-			"銃口下げる",
-			480,0,
+			"レーザーの銃口上げる",
+			0,0,
+			128,128,
+			FALSE,
+			{
+					{2,0,0},{2,1,0},{2,2,0},{2,3,0},
+			}
+		},
+		{
+			"レーザーの銃口下げる",
+			0,0,
 			128,128,
 			FALSE,
 			{
@@ -138,11 +156,11 @@ bool CPlayer::Load(){
 		},
 		{
 			"ダメージ",
-			480,0,
+			0,1280,
 			128,128,
 			FALSE,
 			{
-					{2,0,0},{2,1,0},{2,2,0},{2,3,0},
+					{5,29,0}
 			}
 		},
 	};
@@ -216,14 +234,23 @@ void CPlayer::Update() {
 			m_Motion.ChangeMotion(MOTION_WAIT);
 		}
 	}
+	/*else if (m_Motion.GetMotionNo() == MOTION_NORMAL_MUZZLETOP || m_Motion.GetMotionNo() == MOTION_NORMAL_MUZZLEBOTTOM
+			|| m_Motion.GetMotionNo() == MOTION_LASER_MUZZLETOP || m_Motion.GetMotionNo() == MOTION_LASER_MUZZLEBOTTOM) {
+
+		if (m_Motion.IsEndMotion())
+		{
+			m_Motion.ChangeMotion(MOTION_WAIT);
+		}
+	}//*/
 	else
 	{
 		//キー入力による動作
 		UpdateKey();
 		//TODO: ゲームパッドの接続確認
-	/*if (m_pGamePad != nullptr) {
-		UpdatePadKey(m_pGamePad);//ゲームパッドによる動作
-	}//*/
+		/*if (m_pGamePad != nullptr) {
+			UpdatePadKey(m_pGamePad);//ゲームパッドによる動作
+		}//*/
+	
 	}
 
 	//移動更新
@@ -394,40 +421,75 @@ void CPlayer::NatuChange() {
 	if (g_pInput->IsKeyPush(MOFKEY_O)) {
 		switch (m_NatuType)
 		{
-		case FIRE:
-			m_NatuType = FROST;
-			break;
-		case FROST:
-			m_NatuType = FIRE;
-			break;
 		case HEAL:
 			m_NatuType = HEAVY;
 			break;
 		case HEAVY:
 			m_NatuType = HEAL;
 			break;
+		case FIRE:
+			m_NatuType = FROST;
+			break;
+		case FROST:
+			m_NatuType = FIRE;
+			break;
 		}
 	}
 }
 
 void CPlayer::DirecTpBtmChange() {
+
 	if (g_pInput->IsKeyPush(MOFKEY_W) && !m_bTop) {
 		m_bTop = true;
 		m_bBottom = false;
-
+		if (IsLaser()) {
+			m_Motion.ChangeMotion(MOTION_LASER_MUZZLETOP);
+		}
+		else {
+			m_Motion.ChangeMotion(MOTION_NORMAL_MUZZLETOP);
+		}
 	}
-	else if (g_pInput->IsKeyPush(MOFKEY_W) && m_bTop) {
-		m_bTop = false;//銃口を元に戻す
+	else if (g_pInput->IsKeyPush(MOFKEY_W) && (m_bTop || m_bBottom)) {
+		m_bTop = false;
 		m_bBottom = false;
-
+		m_Motion.ChangeMotion(MOTION_WAIT);
 	}
 	if (g_pInput->IsKeyPush(MOFKEY_S) && !m_bBottom) {
 		m_bBottom = true;
 		m_bTop = false;
+		if (IsLaser()) {
+			m_Motion.ChangeMotion(MOTION_LASER_MUZZLEBOTTOM);
+		}
+		else {
+			m_Motion.ChangeMotion(MOTION_NORMAL_MUZZLEBOTTOM);
+		}
 	}
-	else if (g_pInput->IsKeyPush(MOFKEY_S) && m_bBottom) {
+	else if (g_pInput->IsKeyPush(MOFKEY_S) && (m_bTop || m_bBottom)) {
 		m_bBottom = false;
 		m_bTop = false;
+		m_Motion.ChangeMotion(MOTION_WAIT);
+	}
+}
+
+void CPlayer::DirecMotionChange() {
+	if (GetDirec() == RIGHTTOP || GetDirec() == LEFTTOP) {
+		if (IsLaser()) {
+			m_Motion.ChangeMotion(MOTION_LASER_MUZZLETOP);
+		}
+		else {
+			m_Motion.ChangeMotion(MOTION_NORMAL_MUZZLETOP);
+		}
+	}
+	else if (GetDirec() == RIGHTBOTTOM || GetDirec() == LEFTBOTTOM) {
+		if (IsLaser()) {
+			m_Motion.ChangeMotion(MOTION_LASER_MUZZLEBOTTOM);
+		}
+		else {
+			m_Motion.ChangeMotion(MOTION_NORMAL_MUZZLEBOTTOM);
+		}
+	}
+	else {
+		m_Motion.ChangeMotion(MOTION_ATTACK);
 	}
 }
 
@@ -462,14 +524,11 @@ void CPlayer::FireShot() {
 		if (g_pInput->IsKeyPush(MOFKEY_P))
 		{
 			m_Motion.ChangeMotion(MOTION_ATTACK);
-
+			//DirecMotionChange();
 			for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
-				if (m_PlShotAry[i].GetShow())
-				{
-					continue;
-				}
-				m_ShotWait = PLAYERSHOT_WAIT;
 
+				if (m_PlShotAry[i].GetShow())	{		continue;		}
+				m_ShotWait = PLAYERSHOT_WAIT;
 				ShotRev(i);
 				break;
 			}
@@ -481,30 +540,59 @@ void CPlayer::FireShot() {
 	}
 }
 
+
 //弾の向きを撃つ瞬間にセット
 void CPlayer::ShotRev(int i) {
 	if (!m_bReverse) {
 		if (m_bTop) {
 			m_PlShotAry[i].Fire(SetStartPos(), RIGHTTOP, m_NatuType);
+			return;
 		}
 		else if (m_bBottom) {
 			m_PlShotAry[i].Fire(SetStartPos(), RIGHTBOTTOM, m_NatuType);
+			return;
 		}
 		else {
 			m_PlShotAry[i].Fire(SetStartPos(), RIGHT, m_NatuType);
+			return;
 		}
 	}
 	else {
 		if (m_bTop) {
 			m_PlShotAry[i].Fire(SetStartPos(), LEFTTOP, m_NatuType);
+			return;
 		}
 		else if (m_bBottom) {
 			m_PlShotAry[i].Fire(SetStartPos(), LEFTBOTTOM, m_NatuType);
+			return;
 		}
 		else {
 			m_PlShotAry[i].Fire(SetStartPos(), LEFT, m_NatuType);
+			return;
 		}
 	}
+	/*switch (GetDirec())
+	{
+		case RIGHT:
+			m_PlShotAry[i].Fire(SetStartPos(), RIGHT, m_NatuType);
+			break;
+		case RIGHTTOP:
+			m_PlShotAry[i].Fire(SetStartPos(), RIGHTTOP, m_NatuType);
+			break;
+		case RIGHTBOTTOM:
+			m_PlShotAry[i].Fire(SetStartPos(), RIGHTBOTTOM, m_NatuType);
+			break;
+
+		case LEFT:
+			m_PlShotAry[i].Fire(SetStartPos(), LEFT, m_NatuType);
+			break;
+		case LEFTTOP:
+			m_PlShotAry[i].Fire(SetStartPos(), LEFTTOP, m_NatuType);
+			break;
+		case LEFTBOTTOM:
+			m_PlShotAry[i].Fire(SetStartPos(), LEFTBOTTOM, m_NatuType);
+			break;
+	}//*/
 }
 
 #pragma endregion
@@ -519,7 +607,7 @@ void CPlayer::FireShotLaser() {
 	{
 		if (g_pInput->IsKeyPush(MOFKEY_P))
 		{
-			m_Motion.ChangeMotion(MOTION_ATTACK);
+			DirecMotionChange();
 
 			for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
 				if (m_Laser[i].GetShow()) { continue; }
