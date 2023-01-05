@@ -10,18 +10,11 @@ private:
 public:
 	CPlayerShot();
 	~CPlayerShot() {};
+
 	void Initialize();
 	void Update();
-	/*
-	*引数     ：　
 
-	第一引数　：　弾の発射位置　
-	第二引数　：　銃口の左右上下の方向
-	第三引数　：　弾の特性
-
-	*処理内容  ：　撃つ瞬間の情報をセット
-	*/
-	void Fire(Vector2& pos, int tb, int natuyype);
+	void Fire(Vector2& pos, int tb, int natuyype) override;
 	void Render(float wx, float wy);
 	void RenderDebug(float wx, float wy);
 

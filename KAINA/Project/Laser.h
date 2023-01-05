@@ -28,7 +28,7 @@ public:
 	//Set関数
 public:
 	//発射する情報をセット
-	void Fire(Vector2& pos, int tb, int natuyype);
+	void Fire(Vector2& pos, int tb, int natuyype) override;
 	void SetTexture(CTexture* pt) { m_pShotTex = pt; }
 	//ステージに当たった場合　true	: false
 	void SetWallHitLaser() { m_bHitWall = true; }
