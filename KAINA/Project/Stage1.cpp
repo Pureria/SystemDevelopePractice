@@ -1,9 +1,6 @@
 #include	"GameDefine.h"
 #include	"Stage1.h"
 
-//変更するシーン(外部参照、実体はGameApp.cpp)
-//extern int						gChangeScene;
-
 /**
  * デストラクタ
  *
@@ -21,10 +18,10 @@ bool CStage1::Load(){
 	//ステージの素材読み込み
 	m_Stage.Load("ChipData/1-1MAP_noWall.txt",m_NowSceneNo);
 	//敵メモリ確保
-	m_EnemyArray = new CEnemy[m_Stage.GetEnemy1Count()];
-	m_Enemy2Array = new CEnemy_2[m_Stage.GetEnemy2Count()];
+	m_EnemyArray	= new CEnemy[m_Stage.GetEnemy1Count()];
+	m_Enemy2Array	= new CEnemy_2[m_Stage.GetEnemy2Count()];
 	//アイテムメモリ確保
-	m_ItemArray = new CItem[m_Stage.GetItemCount()];
+	m_ItemArray		= new CItem[m_Stage.GetItemCount()];
 	//エフェクトの素材読み込み
 	m_EffectManager.Load();	
 
@@ -176,7 +173,7 @@ void CStage1::Update(void){
 	if (m_Player.IsEnd())
 	{
 		m_bEnd = true;
-		m_SceneNo = SCENENO_RESULT;
+		m_SceneNo = SCENENO_GAMEOVER;
 	}
 
 	//F3キーでリザルト画面へ
@@ -606,4 +603,5 @@ void CStage1::Release(void){
 	//エフェクトの解放
 	m_EffectManager.Release();
 	m_Menu.Release();
+	m_BGMManager.Release();
 }

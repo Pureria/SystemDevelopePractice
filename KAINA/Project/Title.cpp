@@ -140,4 +140,5 @@ void CTitle::Release(void){
 	m_BackImage.Release();
 	m_SelectArrow.Release();
 	m_Menu.Release();
+	m_BGMManager.Release();
 }

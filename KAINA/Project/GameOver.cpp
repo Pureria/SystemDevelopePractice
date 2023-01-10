@@ -44,7 +44,7 @@ void CGameOver::Update(void){
 	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && !m_bEnd && m_NowScene == m_SceneNo)
 	{
 		m_bEnd = true;
-		m_SceneNo = SCENENO_RESULT;
+		m_SceneNo = SCENENO_SELECT;
 	}
 }
 
@@ -70,4 +70,5 @@ void CGameOver::RenderDebug(void){
  */
 void CGameOver::Release(void){
 	m_BackImage.Release();
+	m_BGMManager.Release();
 }

@@ -95,7 +95,7 @@ void CStage1_Boss::Update(void) {
 			if (m_ItemArray[i].IsEndDoorAnimation())
 			{
 				m_bEnd = true;
-				m_SceneNo = SCENENO_RESULT;
+				m_SceneNo = SCENENO_GAMECLEAR;
 			}
 		}
 		return;
@@ -205,7 +205,7 @@ void CStage1_Boss::Update(void) {
 	if (m_Player.IsGoal())
 	{
 		m_bEnd = true;
-		m_SceneNo = SCENENO_RESULT;
+		m_SceneNo = SCENENO_GAMECLEAR;
 	}
 
 	//F2キーでリザルト画面へ
@@ -219,7 +219,7 @@ void CStage1_Boss::Update(void) {
 	if (m_Player.IsEnd())
 	{
 		m_bEnd = true;
-		m_SceneNo = SCENENO_RESULT;
+		m_SceneNo = SCENENO_GAMEOVER;
 	}
 
 	//F3キーでリザルト画面へ
@@ -469,4 +469,5 @@ void CStage1_Boss::Release(void) {
 	//エフェクトの解放
 	m_EffectManager.Release();
 	m_Menu.Release();
+	m_BGMManager.Release();
 }

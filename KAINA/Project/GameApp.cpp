@@ -83,9 +83,6 @@ MofBool CGameApp::Update(void){
 		case SCENENO_GAME_STAGE1_BOSS:
 			g_pScene = new CStage1_Boss();
 			break;
-		case SCENENO_RESULT:
-			g_pScene = new CResult();
-			break;
 		case SCENENO_GAMECLEAR:
 			g_pScene = new CGameClear();
 			break;

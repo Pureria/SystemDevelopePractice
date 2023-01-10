@@ -31,8 +31,8 @@ protected:
 	CBGM_Manager	m_BGMManager;
 
 public:
-	Scene_Base() : m_bEnd(false), m_SceneNo(NULL), m_NowScene(NULL), m_Alpha(255),m_bChange(false),m_Time(), m_PlayerHp(){};
-	virtual ~Scene_Base() { m_BGMManager.Release(); }
+	Scene_Base() : m_bEnd(false), m_SceneNo(), m_Alpha(255),m_bChange(false),m_Time(), m_PlayerHp(){};
+	virtual ~Scene_Base() {};
 
 	virtual void Initialize()  = 0;
 	virtual void Update()	   = 0;
@@ -41,7 +41,6 @@ public:
 	virtual void Release()     = 0;
 
 	int GetNextScene()		    { return m_SceneNo; }
-	int GetNowScene()			{ return m_NowScene; }
 	bool IsEnd()				{ return m_bEnd; }
 
 	//フェード処理
@@ -74,27 +73,6 @@ public:
 
 		return m_Time;
 	}
-
-	void Fencwrite(void* pdat, int s, FILE* fp) {
-		char* psrc = (char*)pdat;
-		char* pout = (char*)malloc(s);
-		for (int i = 0; i < s; i++) {
-			pout[i] = psrc[i];//^ FILEKEY;
-		}
-		fwrite(pout, s, 1, fp);
-		free(pout);
-	}
-
-	void Fdecread(void* pdat, int s, FILE* fp) {
-		char* pout = (char*)pdat;
-		char* psrc = (char*)malloc(s);
-		fread(psrc, s, 1, fp);
-		for (int i = 0; i < s; i++) {
-			pout[i] = psrc[i];//^ FILEKEY;
-		}
-		free(psrc);
-	}
-
 
 	void SetSaveToFile() {
 		std::ofstream SaveDataFile("SaveDataFile/Save.txt");
