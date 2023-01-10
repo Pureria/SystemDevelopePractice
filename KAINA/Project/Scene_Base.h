@@ -6,17 +6,17 @@
 #define		FILEKEY 0x65
 
 /*
-* �e�V�[���̋��ʃ��W���[�����A�������z�֐��ł܂Ƃ߂���ՂƂȂ�V�[���N���X
+* 各シーンの共通モジュールを、純粋仮想関数でまとめた基盤となるシーンクラス
 * 
 */
 class Scene_Base
 {
 protected:
-	//�V�[���I���̊m�F�t���O
+	//シーン終了の確認フラグ
 	bool			m_bEnd;
-	//���̃V�[��
+	//次のシーン
 	int				m_SceneNo;
-	//���݂̃V�[��
+	//現在のシーン
 	int				m_NowScene;
 	//
 	int				m_Alpha;
@@ -24,7 +24,7 @@ protected:
 	bool			m_bChange;
 
 	float			m_Time;
-	//�v���C���[��HP��ۑ�����ϐ�
+	//プレイヤーのHPを保存する変数
 	int				m_PlayerHp;
 
 	//BGM
@@ -43,7 +43,7 @@ public:
 	int GetNextScene()		    { return m_SceneNo; }
 	bool IsEnd()				{ return m_bEnd; }
 
-	//�t�F�[�h����
+	//フェード処理
 	void UpdateFade() {
 		if (m_bEnd) {
 			m_Alpha -= FADE_ALPHA;

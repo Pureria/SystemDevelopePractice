@@ -23,6 +23,8 @@ bool CGameOver::Load(void){
 		return false;
 	}
 
+	m_BGMManager.Load();
+
 	return true;
 }
 
@@ -33,6 +35,9 @@ bool CGameOver::Load(void){
  */
 void CGameOver::Initialize(void){
 	Load();
+
+	m_BGMManager.Initialize();
+	m_BGMManager.BGMPlayer(BGM_GAMEOVER);
 }
 
 /**

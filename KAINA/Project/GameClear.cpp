@@ -26,6 +26,9 @@ bool CGameClear::Load(void){
 	{
 		return false;
 	}
+
+	m_BGMManager.Load();
+
 	return true;
 }
 
@@ -37,6 +40,9 @@ bool CGameClear::Load(void){
 void CGameClear::Initialize(void){
 	this->Load();
 	m_Alpha = 0;
+
+	m_BGMManager.Initialize();
+	m_BGMManager.BGMPlayer(BGM_GAMECLEAR);
 }
 
 /**
