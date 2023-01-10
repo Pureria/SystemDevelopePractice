@@ -59,7 +59,7 @@ void CGameOver::Update(void){
  */
 void CGameOver::Render(void){
 	m_BackImage.Render(0, 0);
-	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() * 0.5, g_pGraphics->GetTargetHeight() * 0.5, MOF_COLOR_WHITE, "Press Enter Key");
+	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() * 0.5 - 100, g_pGraphics->GetTargetHeight() * 0.5 + 200, MOF_COLOR_WHITE, "Press Enter Key");
 }
 
 /**
