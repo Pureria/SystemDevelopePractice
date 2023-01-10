@@ -183,6 +183,7 @@ void CPlayer::Initialize(){
 	m_bReverse = false;
 	m_bJump = false;
 	m_HP = 100;
+	m_SP = 100;
 	m_DamageWait = 0;
 	m_Motion.ChangeMotion(MOTION_WAIT);
 	m_bDead = false;
@@ -265,6 +266,10 @@ void CPlayer::Update() {
 
 	if (m_HP >= 100) {
 		m_HP = 100;
+	}
+	
+	if (m_SP >= 100) {
+		m_SP = 100;
 	}
 
 	//ダメージのインターバルを減らす
@@ -1064,10 +1069,10 @@ void CPlayer::RenderStatus() {
 	m_HPTexture.Render(0,0);
 	m_SPTexture.Render(0,0);
 	//HPに応じて短径の幅を変化させる
-	CRectangle hprec(0, 0, 1064 * (m_HP * 0.01f), 64);
-	m_HPBarTexture.Render(10, 0, hprec);
-	CRectangle sprec(0, 0, 1064 * (m_SP * 0.01f), 64);
-	m_SPBarTexture.Render(248, 20, sprec);
+	CRectangle hprec(0, 0, 728 * (m_HP * 0.01f), 128);
+	m_HPBarTexture.Render(180, -20, hprec);
+	CRectangle sprec(0, 0, 728 * (m_SP * 0.01f), 128);
+	m_SPBarTexture.Render(180, 20, sprec);
 	//フレームを上部に描画
 	m_FrameTexture.Render(0, 0);
 }
