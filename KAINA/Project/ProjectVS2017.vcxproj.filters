@@ -85,6 +85,9 @@
     <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Base\ShotAmmoBase">
       <UniqueIdentifier>{34dfa4d4-3033-467f-8a36-a6457e1f24ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Sound">
+      <UniqueIdentifier>{4f3b5c0f-0d40-40fb-97c1-c560e91c680e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Title.cpp">
@@ -158,6 +161,12 @@
     </ClCompile>
     <ClCompile Include="CEnemyBase_Shot.cpp">
       <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Base\ShotAmmoBase</Filter>
+    </ClCompile>
+    <ClCompile Include="SE_Manager.cpp">
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="BGM_Manager.cpp">
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +247,15 @@
     </ClInclude>
     <ClInclude Include="CEnemyBase_Shot.h">
       <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Base\ShotAmmoBase</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundDefine.h">
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="BGM_Manager.h">
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SE_Manager.h">
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
