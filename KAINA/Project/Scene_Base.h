@@ -1,6 +1,7 @@
 #pragma once
 #include	 "Mof.h"
 #include     "GameDefine.h"
+#include	"BGM_Manager.h"
 
 #define		FILEKEY 0x65
 
@@ -25,9 +26,13 @@ protected:
 	float			m_Time;
 	//ƒvƒŒƒCƒ„[‚ÌHP‚ğ•Û‘¶‚·‚é•Ï”
 	int				m_PlayerHp;
+
+	//BGM
+	CBGM_Manager	m_BGMManager;
+
 public:
 	Scene_Base() : m_bEnd(false), m_SceneNo(NULL), m_NowScene(NULL), m_Alpha(255),m_bChange(false),m_Time(), m_PlayerHp(){};
-	virtual ~Scene_Base() {};
+	virtual ~Scene_Base() { m_BGMManager.Release(); }
 
 	virtual void Initialize()  = 0;
 	virtual void Update()	   = 0;
