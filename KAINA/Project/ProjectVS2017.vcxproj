@@ -108,7 +108,9 @@
     <ClCompile Include="Enemy_2.cpp" />
     <ClCompile Include="Enemy_Stage1_Boss.cpp" />
     <ClCompile Include="Laser.cpp" />
+    <ClCompile Include="SE_Manager.cpp" />
     <ClCompile Include="Shot_Base.cpp" />
+    <ClCompile Include="BGM_Manager.cpp" />
     <ClCompile Include="Stage1.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameClear.cpp" />
@@ -127,6 +129,7 @@
     <ClInclude Include="CPlayerShot.h" />
     <ClInclude Include="CResult.h" />
     <ClInclude Include="CSelect.h" />
+    <ClInclude Include="SoundDefine.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
@@ -135,7 +138,9 @@
     <ClInclude Include="Enemy_2.h" />
     <ClInclude Include="Enemy_Stage1_Boss.h" />
     <ClInclude Include="Laser.h" />
+    <ClInclude Include="SE_Manager.h" />
     <ClInclude Include="Shot_Base.h" />
+    <ClInclude Include="BGM_Manager.h" />
     <ClInclude Include="Stage1.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameClear.h" />

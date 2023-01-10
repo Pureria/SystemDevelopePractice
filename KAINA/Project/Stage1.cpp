@@ -21,14 +21,15 @@ bool CStage1::Load(){
 	//ステージの素材読み込み
 	m_Stage.Load("ChipData/1-1MAP_noWall.txt",m_NowSceneNo);
 	//敵メモリ確保
-	int a = m_Stage.GetEnemy1Count();
 	m_EnemyArray = new CEnemy[m_Stage.GetEnemy1Count()];
-	a = m_Stage.GetEnemy2Count();
 	m_Enemy2Array = new CEnemy_2[m_Stage.GetEnemy2Count()];
 	//アイテムメモリ確保
 	m_ItemArray = new CItem[m_Stage.GetItemCount()];
 	//エフェクトの素材読み込み
-	m_EffectManager.Load();		
+	m_EffectManager.Load();	
+
+	//BGMの読み込み
+	m_BGMManager.Load();
 	
 	return true;
 }
@@ -74,6 +75,10 @@ void CStage1::Initialize(){
 
 	//ステージにエフェクトクラスの設定
 	m_Stage.SetEffectManager(&m_EffectManager);
+
+	//BGMの初期化
+	m_BGMManager.Initialize();
+	m_BGMManager.BGMPlayer(BGM_STAGE1);
 }
 
 /**

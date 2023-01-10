@@ -270,7 +270,7 @@ void CEnemy_Stage1_Boss::Update() {
 	case MOTION_JUMP:
 		if (!m_bJump)
 		{
-			m_Move.x - 0;
+			m_Move.x = 0;
 			m_Move.y = ENEMY_JUMP;
 			m_bTouchGround = false;
 			m_bJump = true;

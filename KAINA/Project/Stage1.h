@@ -7,6 +7,7 @@
 #include	"EffectManager.h"
 #include    "CMenu.h"
 #include	"Scene_Base.h"
+#include	"SoundDefine.h"
 
 
 
