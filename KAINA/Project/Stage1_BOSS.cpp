@@ -58,6 +58,9 @@ void CStage1_Boss::Initialize() {
 	// ポーズ機能に必要な値を渡す。	
 	m_Menu.Create(m_pTitle, m_pMenuString, TEXTCOUNT_MAX);
 	m_Alpha = 0;
+
+	m_BGMManager.Initialize();
+	m_BGMManager.BGMPlayer(BGM_BOSS1);
 }
 
 /**
@@ -469,4 +472,6 @@ void CStage1_Boss::Release(void) {
 	//エフェクトの解放
 	m_EffectManager.Release();
 	m_Menu.Release();
+
+	m_BGMManager.Release();
 }

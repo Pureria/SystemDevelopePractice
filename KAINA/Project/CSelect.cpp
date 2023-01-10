@@ -9,6 +9,8 @@ CSelect::~CSelect() {}
 bool CSelect::Load() {
 	if (!m_SelectTex.Load("stage select kari.png")) { return false; }
 
+	m_BGMManager.Load();
+
 	return true;
 }
 
@@ -16,6 +18,8 @@ void CSelect::Initialize() {
 	Load();
 	m_NowSelect = 0;
 	m_Alpha = 0;
+	m_BGMManager.Initialize();
+	m_BGMManager.BGMPlayer(BGM_TITLE);
 }
 void CSelect::Update() {
 	if (g_pInput->IsKeyPush(MOFKEY_D)) {

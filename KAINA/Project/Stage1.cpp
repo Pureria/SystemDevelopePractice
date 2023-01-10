@@ -606,4 +606,7 @@ void CStage1::Release(void){
 	//エフェクトの解放
 	m_EffectManager.Release();
 	m_Menu.Release();
+
+	//BGMの解放
+	m_BGMManager.Release();
 }

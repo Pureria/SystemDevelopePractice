@@ -32,7 +32,7 @@ protected:
 
 public:
 	Scene_Base() : m_bEnd(false), m_SceneNo(NULL), m_NowScene(NULL), m_Alpha(255),m_bChange(false),m_Time(), m_PlayerHp(){};
-	virtual ~Scene_Base() { m_BGMManager.Release(); }
+	virtual ~Scene_Base() {}
 
 	virtual void Initialize()  = 0;
 	virtual void Update()	   = 0;
