@@ -240,7 +240,7 @@ private:
 	void UpdateShot();
 
 	//プレイヤー死亡時の処理
-	void PlayerEnd();
+	bool PlayerEnd();
 
 	//プレイヤーの落下処理
 	void Fall();
