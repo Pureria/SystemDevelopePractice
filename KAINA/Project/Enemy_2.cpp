@@ -16,7 +16,7 @@ void CEnemy_2::Initialize(float px, float py, int type)
 	m_Move.x = 0;
 	m_Move.y = 0;
 	m_bShow = true;
-	m_HP = 10;
+	m_HP = ENEMY_2_HP;
 	m_DamageWait = 0;
 	m_bWidthOut = true;
 	m_EnemyType = Bike;
