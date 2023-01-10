@@ -175,6 +175,7 @@ bool CPlayer::Load(){
 
 
 void CPlayer::Initialize(){
+
 	m_PosX = 200;
 	m_PosY = 0;
 	m_bMove = false;
@@ -212,7 +213,7 @@ void CPlayer::Update() {
 	//g_pInput->GetGamePad(m_GamePadCnt);
 
 	//HPが無くなると爆発の終了を待機して終了
-	PlayerEnd();
+	if (PlayerEnd()) {	return;	}
 
 	//移動フラグ、このフレームでの移動があったかを保存
 	m_bMove = false;
@@ -694,15 +695,17 @@ void CPlayer::PlayerDamage(bool flg,float damage)
 
 }
 
-void CPlayer::PlayerEnd() {
+bool CPlayer::PlayerEnd() {
 	if (m_HP <= 0)
 	{
 		if (!m_pEndEffect || !m_pEndEffect->GetShow())
 		{
 			m_bDead = true;
+			
+			return true;
 		}
-		return;
 	}
+	return false;
 }
 
 #pragma endregion
@@ -901,17 +904,42 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 
 	if (prec.CollisionRect(erec))
 	{
-		m_HP -= ENEMY_ATTAK_POWER;
+		m_HP -=  ENEMY_ATTAK_POWER;
 		m_DamageWait = DAMAGE_WAIT;
 		if (prec.Left < erec.Left)
 		{
 			m_MoveX = -5.0f;
-			m_bReverse = false;
 		}
 		else
 		{
 			m_MoveX = 5.0f;
-			m_bReverse = true;
+		}
+		m_Motion.ChangeMotion(MOTION_DAMAGE);
+
+		if (m_HP <= 0)
+		{
+			//爆発エフェクトを発生させる
+			m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+		}
+		else
+		{
+			//ダメージエフェクトを発生させる
+			m_pEffectManager->Start(SetStartPos(), EFC_DAMAGE);
+		}
+		return true;
+	}
+
+	if (boss.isCollisionBossAttack(prec))
+	{
+		m_HP -= 30;
+		m_DamageWait = DAMAGE_WAIT;
+		if (prec.Left < erec.Left)
+		{
+			m_MoveX = -5.0f;
+		}
+		else
+		{
+			m_MoveX = 5.0f;
 		}
 		m_Motion.ChangeMotion(MOTION_DAMAGE);
 
