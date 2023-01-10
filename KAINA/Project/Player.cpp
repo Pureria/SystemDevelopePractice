@@ -38,30 +38,28 @@ m_NextBossScene(false){}
 
 bool CPlayer::Load(){
 	//テクスチャの読み込み
-	if (!m_Texture.Load("Player/chara_ren.png"))				{		return false;	}
+	if (!m_Texture.Load("Player/chara_ren.png"))				{		return false;		}
 
-	if (!m_FrameTexture.Load("Player/Frame.png"))				{		return false;	}
+	if (!m_FrameTexture.Load("Player/Frame.png"))				{		return false;		}
 
-	if (!m_HPTexture.Load("Player/HP.png"))						{		return false;	}
+	if (!m_HPTexture.Load("Player/HP.png"))						{		return false;		}
 
-	if (!m_HPBarTexture.Load("Player/HPBAR.png"))				{		return false;	}	
+	if (!m_HPBarTexture.Load("Player/HPBAR.png"))				{		return false;		}	
 	
-	if (!m_SPTexture.Load("Player/SP.png"))						{		return false;	}
+	if (!m_SPTexture.Load("Player/SP.png"))						{		return false;		}
 
-	if (!m_SPBarTexture.Load("Player/SPBAR.png"))				{		return false;	}
+	if (!m_SPBarTexture.Load("Player/SPBAR.png"))				{		return false;		}
 
-	if (!m_ShotHealTex.Load("Player/healammo.png"))				{		return false;	}
+	if (!m_ShotHealTex.Load("Player/healammo.png"))				{		return false;		}
 
-	if (!m_ShotHeavyTex.Load("Player/heavyammo.png"))			{		return false;	}
-
-	//if (!m_LaserTex.Load("Shot.png")) { return false; }
+	if (!m_ShotHeavyTex.Load("Player/heavyammo.png"))			{		return false;		}
 
 	//TODO: Fire関数に移動
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++)	
+	{
 		m_PlShotAry[i].SetHealTexture(&m_ShotHealTex); 
+		m_PlShotAry[i].SetHeavyTexture(&m_ShotHeavyTex);
 	}
-
-	//for (int i = 0; i < PLAYERSHOT_COUNT; i++) { m_Laser[i].SetTexture(&m_LaserTex); }
 
 	//アニメーションを作成
 	SpriteAnimationCreate anim[] = {

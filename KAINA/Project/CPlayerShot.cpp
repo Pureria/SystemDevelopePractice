@@ -159,20 +159,15 @@ void CPlayerShot::Render(float wx, float wy) {
 	rec.Right -= wx;
 	rec.Bottom -= wy;
 
-	MofU32 Color = 0;
-
 	switch (GetNatu())
 	{
 	case HEAL:
-		Color = MOF_COLOR_GREEN;
+		m_pShotTex->Render(m_ShotPos.x - wx, m_ShotPos.y - wy);
 		break;
 	case HEAVY:
-		Color = MOF_COLOR_BLACK;
+		m_phShotTex->Render(m_ShotPos.x - wx, m_ShotPos.y - wy);
 		break;
 	}
-
-	m_pShotTex->Render(m_ShotPos.x - wx, m_ShotPos.y - wy, Color);
-
 }
 
 void CPlayerShot::RenderDebug(float wx, float wy) {

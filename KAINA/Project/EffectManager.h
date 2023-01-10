@@ -11,6 +11,7 @@ private:
 	CEffect		m_Effect[EFFECTCOUNT][EFC_TYPECOUNT];
 	//エフェクト画像
 	CTexture	m_Texture[EFC_TYPECOUNT];
+
 public:
 	CEffectManager();
 	~CEffectManager();

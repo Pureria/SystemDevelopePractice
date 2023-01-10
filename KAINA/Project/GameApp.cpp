@@ -94,7 +94,6 @@ MofBool CGameApp::Update(void){
 			break;
 		}
 		g_pScene->Initialize();
-		
 	}
 
 	//デバッグ表示の切り替え
