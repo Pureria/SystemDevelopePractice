@@ -6,17 +6,17 @@
 #define		FILEKEY 0x65
 
 /*
-* �e�V�[���̋��ʃ��W���[�����A�������z�֐��ł܂Ƃ߂���ՂƂȂ�V�[���N���X
+* 各シーンの共通モジュールを、純粋仮想関数でまとめた基盤となるシーンクラス
 * 
 */
 class Scene_Base
 {
 protected:
-	//�V�[���I���̊m�F�t���O
+	//シーン終了の確認フラグ
 	bool			m_bEnd;
-	//���̃V�[��
+	//次のシーン
 	int				m_SceneNo;
-	//���݂̃V�[��
+	//現在のシーン
 	int				m_NowScene;
 	//
 	int				m_Alpha;
@@ -24,15 +24,15 @@ protected:
 	bool			m_bChange;
 
 	float			m_Time;
-	//�v���C���[��HP��ۑ�����ϐ�
+	//プレイヤーのHPを保存する変数
 	int				m_PlayerHp;
 
 	//BGM
 	CBGM_Manager	m_BGMManager;
 
 public:
-	Scene_Base() : m_bEnd(false), m_SceneNo(NULL), m_NowScene(NULL), m_Alpha(255),m_bChange(false),m_Time(), m_PlayerHp(){};
-	virtual ~Scene_Base() {}
+	Scene_Base() : m_bEnd(false), m_SceneNo(), m_Alpha(255),m_bChange(false),m_Time(), m_PlayerHp(){};
+	virtual ~Scene_Base() {};
 
 	virtual void Initialize()  = 0;
 	virtual void Update()	   = 0;
@@ -41,10 +41,9 @@ public:
 	virtual void Release()     = 0;
 
 	int GetNextScene()		    { return m_SceneNo; }
-	int GetNowScene()			{ return m_NowScene; }
 	bool IsEnd()				{ return m_bEnd; }
 
-	//�t�F�[�h����
+	//フェード処理
 	void UpdateFade() {
 		if (m_bEnd) {
 			m_Alpha -= FADE_ALPHA;
@@ -74,27 +73,6 @@ public:
 
 		return m_Time;
 	}
-
-	void Fencwrite(void* pdat, int s, FILE* fp) {
-		char* psrc = (char*)pdat;
-		char* pout = (char*)malloc(s);
-		for (int i = 0; i < s; i++) {
-			pout[i] = psrc[i];//^ FILEKEY;
-		}
-		fwrite(pout, s, 1, fp);
-		free(pout);
-	}
-
-	void Fdecread(void* pdat, int s, FILE* fp) {
-		char* pout = (char*)pdat;
-		char* psrc = (char*)malloc(s);
-		fread(psrc, s, 1, fp);
-		for (int i = 0; i < s; i++) {
-			pout[i] = psrc[i];//^ FILEKEY;
-		}
-		free(psrc);
-	}
-
 
 	void SetSaveToFile() {
 		std::ofstream SaveDataFile("SaveDataFile/Save.txt");

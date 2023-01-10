@@ -16,157 +16,154 @@
     <Filter Include="ソース ファイル\Gbl">
       <UniqueIdentifier>{1f031d85-7e92-481a-8990-b7bb0d007efc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gbl\Menu">
-      <UniqueIdentifier>{3b17826f-e7c0-4da3-8956-461a996ef577}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Gbl\Scene_Base">
       <UniqueIdentifier>{584f0f8b-becf-41a0-a950-adf2756f6797}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene">
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Data">
+      <UniqueIdentifier>{b0c22511-eb08-4bfc-8076-f61bfd3d41af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Data\Sound">
+      <UniqueIdentifier>{4f3b5c0f-0d40-40fb-97c1-c560e91c680e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class">
       <UniqueIdentifier>{e0360ffb-d893-483f-9bbc-79b22713af29}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Title">
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Title">
       <UniqueIdentifier>{0268a3a2-e0f9-4cfe-adb5-f6c0e3012374}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Select">
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Select">
       <UniqueIdentifier>{aaeb8573-466f-458d-a024-1ead40ce1efe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game">
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game">
       <UniqueIdentifier>{191bf288-fba1-4912-90b0-1892d2b7826b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object">
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object">
       <UniqueIdentifier>{2ec19ce8-3453-4ebc-9cc2-c31397e9b820}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player">
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Player">
       <UniqueIdentifier>{139c9117-90f0-49e0-9372-7050f716aea1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy">
-      <UniqueIdentifier>{9b784891-2875-43e1-8518-fe772fd1ddd2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Item">
-      <UniqueIdentifier>{e910d3d3-dd97-4f1a-9d1c-beadb99a9a29}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Stage">
-      <UniqueIdentifier>{abfa943d-a51f-42f7-8910-f3e672df26c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Effect">
-      <UniqueIdentifier>{2b050a61-dc5f-461d-bae3-dfba26fadc6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Effect\Manager">
-      <UniqueIdentifier>{cdfdb1e4-6742-40fe-942f-b7f26aa3a53e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Result">
-      <UniqueIdentifier>{c9990727-f2f0-41f5-9dc5-f4065eaeaa99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\GameClear">
-      <UniqueIdentifier>{a8e6aa22-da43-4e2b-8843-54b53a0c937f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\GameOver">
-      <UniqueIdentifier>{252c09ef-499d-4adb-af1f-49349aad6553}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player\Player_obj">
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Player\Player_obj">
       <UniqueIdentifier>{fb5d798f-fc34-4aad-95bf-d06967a4dccd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_1">
-      <UniqueIdentifier>{00d6b502-47bc-4315-9afe-9f95522227ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Stage1_Boss">
-      <UniqueIdentifier>{cee3a8bf-14a7-46b3-9c6c-6ca60e57e1cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player\Player_obj\Shot_Base">
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Player\Player_obj\Shot_Base">
       <UniqueIdentifier>{8c6db5d2-126a-4f06-b3d9-45d94b65ecfc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_2">
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy">
+      <UniqueIdentifier>{9b784891-2875-43e1-8518-fe772fd1ddd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_1">
+      <UniqueIdentifier>{00d6b502-47bc-4315-9afe-9f95522227ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_Stage1_Boss">
+      <UniqueIdentifier>{cee3a8bf-14a7-46b3-9c6c-6ca60e57e1cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_2">
       <UniqueIdentifier>{b6cfb2fc-d334-4b86-8d3f-41b87bc6c443}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Base">
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_Base">
       <UniqueIdentifier>{8e4f3bd9-45e3-4e52-832a-89459e22fa80}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Base\ShotAmmoBase">
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_Base\ShotAmmoBase">
       <UniqueIdentifier>{34dfa4d4-3033-467f-8a36-a6457e1f24ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene\Sound">
-      <UniqueIdentifier>{4f3b5c0f-0d40-40fb-97c1-c560e91c680e}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Item">
+      <UniqueIdentifier>{e910d3d3-dd97-4f1a-9d1c-beadb99a9a29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Stage">
+      <UniqueIdentifier>{abfa943d-a51f-42f7-8910-f3e672df26c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Effect">
+      <UniqueIdentifier>{2b050a61-dc5f-461d-bae3-dfba26fadc6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Effect\Manager">
+      <UniqueIdentifier>{cdfdb1e4-6742-40fe-942f-b7f26aa3a53e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\GameClear">
+      <UniqueIdentifier>{a8e6aa22-da43-4e2b-8843-54b53a0c937f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\GameOver">
+      <UniqueIdentifier>{252c09ef-499d-4adb-af1f-49349aad6553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Data\Menu">
+      <UniqueIdentifier>{3b17826f-e7c0-4da3-8956-461a996ef577}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Title.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Title</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Title</Filter>
     </ClCompile>
     <ClCompile Include="CSelect.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Select</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Select</Filter>
     </ClCompile>
     <ClCompile Include="WinMain.cpp">
       <Filter>ソース ファイル\Gbl\Scene_Base</Filter>
     </ClCompile>
     <ClCompile Include="CMenu.cpp">
-      <Filter>ソース ファイル\Gbl\Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="CResult.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Result</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Data\Menu</Filter>
     </ClCompile>
     <ClCompile Include="Stage1.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Item</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="BaseStage.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Stage</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Stage</Filter>
     </ClCompile>
     <ClCompile Include="GameClear.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\GameClear</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\GameClear</Filter>
     </ClCompile>
     <ClCompile Include="GameOver.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\GameOver</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\GameOver</Filter>
     </ClCompile>
     <ClCompile Include="Effect.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Effect</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Effect\Manager</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Effect\Manager</Filter>
     </ClCompile>
     <ClCompile Include="GameApp.cpp">
       <Filter>ソース ファイル\Gbl</Filter>
     </ClCompile>
     <ClCompile Include="Stage1_BOSS.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_1</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_1</Filter>
     </ClCompile>
     <ClCompile Include="EnemyShot.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_1</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_1</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_Stage1_Boss.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Stage1_Boss</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_Stage1_Boss</Filter>
     </ClCompile>
     <ClCompile Include="Shot_Base.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player\Player_obj\Shot_Base</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Player\Player_obj\Shot_Base</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerShot.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player\Player_obj</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Player\Player_obj</Filter>
     </ClCompile>
     <ClCompile Include="Laser.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player\Player_obj</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Player\Player_obj</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_2.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_2</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_2</Filter>
     </ClCompile>
     <ClCompile Include="CEnemy_Base.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Base</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_Base</Filter>
     </ClCompile>
     <ClCompile Include="CEnemyBase_Shot.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Base\ShotAmmoBase</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_Base\ShotAmmoBase</Filter>
     </ClCompile>
     <ClCompile Include="SE_Manager.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Sound</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Data\Sound</Filter>
     </ClCompile>
     <ClCompile Include="BGM_Manager.cpp">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Sound</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Data\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,85 +174,82 @@
       <Filter>ソース ファイル\Gbl</Filter>
     </ClInclude>
     <ClInclude Include="Title.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Title</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Title</Filter>
     </ClInclude>
     <ClInclude Include="CSelect.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Select</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Select</Filter>
     </ClInclude>
     <ClInclude Include="CMenu.h">
-      <Filter>ソース ファイル\Gbl\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="CResult.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Result</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Data\Menu</Filter>
     </ClInclude>
     <ClInclude Include="Stage1.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Item</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="BaseStage.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Stage</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Stage</Filter>
     </ClInclude>
     <ClInclude Include="GameClear.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\GameClear</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\GameClear</Filter>
     </ClInclude>
     <ClInclude Include="GameOver.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\GameOver</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\GameOver</Filter>
     </ClInclude>
     <ClInclude Include="Effect.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Effect</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="EffectManager.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Effect\Manager</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Effect\Manager</Filter>
     </ClInclude>
     <ClInclude Include="GameApp.h">
       <Filter>ソース ファイル\Gbl</Filter>
     </ClInclude>
     <ClInclude Include="Stage1_BOSS.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_1</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_1</Filter>
     </ClInclude>
     <ClInclude Include="EnemyShot.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_1</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_1</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_Stage1_Boss.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Stage1_Boss</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_Stage1_Boss</Filter>
     </ClInclude>
     <ClInclude Include="Shot_Base.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player\Player_obj\Shot_Base</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Player\Player_obj\Shot_Base</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerShot.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player\Player_obj</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Player\Player_obj</Filter>
     </ClInclude>
     <ClInclude Include="Laser.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Player\Player_obj</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Player\Player_obj</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_2.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_2</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_2</Filter>
     </ClInclude>
     <ClInclude Include="EnemyStateDefine.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="CEnemy_Base.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Base</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_Base</Filter>
     </ClInclude>
     <ClInclude Include="CEnemyBase_Shot.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Game\Object\Enemy\Enemy_Base\ShotAmmoBase</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_Base\ShotAmmoBase</Filter>
     </ClInclude>
     <ClInclude Include="SoundDefine.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Sound</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Data\Sound</Filter>
     </ClInclude>
     <ClInclude Include="BGM_Manager.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Sound</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Data\Sound</Filter>
     </ClInclude>
     <ClInclude Include="SE_Manager.h">
-      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene\Sound</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Data\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -99,7 +99,6 @@
     <ClCompile Include="CEnemy_Base.cpp" />
     <ClCompile Include="CMenu.cpp" />
     <ClCompile Include="CPlayerShot.cpp" />
-    <ClCompile Include="CResult.cpp" />
     <ClCompile Include="CSelect.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -127,7 +126,6 @@
     <ClInclude Include="CEnemy_Base.h" />
     <ClInclude Include="CMenu.h" />
     <ClInclude Include="CPlayerShot.h" />
-    <ClInclude Include="CResult.h" />
     <ClInclude Include="CSelect.h" />
     <ClInclude Include="SoundDefine.h" />
     <ClInclude Include="Effect.h" />
