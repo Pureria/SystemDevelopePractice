@@ -22,6 +22,8 @@ bool CTitle::Load(void){
 	if (!m_SelectArrow.Load("SelectArrow.png"))
 		return false;
 
+	m_BGMManager.Load();
+
 	return true;
 }
 
@@ -46,6 +48,9 @@ void CTitle::Initialize(void){
 	};
 	// ポーズ機能に必要な値を渡す。	
 	m_Menu.Create(m_pTitle, m_pMenuString, TEXTCOUNT_MAX);
+
+	m_BGMManager.Initialize();
+	m_BGMManager.BGMPlayer(BGM_TITLE);
 }
 
 /**
@@ -140,4 +145,5 @@ void CTitle::Release(void){
 	m_BackImage.Release();
 	m_SelectArrow.Release();
 	m_Menu.Release();
+	m_BGMManager.Release();
 }
