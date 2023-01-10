@@ -16,7 +16,7 @@ CTitle::~CTitle(){}
  */
 bool CTitle::Load(void){
 	//テクスチャの読み込み
-	if (!m_BackImage.Load("Title.png"))
+	if (!m_BackImage.Load("BackGround/Title.png"))
 		return false;
 	
 	if (!m_SelectArrow.Load("SelectArrow.png"))
@@ -66,7 +66,7 @@ void CTitle::Update(void){
 	}
 	UpdateSelect();
 	//Enterキーでゲーム画面へ
-	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && m_bSelectArrow && !m_bEnd && m_NowScene == m_SceneNo) {
+	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && m_bSelectArrow && !m_bEnd) {
 		m_bEnd = true;
 		m_SceneNo = SCENENO_SELECT;
 	}

@@ -18,7 +18,7 @@ CGameOver::~CGameOver(){
  */
 bool CGameOver::Load(void){
 	//テクスチャの読み込み
-	if (!m_BackImage.Load("game over.png"))
+	if (!m_BackImage.Load("BackGround/game over.png"))
 	{
 		return false;
 	}
@@ -46,7 +46,7 @@ void CGameOver::Initialize(void){
  */
 void CGameOver::Update(void){
 	//Enterキーでタイトル画面へ
-	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && !m_bEnd && m_NowScene == m_SceneNo)
+	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && !m_bEnd)
 	{
 		m_bEnd = true;
 		m_SceneNo = SCENENO_SELECT;

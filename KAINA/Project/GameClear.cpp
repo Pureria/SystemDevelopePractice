@@ -22,7 +22,7 @@ CGameClear::~CGameClear(){
  */
 bool CGameClear::Load(void){
 	//テクスチャの読み込み
-	if (!m_BackImage.Load("stage clear.png"))
+	if (!m_BackImage.Load("BackGround/stage clear.png"))
 	{
 		return false;
 	}
@@ -51,7 +51,7 @@ void CGameClear::Initialize(void){
  */
 void CGameClear::Update(void){
 	//Enterキーでタイトル画面へ
-	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && !m_bEnd && m_NowScene == m_SceneNo)
+	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && !m_bEnd)
 	{
 		m_bEnd = true;
 		m_SceneNo = SCENENO_SELECT;

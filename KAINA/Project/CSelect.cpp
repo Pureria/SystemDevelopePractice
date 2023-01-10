@@ -7,7 +7,7 @@
 CSelect::~CSelect() {}
 
 bool CSelect::Load() {
-	if (!m_SelectTex.Load("stage select kari.png")) { return false; }
+	if (!m_SelectTex.Load("BackGround/stage select kari.png")) { return false; }
 
 	m_BGMManager.Load();
 
