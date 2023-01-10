@@ -20,7 +20,7 @@ CEffectManager::~CEffectManager(){
  */
 bool CEffectManager::Load(void){
 	char* name[ ] = {
-		"Effect/effect01.png",
+		"Effect/zanngeki1–‡.png",
 		"Effect/effect02.png",
 		"Effect/effect03.png",
 		"Effect/EffectFireBar.png",
