@@ -117,6 +117,8 @@ void CEnemy_Stage1_Boss::Initialize() {
 	m_AttackSlash = false;
 	m_OldMotionNo = MOTION_Idle;
 	m_bEliminated = false;
+	m_DamageWait = 0;
+	
 }
 
 /**
@@ -129,6 +131,9 @@ void CEnemy_Stage1_Boss::Update() {
 	{
 		return;
 	}
+
+	if (m_DamageWait > 0)
+		m_DamageWait--;
 
 	switch (m_Motion.GetMotionNo())
 	{
@@ -480,6 +485,10 @@ void CEnemy_Stage1_Boss::CollisionWall()
 
 void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 
+	if (m_DamageWait > 0)
+		return;
+
+	m_DamageWait = ENEMY_BOSS_ATTACK_WAIT;
 
 	if (direction)
 	{
