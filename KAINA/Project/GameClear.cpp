@@ -64,7 +64,7 @@ void CGameClear::Update(void){
  */
 void CGameClear::Render(void){
 	m_BackImage.Render(0, 0);
-	CGraphicsUtilities::RenderString(400, 500, MOF_COLOR_WHITE, "Press Enter Key");
+	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() * 0.5 - 100, g_pGraphics->GetTargetHeight() * 0.5 + 200, MOF_COLOR_WHITE, "Press Enter Key");
 }
 
 /**

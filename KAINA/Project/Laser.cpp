@@ -161,7 +161,7 @@ void Laser::Render(float wx, float wy) {
 		Color = MOF_XRGB(0, 255, 255);
 		break;
 	}
-	CGraphicsUtilities::RenderFillRect(lzrec, Color,MOF_COLOR_BLACK,MOF_COLOR_BLUE,MOF_COLOR_RED);
+	CGraphicsUtilities::RenderFillRect(lzrec, Color,MOF_COLOR_WHITE, MOF_COLOR_WHITE,Color);
 
 
 	return;
