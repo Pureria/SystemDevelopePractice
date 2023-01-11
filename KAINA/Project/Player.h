@@ -45,8 +45,13 @@ private:
 		MOTION_ATTACK,
 		MOTION_NORMAL_MUZZLETOP,
 		MOTION_NORMAL_MUZZLEBOTTOM,
+		MOTION_NORMAL_MOVETOP,
+		MOTION_NORMAL_MOVEBOTTOM,
 		MOTION_LASER_MUZZLETOP,
 		MOTION_LASER_MUZZLEBOTTOM,
+		MOTION_LASER_MOVETOP,
+		MOTION_LASER_MOVEBOTTOM,
+		MOTION_RETURN_MUZZLE,
 		MOTION_DAMAGE,
 
 		MOTION_COUNT,
@@ -73,8 +78,7 @@ private:
 
 	//下
 	bool					m_bBottom;
-	/*MofU32					m_GamePadCnt;
-	LPGamePad				m_pGamePad;//ゲームパッド接続時*/
+
 	//弾の種類
 	int						m_ShotType;
 
@@ -90,7 +94,9 @@ private:
 	CTexture                m_LaserFrostTex;
 
 	//ボス部屋用フラグ
-	bool					m_NextBossScene;
+	bool					m_bNextBossScene;
+
+	int						m_SpWait;
 
 
 public:
@@ -104,11 +110,6 @@ public:
 	void RenderStatus();
 	void Release();
 	
-	//ゲームパッド追加時の処理
-	//void UpdatePadKey(LPGamePad pPad);
-
-
-
 	/**********************************************public Collision関数********************************************/
 #pragma region Collision関数
 
@@ -159,7 +160,7 @@ public:
 	float GetPosX()												{		return m_PosX;											}
 	float GetPosY()												{		return m_PosY;											}
 
-	bool GetNextBossScene()										{		return m_NextBossScene;									}
+	bool GetNextBossScene()										{		return m_bNextBossScene;									}
 
 	//弾の種類
 	int  GetType()												{		return m_ShotType;										}
@@ -235,6 +236,10 @@ private:
 
 	//プレイヤーの動きの制限
 	void MoveKey();
+
+	void MoveTpBtmAnim();
+
+	void MoveSaveAnim();
 
 	//弾の更新
 	void UpdateShot();

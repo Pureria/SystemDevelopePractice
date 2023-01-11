@@ -57,7 +57,7 @@ void CStage1::Initialize(){
 						"ゲームに戻る",
 						"ステージ選択画面へ",
 	};
-	// ポーズ機能に必要な値を渡す。	
+
 	m_Menu.Create(m_pTitle, m_pMenuString, TEXTCOUNT_MAX);
 	m_Alpha = 0;
 
@@ -84,7 +84,7 @@ void CStage1::Initialize(){
  */
 void CStage1::Update(void){
 	UpdateExitkey();
-	//メニュー画面の表示
+
 	if (m_Menu.IsShow()) {
 		m_Menu.Update();
 		if (m_Menu.IsEnter()) {
@@ -137,24 +137,6 @@ void CStage1::Update(void){
 
 	//アイテムの更新
 	StgCollItm();
-
-
-	for (int i = 0; i < m_Stage.GetEnemy1Count(); i++)
-	{
-		m_EnemyArray[i].SetTime(Time());
-		m_Player.CollisionEnemy(m_EnemyArray[i], m_EnemyArray[i].GetEnemyType());
-	}
-
-	for (int i = 0; i < m_Stage.GetEnemy2Count(); i++)
-	{
-		m_Player.CollisionEnemy(m_Enemy2Array[i], m_Enemy2Array[i].GetEnemyType());
-	}
-
-	for (int i = 0; i < m_Stage.GetItemCount(); i++)
-	{
-		m_Player.ColisionItem(m_ItemArray[i]);
-		m_Player.CollisionAttackItem(m_ItemArray[i]);
-	}
 
 	//ステージの更新
 	m_Stage.Update(m_Player);
@@ -209,20 +191,20 @@ void CStage1::StgCollPlayer() {
 			m_Player.SetWallLaser(i);
 		}
 
-		//水と弾の判定
+		//TODO: 水と弾の判定
 		if (m_Player.GetNatuLaser(i) == FROST)
 		{
 			m_Stage.CollisionFreezeWater(m_Player.GetLaserRect(i));
 		}
 
-		//氷と弾の判定
+		//TODO: 氷と弾の判定
 		if (m_Player.GetNatuLaser(i) == FIRE)
 		{
 			m_Stage.CollisionIceFroe(m_Player.GetLaserRect(i));
 		}
 	}
 
-	//砲台とプレイヤーの当たり判定
+	//TODO: 砲台とプレイヤーの当たり判定
 	for (int i = 0; i < m_Stage.GetEnemy1Count(); i++)
 	{
 		ox = 0; oy = 0;
@@ -233,7 +215,7 @@ void CStage1::StgCollPlayer() {
 
 	}
 
-	//炎の判定
+	//TODO: 炎の判定
 	if (m_bFire)
 	{
 		bool	bFireEffect;
@@ -261,9 +243,6 @@ void CStage1::StgCollPlayer() {
 	}
 	else
 	{
-		//m_Stage.FireBar(CRectangle(-m_Stage.GetScrollX() + m_Player.GetRect().Left, -m_Stage.GetScrollY() + m_Player.GetRect().Top, -m_Stage.GetScrollX() + m_Player.GetRect().Left + 1, -m_Stage.GetScrollY() + m_Player.GetRect().Bottom));
-		//m_Stage.FireBar(CRectangle(-m_Stage.GetScrollX() + m_Player.GetRect().Right - 1, -m_Stage.GetScrollY() + m_Player.GetRect().Top, -m_Stage.GetScrollX() + m_Player.GetRect().Right, -m_Stage.GetScrollY() + m_Player.GetRect().Bottom));
-
 		if (m_intervalFire <= 0)
 		{
 			m_bFire = true;
@@ -340,8 +319,6 @@ void CStage1::StgCollBullet() {
 		{
 			m_Player.SetWallLaser(i);
 		}
-
-		//TODO: 火柱の矩形は完成してる
 	}
 }
 
@@ -355,15 +332,15 @@ void CStage1::StgCollEne() {
 		{
 			continue;
 		}
-
 		m_EnemyArray[i].SetTime(Time());
+		m_Player.CollisionEnemy(m_EnemyArray[i], m_EnemyArray[i].GetEnemyType());
 		m_EnemyArray[i].Update(m_Stage.GetScrollX());
 		float ox = 0, oy = 0;
 		if (m_Stage.Collision(m_EnemyArray[i].GetRect(), ox, oy))
 		{
 			m_EnemyArray[i].CollisionStage(ox, oy);
 
-			//敵の弾とステージの当たり判定
+			//TODO: 敵の弾とステージの当たり判定
 			for (int j = 0; j < ENEMY_SHOT_COUNT; j++)
 			{
 				if (m_Stage.Collision(m_EnemyArray[i].ShotArrayRect(j)))
@@ -380,6 +357,11 @@ void CStage1::StgCollEne() {
 		{
 			continue;
 		}
+		if (!m_Stage.Collision(m_Enemy2Array[i].GetLedgeCheckRect()) && !m_Enemy2Array[i].GetKnockback())
+		{
+			m_Enemy2Array[i].Flip();
+		}
+		m_Player.CollisionEnemy(m_Enemy2Array[i], m_Enemy2Array[i].GetEnemyType());
 		m_Enemy2Array[i].SetTime(Time());
 		m_Enemy2Array[i].SetTargetPos(PPosX, PPosY);
 		m_Enemy2Array[i].Update(m_Stage.GetScrollX());
@@ -388,7 +370,7 @@ void CStage1::StgCollEne() {
 		{
 			m_Enemy2Array[i].CollisionStage(ox, oy);
 
-			//敵の弾とステージの当たり判定
+			//TODO: 敵の弾とステージの当たり判定
 			for (int j = 0; j < ENEMY_SHOT_COUNT; j++)
 			{
 				if (m_Stage.Collision(m_Enemy2Array[i].ShotArrayRect(j)))
@@ -400,11 +382,6 @@ void CStage1::StgCollEne() {
 
 		if (m_Enemy2Array[i].GetFallFlg())
 			continue;
-
-		if (!m_Stage.Collision(m_Enemy2Array[i].GetLedgeCheckRect()) && !m_Enemy2Array[i].GetKnockback())
-		{
-			m_Enemy2Array[i].Flip();
-		}
 	}
 }
 
@@ -415,6 +392,8 @@ void CStage1::StgCollItm() {
 		{
 			continue;
 		}
+		m_Player.ColisionItem(m_ItemArray[i]);
+		m_Player.CollisionAttackItem(m_ItemArray[i]);
 		m_ItemArray[i].SetBossEliminated(true);
 		m_ItemArray[i].Update();
 		float ox = 0, oy = 0;
@@ -432,7 +411,7 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
 	CRectangle brec = playerRect;
 	brec.Top = brec.Bottom - 1;
 	brec.Expansion(-6, -0);
-	//下と当たり判定
+	//TODO: 下と当たり判定
 	if (eneRect.CollisionRect(brec))
 	{
 		re = true;
@@ -441,7 +420,7 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
 		playerRect.Bottom += eneRect.Top - brec.Bottom;
 	}
 
-	//上の当たり判定
+	//TODO: 上の当たり判定
 	CRectangle trec = playerRect;
 	trec.Bottom = trec.Top + 1;
 	trec.Expansion(-12, 0);
@@ -453,7 +432,7 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
 		playerRect.Bottom += eneRect.Bottom - trec.Top;
 	}
 
-	//左右の当たり判定
+	//TODO: 左右の当たり判定
 	CRectangle lrec = playerRect;
 	lrec.Right = lrec.Left + 1;
 	lrec.Expansion(0, -12);
@@ -484,7 +463,7 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
  *
  */
 void CStage1::Render(void){
-	//ステージの描画
+	//TODO: ステージの描画
 	m_Stage.Render();
 
 	//ドアの描画
@@ -528,16 +507,6 @@ void CStage1::Render(void){
 	//プレイヤーの状態描画
 	m_Player.RenderStatus();
 
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-	{
-		if (m_Stage.Collision(m_Player.GetLaserRect(i)))
-		{
-			
-		}
-	}
-
-	CGraphicsUtilities::RenderString(10,10,"ゲーム画面");
-	CGraphicsUtilities::RenderString(10,40,"F2キーでゲームクリア、F3キーでゲームオーバー");
 	if (m_Menu.IsShow()) {
 		m_Menu.Render();
 	}

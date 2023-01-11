@@ -5,6 +5,7 @@ class CPlayerShot : public Shot_Base
 {
 private:
 	int			m_RefCount;
+	int			m_ThroughCount;
 	float		m_MoveX;
 	float		m_MoveY;
 public:

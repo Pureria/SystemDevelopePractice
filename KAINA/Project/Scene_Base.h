@@ -43,21 +43,6 @@ public:
 	int GetNextScene()		    { return m_SceneNo; }
 	bool IsEnd()				{ return m_bEnd; }
 
-	//フェード処理
-	void UpdateFade() {
-		if (m_bEnd) {
-			m_Alpha -= FADE_ALPHA;
-			if (m_Alpha <= 0) {
-				m_NowScene = m_SceneNo;
-				m_bChange = false;
-			}
-		}
-		else {
-			if (m_Alpha < FADE_ALPHA_MAX) {
-				m_Alpha += FADE_ALPHA;
-			}
-		}
-	}
 
 	void UpdateExitkey() {
 		if (g_pInput->IsKeyPush(MOFKEY_ESCAPE)) {

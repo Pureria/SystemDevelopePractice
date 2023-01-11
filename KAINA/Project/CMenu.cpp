@@ -47,12 +47,6 @@ void CMenu::Create(char* pTitle, char** pText, int cnt) {
 		strcpy(m_pText[i], pText[i]);
 	}
 
-	//TODO:
-	/*
-	*引数    　：　
-	*処理内容  ：　
-	*/
-
 	CRectangle trec;
 	CGraphicsUtilities::CalculateStringRect(0, 0, m_pTitle, trec);
 	m_Rect.Right = MOF_MAX(m_Rect.Right, trec.Right + m_HSpace * 2);

@@ -28,7 +28,7 @@ m_HP(0),
 m_SP(0),
 m_bGoal(false),
 m_PlShotAry(),
-m_NextBossScene(false){}
+m_bNextBossScene(false){}
 
 #pragma endregion
 
@@ -54,7 +54,6 @@ bool CPlayer::Load(){
 
 	if (!m_ShotHeavyTex.Load("Player/heavyammo.png"))			{		return false;		}
 
-	//TODO: Fire関数に移動
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)	
 	{
 		m_PlShotAry[i].SetHealTexture(&m_ShotHealTex); 
@@ -113,43 +112,104 @@ bool CPlayer::Load(){
 			128,128,
 			FALSE,
 			{
-					{5,24,0},{5,24,1},{5,24,2},{5,24,3}
+					{5,24,0}
 			}
 		},
 		{
 			"通常弾の銃口上げる",
-			0,0,
+			0,1024,
 			128,128,
 			FALSE,
 			{
-					{2,0,0},{2,1,0},{2,2,0},{2,3,0},
+					{5,0,0}
 			}
 		},
 		{
 			"通常弾の銃口下げる",
-			0,0,
+			0,1152,
 			128,128,
 			FALSE,
 			{
-					{2,0,0},{2,1,0},{2,2,0},{2,3,0},
+					{5,0,0}
+			}
+		},
+		{
+			"通常弾の銃口上げたまま移動",
+			0,1024,
+			128,128,
+			TRUE,
+			{
+					{5,0,0},{5,1,0},{5,2,0},{5,3,0},{5,4,0},{5,5,0},
+					{5,6,0},{5,7,0},{5,8,0},{5,9,0},{5,10,0},{5,11,0},
+					{5,12,0},{5,13,0},{5,14,0},{5,15,0},{5,16,0},{5,17,0},
+					{5,18,0},{5,19,0},{5,20,0},{5,21,0},{5,22,0},{5,23,0},
+					{5,24,0},{5,25,0},{5,26,0},{5,27,0},{5,28,0},{5,29,0}
+			}
+		},
+		{
+			"通常弾の銃口下げたまま移動",
+			0,1152,
+			128,128,
+			TRUE,
+			{
+					{5,0,0},{5,1,0},{5,2,0},{5,3,0},{5,4,0},{5,5,0},
+					{5,6,0},{5,7,0},{5,8,0},{5,9,0},{5,10,0},{5,11,0},
+					{5,12,0},{5,13,0},{5,14,0},{5,15,0},{5,16,0},{5,17,0},
+					{5,18,0},{5,19,0},{5,20,0},{5,21,0},{5,22,0},{5,23,0},
+					{5,24,0},{5,25,0},{5,26,0},{5,27,0},{5,28,0},{5,29,0}
 			}
 		},
 		{
 			"レーザーの銃口上げる",
-			0,0,
+			0,896,
 			128,128,
 			FALSE,
 			{
-					{2,0,0},{2,1,0},{2,2,0},{2,3,0},
+					{5,0,0}
 			}
 		},
 		{
 			"レーザーの銃口下げる",
-			0,0,
+			0,1280,
 			128,128,
 			FALSE,
 			{
-					{2,0,0},{2,1,0},{2,2,0},{2,3,0},
+					{5,0,0}
+			}
+		},
+		{
+			"レーザーの銃口上げたまま移動",
+			0,896,
+			128,128,
+			TRUE,
+			{
+					{5,0,0},{5,1,0},{5,2,0},{5,3,0},{5,4,0},{5,5,0},
+					{5,6,0},{5,7,0},{5,8,0},{5,9,0},{5,10,0},{5,11,0},
+					{5,12,0},{5,13,0},{5,14,0},{5,15,0},{5,16,0},{5,17,0},
+					{5,18,0},{5,19,0},{5,20,0},{5,21,0},{5,22,0},{5,23,0},
+					{5,24,0},{5,25,0},{5,26,0},{5,27,0},{5,28,0},{5,29,0}
+			}
+		},
+		{
+			"レーザーの銃口下げたまま移動",
+			0,1280,
+			128,128,
+			TRUE,
+			{
+					{5,0,0},{5,1,0},{5,2,0},{5,3,0},{5,4,0},{5,5,0},
+					{5,6,0},{5,7,0},{5,8,0},{5,9,0},{5,10,0},{5,11,0},
+					{5,12,0},{5,13,0},{5,14,0},{5,15,0},{5,16,0},{5,17,0},
+					{5,18,0},{5,19,0},{5,20,0},{5,21,0},{5,22,0},{5,23,0},
+					{5,24,0},{5,25,0},{5,26,0},{5,27,0},{5,28,0},{5,29,0}
+			}
+		},
+		{
+			"銃口を戻す",
+			0,640,
+			128,128,
+			FALSE,
+			{
+					{5,0,0}
 			}
 		},
 		{
@@ -162,6 +222,9 @@ bool CPlayer::Load(){
 			}
 		},
 	};
+
+	for (int i = 0; i < anim[i].Pattern[i].No; i++);
+	
 	m_Motion.Create(anim, MOTION_COUNT);
 	
 	return true;
@@ -195,8 +258,8 @@ void CPlayer::Initialize(){
 	m_ShotType = NORMAL;
 	m_NatuType = NULL;
 	m_DrcType = NULL;
-	m_NextBossScene = false;
-	//プレイヤーの素材読み込み
+	m_bNextBossScene = false;
+
 	Load();
 }
 
@@ -209,8 +272,6 @@ void CPlayer::Initialize(){
 
 void CPlayer::Update() {
 	UpdateShot();
-	//TODO: ゲームパッド使用時
-	//g_pInput->GetGamePad(m_GamePadCnt);
 
 	//HPが無くなると爆発の終了を待機して終了
 	if (PlayerEnd()) {	return;	}
@@ -223,7 +284,15 @@ void CPlayer::Update() {
 		//終了で待機に戻す
 		if (m_Motion.IsEndMotion())
 		{
-			m_Motion.ChangeMotion(MOTION_WAIT);
+			if (m_bTop) {
+				m_Motion.ChangeMotion(IsLaser() ? MOTION_LASER_MUZZLETOP : MOTION_NORMAL_MUZZLETOP);
+			}
+			else if (m_bBottom) {
+				m_Motion.ChangeMotion(IsLaser() ? MOTION_LASER_MUZZLEBOTTOM : MOTION_NORMAL_MUZZLEBOTTOM);
+			}
+			else {
+				m_Motion.ChangeMotion(MOTION_WAIT);
+			}
 		}
 	}
 	else if(m_Motion.GetMotionNo() == MOTION_DAMAGE)
@@ -231,26 +300,28 @@ void CPlayer::Update() {
 		//終了で待機に戻す
 		if (m_Motion.IsEndMotion())
 		{
-			m_Motion.ChangeMotion(MOTION_WAIT);
+			if (m_bTop) {
+				m_Motion.ChangeMotion(IsLaser() ? MOTION_LASER_MUZZLETOP : MOTION_NORMAL_MUZZLETOP);
+			}
+			else if (m_bBottom) {
+				m_Motion.ChangeMotion(IsLaser() ? MOTION_LASER_MUZZLEBOTTOM : MOTION_NORMAL_MUZZLEBOTTOM);
+			}
+			else {
+				m_Motion.ChangeMotion(MOTION_WAIT);
+			}
 		}
 	}
-	/*else if (m_Motion.GetMotionNo() == MOTION_NORMAL_MUZZLETOP || m_Motion.GetMotionNo() == MOTION_NORMAL_MUZZLEBOTTOM
-			|| m_Motion.GetMotionNo() == MOTION_LASER_MUZZLETOP || m_Motion.GetMotionNo() == MOTION_LASER_MUZZLEBOTTOM) {
+	else if (m_Motion.GetMotionNo() == MOTION_RETURN_MUZZLE) {
 
-		if (m_Motion.IsEndMotion())
+		if (m_Motion.IsEndMotion()) 
 		{
-			m_Motion.ChangeMotion(MOTION_WAIT);
+			m_Motion.ChangeMotion(MOTION_MOVE);
 		}
-	}//*/
+	}
 	else
 	{
 		//キー入力による動作
-		UpdateKey();
-		//TODO: ゲームパッドの接続確認
-		/*if (m_pGamePad != nullptr) {
-			UpdatePadKey(m_pGamePad);//ゲームパッドによる動作
-		}//*/
-	
+		UpdateKey();	
 	}
 
 	//移動更新
@@ -367,6 +438,7 @@ void CPlayer::MoveKey() {
 		{
 			m_MoveX = -PLAYER_MAXSPEED;
 		}
+		MoveTpBtmAnim();
 		if (m_Motion.GetMotionNo() == MOTION_WAIT)
 		{
 			m_Motion.ChangeMotion(MOTION_MOVE);
@@ -382,6 +454,7 @@ void CPlayer::MoveKey() {
 		{
 			m_MoveX = PLAYER_MAXSPEED;
 		}
+		MoveTpBtmAnim();
 		if (m_Motion.GetMotionNo() == MOTION_WAIT)
 		{
 			m_Motion.ChangeMotion(MOTION_MOVE);
@@ -397,7 +470,40 @@ void CPlayer::MoveKey() {
 	}
 }
 
+void CPlayer::MoveTpBtmAnim() {
+	if (IsLaser()) {
+		if (m_Motion.GetMotionNo() == MOTION_LASER_MUZZLETOP) {
+			m_Motion.ChangeMotion(MOTION_LASER_MOVETOP);
+		}
+		else if(m_Motion.GetMotionNo() == MOTION_LASER_MUZZLEBOTTOM){
+			m_Motion.ChangeMotion(MOTION_LASER_MOVEBOTTOM);
+		}
+	}
+	else {
+		if (m_Motion.GetMotionNo() == MOTION_NORMAL_MUZZLETOP) {
+			m_Motion.ChangeMotion(MOTION_NORMAL_MOVETOP);
+		}
+		else if (m_Motion.GetMotionNo() == MOTION_NORMAL_MUZZLEBOTTOM) {
+			m_Motion.ChangeMotion(MOTION_NORMAL_MOVEBOTTOM);
+		}
+	}
+}
 
+void CPlayer::MoveSaveAnim() {
+	if (m_Motion.GetMotionNo() == MOTION_LASER_MUZZLETOP) {
+		m_Motion.ChangeMotion(MOTION_MOVE);
+	}
+	else if (m_Motion.GetMotionNo() == MOTION_LASER_MUZZLEBOTTOM) {
+		m_Motion.ChangeMotion(MOTION_MOVE);
+	}
+
+	if (m_Motion.GetMotionNo() == MOTION_NORMAL_MUZZLETOP) {
+		m_Motion.ChangeMotion(MOTION_MOVE);
+	}
+	else if (m_Motion.GetMotionNo() == MOTION_NORMAL_MUZZLEBOTTOM) {
+		m_Motion.ChangeMotion(MOTION_MOVE);
+	}
+}
 #pragma endregion
 
 
@@ -446,54 +552,47 @@ void CPlayer::DirecTpBtmChange() {
 	if (g_pInput->IsKeyPush(MOFKEY_W) && !m_bTop) {
 		m_bTop = true;
 		m_bBottom = false;
-		if (IsLaser()) {
-			m_Motion.ChangeMotion(MOTION_LASER_MUZZLETOP);
-		}
-		else {
-			m_Motion.ChangeMotion(MOTION_NORMAL_MUZZLETOP);
-		}
+		m_Motion.ChangeMotion((IsLaser()) ? MOTION_LASER_MUZZLETOP : MOTION_NORMAL_MUZZLETOP);
 	}
-	else if (g_pInput->IsKeyPush(MOFKEY_W) && (m_bTop || m_bBottom)) {
+	else if (g_pInput->IsKeyPush(MOFKEY_W) && m_bTop) {
 		m_bTop = false;
 		m_bBottom = false;
-		m_Motion.ChangeMotion(MOTION_WAIT);
+		m_Motion.ChangeMotion(MOTION_RETURN_MUZZLE);		
 	}
 	if (g_pInput->IsKeyPush(MOFKEY_S) && !m_bBottom) {
 		m_bBottom = true;
 		m_bTop = false;
-		if (IsLaser()) {
-			m_Motion.ChangeMotion(MOTION_LASER_MUZZLEBOTTOM);
-		}
-		else {
-			m_Motion.ChangeMotion(MOTION_NORMAL_MUZZLEBOTTOM);
-		}
+		m_Motion.ChangeMotion((IsLaser()) ? MOTION_LASER_MUZZLEBOTTOM : MOTION_NORMAL_MUZZLEBOTTOM);
 	}
-	else if (g_pInput->IsKeyPush(MOFKEY_S) && (m_bTop || m_bBottom)) {
+	else if (g_pInput->IsKeyPush(MOFKEY_S) && m_bBottom) {
 		m_bBottom = false;
 		m_bTop = false;
-		m_Motion.ChangeMotion(MOTION_WAIT);
+		m_Motion.ChangeMotion(MOTION_RETURN_MUZZLE);
 	}
 }
 
 void CPlayer::DirecMotionChange() {
-	if (GetDirec() == RIGHTTOP || GetDirec() == LEFTTOP) {
-		if (IsLaser()) {
-			m_Motion.ChangeMotion(MOTION_LASER_MUZZLETOP);
+	if (IsLaser()) {
+		if (m_bTop) {
+			m_Motion.ChangeMotion((m_bMove) ? MOTION_LASER_MOVETOP : MOTION_LASER_MUZZLETOP);
+		}
+		else if (m_bBottom) {
+			m_Motion.ChangeMotion((m_bMove) ? MOTION_LASER_MOVEBOTTOM : MOTION_LASER_MUZZLEBOTTOM);
 		}
 		else {
-			m_Motion.ChangeMotion(MOTION_NORMAL_MUZZLETOP);
-		}
-	}
-	else if (GetDirec() == RIGHTBOTTOM || GetDirec() == LEFTBOTTOM) {
-		if (IsLaser()) {
-			m_Motion.ChangeMotion(MOTION_LASER_MUZZLEBOTTOM);
-		}
-		else {
-			m_Motion.ChangeMotion(MOTION_NORMAL_MUZZLEBOTTOM);
+			m_Motion.ChangeMotion(MOTION_ATTACK);
 		}
 	}
 	else {
-		m_Motion.ChangeMotion(MOTION_ATTACK);
+		if (m_bTop) {
+			m_Motion.ChangeMotion((m_bMove) ? MOTION_NORMAL_MOVETOP : MOTION_NORMAL_MUZZLETOP);
+		}
+		else if (m_bBottom) {
+			m_Motion.ChangeMotion((m_bMove) ? MOTION_NORMAL_MOVEBOTTOM : MOTION_NORMAL_MUZZLEBOTTOM);
+		}
+		else {
+			m_Motion.ChangeMotion(MOTION_ATTACK);
+		}
 	}
 }
 
@@ -531,7 +630,8 @@ void CPlayer::FireShot() {
 			for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
 
 				if (m_PlShotAry[i].GetShow())	{		continue;		}
-				m_ShotWait = PLAYERSHOT_WAIT;
+				m_ShotWait = (m_PlShotAry[i].GetNatu() == HEAL) ? PLAYERSHOT_HEALWAIT : PLAYERSHOT_HEAVYWAIT;
+				m_SP -= PLAYERSHOT_DECREASE;
 				ShotRev(i);
 				break;
 			}
@@ -540,6 +640,7 @@ void CPlayer::FireShot() {
 	else
 	{
 		m_ShotWait--;
+		m_SP++;
 	}
 }
 
@@ -574,28 +675,6 @@ void CPlayer::ShotRev(int i) {
 			return;
 		}
 	}
-	/*switch (GetDirec())
-	{
-		case RIGHT:
-			m_PlShotAry[i].Fire(SetStartPos(), RIGHT, m_NatuType);
-			break;
-		case RIGHTTOP:
-			m_PlShotAry[i].Fire(SetStartPos(), RIGHTTOP, m_NatuType);
-			break;
-		case RIGHTBOTTOM:
-			m_PlShotAry[i].Fire(SetStartPos(), RIGHTBOTTOM, m_NatuType);
-			break;
-
-		case LEFT:
-			m_PlShotAry[i].Fire(SetStartPos(), LEFT, m_NatuType);
-			break;
-		case LEFTTOP:
-			m_PlShotAry[i].Fire(SetStartPos(), LEFTTOP, m_NatuType);
-			break;
-		case LEFTBOTTOM:
-			m_PlShotAry[i].Fire(SetStartPos(), LEFTBOTTOM, m_NatuType);
-			break;
-	}//*/
 }
 
 #pragma endregion
@@ -614,7 +693,8 @@ void CPlayer::FireShotLaser() {
 
 			for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
 				if (m_Laser[i].GetShow()) { continue; }
-				m_ShotWait = PLAYERSHOT_WAIT;
+				m_ShotWait = LASER_WAIT;
+				m_SP -= LASER_DECREASE;
 				ShotRevLaser(i);
 				break;
 			}
@@ -623,6 +703,7 @@ void CPlayer::FireShotLaser() {
 	else
 	{
 		m_ShotWait--;
+		m_SP++;
 	}
 }
 
@@ -714,8 +795,8 @@ bool CPlayer::PlayerEnd() {
 //当たり判定の関数
 #pragma region Collision関数
 
-
 bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
+
 	bool flg = false;
 
 	if (!ene.GetShow()) 
@@ -740,14 +821,11 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 			{
 				if (m_PlShotAry[i].GetNatu() == HEAL)
 				{
-					//TODO::回復弾の回復量
 					m_HP += HEAL_POWER;
-					//TODO::ダメージ量
 					ene.Damage(10);
 				}
 				else if (m_PlShotAry[i].GetNatu() == HEAVY)
 				{
-					//TODO::ダメージ量
 					ene.Damage(12);
 				}
 			}
@@ -767,7 +845,6 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 			if (eneType == Turret)
 				continue;
 
-			//TODO::レーザーのダメージ
 			if (m_Laser[i].GetNatu() == FIRE) {
 				ene.Damage(10);
 			}
@@ -859,7 +936,7 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 
 		CRectangle srec = m_PlShotAry[i].GetRect();
 		for (int j = 0; j < ENEMY_SHOT_COUNT; j++) {
-			if (!ene.ShotArrayBool(i))
+			if (!ene.ShotArrayBool(j))
 				continue;
 			CRectangle esrec = ene.ShotArrayRect(j);
 			if (srec.CollisionRect(esrec))
@@ -972,7 +1049,7 @@ bool CPlayer::ColisionItem(CItem& itm)
 	CRectangle irec = itm.GetRect();
 	if (prec.CollisionRect(irec))
 	{
-		itm.Effect(m_HP, m_bGoal,IsJump(),m_NextBossScene,m_MoveX,m_MoveY);
+		itm.Effect(m_HP, m_bGoal,IsJump(),m_bNextBossScene,m_MoveX,m_MoveY);
 		return true;
 	}
 	return false;
@@ -980,7 +1057,6 @@ bool CPlayer::ColisionItem(CItem& itm)
 
 bool CPlayer::CollisionAttackItem(CItem& itm)
 {
-	//TODO::弾の種類によって処理の実行
 
 	CRectangle irec = itm.GetRect();
 	//蜘蛛の巣削除処理
@@ -1084,10 +1160,6 @@ void CPlayer::Render(float wx,float wy){
 		float tmp = dr.Right;
 		dr.Right = dr.Left;
 		dr.Left = tmp;
-		if (m_Motion.GetMotionNo() == MOTION_ATTACK)
-		{
-			px -= PLAYER_ATTACKWIDTH;
-		}
 	}
 	//テクスチャの描画
 	m_Texture.Render(px, py, dr);
@@ -1108,7 +1180,7 @@ void CPlayer::RenderStatus() {
 void CPlayer::RenderDebug(float wx, float wy){
 	//位置の描画
 	CGraphicsUtilities::RenderString(10,70,"プレイヤー位置 X : %.0f , Y : %.0f , Move_Y : %.0f",m_PosX,m_PosY,m_MoveY);
-	if(m_NextBossScene)
+	if(m_bNextBossScene)
 		CGraphicsUtilities::RenderString(10,130, "ボス部屋フラグ : TRUE");
 	else
 		CGraphicsUtilities::RenderString(10, 130, "ボス部屋フラグ : FALSE");

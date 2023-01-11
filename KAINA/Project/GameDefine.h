@@ -74,24 +74,35 @@ enum tag_EnemyType
 //弾の最大数
 #define		PLAYERSHOT_COUNT		20
 
-//弾の間隔
-#define     PLAYERSHOT_WAIT			10
+//弾の間隔	HEAL
+#define     PLAYERSHOT_HEALWAIT		15
 
+//弾の間隔	HEAVY
+#define     PLAYERSHOT_HEAVYWAIT	60
 
+//HEAL弾の回復量
+#define		HEAL_POWER				10
+
+//通常弾のSP減少値
+#define		PLAYERSHOT_DECREASE		10
+
+#define		PLAYER_SPWAIT			10
+
+//レーザーの伸びる長さ
 #define     LASER_ATTACKWIDTH		64
-
-
-#define		LAZER_REVCOUNT			3
 
 #define		LASER_FIRE_COUNT		3
 
+//レーザーが壁に当たって止まる時間
 #define		LASER_DELAY				0.5
 
+//レーザーの間隔
+#define     LASER_WAIT				120
 
-#define		ENEMY_ATTAK_POWER		10
+//レーザーのSP減少値
+#define		LASER_DECREASE			10
 
 
-#define		HEAL_POWER				10
 
 
 //************************ステージシーンで使うDefine*************************//
@@ -116,12 +127,9 @@ enum tag_EnemyType
 //FireBarインターバル
 #define		FIREBAR_INTERVAL		90
 
-//Stage1_BOSSスクロール固定値
-//#define		STAGE1_BOSS_FIXSCROLL_WIDTH		185.0f
-//#define		STAGE1_BOSS_FIXSCROLL_HEIGHT	 120.0f
-
 #define		STAGE1_BOSS_FIXSCROLL_WIDTH		0.0f
 #define		STAGE1_BOSS_FIXSCROLL_HEIGHT	0.0f
-//Y44
+
+#define		ENEMY_ATTAK_POWER		10
 
 
