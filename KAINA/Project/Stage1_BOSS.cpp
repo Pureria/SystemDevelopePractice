@@ -301,8 +301,6 @@ void CStage1_Boss::StgCollBullet()
 		{
 			m_Player.SetWallLaser(i);
 		}
-
-		//TODO: ‰Î’Œ‚Ì‹éŒ`‚ÍŠ®¬‚µ‚Ä‚é
 	}
 }
 

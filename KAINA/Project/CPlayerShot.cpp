@@ -4,14 +4,15 @@
 CPlayerShot::CPlayerShot() :
 	m_RefCount(0),
 	m_MoveX(0.0),
-	m_MoveY(0.0) {};
-
+	m_MoveY(0.0),
+	m_ThroughCount(0){};
 
 void CPlayerShot::Initialize() {
 	m_ShotPos = Vector2(0, 0);
 	m_bShow = false;
 	m_DrcType = RIGHT;
 	m_RefCount = 0;
+	m_ThroughCount = 0;
 }
 
 void CPlayerShot::Update() {
@@ -22,6 +23,10 @@ void CPlayerShot::Update() {
 	SpeedSave();
 	m_ShotPos.x += m_MoveX;
 	m_ShotPos.y += m_MoveY;
+	
+	if (m_ThroughCount >= 2) {
+		m_bShow = false;
+	}
 }
 
 //î≠éÀÇ∑ÇÈèÓïÒÇÉZÉbÉg
@@ -33,6 +38,7 @@ void CPlayerShot::Fire(Vector2& pos, int tb, int natuyype) {
 	m_bHitWall = false;
 	m_NatuType = natuyype;
 	m_RefCount = 0;
+	m_ThroughCount = 0;
 }
 
 void CPlayerShot::Direction() {
@@ -40,6 +46,7 @@ void CPlayerShot::Direction() {
 	{
 	case RIGHT:
 		m_MoveX += PLAYERSHOT_SPEED;
+		m_MoveY = 0;
 		break;
 	case RIGHTTOP:
 		m_MoveX += PLAYERSHOT_SPEED;
@@ -49,9 +56,9 @@ void CPlayerShot::Direction() {
 		m_MoveX += PLAYERSHOT_SPEED;
 		m_MoveY += PLAYERSHOT_SPEED;
 		break;
-
 	case LEFT:
 		m_MoveX -= PLAYERSHOT_SPEED;
+		m_MoveY = 0;
 		break;
 	case LEFTTOP:
 		m_MoveX -= PLAYERSHOT_SPEED;

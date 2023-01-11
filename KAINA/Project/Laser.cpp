@@ -119,11 +119,6 @@ CRectangle* Laser::GetFireRect() {
 	
 }
 
-/*CRectangle Laser::GetSlopeRect() {
-	return;
-}*/
-
-
 void Laser::OutRange() {
 	//Á‚¦‚éˆ—
 

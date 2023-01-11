@@ -7,13 +7,12 @@ private:
 	//レーザーの当たった座標の保管
 	Vector2			m_LaserHitPos;
 
-	//float			m_FmTime;
-
-	//レーザー減衰幅
+	//レーザー減衰幅の変数
 	float			m_LaserDecrealse;
+	//レーザーが止まる時間
 	float			m_StopCount;
 
-	//レーザーの拡張範囲
+	//レーザーの拡張範囲の変数
 	int				m_LaserRange;
 
 	CRectangle		m_FireRec[LASER_FIRE_COUNT];
@@ -39,8 +38,6 @@ public:
 	CRectangle GetRect();
 
 	CRectangle* GetFireRect();
-
-	//CRectangle GetSlopeRect();
 
 	//処理を省略するための関数
 private:
