@@ -73,7 +73,7 @@ enum tag_NormalNaturalChangeType {
 //通常弾のSP減少値
 #define		PLAYERSHOT_DECREASE		10
 
-#define		PLAYER_SPWAIT			10
+#define		PLAYER_SPWAIT			60
 
 //レーザーの間隔
 #define     LASER_WAIT				120
@@ -82,19 +82,25 @@ enum tag_NormalNaturalChangeType {
 #define		LASER_DECREASE			10
 
 //************************メニュー表示で使うDefine*************************//
+
+
 //表示させるテキストの最大数
 #define     TEXTCOUNT_MAX			2
 
+
+//****************************Enemyで使うDefine****************************//
+
+
 //敵の弾最大数
-#define		ENEMY_SHOT_COUNT		20
-#define		ENEMY_SHOT_WAIT			100
+#define		ENEMY_SHOT_COUNT				20
+#define		ENEMY_SHOT_WAIT					100
 
 //FireBarインターバル
-#define		FIREBAR_INTERVAL		90
+#define		FIREBAR_INTERVAL				90
 
 #define		STAGE1_BOSS_FIXSCROLL_WIDTH		0.0f
 #define		STAGE1_BOSS_FIXSCROLL_HEIGHT	0.0f
 
-#define		ENEMY_ATTAK_POWER		10
+#define		ENEMY_ATTAK_POWER				10
 
 
