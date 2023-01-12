@@ -18,6 +18,7 @@ private:
 	float					m_TargetPosY;
 
 	CEffect*				m_pEndEffect;
+	CSE_Manager*			m_pSEManager;
 
 	//モーション種類定義
 	enum tag_Motion {
@@ -47,6 +48,9 @@ public:
 	//プレイヤーの座標セット
 	void		SetTargetPos(float tx, float ty) { m_TargetPosX = tx; m_TargetPosY = ty; }
 	bool		ShotTarget(int i);
+
+	//SEManagerのセット
+	void		SetSEManager(CSE_Manager* pmng) { m_pSEManager = pmng; }
 
 	//弾のShowを返す
 	bool		GetShotShow(int i) { return m_ShotArray[i].GetShow(); }

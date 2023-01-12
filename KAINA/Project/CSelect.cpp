@@ -24,16 +24,40 @@ void CSelect::Initialize() {
 void CSelect::Update() {
 	if (g_pInput->IsKeyPush(MOFKEY_D)) {
 		if (m_NowSelect < COUNT_NO - 1) {
+			for (int i = 0; i < SE_COUNT; i++)
+			{
+				if (m_SEManager[i].IsPlaySE())
+					continue;
+				m_SEManager[i].SEPlayer(SE_SELECT_CHANGE);
+				break;
+			}
+
 			++m_NowSelect;
 		}
 	}
 	if (g_pInput->IsKeyPush(MOFKEY_A)) {
 		if (m_NowSelect > 0) {
+			for (int i = 0; i < SE_COUNT; i++)
+			{
+				if (m_SEManager[i].IsPlaySE())
+					continue;
+				m_SEManager[i].SEPlayer(SE_SELECT_CHANGE);
+				break;
+			}
 			--m_NowSelect;
 		}
 	}
 
 	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && !m_bEnd) {
+
+		for (int i = 0; i < SE_COUNT; i++)
+		{
+			if (m_SEManager[i].IsPlaySE())
+				continue;
+			m_SEManager[i].SEPlayer(SE_SELECT_OK);
+			break;
+		}
+
 		switch (m_NowSelect)
 		{
 		case 0:
@@ -82,4 +106,15 @@ void CSelect::Render() {
 
 void CSelect::RenderDebug() {
 
+}
+
+void CSelect::Release()
+{
+	m_SelectTex.Release(); 
+	m_BGMManager.Release();
+
+	for (int i = 0; i < SE_COUNT; i++)
+	{
+		m_SEManager[i].Release();
+	}
 }

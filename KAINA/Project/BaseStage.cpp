@@ -5,7 +5,7 @@
  * コンストラクタ
  *
  */
-CStage::CStage() :
+CBaseStage::CBaseStage() :
 m_ChipTexture() ,
 m_BackTexture() ,
 m_ChipSize(0) ,
@@ -34,7 +34,7 @@ m_bButtonYellow(false){
  * デストラクタ
  *
  */
-CStage::~CStage(){
+CBaseStage::~CBaseStage(){
 }
 
 /**
@@ -44,7 +44,7 @@ CStage::~CStage(){
  * 引数
  * [in]			pName				ステージファイルの名前
  */
-bool CStage::Load(char* pName , int nowscene){
+bool CBaseStage::Load(char* pName , int nowscene){
 	//テキストファイルを開く
 	FILE* fp = fopen(pName, "rt");
 	if (fp == NULL)
@@ -202,7 +202,7 @@ bool CStage::Load(char* pName , int nowscene){
  * 初期化
  * パラメーターや座標を初期化する。
  */
-void CStage::Initialize(CEnemy* pEnemy,CEnemy_2* pEnemy2, CItem* pItem){
+void CBaseStage::Initialize(CEnemy* pEnemy,CEnemy_2* pEnemy2, CItem* pItem){
 	m_ScrollX = 0;
 	m_ScrollY = 0;
 	ButtonCount = 0;
@@ -278,7 +278,7 @@ void CStage::Initialize(CEnemy* pEnemy,CEnemy_2* pEnemy2, CItem* pItem){
 	
 }
 
-void CStage::Initialize(CItem* pItem)
+void CBaseStage::Initialize(CItem* pItem)
 {
 	m_ScrollX = 0;
 	m_ScrollY = 0;
@@ -307,7 +307,7 @@ void CStage::Initialize(CItem* pItem)
  * 引数
  * [in]			pl					プレイヤー、スクロールの判定に使用
  */
-void CStage::Update(CPlayer& pl){
+void CBaseStage::Update(CPlayer& pl){
 	//プレイヤーの短径取得
 	CRectangle prec = pl.GetRect();
 	//スクリーンの幅
@@ -390,7 +390,7 @@ void CStage::Update(CPlayer& pl){
 	ButtonGimmic();
 }
 
-void CStage::ButtonGimmic()
+void CBaseStage::ButtonGimmic()
 {
 	if (m_bButtonRed)
 	{
@@ -445,7 +445,7 @@ void CStage::ButtonGimmic()
  * 描画
  *
  */
-void CStage::Render(void){
+void CBaseStage::Render(void){
 	//遠景の描画
 	int scw = g_pGraphics->GetTargetWidth();
 	int sch = g_pGraphics->GetTargetHeight();
@@ -482,7 +482,7 @@ void CStage::Render(void){
 }
 
 //当たり判定
-bool CStage::Collision(CRectangle r) {
+bool CBaseStage::Collision(CRectangle r) {
 	//当たり判定する短径の左上と右下のチップ位置を求める
 	int lc = r.Left / m_ChipSize;
 	int rc = r.Right / m_ChipSize;
@@ -534,7 +534,7 @@ bool CStage::Collision(CRectangle r) {
 	return false;
 }
 
-bool CStage::CollisionBoss1(CRectangle r) {
+bool CBaseStage::CollisionBoss1(CRectangle r) {
 	//当たり判定する短径の左上と右下のチップ位置を求める
 	int lc = r.Left / m_ChipSize;
 	int rc = r.Right / m_ChipSize;
@@ -600,7 +600,7 @@ bool CStage::CollisionBoss1(CRectangle r) {
 	return false;
 }
 
-bool CStage::Collision(CRectangle r, float& ox, float& oy) {
+bool CBaseStage::Collision(CRectangle r, float& ox, float& oy) {
 	bool re = false;
 
 	//当たり判定する短径の左上と右下のチップ位置を求める
@@ -742,7 +742,7 @@ bool CStage::Collision(CRectangle r, float& ox, float& oy) {
 }
 
 
-bool CStage::StageAttackCollision(CRectangle r)
+bool CBaseStage::StageAttackCollision(CRectangle r)
 {
 	//当たり判定する短径の左上と右下のチップ位置を求める
 	int lc = m_ScrollX / m_ChipSize;
@@ -807,7 +807,7 @@ bool CStage::StageAttackCollision(CRectangle r)
 
 
 
-void CStage::CollisionFreezeWater(CRectangle r)
+void CBaseStage::CollisionFreezeWater(CRectangle r)
 {
 	int lc = m_ScrollX / m_ChipSize;
 	int rc = (g_pGraphics->GetTargetWidth() + m_ScrollX) / m_ChipSize;
@@ -862,7 +862,7 @@ void CStage::CollisionFreezeWater(CRectangle r)
 }
 
 
-void CStage::CollisionIceFroe(CRectangle r)
+void CBaseStage::CollisionIceFroe(CRectangle r)
 {
 	int lc = m_ScrollX / m_ChipSize;
 	int rc = (g_pGraphics->GetTargetWidth() + m_ScrollX) / m_ChipSize;
@@ -885,6 +885,13 @@ void CStage::CollisionIceFroe(CRectangle r)
 				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
 				if (cr.CollisionRect(r))
 				{
+					for (int i = 0; i < SE_COUNT; i++)
+					{
+						if (m_pSEManager[i].IsPlaySE())
+							continue;
+						m_pSEManager[i].SEPlayer(SE_FIRE_ICE);
+						break;
+					}
 					m_pChipData[y * m_XCount + x] = 13;
 				}
 			}
@@ -893,6 +900,13 @@ void CStage::CollisionIceFroe(CRectangle r)
 				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
 				if (cr.CollisionRect(r))
 				{
+					for (int i = 0; i < SE_COUNT; i++)
+					{
+						if (m_pSEManager[i].IsPlaySE())
+							continue;
+						m_pSEManager[i].SEPlayer(SE_FIRE_ICE);
+						break;
+					}
 					m_pChipData[y * m_XCount + x] = 0;
 				}
 			}
@@ -900,7 +914,7 @@ void CStage::CollisionIceFroe(CRectangle r)
 	}
 }
 
-bool CStage::CollisionLift(CRectangle r, float& ox, float& oy)
+bool CBaseStage::CollisionLift(CRectangle r, float& ox, float& oy)
 {
 	bool re = false;
 
@@ -937,7 +951,7 @@ bool CStage::CollisionLift(CRectangle r, float& ox, float& oy)
 	return re;
 }
 
-bool CStage::FireBar(CRectangle prec,bool FireEffect)
+bool CBaseStage::FireBar(CRectangle prec,bool FireEffect)
 {
 	int lc = m_ScrollX / m_ChipSize;
 	int rc = (g_pGraphics->GetTargetWidth() + m_ScrollX) / m_ChipSize;
@@ -957,6 +971,15 @@ bool CStage::FireBar(CRectangle prec,bool FireEffect)
 			char cn = m_pChipData[y * m_XCount + x] - 1;
 			if (cn != BURNER)
 				continue;
+
+			//バーナーのSE
+			for (int i = 0; i < SE_COUNT; i++)
+			{
+				if (m_pSEManager[i].IsPlaySE())
+					continue;
+				m_pSEManager[i].SEPlayer(SE_BURNER);
+				break;
+			}
 
 			//上下確認
 			//上方向
@@ -988,7 +1011,7 @@ bool CStage::FireBar(CRectangle prec,bool FireEffect)
  * デバッグ描画
  *
  */
-void CStage::RenderDebug(void){
+void CBaseStage::RenderDebug(void){
 	//位置の描画
 	CGraphicsUtilities::RenderString(10,100,"スクロール X : %.0f , Y : %.0f",m_ScrollX,m_ScrollY);
 	//CGraphicsUtilities::RenderRect(FireRec, MOF_XRGB(255, 0, 0));
@@ -998,7 +1021,7 @@ void CStage::RenderDebug(void){
  * 解放
  *
  */
-void CStage::Release(int nowscene){
+void CBaseStage::Release(int nowscene){
 	m_ChipTexture.Release();
 	m_BackTexture.Release();
 	if (m_pChipData)

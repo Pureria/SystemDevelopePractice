@@ -67,6 +67,15 @@ void CTitle::Update(void){
 	UpdateSelect();
 	//EnterƒL[‚ÅƒQ[ƒ€‰æ–Ê‚Ö
 	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && m_bSelectArrow && !m_bEnd) {
+
+		for (int i = 0; i < SE_COUNT; i++)
+		{
+			if (m_SEManager[i].IsPlaySE())
+				continue;
+			m_SEManager[i].SEPlayer(SE_SELECT_OK);
+			break;
+		}
+
 		m_bEnd = true;
 		m_SceneNo = SCENENO_SELECT;
 	}
@@ -80,6 +89,14 @@ void CTitle::UpdateSelect() {
 
 	if (g_pInput->IsKeyPush(MOFKEY_UP) || g_pInput->IsKeyPush(MOFKEY_DOWN))
 	{
+		for (int i = 0; i < SE_COUNT; i++)
+		{
+			if (m_SEManager[i].IsPlaySE())
+				continue;
+			m_SEManager[i].SEPlayer(SE_SELECT_CHANGE);
+			break;
+		}
+
 		if (!m_bSelectArrow)
 			m_bSelectArrow = true;
 		else
@@ -105,6 +122,14 @@ void CTitle::UpdateMenu() {
 	}
 	else if (!m_bSelectArrow) {
 		if (g_pInput->IsKeyPush(MOFKEY_RETURN)) {
+			for (int i = 0; i < SE_COUNT; i++)
+			{
+				if (m_SEManager[i].IsPlaySE())
+					continue;
+				m_SEManager[i].SEPlayer(SE_SELECT_OK);
+				break;
+			}
+
 			m_Menu.Show(Vector2(g_pGraphics->GetTargetWidth() * 0.5f, g_pGraphics->GetTargetHeight() * 0.5f));
 		}
 	}
@@ -146,4 +171,9 @@ void CTitle::Release(void){
 	m_SelectArrow.Release();
 	m_Menu.Release();
 	m_BGMManager.Release();
+	
+	for (int i = 0; i < SE_COUNT; i++)
+	{
+		m_SEManager[i].Release();
+	}
 }

@@ -2,6 +2,9 @@
 
 #include	"Mof.h"
 
+//SE配列用
+#define			SE_COUNT	10
+
 //存在するシーンの列挙
 enum tag_SCENENO{
 	SCENENO_TITLE,

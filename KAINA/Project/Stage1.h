@@ -17,7 +17,7 @@ private:
 	CPlayer			m_Player;
 
 	//ステージ
-	CStage			m_Stage;
+	CBaseStage			m_BaseStage;
 
 	//敵のポインタ配列
 	CEnemy*		    m_EnemyArray;
@@ -41,7 +41,7 @@ private:
 
 
 public:
-	CStage1() : m_Player(),m_Stage(),m_EnemyArray(),m_EffectManager(),m_ItemArray(),m_Menu(),m_NowSceneNo(SCENENO_GAME_STAGE1){};
+	CStage1() : m_Player(),m_BaseStage(),m_EnemyArray(),m_EffectManager(),m_ItemArray(),m_Menu(),m_NowSceneNo(SCENENO_GAME_STAGE1){};
 	~CStage1();
 	bool Load();
 	void Initialize();

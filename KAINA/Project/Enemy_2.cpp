@@ -2,7 +2,8 @@
 
 CEnemy_2::CEnemy_2() :
 	m_bFallFlg(false),
-	m_pEndEffect(){}
+	m_pEndEffect(),
+	m_pSEManager(){}
 
 CEnemy_2::~CEnemy_2(){}
 
@@ -26,6 +27,7 @@ void CEnemy_2::Initialize(float px, float py, int type)
 
 	m_bShotTarget = m_bFallFlg;
 	m_pEndEffect = NULL;
+	m_pSEManager = NULL;
 
 	//íeópïœêîÇÃInitialize
 	m_ShotWait = ENEMY_SHOT_WAIT;
@@ -258,10 +260,25 @@ void CEnemy_2::Damage(float dmg)
 	if (m_HP <= 0)
 	{
 		m_pEndEffect = m_pEffectManager->Start(m_Pos.x + (m_SrcRect.GetWidth() * 0.5), m_Pos.y + (m_SrcRect.GetHeight() * 0.5), EFC_EXPLOSION01);
+		for (int i = 0; i < SE_COUNT; i++)
+		{
+			if (m_pSEManager[i].IsPlaySE())
+				continue;
+			m_pSEManager[i].SEPlayer(SE_ENEMY_DIE);
+			break;
+		}
 		m_bShow = false;
 	}
 	else
 	{
+		for (int i = 0; i < SE_COUNT; i++)
+		{
+			if (m_pSEManager[i].IsPlaySE())
+				continue;
+			m_pSEManager[i].SEPlayer(SE_ENEMY_DAMAGE);
+			break;
+		}
+
 		m_bKnockback = true;
 		Flip();
 		m_Move.y = -ENEMY_KNOCKBACK_POWER_Y;

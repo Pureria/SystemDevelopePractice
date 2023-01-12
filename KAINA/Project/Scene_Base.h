@@ -2,6 +2,7 @@
 #include	 "Mof.h"
 #include     "GameDefine.h"
 #include	"BGM_Manager.h"
+#include	"SE_Manager.h"
 
 #define		FILEKEY 0x65
 
@@ -29,6 +30,10 @@ protected:
 
 	//BGM
 	CBGM_Manager	m_BGMManager;
+
+	//SE
+	CSE_Manager		m_SEManager[SE_COUNT];
+
 
 public:
 	Scene_Base() : m_bEnd(false), m_SceneNo(), m_Alpha(255),m_bChange(false),m_Time(), m_PlayerHp(){};

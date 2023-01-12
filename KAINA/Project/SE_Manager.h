@@ -9,9 +9,7 @@ private:
 public:
 
 	bool Load(void);
-	void Initialize(void);
 	void SEPlayer(int request);
-	void Render(void);
 	void Release(void);
 
 	bool IsPlaySE() { return gSound.IsPlay(); }
