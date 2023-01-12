@@ -505,22 +505,6 @@ void CPlayer::MoveTpBtmAnim() {
 	}
 }
 
-void CPlayer::MoveSaveAnim() {
-	if (m_Motion.GetMotionNo() == MOTION_LASER_MUZZLETOP) {
-		m_Motion.ChangeMotion(MOTION_MOVE);
-	}
-	else if (m_Motion.GetMotionNo() == MOTION_LASER_MUZZLEBOTTOM) {
-		m_Motion.ChangeMotion(MOTION_MOVE);
-	}
-
-	if (m_Motion.GetMotionNo() == MOTION_NORMAL_MUZZLETOP) {
-		m_Motion.ChangeMotion(MOTION_MOVE);
-	}
-	else if (m_Motion.GetMotionNo() == MOTION_NORMAL_MUZZLEBOTTOM) {
-		m_Motion.ChangeMotion(MOTION_MOVE);
-	}
-}
-
 void CPlayer::MoveStopAnim() {
 	if (m_bTop) {
 		m_Motion.ChangeMotion((IsLaser()) ? MOTION_LASER_MUZZLETOP : MOTION_NORMAL_MUZZLETOP);
