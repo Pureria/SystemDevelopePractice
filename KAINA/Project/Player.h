@@ -239,6 +239,8 @@ private:
 
 	void MoveSaveAnim();
 
+	void MoveStopAnim();
+
 	//’e‚ÌXV
 	void UpdateShot();
 

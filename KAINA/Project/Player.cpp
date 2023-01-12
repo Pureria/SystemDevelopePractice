@@ -387,6 +387,7 @@ void CPlayer::UpdateMove(){
 			if (m_MoveX <= 0)
 			{
 				m_MoveX = 0;
+				MoveStopAnim();
 			}
 		}
 		else if (m_MoveX < 0)
@@ -395,6 +396,7 @@ void CPlayer::UpdateMove(){
 			if (m_MoveX >= 0)
 			{
 				m_MoveX = 0;
+				MoveStopAnim();
 			}
 		}
 		else if (m_Motion.GetMotionNo() == MOTION_MOVE)
@@ -439,7 +441,6 @@ void CPlayer::UpdateKey() {
 
 //キー入力による動作更新/
 #pragma region Move関数
-
 
 void CPlayer::MoveKey() {
 	//入力で直接座標を動かすのではなく、速度を変化させる
@@ -517,6 +518,18 @@ void CPlayer::MoveSaveAnim() {
 	}
 	else if (m_Motion.GetMotionNo() == MOTION_NORMAL_MUZZLEBOTTOM) {
 		m_Motion.ChangeMotion(MOTION_MOVE);
+	}
+}
+
+void CPlayer::MoveStopAnim() {
+	if (m_bTop) {
+		m_Motion.ChangeMotion((IsLaser()) ? MOTION_LASER_MUZZLETOP : MOTION_NORMAL_MUZZLETOP);
+	}
+	else if (m_bBottom) {
+		m_Motion.ChangeMotion((IsLaser()) ? MOTION_LASER_MUZZLEBOTTOM : MOTION_NORMAL_MUZZLEBOTTOM);
+	}
+	else {
+		m_Motion.ChangeMotion(MOTION_RETURN_MUZZLE);
 	}
 }
 
@@ -852,11 +865,11 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 				if (m_PlShotAry[i].GetNatu() == HEAL)
 				{
 					m_HP += HEAL_POWER;
-					ene.Damage(10);
+					ene.Damage(HEAL_DAMAGE);
 				}
 				else if (m_PlShotAry[i].GetNatu() == HEAVY)
 				{
-					ene.Damage(12);
+					ene.Damage(HEAVY_DAMAGE);
 				}
 			}
 			m_PlShotAry[i].SetShow(false);
@@ -876,10 +889,10 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 				continue;
 
 			if (m_Laser[i].GetNatu() == FIRE) {
-				ene.Damage(10);
+				ene.Damage(FIRE_DAMAGE);
 			}
 			else if (m_Laser[i].GetNatu() == FROST) {
-				ene.Damage(12);
+				ene.Damage(FROST_DAMAGE);
 			}
 		}
 	}

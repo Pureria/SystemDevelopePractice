@@ -91,6 +91,9 @@
     <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_BaseData\Enemy_Base">
       <UniqueIdentifier>{1f92c570-f424-4358-bda6-cfd55bd64c17}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Player\Player_obj\Shot_Base\ShotDefine">
+      <UniqueIdentifier>{29139872-3c6b-4de4-94ac-acd60a0fcd0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Title.cpp">
@@ -255,7 +258,7 @@
       <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_BaseData\Enemy_Base</Filter>
     </ClInclude>
     <ClInclude Include="ShotDefine.h">
-      <Filter>ソース ファイル\Gbl</Filter>
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Player\Player_obj\Shot_Base\ShotDefine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
