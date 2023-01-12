@@ -36,17 +36,7 @@ enum tag_NormalNaturalChangeType {
 	FROST,
 };
 
-//敵の種類
-enum tag_EnemyType
-{
-	Enemy_1,
-	Enemy_2,
 
-	EnemyTypeCount,
-};
-
-//弾の反射回数
-#define		REFLECTION_COUNT		5	
 //************************全ステージの重力Define*************************//
 //重力
 #define		GRAVITY					0.3f
@@ -68,9 +58,6 @@ enum tag_EnemyType
 //当たり判定減衰幅
 #define		PLAYER_RECTDECREASE		12
 
-//弾の速さ
-#define	    PLAYERSHOT_SPEED		10
-
 //弾の最大数
 #define		PLAYERSHOT_COUNT		20
 
@@ -88,37 +75,15 @@ enum tag_EnemyType
 
 #define		PLAYER_SPWAIT			10
 
-//レーザーの伸びる長さ
-#define     LASER_ATTACKWIDTH		64
-
-#define		LASER_FIRE_COUNT		3
-
-//レーザーが壁に当たって止まる時間
-#define		LASER_DELAY				0.5
-
 //レーザーの間隔
 #define     LASER_WAIT				120
 
 //レーザーのSP減少値
 #define		LASER_DECREASE			10
 
-
-
-
-//************************ステージシーンで使うDefine*************************//
-//ステージ選択画面の最大数
-#define     COUNT_NO				4
-
 //************************メニュー表示で使うDefine*************************//
 //表示させるテキストの最大数
 #define     TEXTCOUNT_MAX			2
-
-//************************フェードアウト フェードインで使うDefine*************************//
-//アルファ値
-#define		FADE_ALPHA				5
-
-//アルファ最大値
-#define		FADE_ALPHA_MAX			255
 
 //敵の弾最大数
 #define		ENEMY_SHOT_COUNT		20

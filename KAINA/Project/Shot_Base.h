@@ -1,6 +1,7 @@
 #pragma once
 #include "Mof.h"
 #include "GameDefine.h"
+#include "ShotDefine.h"
 
 class Shot_Base
 {
@@ -17,18 +18,14 @@ protected:
 	bool			m_bShow;
 	//•Ç‚É“–‚½‚Á‚½‚©‚Ç‚¤‚©
 	bool			m_bHitWall;
-	//’e‚Ìí—Ş
-	int				m_ShotType;
 	//’e‚Ì•ûŒü
 	int				m_DrcType;
 	//’e‚Ì“Á«
 	int				m_NatuType;
 
-	float			m_ScrollX, m_ScrollY;
-
 //‰¼‘zŠÖ”‚Ü‚Æ‚ß
 public:
-	Shot_Base() : m_pShotTex(), m_phShotTex(), m_ShotPos(0, 0), m_bShow(false), m_bHitWall(false), m_ShotType(NORMAL), m_DrcType(RIGHT), m_NatuType(HEAL), m_ScrollX(0), m_ScrollY(0) {};
+	Shot_Base() : m_pShotTex(), m_phShotTex(), m_ShotPos(0, 0), m_bShow(false), m_bHitWall(false), m_DrcType(RIGHT), m_NatuType(HEAL) {};
 	virtual void Initialize()								= 0;
 	virtual void Update()									= 0;
 	virtual void Render(float wx, float wy)					= 0;
@@ -46,29 +43,20 @@ public:
 	virtual CRectangle GetRect()							= 0;
 //SetŠÖ”
 public:
-	//ƒeƒNƒXƒ`ƒƒ‚Ì”z—ñ
-	void		SetHealTexture(CTexture* pt)		{		m_pShotTex = pt;				}
-	void		SetHeavyTexture(CTexture* pt)		{		m_phShotTex = pt;				}
 	//•`‰æ‚·‚é‚©‚Ç‚¤‚©
-	void		SetShow(bool bs)					{		m_bShow	= bs;					}
+	void			SetShow(bool bs)				{		m_bShow	= bs;					}
 //GetŠÖ”	
 public:
-	//’e‚Ìí—Ş
-	int			GetType()							{		return m_ShotType;				}
 	//Œ‚‚Â•ûŒü
-	int			GetDirec()							{		return m_DrcType;				}
+	int				GetDirec()						{		return m_DrcType;				}
 	//’e‚Ì“Á«
-	int			GetNatu()							{		return m_NatuType;				}
+	int				GetNatu()						{		return m_NatuType;				}
 	//•`‰æ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
-	bool		GetShow()							{		return m_bShow;					}
+	bool			GetShow()						{		return m_bShow;					}
 //IsŠÖ”
 public:
-	bool		IsLazer()							{		return m_ShotType == LASER;		}
 
-	bool		IsHitWall()							{		return m_bHitWall;				}
+	//inline bool		IsHitWall()						{		return m_bHitWall;				}
 
-	void		SetScroll(float wx, float wy)		{		m_ScrollX = wx; m_ScrollY = wy; }
-
-	void SetBullet(int type, int drc, int natu)		{		m_ShotType = type; m_DrcType = drc; m_NatuType = natu; }
 };
 

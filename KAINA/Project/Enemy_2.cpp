@@ -6,7 +6,7 @@ CEnemy_2::CEnemy_2() :
 
 CEnemy_2::~CEnemy_2(){}
 
-//TODO::Enemy_2‚Ìˆ—
+//TODO::Enemy_2ã®å‡¦ç†
 
 void CEnemy_2::Initialize(float px, float py, int type)
 {
@@ -27,18 +27,18 @@ void CEnemy_2::Initialize(float px, float py, int type)
 	m_bShotTarget = m_bFallFlg;
 	m_pEndEffect = NULL;
 
-	//’e—p•Ï”‚ÌInitialize
+	//å¼¾ç”¨å¤‰æ•°ã®Initialize
 	m_ShotWait = ENEMY_SHOT_WAIT;
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ğì¬
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ä½œæˆ
 	SpriteAnimationCreate anim[] = {
 		{
-			"ˆÚ“®",
+			"ç§»å‹•",
 			0,0,192,64,TRUE,
 			{{5,0,0}}
 		},
 		{
-			"ƒ_ƒ[ƒW",
+			"ãƒ€ãƒ¡ãƒ¼ã‚¸",
 			0,0,192,64,FALSE,
 			{{5,0,0}}
 		},
@@ -47,9 +47,9 @@ void CEnemy_2::Initialize(float px, float py, int type)
 }
 
 /**
-*XV
+*æ›´æ–°
 *
-* [in] wx:ƒXƒNƒŠ[ƒ“À•W
+* [in] wx:ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™
 **/
 void CEnemy_2::Update(float wx)
 {
@@ -62,7 +62,7 @@ void CEnemy_2::Update(float wx)
 		m_bWidthOut = true;
 	}
 
-	//’e‚ÌXV
+	//å¼¾ã®æ›´æ–°
 	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
 	{
 		m_ShotArray[i].Update(wx);
@@ -85,39 +85,39 @@ void CEnemy_2::Update(float wx)
 
 	if (m_bKnockback)
 	{
-		//TODO::ƒmƒbƒNƒoƒbƒN’†‚Ìˆ—
+		//TODO::ãƒãƒƒã‚¯ãƒãƒƒã‚¯ä¸­ã®å‡¦ç†
 		KnockBack();
 		return;
 	}
 	else if (m_pEndEffect)
 		return;
 
-	//ƒ_ƒ[ƒW’†‚Ì“®ì
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸ä¸­ã®å‹•ä½œ
 	if (m_Motion.GetMotionNo() == MOTION_DAMAGE)
 	{
 		m_ShotWait = ENEMY_SHOT_WAIT;
 
-		//ƒ_ƒ[ƒWƒ‚[ƒVƒ‡ƒ“I—¹‚ÅŒ³‚É–ß‚·
+		//ãƒ€ãƒ¡ãƒ¼ã‚¸ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†ã§å…ƒã«æˆ»ã™
 		if (m_Motion.IsEndMotion())
 		{
 			m_Motion.ChangeMotion(MOTION_MOVE);
 			if (m_HP <= 0)
 			{
 				m_bShow = false;
-				//”š”­ƒGƒtƒFƒNƒg‚ğ”­¶‚³‚¹‚é
+				//çˆ†ç™ºã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ç™ºç”Ÿã•ã›ã‚‹
 				m_pEffectManager->Start(m_Pos.x + m_SrcRect.GetWidth() * 0.5f, m_Pos.y + m_SrcRect.GetHeight() * 0.5f, EFC_EXPLOSION01);
 			}
 		}
-		//TODO::—]—T‚ª‚ ‚ê‚Îƒ_ƒ[ƒW’†‚ÌƒmƒbƒNƒoƒbƒN
+		//TODO::ä½™è£•ãŒã‚ã‚Œã°ãƒ€ãƒ¡ãƒ¼ã‚¸ä¸­ã®ãƒãƒƒã‚¯ãƒãƒƒã‚¯
 	}
 
-	//ƒ_ƒ[ƒW‚ÌƒCƒ“ƒ^[ƒoƒ‹‚ğŒ¸‚ç‚·
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«ã‚’æ¸›ã‚‰ã™
 	if ((m_DamageWait > 0))
 	{
 		m_DamageWait--;
 	}
 
-	//’e‚Ì”­Ë
+	//å¼¾ã®ç™ºå°„
 	if (m_ShotWait <= 0)
 	{
 		for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
@@ -172,7 +172,7 @@ void CEnemy_2::Update(float wx)
 		m_ShotWait--;
 	}
 
-	//d—Í
+	//é‡åŠ›
 	m_Move.y += GRAVITY;
 	if (m_Move.y >= 20.0f) { m_Move.y = 20.0f; }
 
@@ -180,25 +180,25 @@ void CEnemy_2::Update(float wx)
 	//m_Pos.y += m_Move.y;
 	m_Pos += m_Move;
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌXV
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®æ›´æ–°
 	m_Motion.AddTimer(CUtilities::GetFrameSecond());
 	m_SrcRect = m_Motion.GetSrcRect();
 }
 
 bool CEnemy_2::ShotTarget(int i)
 {
-	//’e‚Ì”­ËˆÊ’u
+	//å¼¾ã®ç™ºå°„ä½ç½®
 	float stx = m_Pos.x + 30;
 	float sty = m_Pos.y + 30;
-	//–Ú•W’n“_‚ÉŒü‚©‚¤‚½‚ß‚Ì•ûŒü
+	//ç›®æ¨™åœ°ç‚¹ã«å‘ã‹ã†ãŸã‚ã®æ–¹å‘
 	float dx = m_TargetPosX - stx;
 	float dy = m_TargetPosY - sty;
-	//–Ú•W’n“_‚Ü‚Å‚Ì‹——£‚ğ‹‚ß‚é
+	//ç›®æ¨™åœ°ç‚¹ã¾ã§ã®è·é›¢ã‚’æ±‚ã‚ã‚‹
 	float d = sqrt(dx * dx + dy * dy);
-	//‹——£‚ª0ˆÈ‰º = Š®‘S‚É“¯‚¶ˆÊ’u‚Ìê‡‚Í”­Ë‚µ‚È‚¢
+	//è·é›¢ãŒ0ä»¥ä¸‹ = å®Œå…¨ã«åŒã˜ä½ç½®ã®å ´åˆã¯ç™ºå°„ã—ãªã„
 	if (d <= 0)
 		return false;
-	//•ûŒü‚ğ³‹K‰»
+	//æ–¹å‘ã‚’æ­£è¦åŒ–
 	dx /= d;
 	dy /= d;
 	m_ShotArray[i].Fire(stx, sty, dx * 5, dy * 5);
@@ -206,11 +206,11 @@ bool CEnemy_2::ShotTarget(int i)
 }
 
 /**
-*ƒXƒe[ƒW‚Æ‚Ì“–‚½‚è
+*ã‚¹ãƒ†ãƒ¼ã‚¸ã¨ã®å½“ãŸã‚Š
 *
-*ˆø”
-*[in]		ox		x–„‚Ü‚è—Ê
-*[in]		oy		y–„‚Ü‚è—Ê
+*å¼•æ•°
+*[in]		ox		xåŸ‹ã¾ã‚Šé‡
+*[in]		oy		yåŸ‹ã¾ã‚Šé‡
 */
 
 void CEnemy_2::CollisionStage(float ox, float oy)
@@ -221,7 +221,7 @@ void CEnemy_2::CollisionStage(float ox, float oy)
 	}
 	m_Pos.x += ox;
 	m_Pos.y += oy;
-	//—‰º’†‚Ì‰º–„‚Ü‚èAƒWƒƒƒ“ƒv’†‚Ìã–„‚Ü‚è‚Ìê‡‚ÍˆÚ“®‚ğ‰Šú‰»‚·‚é
+	//è½ä¸‹ä¸­ã®ä¸‹åŸ‹ã¾ã‚Šã€ã‚¸ãƒ£ãƒ³ãƒ—ä¸­ã®ä¸ŠåŸ‹ã¾ã‚Šã®å ´åˆã¯ç§»å‹•ã‚’åˆæœŸåŒ–ã™ã‚‹
 	if (oy < 0 && m_Move.y > 0)
 	{
 		m_Move.y = 0;
@@ -233,7 +233,7 @@ void CEnemy_2::CollisionStage(float ox, float oy)
 }
 
 /**
-*ŠR”»’è—pRect‚ğ•Ô‚·
+*å´–åˆ¤å®šç”¨Rectã‚’è¿”ã™
 *
 */
 
@@ -285,31 +285,31 @@ void CEnemy_2::KnockBack()
 }
 
 /**
-*•`‰æ
+*æç”»
 *
-*ˆø”
-*[in]		wx		ƒXƒNƒ[ƒ‹’lx
-*[in]		wy		ƒXƒNƒ[ƒ‹’ly
+*å¼•æ•°
+*[in]		wx		ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«å€¤x
+*[in]		wy		ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«å€¤y
 */
 void CEnemy_2::Render(float wx, float wy)
 {
-	//”ñ•\¦
+	//éè¡¨ç¤º
 	if (!m_bShow)
 		return;
 
-	//’e‚Ì•`‰æ
+	//å¼¾ã®æç”»
 	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
 	{
 		m_ShotArray[i].Render(wx, wy);
 	}
 
-	//ƒCƒ“ƒ^[ƒoƒ‹2ƒtƒŒ[ƒ€‚²‚Æ‚É•`‰æ‚ğ‚µ‚È‚¢
+	//ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«2ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã«æç”»ã‚’ã—ãªã„
 	if (m_DamageWait % 4 >= 2)
 	{
 		return;
 	}
 
-	//•`‰æ’ZŒa
+	//æç”»çŸ­å¾„
 	CRectangle dr = m_SrcRect;
 	if (m_bReverse)
 	{
@@ -317,7 +317,7 @@ void CEnemy_2::Render(float wx, float wy)
 		dr.Right = dr.Left;
 		dr.Left = tmp;
 	}
-	//ƒeƒNƒXƒ`ƒƒ‚Ì•`‰æ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æç”»
 	if(m_bFallFlg)
 		m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr);
 	else
@@ -325,26 +325,26 @@ void CEnemy_2::Render(float wx, float wy)
 }
 
 /**
-*ƒfƒoƒbƒO
+*ãƒ‡ãƒãƒƒã‚°
 *
-*ˆø”
-*[in]		wx		ƒXƒNƒ[ƒ‹’lx
-*[in]		wy		ƒXƒNƒ[ƒ‹’ly
+*å¼•æ•°
+*[in]		wx		ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«å€¤x
+*[in]		wy		ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«å€¤y
 */
 void CEnemy_2::RenderDebug(float wx, float wy)
 {
 	if (!m_bShow)
 		return;
 
-	//“–‚½‚è”»’è‚Ì•\¦
+	//å½“ãŸã‚Šåˆ¤å®šã®è¡¨ç¤º
 	CRectangle hr = GetRect();
 	CGraphicsUtilities::RenderRect(hr.Left - wx, hr.Top - wy, hr.Right - wx, hr.Bottom - wy, MOF_XRGB(255, 0, 0));
 
-	//ŠRƒ`ƒFƒbƒN‚ÌRect
+	//å´–ãƒã‚§ãƒƒã‚¯ã®Rect
 	hr = GetLedgeCheckRect();
 	CGraphicsUtilities::RenderFillRect(hr.Left - wx, hr.Top - wy, hr.Right - wx, hr.Bottom - wy, MOF_XRGB(255, 255, 0));
 
-	//’e‚Ì•`‰æ
+	//å¼¾ã®æç”»
 	for (int i = 0; i < ENEMY_SHOT_COUNT; i++)
 		m_ShotArray[i].RenderDebug(wx, wy);
 }
@@ -363,7 +363,7 @@ void CEnemy_2::DeffenceProc(int dmg) {
 	if (deff < 0) { m_HP += deff; }
 }
 /**
-*‰ğ•ú
+*è§£æ”¾
 *
 */
 void CEnemy_2::Release()
