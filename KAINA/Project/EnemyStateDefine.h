@@ -12,6 +12,10 @@ enum tas_EnemyType {
 #define		ENEMY_DEFFENCE_POWER	1
 /***************************/
 
+/************Enemy2ステータス**********/
+#define		ENEMY_2_HP				10
+/**************************************/
+
 /*ステージ1ボスのステータス*/
 #define		ENEMY_BOSS_HP				50
 #define		ENEMY_BOSS_FRONT_DEF		2
