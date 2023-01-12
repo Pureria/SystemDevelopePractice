@@ -183,23 +183,21 @@ public:
 	void SetEffectManager(CEffectManager* pmng)					{ 		m_pEffectManager = pmng; 								}
 
 	void SetNormalShotShow(bool flg, int i)						{		m_PlShotAry[i].SetShow(flg);							}
-	
-	void SetScroll(float wx, float wy, int i)					{		m_PlShotAry[i].SetScroll(wx, wy);						}
 
 	//PlayerPosセット
-	void SetPlayerPos(float PosX, float PosY)					{		m_PosX = PosX; m_PosY = PosY;							}
+	inline void SetPlayerPos(float PosX, float PosY)			{		m_PosX = PosX; m_PosY = PosY;							}
 
 	void SetWallLaser(int i)									{		m_Laser[i].SetWallHitLaser();							}
 	
-	void SetHp(int hp)											{		m_HP = hp;												}
+	inline void SetHp(int hp)									{		m_HP = hp;												}
 #pragma endregion	
 	/************************************************public Is関数*************************************************/
 #pragma region Is関数
 
 
-	bool IsAttack()												{		return m_Motion.GetMotionNo() == MOTION_ATTACK;			}
+	inline bool IsAttack()										{		return m_Motion.GetMotionNo() == MOTION_ATTACK;			}
 
-	bool IsGoal(void)											{		return m_bGoal;											}
+	inline bool IsGoal(void)									{		return m_bGoal;											}
 
 	bool IsEnd(void)											{		return m_bDead;											}
 	//上昇中　: true
@@ -207,7 +205,7 @@ public:
 	
 	bool IsLaser()												{		return m_ShotType == LASER;								}
 	
-	bool IsWallLaser(int i)										{		return m_Laser[i].IsHitWall();							}
+	//TODO: inline bool IsWallLaser(int i)								{		return m_Laser[i].IsHitWall();							}
 	
 	
 	

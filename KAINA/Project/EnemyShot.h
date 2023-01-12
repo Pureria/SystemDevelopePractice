@@ -1,5 +1,5 @@
 #pragma once
-#include	"GameDefine.h"
+#include "GameDefine.h"
 
 class CEnemyShot
 {
