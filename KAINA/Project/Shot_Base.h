@@ -44,19 +44,17 @@ public:
 //SetŠÖ”
 public:
 	//•`‰æ‚·‚é‚©‚Ç‚¤‚©
-	void			SetShow(bool bs)				{		m_bShow	= bs;					}
+	inline void		SetShow(bool bs)				{		m_bShow	= bs;					}
 //GetŠÖ”	
 public:
 	//Œ‚‚Â•ûŒü
-	int				GetDirec()						{		return m_DrcType;				}
+	inline int		GetDirec()						{		return m_DrcType;				}
 	//’e‚Ì“Á«
-	int				GetNatu()						{		return m_NatuType;				}
+	inline int		GetNatu()						{		return m_NatuType;				}
 	//•`‰æ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
-	bool			GetShow()						{		return m_bShow;					}
+	inline bool		GetShow()						{		return m_bShow;					}
 //IsŠÖ”
 public:
-
-	//inline bool		IsHitWall()						{		return m_bHitWall;				}
 
 };
 

@@ -67,19 +67,15 @@ enum tag_NormalNaturalChangeType {
 //弾の間隔	HEAVY
 #define     PLAYERSHOT_HEAVYWAIT	60
 
-//通常弾のSP減少値
-#define		PLAYERSHOT_DECREASE		10
-
-#define		PLAYER_SPWAIT			60
-
 //レーザーの間隔
 #define     LASER_WAIT				120
 
-//レーザーのSP減少値
-#define		LASER_DECREASE			10
+//SP消費の間隔
+#define		PLAYER_SPWAIT			60
 
 //HEAL弾の回復量
 #define		HEAL_POWER				10
+
 
 //HEAL弾のダメージ量
 #define		HEAL_DAMAGE				3
@@ -92,6 +88,18 @@ enum tag_NormalNaturalChangeType {
 
 //FIRE弾のダメージ量
 #define		FIRE_DAMAGE				6
+
+//HEALのSP減少値
+#define		HEAL_DECREASE			4
+
+//HEAVYのSP減少値
+#define		HEAVY_DECREASE			6
+
+//FIREのSP減少値
+#define		FIRE_DECREASE			6
+
+//FROSTのSP減少値
+#define		FROST_DECREASE			8
 
 //************************メニュー表示で使うDefine*************************//
 
