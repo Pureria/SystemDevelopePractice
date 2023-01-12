@@ -666,19 +666,19 @@ void CPlayer::ShotRev(int i) {
 		if (m_bTop) {
 			m_PlShotAry[i].Fire(SetStartPos(), RIGHTTOP, m_NatuType);
 			m_SpWait = PLAYER_SPWAIT;
-			m_SP -= PLAYERSHOT_DECREASE;
+			m_SP -= (m_PlShotAry[i].GetNatu() == HEAL) ? HEAL_DECREASE : HEAVY_DECREASE;
 			return;
 		}
 		else if (m_bBottom) {
 			m_PlShotAry[i].Fire(SetStartPos(), RIGHTBOTTOM, m_NatuType);
 			m_SpWait = PLAYER_SPWAIT;
-			m_SP -= PLAYERSHOT_DECREASE;
+			m_SP -= (m_PlShotAry[i].GetNatu() == HEAL) ? HEAL_DECREASE : HEAVY_DECREASE;
 			return;
 		}
 		else {
 			m_PlShotAry[i].Fire(SetStartPos(), RIGHT, m_NatuType);
 			m_SpWait = PLAYER_SPWAIT;
-			m_SP -= PLAYERSHOT_DECREASE;
+			m_SP -= (m_PlShotAry[i].GetNatu() == HEAL) ? HEAL_DECREASE : HEAVY_DECREASE;
 			return;
 		}
 	}
@@ -686,19 +686,19 @@ void CPlayer::ShotRev(int i) {
 		if (m_bTop) {
 			m_PlShotAry[i].Fire(SetStartPos(), LEFTTOP, m_NatuType);
 			m_SpWait = PLAYER_SPWAIT;
-			m_SP -= PLAYERSHOT_DECREASE;
+			m_SP -= (m_PlShotAry[i].GetNatu() == HEAL) ? HEAL_DECREASE : HEAVY_DECREASE;
 			return;
 		}
 		else if (m_bBottom) {
 			m_PlShotAry[i].Fire(SetStartPos(), LEFTBOTTOM, m_NatuType);
 			m_SpWait = PLAYER_SPWAIT;
-			m_SP -= PLAYERSHOT_DECREASE;
+			m_SP -= (m_PlShotAry[i].GetNatu() == HEAL) ? HEAL_DECREASE : HEAVY_DECREASE;
 			return;
 		}
 		else {
 			m_PlShotAry[i].Fire(SetStartPos(), LEFT, m_NatuType);
 			m_SpWait = PLAYER_SPWAIT;
-			m_SP -= PLAYERSHOT_DECREASE;
+			m_SP -= (m_PlShotAry[i].GetNatu() == HEAL) ? HEAL_DECREASE : HEAVY_DECREASE;
 			return;
 		}
 	}
@@ -721,8 +721,6 @@ void CPlayer::FireShotLaser() {
 			for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
 				if (m_Laser[i].GetShow()) { continue; }
 				m_ShotWait = LASER_WAIT;
-				m_SpWait = PLAYER_SPWAIT;
-				m_SP -= LASER_DECREASE;
 				ShotRevLaser(i);
 				break;
 			}
@@ -736,26 +734,42 @@ void CPlayer::FireShotLaser() {
 
 //’e‚ÌŒü‚«‚ðŒ‚‚ÂuŠÔ‚ÉƒZƒbƒg
 void CPlayer::ShotRevLaser(int i) {
+	if (m_SP <= 0) {
+		return;
+	}
+
 	if (!m_bReverse) {
 		if (m_bTop) {
 			m_Laser[i].Fire(SetStartPos(), RIGHTTOP, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_Laser[i].GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 		}
 		else if (m_bBottom) {
 			m_Laser[i].Fire(SetStartPos(), RIGHTBOTTOM, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_Laser[i].GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 		}
 		else {
 			m_Laser[i].Fire(SetStartPos(), RIGHT, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_Laser[i].GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 		}
 	}
 	else {
 		if (m_bTop) {
 			m_Laser[i].Fire(SetStartPos(), LEFTTOP, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_Laser[i].GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 		}
 		else if (m_bBottom) {
 			m_Laser[i].Fire(SetStartPos(), LEFTBOTTOM, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_Laser[i].GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 		}
 		else {
 			m_Laser[i].Fire(SetStartPos(), LEFT, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_Laser[i].GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 		}
 	}
 }
