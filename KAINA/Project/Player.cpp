@@ -274,10 +274,11 @@ void CPlayer::Update() {
 	UpdateShot();
 
 	//HPが無くなると爆発の終了を待機して終了
-	if (PlayerEnd()) {	return;	}
+	if (PlayerEnd())	{			return;				}
 
 	//移動フラグ、このフレームでの移動があったかを保存
 	m_bMove = false;
+
 	//攻撃中、着地の場合の動作
 	if (m_Motion.GetMotionNo() == MOTION_ATTACK || m_Motion.GetMotionNo() == MOTION_JUMPEND)
 	{
@@ -344,11 +345,25 @@ void CPlayer::Update() {
 		m_SP = 100;
 	}
 
+	if (m_SP <= 0) {
+		m_SP = 0;
+	}
+
+	if (m_SpWait > 0) {
+		m_SpWait--;
+		if (m_SpWait <= 0) {
+			m_SP++;
+			m_SpWait = PLAYER_SPWAIT;
+		}
+	}
+
 	//ダメージのインターバルを減らす
 	if (m_DamageWait > 0)
 	{
 		m_DamageWait--;
 	}
+
+
 
 }
 
@@ -504,6 +519,7 @@ void CPlayer::MoveSaveAnim() {
 		m_Motion.ChangeMotion(MOTION_MOVE);
 	}
 }
+
 #pragma endregion
 
 
@@ -631,7 +647,6 @@ void CPlayer::FireShot() {
 
 				if (m_PlShotAry[i].GetShow())	{		continue;		}
 				m_ShotWait = (m_PlShotAry[i].GetNatu() == HEAL) ? PLAYERSHOT_HEALWAIT : PLAYERSHOT_HEAVYWAIT;
-				m_SP -= PLAYERSHOT_DECREASE;
 				ShotRev(i);
 				break;
 			}
@@ -640,38 +655,53 @@ void CPlayer::FireShot() {
 	else
 	{
 		m_ShotWait--;
-		m_SP++;
 	}
 }
 
 
 //弾の向きを撃つ瞬間にセット
 void CPlayer::ShotRev(int i) {
+	if (m_SP <= 0) {		
+		return;
+	}
+
 	if (!m_bReverse) {
 		if (m_bTop) {
 			m_PlShotAry[i].Fire(SetStartPos(), RIGHTTOP, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= PLAYERSHOT_DECREASE;
 			return;
 		}
 		else if (m_bBottom) {
 			m_PlShotAry[i].Fire(SetStartPos(), RIGHTBOTTOM, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= PLAYERSHOT_DECREASE;
 			return;
 		}
 		else {
 			m_PlShotAry[i].Fire(SetStartPos(), RIGHT, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= PLAYERSHOT_DECREASE;
 			return;
 		}
 	}
 	else {
 		if (m_bTop) {
 			m_PlShotAry[i].Fire(SetStartPos(), LEFTTOP, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= PLAYERSHOT_DECREASE;
 			return;
 		}
 		else if (m_bBottom) {
 			m_PlShotAry[i].Fire(SetStartPos(), LEFTBOTTOM, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= PLAYERSHOT_DECREASE;
 			return;
 		}
 		else {
 			m_PlShotAry[i].Fire(SetStartPos(), LEFT, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= PLAYERSHOT_DECREASE;
 			return;
 		}
 	}
@@ -694,6 +724,7 @@ void CPlayer::FireShotLaser() {
 			for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
 				if (m_Laser[i].GetShow()) { continue; }
 				m_ShotWait = LASER_WAIT;
+				m_SpWait = PLAYER_SPWAIT;
 				m_SP -= LASER_DECREASE;
 				ShotRevLaser(i);
 				break;
@@ -703,7 +734,6 @@ void CPlayer::FireShotLaser() {
 	else
 	{
 		m_ShotWait--;
-		m_SP++;
 	}
 }
 
