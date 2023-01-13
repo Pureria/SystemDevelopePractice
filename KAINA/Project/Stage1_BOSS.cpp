@@ -57,10 +57,11 @@ void CStage1_Boss::Initialize() {
 	};
 	// ポーズ機能に必要な値を渡す。	
 	m_Menu.Create(m_pTitle, m_pMenuString, TEXTCOUNT_MAX);
-	m_Alpha = 0;
 
 	m_BGMManager.Initialize();
 	m_BGMManager.BGMPlayer(BGM_BOSS1);
+
+	m_Alpha = 255;
 }
 
 /**
@@ -68,6 +69,29 @@ void CStage1_Boss::Initialize() {
  *
  */
 void CStage1_Boss::Update(void) {
+#pragma region Fade
+	if (m_bFadeIn)
+	{
+		m_NowTime += CUtilities::GetFrameSecond();
+		m_Alpha = (int)m_Function.Animation(0, FADE_TIME, 255, 0, m_NowTime);
+		if (m_Alpha <= 0)
+			m_bFadeIn = false;
+	}
+
+	if (m_bFadeOut)
+	{
+		m_NowTime += CUtilities::GetFrameSecond();
+		m_Alpha = (int)m_Function.Animation(0, FADE_TIME, 0, 255, m_NowTime);
+		if (m_Alpha >= 255)
+		{
+			m_bEnd = true;
+			m_SceneNo = SCENENO_GAMECLEAR;
+		}
+
+		return;
+	}
+#pragma endregion
+
 	UpdateExitkey();
 	//メニュー画面の表示
 	if (m_Menu.IsShow()) {
@@ -97,8 +121,9 @@ void CStage1_Boss::Update(void) {
 
 			if (m_ItemArray[i].IsEndDoorAnimation())
 			{
-				m_bEnd = true;
-				m_SceneNo = SCENENO_GAMECLEAR;
+				m_bFadeOut = true;
+				m_NowTime = 0;
+				m_Alpha = 0;
 			}
 		}
 		return;
@@ -231,6 +256,7 @@ void CStage1_Boss::Update(void) {
 		m_bEnd = true;
 		m_SceneNo = SCENENO_GAMEOVER;
 	}
+
 }
 
 void CStage1_Boss::StgCollPlayer()
@@ -413,16 +439,13 @@ void CStage1_Boss::Render(void) {
 	//エフェクトの描画
 	m_EffectManager.Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
 
-	CGraphicsUtilities::RenderString(500 - m_Stage.GetScrollX(), 300 - m_Stage.GetScrollY(), "W,A,S,Dで移動");
-
 	//プレイヤーの状態描画
 	m_Player.RenderStatus();
-
-	CGraphicsUtilities::RenderString(10, 10, "ゲーム画面");
-	CGraphicsUtilities::RenderString(10, 40, "F2キーでゲームクリア、F3キーでゲームオーバー");
 	if (m_Menu.IsShow()) {
 		m_Menu.Render();
 	}
+
+	CGraphicsUtilities::RenderFillRect(0, 0, g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight(), MOF_ARGB(m_Alpha, 0, 0, 0));
 }
 
 /**

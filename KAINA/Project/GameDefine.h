@@ -48,6 +48,9 @@ enum tag_EnemyType
 	EnemyTypeCount,
 };
 
+//Fade時間(秒)
+#define		FADE_TIME				2
+
 //弾の反射回数
 #define		REFLECTION_COUNT		5	
 //************************全ステージの重力Define*************************//

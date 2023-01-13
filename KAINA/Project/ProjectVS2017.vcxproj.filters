@@ -251,6 +251,9 @@
     <ClInclude Include="SE_Manager.h">
       <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Data\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="PublicFunction.h">
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Data\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">

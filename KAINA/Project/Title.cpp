@@ -51,6 +51,8 @@ void CTitle::Initialize(void){
 
 	m_BGMManager.Initialize();
 	m_BGMManager.BGMPlayer(BGM_TITLE);
+
+	m_Alpha = 255;
 }
 
 /**
@@ -58,6 +60,31 @@ void CTitle::Initialize(void){
  *
  */
 void CTitle::Update(void){
+
+#pragma region Fade
+	if (m_bFadeIn)
+	{
+		m_NowTime += CUtilities::GetFrameSecond();
+		m_Alpha = (int)m_Function.Animation(0, FADE_TIME, 255, 0, m_NowTime);
+		if (m_Alpha <= 0)
+			m_bFadeIn = false;
+		return;
+	}
+
+	if (m_bFadeOut)
+	{
+		m_NowTime += CUtilities::GetFrameSecond();
+		m_Alpha = (int)m_Function.Animation(0, FADE_TIME, 0, 255, m_NowTime);
+		if (m_Alpha >= 255)
+		{
+			m_bEnd = true;
+			m_SceneNo = SCENENO_SELECT;
+		}
+			
+		return;
+	}
+#pragma endregion
+
 	UpdateExitkey();
 	UpdateMenu();
 
@@ -68,6 +95,10 @@ void CTitle::Update(void){
 	//EnterƒL[‚ÅƒQ[ƒ€‰æ–Ê‚Ö
 	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && m_bSelectArrow && !m_bEnd) {
 
+		m_bFadeOut = true;
+		m_NowTime = 0;
+		m_Alpha = 0;
+
 		for (int i = 0; i < SE_COUNT; i++)
 		{
 			if (m_SEManager[i].IsPlaySE())
@@ -75,9 +106,6 @@ void CTitle::Update(void){
 			m_SEManager[i].SEPlayer(SE_SELECT_OK);
 			break;
 		}
-
-		m_bEnd = true;
-		m_SceneNo = SCENENO_SELECT;
 	}
 }
 
@@ -134,6 +162,7 @@ void CTitle::UpdateMenu() {
 		}
 	}
 }
+
 /**
  * •`‰æ
  *
@@ -147,6 +176,8 @@ void CTitle::Render(void){
 
 	(m_bSelectArrow) ?	m_SelectArrow.Render(g_pGraphics->GetTargetWidth() / 3.5, g_pGraphics->GetTargetHeight() / 1.35, MOF_XRGB(255, 255, 255)) :
 		m_SelectArrow.Render(g_pGraphics->GetTargetWidth() / 3.5, g_pGraphics->GetTargetHeight() / 1.25, MOF_XRGB(255, 255, 255));
+
+	CGraphicsUtilities::RenderFillRect(0, 0, g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight(), MOF_ARGB(m_Alpha, 0, 0, 0));
 
 	if (m_Menu.IsShow()) {
 		m_Menu.Render();

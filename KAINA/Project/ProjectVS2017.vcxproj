@@ -127,6 +127,7 @@
     <ClInclude Include="CMenu.h" />
     <ClInclude Include="CPlayerShot.h" />
     <ClInclude Include="CSelect.h" />
+    <ClInclude Include="PublicFunction.h" />
     <ClInclude Include="SoundDefine.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />

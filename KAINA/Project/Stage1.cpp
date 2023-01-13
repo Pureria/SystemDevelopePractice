@@ -59,7 +59,6 @@ void CStage1::Initialize(){
 	};
 
 	m_Menu.Create(m_pTitle, m_pMenuString, TEXTCOUNT_MAX);
-	m_Alpha = 0;
 
 	m_intervalFire = FIREBAR_INTERVAL;
 	m_bFire = false;
@@ -86,6 +85,28 @@ void CStage1::Initialize(){
  *
  */
 void CStage1::Update(void){
+#pragma region Fade
+	if (m_bFadeIn)
+	{
+		m_NowTime += CUtilities::GetFrameSecond();
+		m_Alpha = (int)m_Function.Animation(0, FADE_TIME, 255, 0, m_NowTime);
+		if (m_Alpha <= 0)
+			m_bFadeIn = false;
+	}
+
+	if (m_bFadeOut)
+	{
+		m_NowTime += CUtilities::GetFrameSecond();
+		m_Alpha = (int)m_Function.Animation(0, FADE_TIME, 0, 255, m_NowTime);
+		if (m_Alpha >= 255)
+		{
+			m_bEnd = true;
+			m_SceneNo = SCENENO_GAME_STAGE1_BOSS;
+		}
+		return;
+	}
+#pragma endregion
+
 	UpdateExitkey();
 
 	if (m_Menu.IsShow()) {
@@ -115,8 +136,9 @@ void CStage1::Update(void){
 
 			if (m_ItemArray[i].IsEndDoorAnimation())
 			{
-				m_bEnd = true;
-				m_SceneNo = SCENENO_GAME_STAGE1_BOSS;
+				m_bFadeOut = true;
+				m_Alpha = 0;
+				m_NowTime = 0;
 				m_PlayerHp = m_Player.GetHp();
 				SetSaveToFile();
 				break;
@@ -505,14 +527,14 @@ void CStage1::Render(void){
 	//エフェクトの描画
 	m_EffectManager.Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 
-	CGraphicsUtilities::RenderString(500 - m_BaseStage.GetScrollX(), 300 - m_BaseStage.GetScrollY(), "W,A,S,Dで移動");
-
 	//プレイヤーの状態描画
 	m_Player.RenderStatus();
 
 	if (m_Menu.IsShow()) {
 		m_Menu.Render();
 	}
+
+	CGraphicsUtilities::RenderFillRect(0, 0, g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight(), MOF_ARGB(m_Alpha, 0, 0, 0));
 }
 
 /**
