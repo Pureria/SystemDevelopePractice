@@ -148,7 +148,7 @@ public:
 
 	CRectangle GetRect()										{
 																		return CRectangle(m_PosX + PLAYER_RECTDECREASE,
-																				m_PosY + PLAYER_RECTDECREASE,
+																				m_PosY + 12,
 																				m_PosX + m_SrcRect.GetWidth() - PLAYER_RECTDECREASE,
 																				m_PosY + m_SrcRect.GetHeight());
 																}
