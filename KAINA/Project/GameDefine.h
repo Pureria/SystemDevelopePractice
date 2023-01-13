@@ -82,7 +82,10 @@ enum tag_NormalNaturalChangeType {
 #define		PLAYER_SPWAIT			60
 
 //HEAL弾の回復量
-#define		HEAL_POWER				10
+#define		HEAL_POWER				5
+
+//SPの回復量
+#define		SP_POWER				5
 
 
 //HEAL弾のダメージ量
@@ -92,22 +95,22 @@ enum tag_NormalNaturalChangeType {
 #define		HEAVY_DAMAGE			6
 
 //FROST弾のダメージ量
-#define		FROST_DAMAGE			5
+#define		FROST_DAMAGE			6
 
 //FIRE弾のダメージ量
-#define		FIRE_DAMAGE				6
+#define		FIRE_DAMAGE				8
 
 //HEALのSP減少値
-#define		HEAL_DECREASE			4
+#define		HEAL_DECREASE			1
 
 //HEAVYのSP減少値
 #define		HEAVY_DECREASE			6
 
 //FIREのSP減少値
-#define		FIRE_DECREASE			6
+#define		FIRE_DECREASE			16
 
 //FROSTのSP減少値
-#define		FROST_DECREASE			8
+#define		FROST_DECREASE			12
 
 //************************メニュー表示で使うDefine*************************//
 
@@ -131,4 +134,4 @@ enum tag_NormalNaturalChangeType {
 
 #define		ENEMY_ATTAK_POWER				10
 
-
+#define		STAGE1_BOSS_SLASH_DAMAGE		30

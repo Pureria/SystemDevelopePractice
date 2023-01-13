@@ -29,9 +29,7 @@ private:
 	int						m_DamageWait;
 
 	CTexture				m_FrameTexture;
-	CTexture				m_HPTexture;
 	CTexture				m_HPBarTexture;
-	CTexture				m_SPTexture;
 	CTexture				m_SPBarTexture;
 
 	CEffectManager*			m_pEffectManager;
@@ -108,6 +106,7 @@ public:
 	void Render(float wx,float wy);
 	void RenderDebug(float wx,float wy);
 	void RenderStatus();
+	void ShotRender(float wx, float wy);
 	void Release();
 	
 	/**********************************************public Collision関数********************************************/
@@ -180,6 +179,8 @@ public:
 	bool GetLaserShotShow(int i)								{		return m_Laser[i].GetShow();							}
 
 	inline int GetHp()											{		return m_HP;											}
+
+	inline bool GetLaserWallHit(int i)							{		return m_Laser[i].GetWallHit();							}
 	
 #pragma endregion
 
@@ -190,8 +191,8 @@ public:
 	void SetEffectManager(CEffectManager* pmng)					{ 		m_pEffectManager = pmng; 								}
 
 	void SetNormalShotShow(bool flg, int i)						{		m_PlShotAry[i].SetShow(flg);							}
-
-	void SetWallLaser(int i)									{		m_Laser[i].SetWallHitLaser();							}
+	//ステージに当たった場合　true	: false
+	void SetWallLaser(int i,bool flg)							{		m_Laser[i].SetWallHitLaser(flg);						}
 	
 	inline void SetPlayerPos(float PosX, float PosY)			{		m_PosX = PosX; m_PosY = PosY;							}
 	
@@ -288,8 +289,8 @@ private:
 #pragma region Set関数
 
 	//発生位置
-	Vector2 SetStartPos() {
-		return Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f - 20);
+	inline Vector2 SetStartPos() {
+		return Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f);
 	}
 
 #pragma endregion

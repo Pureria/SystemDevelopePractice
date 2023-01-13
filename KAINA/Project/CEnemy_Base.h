@@ -37,6 +37,8 @@ protected:
 	int						m_Deffence;
 
 	float					m_EneTime;
+
+	bool					m_bDead;
 public:
 	void virtual Initialize(float px, float py, int type)	= 0;
 	void virtual Update(float wx)							= 0;
@@ -46,18 +48,20 @@ public:
 	void virtual Release()									= 0;
 	CRectangle virtual GetRect()							= 0;
 
-	void virtual SetTexture(CTexture* pt, CTexture* st) { return; }
-	void virtual DeffenceProc(int dmg) { return; }
-	void virtual DeffenceProc(int dmg,int deff) { return; }
+	void virtual SetTexture(CTexture* pt, CTexture* st)					{			return;							}
+	void virtual DeffenceProc(int dmg)									{			return;							}
+	void virtual DeffenceProc(int dmg,int deff)							{			return;							}
+	void virtual Damage(float dmg)										{			return;							}
+	void virtual KnockBack()											{			return;							}
 
-	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
-	void SetTime(float time) { m_EneTime = time; }
-	
-	bool GetShow() { return m_bShow; }
-	bool GetKnockback() { return m_bKnockback; }
-	int	 GetEnemyType() { return m_EnemyType; }
-	
-	void virtual Damage(float dmg) { return; }
-	void virtual KnockBack() { return; }
+
+	void SetEffectManager(CEffectManager* pmng)							{			m_pEffectManager = pmng;		}
+	void SetTime(float time)											{			m_EneTime = time;				}
+		
+	bool GetShow()														{			return m_bShow;					}
+	bool GetKnockback()													{			return m_bKnockback;			}
+	int	 GetEnemyType()													{			return m_EnemyType;				}
+
+	bool IsDead()														{			return m_bDead;					}
 };
 

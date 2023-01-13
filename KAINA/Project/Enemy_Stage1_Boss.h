@@ -63,6 +63,7 @@ private:
 	float					m_TargetPosY;
 
 
+	CEffect*				m_pEndEffect;
 
 public:
 	CEnemy_Stage1_Boss();
@@ -132,8 +133,15 @@ public:
 
 	void DeffenceProc(int dmg, int deff) override;
 
+	//î≠ê∂à íu
+	inline Vector2 SetStartPos() {
+		return Vector2(m_Pos.x + m_SrcRect.GetWidth() * 0.5f, m_Pos.y + m_SrcRect.GetHeight() * 0.5f);
+	}
+
+
 	//TODO: Ç«Ç§Ç…Ç©ÇµÇÊÇ§
 	void Initialize(float px, float py, int type) {};
 	void Update(float wx) {};
+
 };
 
