@@ -5,19 +5,19 @@ enum tas_EnemyType {
 	Bike,
 };
 
-/************ÊïµÂÖ±ÈÄö**********/
+/************ìGã§í **********/
 #define		ENEMY_KNOCKBACK_POWER_Y	5.0f
 #define		ENEMY_KNOCKBACK_TIME	0.5f
 /***************************/
 
-/************Enemy2„Çπ„ÉÜ„Éº„Çø„Çπ**********/
+/************Enemy2ÉXÉeÅ[É^ÉX**********/
 #define		ENEMY_2_1_HP				12
 #define		ENEMY_2_2_HP				15
 #define		ENEMY_2_1_DEFFENCE_POWER	1
 #define		ENEMY_2_2_DEFFENCE_POWER	0
 /**************************************/
 
-/*„Çπ„ÉÜ„Éº„Ç∏1„Éú„Çπ„ÅÆ„Çπ„ÉÜ„Éº„Çø„Çπ*/
+/*ÉXÉeÅ[ÉW1É{ÉXÇÃÉXÉeÅ[É^ÉX*/
 #define		ENEMY_BOSS_HP				50
 #define		ENEMY_BOSS_FRONT_DEF		2
 #define		ENEMY_BOSS_BACK_DEF			0

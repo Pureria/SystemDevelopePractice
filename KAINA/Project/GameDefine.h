@@ -2,10 +2,10 @@
 
 #include	"Mof.h"
 
-//SE配列用
+//SE�z��p
 #define			SE_COUNT	10
 
-//存在するシーンの列挙
+//���݂���V�[���̗�
 enum tag_SCENENO{
 	SCENENO_TITLE,
 	SCENENO_SELECT,
@@ -15,7 +15,7 @@ enum tag_SCENENO{
 	SCENENO_GAMEOVER,
 };
 
-//発射の方向
+//���˂̕���
 enum tag_Direction {
 	RIGHT,
 	LEFT,
@@ -25,107 +25,105 @@ enum tag_Direction {
 	LEFTBOTTOM
 };
 
-//弾の種類
+//�e�̎��
 enum tag_AttackType {
 	NORMAL,
 	LASER,
 };
 
-//弾の特性変化
+//�e�̓����ω�
 enum tag_NormalNaturalChangeType {
 	HEAL,
 	HEAVY,
 	FIRE,
 	FROST,
 };
-	EnemyTypeCount,
-};
 
-//Fade時間(秒)
+//Fade����(�b)
 #define		FADE_TIME				2
 
-//弾の反射回数
+//�e�̔��ˉ�
 #define		REFLECTION_COUNT		5	
 
-//************************全ステージの重力Define*************************//
-//重力
+//************************�S�X�e�[�W�̏d��Define*************************//
+//�d��
 #define		GRAVITY					0.3f
 
 #define		DAMAGE_WAIT				60
-//************************プレイヤーで使うDefine*************************//
-//移動速度
+//************************�v���C���[�Ŏg��Define*************************//
+//�ړ����x
 #define		PLAYER_SPEED			0.3f
 
-//移動最大速度
+//�ړ��ő呬�x
 #define		PLAYER_MAXSPEED			7.0f
 
-//ジャンプ初速
+//�W�����v����
 #define		PLAYER_JUMP				-13.0f
 
-//攻撃幅
+//�U����
 #define		PLAYER_ATTACKWIDTH		30
 
-//当たり判定減衰幅
+//�����蔻�茸����
 #define		PLAYER_RECTDECREASE		12
 
-//弾の最大数
+//�e�̍ő吔
 #define		PLAYERSHOT_COUNT		20
 
-//弾の間隔	HEAL
+//�e�̊Ԋu	HEAL
 #define     PLAYERSHOT_HEALWAIT		15
 
-//弾の間隔	HEAVY
+//�e�̊Ԋu	HEAVY
 #define     PLAYERSHOT_HEAVYWAIT	60
 
-//レーザーの間隔
+//���[�U�[�̊Ԋu
 #define     LASER_WAIT				120
 
-//SP消費の間隔
+//SP����̊Ԋu
 #define		PLAYER_SPWAIT			60
 
-//HEAL弾の回復量
+//HEAL�e�̉񕜗�
 #define		HEAL_POWER				10
 
 
-//HEAL弾のダメージ量
+//HEAL�e�̃_���[�W��
 #define		HEAL_DAMAGE				3
 
-//HEAVY弾のダメージ量
+//HEAVY�e�̃_���[�W��
 #define		HEAVY_DAMAGE			6
 
-//FROST弾のダメージ量
+//FROST�e�̃_���[�W��
 #define		FROST_DAMAGE			5
 
-//FIRE弾のダメージ量
+//FIRE�e�̃_���[�W��
 #define		FIRE_DAMAGE				6
 
-//HEALのSP減少値
+//HEAL��SP�����l
 #define		HEAL_DECREASE			4
 
-//HEAVYのSP減少値
+//HEAVY��SP�����l
 #define		HEAVY_DECREASE			6
 
-//FIREのSP減少値
+//FIRE��SP�����l
 #define		FIRE_DECREASE			6
 
-//FROSTのSP減少値
+//FROST��SP�����l
 #define		FROST_DECREASE			8
 
-//************************メニュー表示で使うDefine*************************//
+//************************���j���[�\���Ŏg��Define*************************//
 
 
-//表示させるテキストの最大数
+//�\��������e�L�X�g�̍ő吔
 #define     TEXTCOUNT_MAX			2
 
 
-//****************************Enemyで使うDefine****************************//
+//****************************Enemy�Ŏg��Define****************************//
 
 
-//敵の弾最大数
+//�G�̒e�ő吔
 #define		ENEMY_SHOT_COUNT				20
 #define		ENEMY_SHOT_WAIT					100
 
-//FireBarインターバル
+//FireBar�C���^�[�o��
 #define		FIREBAR_INTERVAL				90
 
 #define		STAGE1_BOSS_FIXSCROLL_WIDTH		0.0f
