@@ -12,14 +12,13 @@ public:
 	CPlayerShot();
 	~CPlayerShot() {};
 
-	void Initialize();
-	void Update();
+	void Initialize()								override;
+	void Update()									override;
+	void Fire(Vector2& pos, int tb, int natuyype)	override;
+	void Render(float wx, float wy)					override;
+	void RenderDebug(float wx, float wy)			override;
 
-	void Fire(Vector2& pos, int tb, int natuyype) override;
-	void Render(float wx, float wy);
-	void RenderDebug(float wx, float wy);
-
-	CRectangle GetRect()
+	inline CRectangle GetRect()						override
 	{
 		return CRectangle(m_ShotPos.x,
 			m_ShotPos.y,
@@ -27,7 +26,9 @@ public:
 			m_ShotPos.y + m_pShotTex->GetHeight());
 	}
 
-	void SetShotType(int type) { m_ShotType = type; }
+	//テクスチャの配列
+	inline void		SetHealTexture(CTexture* pt)		{		m_pShotTex = pt;		}
+	inline void		SetHeavyTexture(CTexture* pt)		{		m_phShotTex = pt;		}
 
 	void SetPowerLeft();
 

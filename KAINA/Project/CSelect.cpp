@@ -111,10 +111,8 @@ void CSelect::Render() {
 	m_SelectTex.Render(0,0);
 
 	const char* MenuString[COUNT_NO] = {
-		"ステージ1",
-		"ステージ2",
-		"ステージ3",
-	    "ステージ4",
+		"_________________________",
+		"_________________________",
 	};
 	MofU32	color[COUNT_NO];
 
@@ -126,7 +124,7 @@ void CSelect::Render() {
 
 
 	for (int i = 0; i < COUNT_NO; ++i) {
-		CGraphicsUtilities::RenderString(100 + 450 * i,(i == 1) ? 100 + 600 * i : (i == 3) ? 700 : 300, color[i], MenuString[i]);
+		CGraphicsUtilities::RenderString(350 + 900 * i,600, color[i], MenuString[i]);
 	}
 
 	CGraphicsUtilities::RenderFillRect(0, 0, g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight(), MOF_ARGB(m_Alpha, 0, 0, 0));

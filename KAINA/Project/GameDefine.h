@@ -2,10 +2,10 @@
 
 #include	"Mof.h"
 
-//SE”z—ñ—p
+//SEé…åˆ—ç”¨
 #define			SE_COUNT	10
 
-//‘¶Ý‚·‚éƒV[ƒ“‚Ì—ñ‹“
+//å­˜åœ¨ã™ã‚‹ã‚·ãƒ¼ãƒ³ã®åˆ—æŒ™
 enum tag_SCENENO{
 	SCENENO_TITLE,
 	SCENENO_SELECT,
@@ -15,7 +15,7 @@ enum tag_SCENENO{
 	SCENENO_GAMEOVER,
 };
 
-//”­ŽË‚Ì•ûŒü
+//ç™ºå°„ã®æ–¹å‘
 enum tag_Direction {
 	RIGHT,
 	LEFT,
@@ -25,117 +25,112 @@ enum tag_Direction {
 	LEFTBOTTOM
 };
 
-//’e‚ÌŽí—Þ
+//å¼¾ã®ç¨®é¡ž
 enum tag_AttackType {
 	NORMAL,
 	LASER,
 };
 
-//’e‚Ì“Á«•Ï‰»
+//å¼¾ã®ç‰¹æ€§å¤‰åŒ–
 enum tag_NormalNaturalChangeType {
 	HEAL,
 	HEAVY,
 	FIRE,
 	FROST,
 };
-
-//“G‚ÌŽí—Þ
-enum tag_EnemyType
-{
-	Enemy_1,
-	Enemy_2,
-
 	EnemyTypeCount,
 };
 
-//FadeŽžŠÔ(•b)
+//Fadeæ™‚é–“(ç§’)
 #define		FADE_TIME				2
 
-//’e‚Ì”½ŽË‰ñ”
+//å¼¾ã®åå°„å›žæ•°
 #define		REFLECTION_COUNT		5	
-//************************‘SƒXƒe[ƒW‚Ìd—ÍDefine*************************//
-//d—Í
+
+//************************å…¨ã‚¹ãƒ†ãƒ¼ã‚¸ã®é‡åŠ›Define*************************//
+//é‡åŠ›
 #define		GRAVITY					0.3f
 
 #define		DAMAGE_WAIT				60
-//************************ƒvƒŒƒCƒ„[‚ÅŽg‚¤Define*************************//
-//ˆÚ“®‘¬“x
+//************************ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã§ä½¿ã†Define*************************//
+//ç§»å‹•é€Ÿåº¦
 #define		PLAYER_SPEED			0.3f
 
-//ˆÚ“®Å‘å‘¬“x
+//ç§»å‹•æœ€å¤§é€Ÿåº¦
 #define		PLAYER_MAXSPEED			7.0f
 
-//ƒWƒƒƒ“ƒv‰‘¬
+//ã‚¸ãƒ£ãƒ³ãƒ—åˆé€Ÿ
 #define		PLAYER_JUMP				-13.0f
 
-//UŒ‚•
+//æ”»æ’ƒå¹…
 #define		PLAYER_ATTACKWIDTH		30
 
-//“–‚½‚è”»’èŒ¸Š•
+//å½“ãŸã‚Šåˆ¤å®šæ¸›è¡°å¹…
 #define		PLAYER_RECTDECREASE		12
 
-//’e‚Ì‘¬‚³
-#define	    PLAYERSHOT_SPEED		10
-
-//’e‚ÌÅ‘å”
+//å¼¾ã®æœ€å¤§æ•°
 #define		PLAYERSHOT_COUNT		20
 
-//’e‚ÌŠÔŠu	HEAL
+//å¼¾ã®é–“éš”	HEAL
 #define     PLAYERSHOT_HEALWAIT		15
 
-//’e‚ÌŠÔŠu	HEAVY
+//å¼¾ã®é–“éš”	HEAVY
 #define     PLAYERSHOT_HEAVYWAIT	60
 
-//HEAL’e‚Ì‰ñ•œ—Ê
-#define		HEAL_POWER				10
-
-//’Êí’e‚ÌSPŒ¸­’l
-#define		PLAYERSHOT_DECREASE		10
-
-#define		PLAYER_SPWAIT			10
-
-//ƒŒ[ƒU[‚ÌL‚Ñ‚é’·‚³
-#define     LASER_ATTACKWIDTH		64
-
-#define		LASER_FIRE_COUNT		3
-
-//ƒŒ[ƒU[‚ª•Ç‚É“–‚½‚Á‚ÄŽ~‚Ü‚éŽžŠÔ
-#define		LASER_DELAY				0.5
-
-//ƒŒ[ƒU[‚ÌŠÔŠu
+//ãƒ¬ãƒ¼ã‚¶ãƒ¼ã®é–“éš”
 #define     LASER_WAIT				120
 
-//ƒŒ[ƒU[‚ÌSPŒ¸­’l
-#define		LASER_DECREASE			10
+//SPæ¶ˆè²»ã®é–“éš”
+#define		PLAYER_SPWAIT			60
+
+//HEALå¼¾ã®å›žå¾©é‡
+#define		HEAL_POWER				10
 
 
+//HEALå¼¾ã®ãƒ€ãƒ¡ãƒ¼ã‚¸é‡
+#define		HEAL_DAMAGE				3
+
+//HEAVYå¼¾ã®ãƒ€ãƒ¡ãƒ¼ã‚¸é‡
+#define		HEAVY_DAMAGE			6
+
+//FROSTå¼¾ã®ãƒ€ãƒ¡ãƒ¼ã‚¸é‡
+#define		FROST_DAMAGE			5
+
+//FIREå¼¾ã®ãƒ€ãƒ¡ãƒ¼ã‚¸é‡
+#define		FIRE_DAMAGE				6
+
+//HEALã®SPæ¸›å°‘å€¤
+#define		HEAL_DECREASE			4
+
+//HEAVYã®SPæ¸›å°‘å€¤
+#define		HEAVY_DECREASE			6
+
+//FIREã®SPæ¸›å°‘å€¤
+#define		FIRE_DECREASE			6
+
+//FROSTã®SPæ¸›å°‘å€¤
+#define		FROST_DECREASE			8
+
+//************************ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤ºã§ä½¿ã†Define*************************//
 
 
-//************************ƒXƒe[ƒWƒV[ƒ“‚ÅŽg‚¤Define*************************//
-//ƒXƒe[ƒW‘I‘ð‰æ–Ê‚ÌÅ‘å”
-#define     COUNT_NO				4
-
-//************************ƒƒjƒ…[•\Ž¦‚ÅŽg‚¤Define*************************//
-//•\Ž¦‚³‚¹‚éƒeƒLƒXƒg‚ÌÅ‘å”
+//è¡¨ç¤ºã•ã›ã‚‹ãƒ†ã‚­ã‚¹ãƒˆã®æœ€å¤§æ•°
 #define     TEXTCOUNT_MAX			2
 
-//************************ƒtƒF[ƒhƒAƒEƒg ƒtƒF[ƒhƒCƒ“‚ÅŽg‚¤Define*************************//
-//ƒAƒ‹ƒtƒ@’l
-#define		FADE_ALPHA				5
 
-//ƒAƒ‹ƒtƒ@Å‘å’l
-#define		FADE_ALPHA_MAX			255
+//****************************Enemyã§ä½¿ã†Define****************************//
 
-//“G‚Ì’eÅ‘å”
-#define		ENEMY_SHOT_COUNT		20
-#define		ENEMY_SHOT_WAIT			100
 
-//FireBarƒCƒ“ƒ^[ƒoƒ‹
-#define		FIREBAR_INTERVAL		90
+//æ•µã®å¼¾æœ€å¤§æ•°
+#define		ENEMY_SHOT_COUNT				20
+#define		ENEMY_SHOT_WAIT					100
+
+//FireBarã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«
+#define		FIREBAR_INTERVAL				90
 
 #define		STAGE1_BOSS_FIXSCROLL_WIDTH		0.0f
 #define		STAGE1_BOSS_FIXSCROLL_HEIGHT	0.0f
 
-#define		ENEMY_ATTAK_POWER		10
+#define		ENEMY_ATTAK_POWER				10
 
 

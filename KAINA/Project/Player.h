@@ -111,6 +111,7 @@ public:
 	void Release();
 	
 	/**********************************************public Collision関数********************************************/
+
 #pragma region Collision関数
 
 	void CollisionStage(float ox, float oy);
@@ -120,7 +121,9 @@ public:
 	bool CollisionAttackItem(CItem& itm);
 
 #pragma endregion
+
 	/************************************************public Shot関数***********************************************/
+
 #pragma region Shot関数
 
 
@@ -137,7 +140,9 @@ public:
 
 
 #pragma endregion
+
 	/************************************************public Get関数************************************************/
+
 #pragma region Get関数
 
 
@@ -160,7 +165,7 @@ public:
 	float GetPosX()												{		return m_PosX;											}
 	float GetPosY()												{		return m_PosY;											}
 
-	bool GetNextBossScene()										{		return m_bNextBossScene;									}
+	bool GetNextBossScene()										{		return m_bNextBossScene;								}
 
 	//弾の種類
 	int  GetType()												{		return m_ShotType;										}
@@ -174,32 +179,35 @@ public:
 
 	bool GetLaserShotShow(int i)								{		return m_Laser[i].GetShow();							}
 
-	int GetHp()													{		return m_HP;											}
-
+	inline int GetHp()											{		return m_HP;											}
+	
 #pragma endregion
+
 	/************************************************public Set関数************************************************/
+
 #pragma region Set関数
 	
 	void SetEffectManager(CEffectManager* pmng)					{ 		m_pEffectManager = pmng; 								}
 
 	void SetNormalShotShow(bool flg, int i)						{		m_PlShotAry[i].SetShow(flg);							}
-	
-	void SetScroll(float wx, float wy, int i)					{		m_PlShotAry[i].SetScroll(wx, wy);						}
-
-	//PlayerPosセット
-	void SetPlayerPos(float PosX, float PosY)					{		m_PosX = PosX; m_PosY = PosY;							}
 
 	void SetWallLaser(int i)									{		m_Laser[i].SetWallHitLaser();							}
 	
-	void SetHp(int hp)											{		m_HP = hp;												}
+	inline void SetPlayerPos(float PosX, float PosY)			{		m_PosX = PosX; m_PosY = PosY;							}
+	
+	inline void SetHp(int hp)									{		m_HP = hp;												}
+
+
 #pragma endregion	
+
 	/************************************************public Is関数*************************************************/
+
 #pragma region Is関数
 
 
-	bool IsAttack()												{		return m_Motion.GetMotionNo() == MOTION_ATTACK;			}
+	inline bool IsAttack()										{		return m_Motion.GetMotionNo() == MOTION_ATTACK;			}
 
-	bool IsGoal(void)											{		return m_bGoal;											}
+	inline bool IsGoal(void)									{		return m_bGoal;											}
 
 	bool IsEnd(void)											{		return m_bDead;											}
 	//上昇中　: true
@@ -207,12 +215,14 @@ public:
 	
 	bool IsLaser()												{		return m_ShotType == LASER;								}
 	
-	bool IsWallLaser(int i)										{		return m_Laser[i].IsHitWall();							}
+	//TODO: inline bool IsWallLaser(int i)								{		return m_Laser[i].IsHitWall();							}
 	
 	
 	
 #pragma endregion
+
 	/************************************************public Other関数**********************************************/
+
 #pragma region Other関数
 
 	//引数 ダメージ判定のものがプレイヤーより false : 右	true : 左
@@ -220,35 +230,75 @@ public:
 
 #pragma endregion
 
+
+
 private:
 
+	/************************************************private Shot関数**********************************************/
+
+#pragma region Shot関数
+
+	//Shot関数をまとめた関数
 	void ShotManager();
-	//弾の向きを撃つ瞬間にセット
+
+	//反射弾の発射状態の管理
+	void FireShot();
+	//反射弾の向きを撃つ瞬間にセット
 	void ShotRev(int i);
+
+	//レーザーの発射状態の管理
+	void FireShotLaser();
+	//レーザーの向きを撃つ瞬間にセット
 	void ShotRevLaser(int i);
 
-	void FireShot();
-	void FireShotLaser();
+#pragma endregion
 	
+	/************************************************private Update関数**********************************************/
+
+#pragma region Update関数
+
+	//Key入力の更新
 	void UpdateKey();
 
+	//動きの更新
 	void UpdateMove();
-
-	//プレイヤーの動きの制限
-	void MoveKey();
-
-	void MoveTpBtmAnim();
-
-	void MoveSaveAnim();
 
 	//弾の更新
 	void UpdateShot();
 
-	//プレイヤー死亡時の処理
-	bool PlayerEnd();
 
-	//プレイヤーの落下処理
-	void Fall();
+#pragma endregion
+
+	/************************************************private Move関数**********************************************/
+
+#pragma region Move関数
+
+	//プレイヤーの動きの制限
+	void MoveKey();
+
+	//プレイヤーの向きによって停止しているアニメーションを移動アニメーションに変更する関数
+	void MoveTpBtmAnim();
+
+	//プレイヤーの向きによって移動しているアニメーションを停止アニメーションに変更する関数
+	void MoveStopAnim();
+
+
+#pragma endregion
+
+	/************************************************private Set関数**********************************************/
+
+#pragma region Set関数
+
+	//発生位置
+	Vector2 SetStartPos() {
+		return Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f - 20);
+	}
+
+#pragma endregion
+
+	/************************************************private Change関数*******************************************/
+
+#pragma region Change関数
 
 	//銃口の向きを変える処理
 	void DirecTpBtmChange();
@@ -260,11 +310,20 @@ private:
 	void BulletChange();
 	void TypeChange();
 
-	//発生位置
-	Vector2 SetStartPos() {
-		return Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f - 20);
-	}
-
 	void DirecMotionChange();
+
+#pragma endregion
+
+	/************************************************private Other関数********************************************/
+
+#pragma region Other関数
+
+	//プレイヤーの落下処理
+	void Fall();
+
+	//プレイヤー死亡時の処理
+	bool PlayerEnd();
+
+#pragma endregion
 
 };

@@ -8,7 +8,11 @@ enum tag_EFFECTTYPE {
 	EFC_DAMAGE,						//ダメージ
 	EFC_EXPLOSION01,				//敵爆破
 	EFC_EXPLOSION02,				//プレイヤー爆破
-	EFC_FIREBAR,
+	EFC_FIREBAR,				//ステージギミックの火柱（上から発射）
+	/*EFC_FIREBAR_BOTTOM,				//ステージギミックの火柱（下から発射）
+	EFC_SLASH,						//斬撃
+	EFC_SHIELD,						//シールド*/
+
 
 	EFC_TYPECOUNT,
 };

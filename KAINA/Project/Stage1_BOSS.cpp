@@ -140,83 +140,13 @@ void CStage1_Boss::Update(void) {
 	//敵の更新
 	StgCollEne();
 
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-	{
-		if (!m_Player.IsLaser()) {
-			if (!m_Player.GetNormalShow(i)) { continue; }
-			
-			CRectangle prec = m_Player.GetNormalRect(i);
-			CRectangle erec = m_Boss.GetBossFrontRect();
-			if (prec.CollisionRect(erec)) {
-				if (m_Player.GetNatuShot(i) == HEAL) {
-					m_Boss.Damage(10,true);
-					m_Player.SetNormalShotShow(false,i);
-				}
-				else if (m_Player.GetNatuShot(i) == HEAVY) {
-					m_Boss.Damage(12,true);
-					m_Player.SetNormalShotShow(false,i);
-				}
-				continue;
-			}
-			else {
-				erec = m_Boss.GetRect();
-				if (prec.CollisionRect(erec)) {
-					if (m_Player.GetNatuShot(i) == HEAL) {
-						m_Boss.Damage(10, false);
-						m_Player.SetNormalShotShow(false, i);
-					}
-					else if (m_Player.GetNatuShot(i) == HEAVY) {
-						m_Boss.Damage(12, false);
-						m_Player.SetNormalShotShow(false, i);
-					}
-					continue;
-				}
-			}
-		}
-		else {
-			if (!m_Player.GetLaserShotShow(i)) { continue; }
-			CRectangle prec = m_Player.GetLaserRect(i);
-			CRectangle erec = m_Boss.GetBossFrontRect();
-			if (prec.CollisionRect(erec)) {
-				if (m_Player.GetNatuLaser(i) == FIRE) {
-					m_Boss.Damage(10, true);
-					m_Player.SetWallLaser(i);
-				}
-				else if (m_Player.GetNatuLaser(i) == FROST) {
-					m_Boss.Damage(12, true);
-					m_Player.SetWallLaser(i);
-				}
-				continue;
-			}
-			else {
-				erec = m_Boss.GetRect();
-				if (prec.CollisionRect(erec)) {
-					if (m_Player.GetNatuLaser(i) == FIRE) {
-						m_Boss.Damage(10, false);
-					}
-					else if (m_Player.GetNatuLaser(i) == FROST) {
-						m_Boss.Damage(12, false);
-					}
-					continue;
-				}
-			}
-		}
-
-
-
-	}
+	StgCollBoss();
 
 	//アイテムの更新
 	StgCollItm();
 
 	//当たり判定の実行
 	m_Player.Collision_Stage1_Boss(m_Boss);
-
-	for (int i = 0; i < m_Stage.GetItemCount(); i++)
-	{
-		m_Player.ColisionItem(m_ItemArray[i]);
-		m_Player.CollisionAttackItem(m_ItemArray[i]);
-	}
 
 	//ステージの更新
 	m_Stage.Update(m_Player);
@@ -386,6 +316,71 @@ void CStage1_Boss::StgCollEne()
 	}
 }
 
+void CStage1_Boss::StgCollBoss() {
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
+	{
+		if (!m_Player.IsLaser()) {
+			if (!m_Player.GetNormalShow(i)) { continue; }
+
+			CRectangle prec = m_Player.GetNormalRect(i);
+			CRectangle erec = m_Boss.GetBossFrontRect();
+			if (prec.CollisionRect(erec)) {
+				if (m_Player.GetNatuShot(i) == HEAL) {
+					m_Boss.Damage(HEAL_DAMAGE, true);
+					m_Player.SetNormalShotShow(false, i);
+				}
+				else if (m_Player.GetNatuShot(i) == HEAVY) {
+					m_Boss.Damage(HEAVY_DAMAGE, true);
+					m_Player.SetNormalShotShow(false, i);
+				}
+				continue;
+			}
+			else {
+				erec = m_Boss.GetRect();
+				if (prec.CollisionRect(erec)) {
+					if (m_Player.GetNatuShot(i) == HEAL) {
+						m_Boss.Damage(HEAL_DAMAGE, false);
+						m_Player.SetNormalShotShow(false, i);
+					}
+					else if (m_Player.GetNatuShot(i) == HEAVY) {
+						m_Boss.Damage(HEAVY_DAMAGE, false);
+						m_Player.SetNormalShotShow(false, i);
+					}
+					continue;
+				}
+			}
+		}
+		else {
+			if (!m_Player.GetLaserShotShow(i)) { continue; }
+			CRectangle prec = m_Player.GetLaserRect(i);
+			CRectangle erec = m_Boss.GetBossFrontRect();
+			if (prec.CollisionRect(erec)) {
+				if (m_Player.GetNatuLaser(i) == FIRE) {
+					m_Boss.Damage(FIRE_DAMAGE, true);
+					m_Player.SetWallLaser(i);
+				}
+				else if (m_Player.GetNatuLaser(i) == FROST) {
+					m_Boss.Damage(FROST_DAMAGE, true);
+					m_Player.SetWallLaser(i);
+				}
+				continue;
+			}
+			else {
+				erec = m_Boss.GetRect();
+				if (prec.CollisionRect(erec)) {
+					if (m_Player.GetNatuLaser(i) == FIRE) {
+						m_Boss.Damage(FIRE_DAMAGE, false);
+					}
+					else if (m_Player.GetNatuLaser(i) == FROST) {
+						m_Boss.Damage(FROST_DAMAGE, false);
+					}
+					continue;
+				}
+			}
+		}
+	}
+}
+
 void CStage1_Boss::StgCollItm()
 {
 	for (int i = 0; i < m_Stage.GetItemCount(); i++)
@@ -394,6 +389,8 @@ void CStage1_Boss::StgCollItm()
 		{
 			continue;
 		}
+		m_Player.ColisionItem(m_ItemArray[i]);
+		m_Player.CollisionAttackItem(m_ItemArray[i]);
 		m_ItemArray[i].SetBossEliminated(m_Boss.isBossEliminated());
 		m_ItemArray[i].Update();
 		float ox = 0, oy = 0;

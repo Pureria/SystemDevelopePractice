@@ -151,7 +151,7 @@ void CPlayerShot::SetDirection(int dic)
 }
 
 void CPlayerShot::ShotRemove() {
-	if (m_RefCount >= 5)
+	if (m_RefCount >= REFLECTION_COUNT)
 	{
 		m_bShow = false;
 	}

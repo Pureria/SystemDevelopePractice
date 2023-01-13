@@ -274,10 +274,11 @@ void CPlayer::Update() {
 	UpdateShot();
 
 	//HPが無くなると爆発の終了を待機して終了
-	if (PlayerEnd()) {	return;	}
+	if (PlayerEnd())	{			return;				}
 
 	//移動フラグ、このフレームでの移動があったかを保存
 	m_bMove = false;
+
 	//攻撃中、着地の場合の動作
 	if (m_Motion.GetMotionNo() == MOTION_ATTACK || m_Motion.GetMotionNo() == MOTION_JUMPEND)
 	{
@@ -344,11 +345,25 @@ void CPlayer::Update() {
 		m_SP = 100;
 	}
 
+	if (m_SP <= 0) {
+		m_SP = 0;
+	}
+
+	if (m_SpWait > 0) {
+		m_SpWait--;
+		if (m_SpWait <= 0) {
+			m_SP++;
+			m_SpWait = PLAYER_SPWAIT;
+		}
+	}
+
 	//ダメージのインターバルを減らす
 	if (m_DamageWait > 0)
 	{
 		m_DamageWait--;
 	}
+
+
 
 }
 
@@ -372,6 +387,7 @@ void CPlayer::UpdateMove(){
 			if (m_MoveX <= 0)
 			{
 				m_MoveX = 0;
+				MoveStopAnim();
 			}
 		}
 		else if (m_MoveX < 0)
@@ -380,6 +396,7 @@ void CPlayer::UpdateMove(){
 			if (m_MoveX >= 0)
 			{
 				m_MoveX = 0;
+				MoveStopAnim();
 			}
 		}
 		else if (m_Motion.GetMotionNo() == MOTION_MOVE)
@@ -424,7 +441,6 @@ void CPlayer::UpdateKey() {
 
 //キー入力による動作更新/
 #pragma region Move関数
-
 
 void CPlayer::MoveKey() {
 	//入力で直接座標を動かすのではなく、速度を変化させる
@@ -489,21 +505,18 @@ void CPlayer::MoveTpBtmAnim() {
 	}
 }
 
-void CPlayer::MoveSaveAnim() {
-	if (m_Motion.GetMotionNo() == MOTION_LASER_MUZZLETOP) {
-		m_Motion.ChangeMotion(MOTION_MOVE);
+void CPlayer::MoveStopAnim() {
+	if (m_bTop) {
+		m_Motion.ChangeMotion((IsLaser()) ? MOTION_LASER_MUZZLETOP : MOTION_NORMAL_MUZZLETOP);
 	}
-	else if (m_Motion.GetMotionNo() == MOTION_LASER_MUZZLEBOTTOM) {
-		m_Motion.ChangeMotion(MOTION_MOVE);
+	else if (m_bBottom) {
+		m_Motion.ChangeMotion((IsLaser()) ? MOTION_LASER_MUZZLEBOTTOM : MOTION_NORMAL_MUZZLEBOTTOM);
 	}
-
-	if (m_Motion.GetMotionNo() == MOTION_NORMAL_MUZZLETOP) {
-		m_Motion.ChangeMotion(MOTION_MOVE);
-	}
-	else if (m_Motion.GetMotionNo() == MOTION_NORMAL_MUZZLEBOTTOM) {
-		m_Motion.ChangeMotion(MOTION_MOVE);
+	else {
+		m_Motion.ChangeMotion(MOTION_RETURN_MUZZLE);
 	}
 }
+
 #pragma endregion
 
 
@@ -631,7 +644,6 @@ void CPlayer::FireShot() {
 
 				if (m_PlShotAry[i].GetShow())	{		continue;		}
 				m_ShotWait = (m_PlShotAry[i].GetNatu() == HEAL) ? PLAYERSHOT_HEALWAIT : PLAYERSHOT_HEAVYWAIT;
-				m_SP -= PLAYERSHOT_DECREASE;
 				ShotRev(i);
 				break;
 			}
@@ -640,38 +652,53 @@ void CPlayer::FireShot() {
 	else
 	{
 		m_ShotWait--;
-		m_SP++;
 	}
 }
 
 
 //弾の向きを撃つ瞬間にセット
 void CPlayer::ShotRev(int i) {
+	if (m_SP <= 0) {		
+		return;
+	}
+
 	if (!m_bReverse) {
 		if (m_bTop) {
 			m_PlShotAry[i].Fire(SetStartPos(), RIGHTTOP, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_PlShotAry[i].GetNatu() == HEAL) ? HEAL_DECREASE : HEAVY_DECREASE;
 			return;
 		}
 		else if (m_bBottom) {
 			m_PlShotAry[i].Fire(SetStartPos(), RIGHTBOTTOM, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_PlShotAry[i].GetNatu() == HEAL) ? HEAL_DECREASE : HEAVY_DECREASE;
 			return;
 		}
 		else {
 			m_PlShotAry[i].Fire(SetStartPos(), RIGHT, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_PlShotAry[i].GetNatu() == HEAL) ? HEAL_DECREASE : HEAVY_DECREASE;
 			return;
 		}
 	}
 	else {
 		if (m_bTop) {
 			m_PlShotAry[i].Fire(SetStartPos(), LEFTTOP, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_PlShotAry[i].GetNatu() == HEAL) ? HEAL_DECREASE : HEAVY_DECREASE;
 			return;
 		}
 		else if (m_bBottom) {
 			m_PlShotAry[i].Fire(SetStartPos(), LEFTBOTTOM, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_PlShotAry[i].GetNatu() == HEAL) ? HEAL_DECREASE : HEAVY_DECREASE;
 			return;
 		}
 		else {
 			m_PlShotAry[i].Fire(SetStartPos(), LEFT, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_PlShotAry[i].GetNatu() == HEAL) ? HEAL_DECREASE : HEAVY_DECREASE;
 			return;
 		}
 	}
@@ -694,7 +721,6 @@ void CPlayer::FireShotLaser() {
 			for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
 				if (m_Laser[i].GetShow()) { continue; }
 				m_ShotWait = LASER_WAIT;
-				m_SP -= LASER_DECREASE;
 				ShotRevLaser(i);
 				break;
 			}
@@ -703,32 +729,47 @@ void CPlayer::FireShotLaser() {
 	else
 	{
 		m_ShotWait--;
-		m_SP++;
 	}
 }
 
 //弾の向きを撃つ瞬間にセット
 void CPlayer::ShotRevLaser(int i) {
+	if (m_SP <= 0) {
+		return;
+	}
+
 	if (!m_bReverse) {
 		if (m_bTop) {
 			m_Laser[i].Fire(SetStartPos(), RIGHTTOP, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_Laser[i].GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 		}
 		else if (m_bBottom) {
 			m_Laser[i].Fire(SetStartPos(), RIGHTBOTTOM, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_Laser[i].GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 		}
 		else {
 			m_Laser[i].Fire(SetStartPos(), RIGHT, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_Laser[i].GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 		}
 	}
 	else {
 		if (m_bTop) {
 			m_Laser[i].Fire(SetStartPos(), LEFTTOP, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_Laser[i].GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 		}
 		else if (m_bBottom) {
 			m_Laser[i].Fire(SetStartPos(), LEFTBOTTOM, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_Laser[i].GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 		}
 		else {
 			m_Laser[i].Fire(SetStartPos(), LEFT, m_NatuType);
+			m_SpWait = PLAYER_SPWAIT;
+			m_SP -= (m_Laser[i].GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 		}
 	}
 }
@@ -822,11 +863,11 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 				if (m_PlShotAry[i].GetNatu() == HEAL)
 				{
 					m_HP += HEAL_POWER;
-					ene.Damage(10);
+					ene.Damage(HEAL_DAMAGE);
 				}
 				else if (m_PlShotAry[i].GetNatu() == HEAVY)
 				{
-					ene.Damage(12);
+					ene.Damage(HEAVY_DAMAGE);
 				}
 			}
 			m_PlShotAry[i].SetShow(false);
@@ -846,10 +887,10 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 				continue;
 
 			if (m_Laser[i].GetNatu() == FIRE) {
-				ene.Damage(10);
+				ene.Damage(FIRE_DAMAGE);
 			}
 			else if (m_Laser[i].GetNatu() == FROST) {
-				ene.Damage(12);
+				ene.Damage(FROST_DAMAGE);
 			}
 		}
 	}

@@ -1,6 +1,9 @@
 #pragma once
 #include	"Scene_Base.h"
 
+//ステージ選択画面の最大数
+#define     COUNT_NO				4
+
 
 class CSelect : public Scene_Base
 {
