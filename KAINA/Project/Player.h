@@ -205,8 +205,6 @@ public:
 #pragma region Isä÷êî
 
 
-	inline bool IsAttack()										{		return m_Motion.GetMotionNo() == MOTION_ATTACK;			}
-
 	inline bool IsGoal(void)									{		return m_bGoal;											}
 
 	bool IsEnd(void)											{		return m_bDead;											}

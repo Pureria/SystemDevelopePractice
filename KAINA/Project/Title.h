@@ -6,6 +6,9 @@ class CTitle : public Scene_Base {
 private:
 	CTexture				m_BackImage;
 	CTexture                m_SelectArrow;
+	CTexture				m_StartImage;
+	CTexture				m_ExitImage;
+	CTexture				m_TImage;
 
 	//遷移フラグ        true : ステージ選択        false : ゲーム終了
 	bool                    m_bSelectArrow;
@@ -15,7 +18,7 @@ private:
 
 
 public:
-	CTitle() : m_BackImage(), m_SelectArrow(), m_bSelectArrow(false),m_Menu(){};
+	CTitle() : m_BackImage(), m_SelectArrow(), m_bSelectArrow(false),m_Menu(),m_StartImage(),m_ExitImage(){};
 	~CTitle();
 	bool Load(void);
 	void Initialize(void);

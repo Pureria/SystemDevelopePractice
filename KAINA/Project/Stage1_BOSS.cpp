@@ -255,7 +255,11 @@ void CStage1_Boss::StgCollBullet()
 		}
 		else if (m_Stage.Collision(m_Player.GetLaserRect(i)))
 		{
-			m_Player.SetWallLaser(i);
+			int wait = 1;
+			if (wait == 0) {
+				m_Player.SetWallLaser(i);
+			}
+			wait = 0;
 		}
 	}
 }
