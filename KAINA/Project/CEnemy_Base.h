@@ -2,6 +2,7 @@
 #include	"Mof.h"
 #include	"EnemyStateDefine.h"
 #include	"EffectManager.h"
+#include	"SE_Manager.h"
 
 class CEnemy_Base
 {

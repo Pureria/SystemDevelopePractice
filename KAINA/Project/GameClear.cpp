@@ -43,6 +43,8 @@ void CGameClear::Initialize(void){
 
 	m_BGMManager.Initialize();
 	m_BGMManager.BGMPlayer(BGM_GAMECLEAR);
+
+	m_Alpha = 255;
 }
 
 /**
@@ -50,11 +52,36 @@ void CGameClear::Initialize(void){
  *
  */
 void CGameClear::Update(void){
+#pragma region Fade
+	if (m_bFadeIn)
+	{
+		m_NowTime += CUtilities::GetFrameSecond();
+		m_Alpha = (int)m_Function.Animation(0, FADE_TIME, 255, 0, m_NowTime);
+		if (m_Alpha <= 0)
+			m_bFadeIn = false;
+		return;
+	}
+
+	if (m_bFadeOut)
+	{
+		m_NowTime += CUtilities::GetFrameSecond();
+		m_Alpha = (int)m_Function.Animation(0, FADE_TIME, 0, 255, m_NowTime);
+		if (m_Alpha >= 255)
+		{
+			m_bEnd = true;
+			m_SceneNo = SCENENO_SELECT;
+		}
+
+		return;
+	}
+#pragma endregion
+
 	//Enterキーでタイトル画面へ
 	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && !m_bEnd)
 	{
-		m_bEnd = true;
-		m_SceneNo = SCENENO_SELECT;
+		m_bFadeOut = true;
+		m_Alpha = 0;
+		m_NowTime = 0;
 	}
 }
 
@@ -65,6 +92,8 @@ void CGameClear::Update(void){
 void CGameClear::Render(void){
 	m_BackImage.Render(0, 0);
 	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() * 0.5 - 100, g_pGraphics->GetTargetHeight() * 0.5 + 200, MOF_COLOR_WHITE, "Press Enter Key");
+
+	CGraphicsUtilities::RenderFillRect(0, 0, g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight(), MOF_ARGB(m_Alpha, 0, 0, 0));
 }
 
 /**

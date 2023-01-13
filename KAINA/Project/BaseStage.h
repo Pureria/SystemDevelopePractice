@@ -5,6 +5,7 @@
 #include	"Enemy_2.h"
 #include	"Item.h"
 #include	"EffectManager.h"
+#include	"SE_Manager.h"
 
 //左傾斜チップ
 #define		LEFTSLOPE		9
@@ -28,7 +29,7 @@
 //リフトチップ
 #define		LIFT			14
 
-class CStage {
+class CBaseStage {
 private:
 	CTexture				m_ChipTexture;
 	CTexture				m_BackTexture;
@@ -68,12 +69,15 @@ private:
 	bool					m_bButtonBlue;
 	bool					m_bButtonYellow;
 
+	//SE
+	CSE_Manager*			m_pSEManager;
+
 	//テスト用
 	CRectangle				FireRec;
 
 public:
-	CStage();
-	~CStage();
+	CBaseStage();
+	~CBaseStage();
 	bool Load(char* pName , int nowscene);
 	void Initialize(CEnemy* pEnemy,CEnemy_2* pEnemy2,CItem* pItem);
 	void Initialize(CItem* pItem);
@@ -86,6 +90,9 @@ public:
 	bool Collision(CRectangle r);
 	bool CollisionBoss1(CRectangle r);
 	bool Collision(CRectangle r, float& ox, float& oy);
+
+	//SEManagerのセット
+	void		SetSEManager(CSE_Manager* pmng) { m_pSEManager = pmng; }
 
 	//引数　：　プレイヤーの攻撃Rect		プレイヤーがステージに攻撃した時の処理(ボタン処理)
 	bool StageAttackCollision(CRectangle r);

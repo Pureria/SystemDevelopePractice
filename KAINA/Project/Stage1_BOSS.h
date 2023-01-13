@@ -15,7 +15,7 @@ private:
 	CPlayer				m_Player;
 
 	//ステージ
-	CStage				m_Stage;
+	CBaseStage				m_Stage;
 
 	//敵のポインタ配列
 	CEnemy_Stage1_Boss	m_Boss;

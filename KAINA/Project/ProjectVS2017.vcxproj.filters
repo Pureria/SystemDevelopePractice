@@ -254,6 +254,8 @@
     <ClInclude Include="SE_Manager.h">
       <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Data\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="PublicFunction.h">
+      <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Data\Sound</Filter>
     <ClInclude Include="CEnemy_Base.h">
       <Filter>ソース ファイル\Gbl\Scene_Base\AllScene_Class\Game\Object\Enemy\Enemy_BaseData\Enemy_Base</Filter>
     </ClInclude>

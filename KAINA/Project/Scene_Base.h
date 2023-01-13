@@ -2,6 +2,8 @@
 #include	 "Mof.h"
 #include     "GameDefine.h"
 #include	"BGM_Manager.h"
+#include	"SE_Manager.h"
+#include	"PublicFunction.h"
 
 #define		FILEKEY 0x65
 
@@ -19,8 +21,6 @@ protected:
 	//現在のシーン
 	int				m_NowScene;
 	//
-	int				m_Alpha;
-	//
 	bool			m_bChange;
 
 	float			m_Time;
@@ -30,8 +30,20 @@ protected:
 	//BGM
 	CBGM_Manager	m_BGMManager;
 
+	//SE
+	CSE_Manager		m_SEManager[SE_COUNT];
+
+	CPublicFunction	m_Function;
+
+	//フェードイン・フェードアウト用
+	int						m_Alpha;
+	float					m_NowTime;
+	bool					m_bFadeIn;
+	bool					m_bFadeOut;
+
+
 public:
-	Scene_Base() : m_bEnd(false), m_SceneNo(), m_Alpha(255),m_bChange(false),m_Time(), m_PlayerHp(){};
+	Scene_Base() : m_bEnd(false), m_SceneNo(),m_bChange(false),m_Time(), m_PlayerHp(), m_Alpha(255), m_NowTime(0), m_bFadeIn(true), m_bFadeOut(false) {};
 	virtual ~Scene_Base() {};
 
 	virtual void Initialize()  = 0;

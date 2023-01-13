@@ -2,7 +2,8 @@
 
 CEnemy_2::CEnemy_2() :
 	m_bFallFlg(false),
-	m_pEndEffect(){}
+	m_pEndEffect(),
+	m_pSEManager(){}
 
 CEnemy_2::~CEnemy_2(){}
 
@@ -16,7 +17,6 @@ void CEnemy_2::Initialize(float px, float py, int type)
 	m_Move.x = 0;
 	m_Move.y = 0;
 	m_bShow = true;
-	m_HP = ENEMY_2_HP;
 	m_DamageWait = 0;
 	m_bWidthOut = true;
 	m_EnemyType = Bike;
@@ -26,6 +26,12 @@ void CEnemy_2::Initialize(float px, float py, int type)
 
 	m_bShotTarget = m_bFallFlg;
 	m_pEndEffect = NULL;
+	m_pSEManager = NULL;
+
+	if (m_bFallFlg)
+		m_HP = ENEMY_2_1_HP;
+	else
+		m_HP = ENEMY_2_2_HP;
 
 	//íeópïœêîÇÃInitialize
 	m_ShotWait = ENEMY_SHOT_WAIT;
@@ -255,13 +261,29 @@ void CEnemy_2::Damage(float dmg)
 		return;
 
 	DeffenceProc(dmg);
+
 	if (m_HP <= 0)
 	{
 		m_pEndEffect = m_pEffectManager->Start(m_Pos.x + (m_SrcRect.GetWidth() * 0.5), m_Pos.y + (m_SrcRect.GetHeight() * 0.5), EFC_EXPLOSION01);
+		for (int i = 0; i < SE_COUNT; i++)
+		{
+			if (m_pSEManager[i].IsPlaySE())
+				continue;
+			m_pSEManager[i].SEPlayer(SE_ENEMY_DIE);
+			break;
+		}
 		m_bShow = false;
 	}
 	else
 	{
+		for (int i = 0; i < SE_COUNT; i++)
+		{
+			if (m_pSEManager[i].IsPlaySE())
+				continue;
+			m_pSEManager[i].SEPlayer(SE_ENEMY_DAMAGE);
+			break;
+		}
+
 		m_bKnockback = true;
 		Flip();
 		m_Move.y = -ENEMY_KNOCKBACK_POWER_Y;
@@ -356,7 +378,10 @@ void CEnemy_2::SetTexture(CTexture* pt, CTexture* st)
 }
 
 void CEnemy_2::DeffenceProc(int dmg) {
-	m_Deffence = ENEMY_DEFFENCE_POWER;
+	if (m_bFallFlg)
+		m_Deffence = ENEMY_2_1_DEFFENCE_POWER;
+	else
+		m_Deffence = ENEMY_2_2_DEFFENCE_POWER;
 
 	float deff = m_Deffence - dmg;
 

@@ -18,6 +18,6 @@ public:
 	void Update();
 	void Render();
 	void RenderDebug();
-	void Release() { m_SelectTex.Release(); m_BGMManager.Release(); }
+	void Release();
 };
 
