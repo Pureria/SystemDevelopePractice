@@ -40,7 +40,6 @@ void Laser::ShotLaser() {
 		return;
 	}
 	else {
-
 		DirecPosSet();
 		OutRange();
 	}

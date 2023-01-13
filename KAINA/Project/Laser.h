@@ -17,6 +17,7 @@ private:
 
 	CRectangle		m_FireRec[LASER_FIRE_COUNT];
 
+
 public:
 	Laser();
 	~Laser() {};
@@ -28,16 +29,18 @@ public:
 public:
 	//発射する情報をセット
 	void Fire(Vector2& pos, int tb, int natuyype) override;
-	void SetTexture(CTexture* pt) { m_pShotTex = pt; }
+	void SetTexture(CTexture* pt)								{		m_pShotTex = pt;				}
 	//ステージに当たった場合　true	: false
-	void SetWallHitLaser() { m_bHitWall = true; }
-	//当たった座標をセット
+	void SetWallHitLaser(bool flg)								{		m_bHitWall = flg;				}
 	void DirecPosSet();
 	//Get関数
 public:
 	CRectangle GetRect();
 
 	CRectangle* GetFireRect();
+
+
+	bool GetWallHit()											{		return m_bHitWall;				}
 
 	//処理を省略するための関数
 private:

@@ -214,7 +214,7 @@ void CStage1::StgCollPlayer() {
 		ox = 0, oy = 0;
 		if (m_BaseStage.Collision(m_Player.GetLaserRect(i), ox, oy))
 		{
-			m_Player.SetWallLaser(i);
+			m_Player.SetWallLaser(i,true);
 		}
 
 		//TODO: 水と弾の判定
@@ -339,15 +339,6 @@ void CStage1::StgCollBullet() {
 			{
 				m_Player.ShotRefRight(i);
 			}
-		}
-		else if (m_BaseStage.Collision(m_Player.GetLaserRect(i)))
-		{
-			//TODO: レーザーの処理いれてね
-			int wait = 1;
-			if (wait == 0) {
-				m_Player.SetWallLaser(i);
-			}
-			wait = 0;
 		}
 	}
 }
@@ -493,8 +484,10 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
  *
  */
 void CStage1::Render(void){
-	//TODO: ステージの描画
+	m_BaseStage.BackTexRender();
+	m_Player.ShotRender(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	m_BaseStage.Render();
+
 
 	//ドアの描画
 	for (int i = 0; i < m_BaseStage.GetItemCount(); i++)

@@ -441,45 +441,6 @@ void CBaseStage::ButtonGimmic()
 	}
 }
 
-/**
- * 描画
- *
- */
-void CBaseStage::Render(void){
-	//遠景の描画
-	int scw = g_pGraphics->GetTargetWidth();
-	int sch = g_pGraphics->GetTargetHeight();
-	int wn = m_BackTexture.GetWidth();
-	int hn = m_BackTexture.GetHeight();
-	for (float y = ((int)-m_ScrollY % hn) - hn; y < scw; y += hn)
-	{
-		for (float x = ((int)-m_ScrollX % wn) - wn; x < scw; x += wn)
-		{
-			m_BackTexture.Render(x, y);
-		}
-	}
-
-	//テクスチャの横幅からマップチップの縦オフセットを求める
-	int tcx = m_ChipTexture.GetWidth() / m_ChipSize;
-	//マップチップの描画
-	for (int y = 0; y < m_YCount; y++)
-	{
-		for (int x = 0; x < m_XCount; x++)
-		{
-			//描画するチップ番号
-			//チップ番号0は描画しない
-			char cn = m_pChipData[y * m_XCount + x] - 1;
-			if (cn < 0)
-			{
-				continue;
-			}
-			//マップチップの短径
-			CRectangle cr(m_ChipSize * (cn % tcx), m_ChipSize * (cn / tcx), m_ChipSize * (cn % tcx + 1), m_ChipSize * (cn / tcx + 1));
-			//マップチップの描画
-			m_ChipTexture.Render(-m_ScrollX + x * m_ChipSize, -m_ScrollY + y * m_ChipSize, cr);
-		}
-	}
-}
 
 //当たり判定
 bool CBaseStage::Collision(CRectangle r) {
@@ -1006,7 +967,48 @@ bool CBaseStage::FireBar(CRectangle prec,bool FireEffect)
 	}
 	return false;
 }
+/**
+ * 描画
+ *
+ */
+void CBaseStage::Render(void){
 
+	//テクスチャの横幅からマップチップの縦オフセットを求める
+	int tcx = m_ChipTexture.GetWidth() / m_ChipSize;
+	//マップチップの描画
+	for (int y = 0; y < m_YCount; y++)
+	{
+		for (int x = 0; x < m_XCount; x++)
+		{
+			//描画するチップ番号
+			//チップ番号0は描画しない
+			char cn = m_pChipData[y * m_XCount + x] - 1;
+			if (cn < 0)
+			{
+				continue;
+			}
+			//マップチップの短径
+			CRectangle cr(m_ChipSize * (cn % tcx), m_ChipSize * (cn / tcx), m_ChipSize * (cn % tcx + 1), m_ChipSize * (cn / tcx + 1));
+			//マップチップの描画
+			m_ChipTexture.Render(-m_ScrollX + x * m_ChipSize, -m_ScrollY + y * m_ChipSize, cr);
+		}
+	}
+}
+
+void CBaseStage::BackTexRender() {
+	//遠景の描画
+	int scw = g_pGraphics->GetTargetWidth();
+	int sch = g_pGraphics->GetTargetHeight();
+	int wn = m_BackTexture.GetWidth();
+	int hn = m_BackTexture.GetHeight();
+	for (float y = ((int)-m_ScrollY % hn) - hn; y < scw; y += hn)
+	{
+		for (float x = ((int)-m_ScrollX % wn) - wn; x < scw; x += wn)
+		{
+			m_BackTexture.Render(x, y);
+		}
+	}
+}
 /**
  * デバッグ描画
  *

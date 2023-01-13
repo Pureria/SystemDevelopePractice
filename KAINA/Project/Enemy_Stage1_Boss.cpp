@@ -116,6 +116,7 @@ void CEnemy_Stage1_Boss::Initialize() {
 	m_bTouchGround = true;
 	m_AttackSlash = false;
 	m_OldMotionNo = MOTION_Idle;
+	m_bDead = false;
 	m_bEliminated = false;
 	m_DamageWait = 0;
 	
@@ -132,8 +133,23 @@ void CEnemy_Stage1_Boss::Update() {
 		return;
 	}
 
+	if (m_bDead) {
+		m_bEliminated = true;
+		m_bShow = false;
+		return;
+	}
+
 	if (m_DamageWait > 0)
 		m_DamageWait--;
+
+
+	if (m_HP <= 0) {
+
+		if (!m_pEndEffect || !m_pEndEffect->GetShow())
+		{
+			m_bDead = true;
+		}
+	}
 
 	switch (m_Motion.GetMotionNo())
 	{
@@ -501,8 +517,13 @@ void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 
 	if (m_HP <= 0)
 	{
-		m_bEliminated = true;
-		m_bShow = false;
+		//爆発エフェクトを発生させる
+		m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+	}
+	else
+	{
+		//ダメージエフェクトを発生させる
+		m_pEffectManager->Start(SetStartPos(), (direction) ? EFC_SHIELD : EFC_WEAK);
 	}
 }
 

@@ -84,6 +84,7 @@ public:
 	void Update(CPlayer& pl);
 	void Render(void);
 	void RenderDebug(void);
+	void BackTexRender();
 	void Release(int nowscene);
 	float GetScrollX(){ return m_ScrollX; }
 	float GetScrollY(){ return m_ScrollY; }

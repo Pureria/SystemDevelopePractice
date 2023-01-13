@@ -15,31 +15,30 @@ class Scene_Base
 {
 protected:
 	//シーン終了の確認フラグ
-	bool			m_bEnd;
+	bool					m_bEnd;
 	//次のシーン
-	int				m_SceneNo;
-	//現在のシーン
-	int				m_NowScene;
+	int						m_SceneNo;
 	//
-	bool			m_bChange;
+	bool					m_bChange;
 
-	float			m_Time;
+	float					m_Time;
 	//プレイヤーのHPを保存する変数
-	int				m_PlayerHp;
+	int						m_PlayerHp;
 
 	//BGM
-	CBGM_Manager	m_BGMManager;
+	CBGM_Manager			m_BGMManager;
 
 	//SE
-	CSE_Manager		m_SEManager[SE_COUNT];
+	CSE_Manager				m_SEManager[SE_COUNT];
 
-	CPublicFunction	m_Function;
+	CPublicFunction			m_Function;
 
 	//フェードイン・フェードアウト用
 	int						m_Alpha;
 	float					m_NowTime;
 	bool					m_bFadeIn;
 	bool					m_bFadeOut;
+
 
 
 public:

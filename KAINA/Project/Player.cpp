@@ -333,11 +333,11 @@ void CPlayer::Update() {
 	m_Motion.AddTimer(CUtilities::GetFrameSecond());
 	m_SrcRect = m_Motion.GetSrcRect();
 
-	if (m_HP >= 100) {
+	if (m_HP > 100) {
 		m_HP = 100;
 	}
 	
-	if (m_SP >= 100) {
+	if (m_SP > 100) {
 		m_SP = 100;
 	}
 
@@ -348,7 +348,7 @@ void CPlayer::Update() {
 	if (m_SpWait > 0) {
 		m_SpWait--;
 		if (m_SpWait <= 0) {
-			m_SP++;
+			m_SP += SP_POWER;
 			m_SpWait = PLAYER_SPWAIT;
 		}
 	}
@@ -700,6 +700,16 @@ void CPlayer::ShotRev(int i) {
 	}
 }
 
+void  CPlayer::ShotRender(float wx,float wy) {
+	//’e‚Ì•`‰æ
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
+	{
+		m_Laser[i].Render(wx, wy);
+		m_PlShotAry[i].Render(wx, wy);
+	}
+}
+
+
 #pragma endregion
 
 //ƒŒ[ƒU[‚Ìˆ—
@@ -850,43 +860,42 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 	//“G‚Æ’e‚Ì“–‚½‚è”»’è
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
-		if (!m_PlShotAry[i].GetShow()) { continue; }
-		CRectangle srec = m_PlShotAry[i].GetRect();
-		if (srec.CollisionRect(erec))
-		{
-			if (eneType != Turret)
+		if (!IsLaser()) {
+			if (!m_PlShotAry[i].GetShow()) { continue; }
+			CRectangle srec = m_PlShotAry[i].GetRect();
+			if (srec.CollisionRect(erec))
 			{
-				if (m_PlShotAry[i].GetNatu() == HEAL)
+				if (eneType != Turret)
 				{
-					m_HP += HEAL_POWER;
-					ene.Damage(HEAL_DAMAGE);
+					if (m_PlShotAry[i].GetNatu() == HEAL)
+					{
+						m_HP += HEAL_POWER;
+						ene.Damage(HEAL_DAMAGE);
+					}
+					else if (m_PlShotAry[i].GetNatu() == HEAVY)
+					{
+						ene.Damage(HEAVY_DAMAGE);
+					}
 				}
-				else if (m_PlShotAry[i].GetNatu() == HEAVY)
-				{
-					ene.Damage(HEAVY_DAMAGE);
-				}
+				m_PlShotAry[i].SetShow(false);
 			}
-			m_PlShotAry[i].SetShow(false);
+
 		}
+		else {
+			if (!m_Laser[i].GetShow()) { continue; }
 
-	}
+			CRectangle srec = m_Laser[i].GetRect();
+			if (srec.CollisionRect(erec))
+			{
+				if (eneType == Turret)
+					continue;
 
-	//“G‚ÆƒŒ[ƒU[‚Ì“–‚½‚è”»’è
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-	{
-		if (!m_Laser[i].GetShow()) { continue; }
-
-		CRectangle srec = m_Laser[i].GetRect();
-		if (srec.CollisionRect(erec))
-		{
-			if (eneType == Turret)
-				continue;
-
-			if (m_Laser[i].GetNatu() == FIRE) {
-				ene.Damage(FIRE_DAMAGE);
-			}
-			else if (m_Laser[i].GetNatu() == FROST) {
-				ene.Damage(FROST_DAMAGE);
+				if (m_Laser[i].GetNatu() == FIRE) {
+					ene.Damage(FIRE_DAMAGE);
+				}
+				else if (m_Laser[i].GetNatu() == FROST) {
+					ene.Damage(FROST_DAMAGE);
+				}
 			}
 		}
 	}
@@ -1045,7 +1054,7 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 
 	if (boss.isCollisionBossAttack(prec))
 	{
-		m_HP -= 30;
+		m_HP -= STAGE1_BOSS_SLASH_DAMAGE;
 		m_DamageWait = DAMAGE_WAIT;
 		if (prec.Left < erec.Left)
 		{
@@ -1068,6 +1077,75 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 			m_pEffectManager->Start(SetStartPos(), EFC_DAMAGE);
 		}
 		return true;
+	}
+
+	//“G‚Æ’e‚Ì“–‚½‚è”»’è
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
+	{
+		if (!IsLaser()) {
+			if (!m_PlShotAry[i].GetShow()) { continue; }
+			CRectangle srec = m_PlShotAry[i].GetRect();
+			if (srec.CollisionRect(erec))
+			{
+				if (m_PlShotAry[i].GetNatu() == HEAL)
+				{
+					m_HP += HEAL_POWER;
+					boss.Damage(HEAL_DAMAGE,false);
+				}
+				else if (m_PlShotAry[i].GetNatu() == HEAVY)
+				{
+					boss.Damage(HEAVY_DAMAGE,false);
+				}
+				m_PlShotAry[i].SetShow(false);
+				continue;
+			}
+			
+			erec = boss.GetBossFrontRect();
+
+			if (srec.CollisionRect(erec))
+			{
+				if (m_PlShotAry[i].GetNatu() == HEAL)
+				{
+					m_HP += HEAL_POWER;
+					boss.Damage(HEAL_DAMAGE, true);
+				}
+				else if (m_PlShotAry[i].GetNatu() == HEAVY)
+				{
+					boss.Damage(HEAVY_DAMAGE, true);
+				}
+				m_PlShotAry[i].SetShow(false);
+				continue;
+			}
+		}
+		else {
+			if (!m_Laser[i].GetShow()) { continue; }
+
+			erec = boss.GetRect();
+			CRectangle srec = m_Laser[i].GetRect();
+			if (srec.CollisionRect(erec))
+			{
+				if (m_Laser[i].GetNatu() == FIRE) {
+					boss.Damage(FIRE_DAMAGE,false);
+				}
+				else if (m_Laser[i].GetNatu() == FROST) {
+					boss.Damage(FROST_DAMAGE,false);
+				}
+				continue;
+			}
+
+			erec = boss.GetBossFrontRect();
+
+			if (srec.CollisionRect(erec))
+			{
+				if (m_Laser[i].GetNatu() == FIRE) {
+					boss.Damage(FIRE_DAMAGE, true);
+				}
+				else if (m_Laser[i].GetNatu() == FROST) {
+					boss.Damage(FROST_DAMAGE, true);
+				}
+				continue;
+			}
+		}
 	}
 
 	return false;
@@ -1173,12 +1251,6 @@ bool CPlayer::IsJump()
 #pragma region RenderŠÖ”
 
 void CPlayer::Render(float wx,float wy){
-	//’e‚Ì•`‰æ
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-	{
-		m_Laser[i].Render(wx, wy);
-		m_PlShotAry[i].Render(wx, wy);
-	}
 
 	//ƒCƒ“ƒ^[ƒoƒ‹2ƒtƒŒ[ƒ€‚²‚Æ‚É•`‰æ‚ð‚µ‚È‚¢
 	if (m_DamageWait % 4 >= 2)
@@ -1240,9 +1312,7 @@ void CPlayer::Release(){
 	m_Texture.Release();
 	m_Motion.Release();
 	m_FrameTexture.Release();
-	m_HPTexture.Release();
 	m_HPBarTexture.Release();
-	m_SPTexture.Release();
 	m_SPBarTexture.Release();
 	m_ShotHealTex.Release();
 	m_ShotHeavyTex.Release();

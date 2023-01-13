@@ -253,14 +253,15 @@ void CStage1_Boss::StgCollBullet()
 				m_Player.ShotRefRight(i);
 			}
 		}
-		else if (m_Stage.Collision(m_Player.GetLaserRect(i)))
-		{
-			int wait = 1;
-			if (wait == 0) {
-				m_Player.SetWallLaser(i);
+		else {
+			if (!m_Player.GetLaserShotShow(i)) { continue; }
+			
+			if (m_Stage.Collision(m_Player.GetLaserRect(i)))
+			{
+				m_Player.SetWallLaser(i, true);
 			}
-			wait = 0;
 		}
+		
 	}
 }
 
@@ -321,7 +322,8 @@ void CStage1_Boss::StgCollEne()
 }
 
 void CStage1_Boss::StgCollBoss() {
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
+	m_Player.Collision_Stage1_Boss(m_Boss);
+	/*for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
 		if (!m_Player.IsLaser()) {
 			if (!m_Player.GetNormalShow(i)) { continue; }
@@ -361,11 +363,11 @@ void CStage1_Boss::StgCollBoss() {
 			if (prec.CollisionRect(erec)) {
 				if (m_Player.GetNatuLaser(i) == FIRE) {
 					m_Boss.Damage(FIRE_DAMAGE, true);
-					m_Player.SetWallLaser(i);
+					m_Player.SetWallLaser(i,true);
 				}
 				else if (m_Player.GetNatuLaser(i) == FROST) {
 					m_Boss.Damage(FROST_DAMAGE, true);
-					m_Player.SetWallLaser(i);
+					m_Player.SetWallLaser(i,true);
 				}
 				continue;
 			}
@@ -382,7 +384,7 @@ void CStage1_Boss::StgCollBoss() {
 				}
 			}
 		}
-	}
+	}*/
 }
 
 void CStage1_Boss::StgCollItm()
@@ -410,6 +412,8 @@ void CStage1_Boss::StgCollItm()
  *
  */
 void CStage1_Boss::Render(void) {
+	m_Stage.BackTexRender();
+	m_Player.ShotRender(m_Stage.GetScrollX(),m_Stage.GetScrollY());
 	//ステージの描画
 	m_Stage.Render();
 
