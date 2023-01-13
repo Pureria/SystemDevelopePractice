@@ -16,7 +16,8 @@ bool CStage1::Load(){
 	//プレイヤーの素材読み込み
 	m_Player.Load();
 	//ステージの素材読み込み
-	m_BaseStage.Load("ChipData/1-1MAP_noWall.txt",m_NowSceneNo);
+	//m_BaseStage.Load("ChipData/1-1MAP_noWall.txt",m_NowSceneNo);
+	m_BaseStage.Load("ChipData/New1-1_α.txt", m_NowSceneNo);
 	//敵メモリ確保
 	m_EnemyArray	= new CEnemy[m_BaseStage.GetEnemy1Count()];
 	m_Enemy2Array	= new CEnemy_2[m_BaseStage.GetEnemy2Count()];
