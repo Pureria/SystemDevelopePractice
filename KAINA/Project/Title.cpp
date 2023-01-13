@@ -22,6 +22,15 @@ bool CTitle::Load(void){
 	if (!m_SelectArrow.Load("SelectArrow.png"))
 		return false;
 
+	if (!m_StartImage.Load("BackGround/Start.png"))
+		return false;
+
+	if (!m_ExitImage.Load("BackGround/Exit.png"))
+		return false;
+
+	if (!m_TImage.Load("BackGround/title2.png"))
+		return false;
+
 	m_BGMManager.Load();
 
 	return true;
@@ -115,7 +124,7 @@ void CTitle::Update(void){
 */
 void CTitle::UpdateSelect() {
 
-	if (g_pInput->IsKeyPush(MOFKEY_UP) || g_pInput->IsKeyPush(MOFKEY_DOWN))
+	if (g_pInput->IsKeyPush(MOFKEY_W) || g_pInput->IsKeyPush(MOFKEY_S))
 	{
 		for (int i = 0; i < SE_COUNT; i++)
 		{
@@ -170,6 +179,8 @@ void CTitle::UpdateMenu() {
 void CTitle::Render(void){
 	CGraphicsUtilities::RenderFillRect(0, 0, 1024, 768, MOF_COLOR_WHITE);
 	m_BackImage.Render(0, 0);
+	m_StartImage.Render(g_pGraphics->GetTargetWidth() * 0.5f - 230,610);
+	m_ExitImage.Render(g_pGraphics->GetTargetWidth() * 0.5f - 190,780);
 
 	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() / 2.5, g_pGraphics->GetTargetHeight() / 1.3, MOF_XRGB( 0, 0, 0), "ゲームスタート");
 	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() / 2.2, g_pGraphics->GetTargetHeight() / 1.2, MOF_XRGB(0, 0, 0), "終了");
@@ -200,9 +211,10 @@ void CTitle::RenderDebug(void){
 void CTitle::Release(void){
 	m_BackImage.Release();
 	m_SelectArrow.Release();
+	m_StartImage.Release();
+	m_ExitImage.Release();
 	m_Menu.Release();
 	m_BGMManager.Release();
-	
 	for (int i = 0; i < SE_COUNT; i++)
 	{
 		m_SEManager[i].Release();

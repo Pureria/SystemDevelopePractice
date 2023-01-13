@@ -24,6 +24,9 @@ bool CEffectManager::Load(void){
 		"Effect/effect02.png",
 		"Effect/effect03.png",
 		"Effect/EffectFireBar.png",
+		"Effect/zanngeki1–‡.png",
+		"Effect/effect02.png",
+		"Effect/effect03.png",
 	};
 	for ( int i = 0; i < EFC_TYPECOUNT; i++ )
 	{

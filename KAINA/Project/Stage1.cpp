@@ -282,10 +282,9 @@ void CStage1::StgCollPlayer() {
 
 void CStage1::StgCollBullet() {
 
-	if (m_Player.IsAttack())
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
-		for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-		{
+		if (m_Player.GetLaserShotShow(i)) {
 			m_BaseStage.StageAttackCollision(m_Player.GetLaserRect(i));
 		}
 	}
@@ -343,7 +342,12 @@ void CStage1::StgCollBullet() {
 		}
 		else if (m_BaseStage.Collision(m_Player.GetLaserRect(i)))
 		{
-			m_Player.SetWallLaser(i);
+			//TODO: ƒŒ[ƒU[‚Ìˆ—‚¢‚ê‚Ä‚Ë
+			int wait = 1;
+			if (wait == 0) {
+				m_Player.SetWallLaser(i);
+			}
+			wait = 0;
 		}
 	}
 }
