@@ -42,13 +42,9 @@ bool CPlayer::Load(){
 
 	if (!m_FrameTexture.Load("Player/Frame.png"))				{		return false;		}
 
-	if (!m_HPTexture.Load("Player/HP.png"))						{		return false;		}
+	if (!m_HPBarTexture.Load("Player/hp.png"))					{		return false;		}	
 
-	if (!m_HPBarTexture.Load("Player/HPBAR.png"))				{		return false;		}	
-	
-	if (!m_SPTexture.Load("Player/SP.png"))						{		return false;		}
-
-	if (!m_SPBarTexture.Load("Player/SPBAR.png"))				{		return false;		}
+	if (!m_SPBarTexture.Load("Player/sp.png"))					{		return false;		}
 
 	if (!m_ShotHealTex.Load("Player/healammo.png"))				{		return false;		}
 
@@ -1207,13 +1203,11 @@ void CPlayer::Render(float wx,float wy){
 }
 
 void CPlayer::RenderStatus() {
-	m_HPTexture.Render(0,0);
-	m_SPTexture.Render(0,0);
 	//HP‚É‰‚¶‚Ä’ZŒa‚Ì•‚ğ•Ï‰»‚³‚¹‚é
-	CRectangle hprec(0, 0, 728 * (m_HP * 0.01f), 128);
-	m_HPBarTexture.Render(180, -20, hprec);
-	CRectangle sprec(0, 0, 728 * (m_SP * 0.01f), 128);
-	m_SPBarTexture.Render(180, 20, sprec);
+	CRectangle hprec(0, 0, 1024 * (m_HP * 0.01f), 128);
+	m_HPBarTexture.Render(0,0, hprec);
+	CRectangle sprec(0, 0, 1024 * (m_SP * 0.01f), 128);
+	m_SPBarTexture.Render(0,0, sprec);
 	//ƒtƒŒ[ƒ€‚ğã•”‚É•`‰æ
 	m_FrameTexture.Render(0, 0);
 }

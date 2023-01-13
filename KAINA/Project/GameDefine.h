@@ -64,7 +64,7 @@ enum tag_NormalNaturalChangeType {
 #define		PLAYER_ATTACKWIDTH		30
 
 //“–‚½‚è”»’èŒ¸Š•
-#define		PLAYER_RECTDECREASE		12
+#define		PLAYER_RECTDECREASE		32
 
 //’e‚ÌÅ‘å”
 #define		PLAYERSHOT_COUNT		20
