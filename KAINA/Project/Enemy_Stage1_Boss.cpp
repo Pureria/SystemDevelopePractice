@@ -501,6 +501,9 @@ void CEnemy_Stage1_Boss::CollisionWall()
 
 void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 
+	if (m_HP <= 0)
+		return;
+
 	if (m_DamageWait > 0)
 		return;
 
