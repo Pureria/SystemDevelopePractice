@@ -26,10 +26,10 @@ protected:
 //仮想関数まとめ
 public:
 	Shot_Base() : m_pShotTex(), m_phShotTex(), m_ShotPos(0, 0), m_bShow(false), m_bHitWall(false), m_DrcType(RIGHT), m_NatuType(HEAL) {};
-	virtual void Initialize()								= 0;
-	virtual void Update()									= 0;
-	virtual void Render(float wx, float wy)					= 0;
-	virtual void RenderDebug(float wx, float wy)			= 0;
+	virtual void Initialize()										= 0;
+	virtual void Update()											= 0;
+	virtual void Render(float wx, float wy)							= 0;
+	virtual void RenderDebug(float wx, float wy)					= 0;
 	/*
 	*引数     ：　
 
@@ -39,8 +39,8 @@ public:
 
 	*処理内容  ：　撃つ瞬間の情報をセット
 	*/
-	virtual void Fire(Vector2& pos, int tb, int natuyype)	= 0;
-	virtual CRectangle GetRect()							= 0;
+	virtual void Fire(Vector2& pos, int tb, int natuyype)			= 0;
+	virtual CRectangle GetRect()									= 0;
 //Set関数
 public:
 	//描画するかどうか

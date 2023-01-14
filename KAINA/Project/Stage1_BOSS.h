@@ -44,7 +44,6 @@ public:
 private:
 	void StgCollPlayer();
 	void StgCollEne();
-	void StgCollBoss();
 	void StgCollItm();
 	void StgCollBullet();
 	

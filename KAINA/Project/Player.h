@@ -9,6 +9,7 @@
 #include	"Item.h"
 #include	"CPlayerShot.h"
 #include	"Laser.h"
+#include	"SE_Manager.h"
 
 
 class CPlayer {
@@ -97,8 +98,6 @@ private:
 	CTexture                m_HeavyTex;
 	CTexture				m_FireTex;
 	CTexture				m_FrostTex;
-
-
 
 public:
 	CPlayer();

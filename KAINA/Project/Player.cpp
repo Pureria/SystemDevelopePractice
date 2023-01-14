@@ -28,7 +28,8 @@ m_HP(0),
 m_SP(0),
 m_PlShotAry(),
 m_bNextBossScene(false),
-m_SpWait(0){}
+m_SpWait(0)
+{}
 
 #pragma endregion
 
@@ -244,6 +245,7 @@ bool CPlayer::Load(){
 
 void CPlayer::Initialize(){
 
+	Load();
 	m_PosX = 200;
 	m_PosY = 0;
 	m_bMove = false;
@@ -264,7 +266,6 @@ void CPlayer::Initialize(){
 	m_DrcType = NULL;
 	m_bNextBossScene = false;
 	m_SpWait = 0;
-	Load();
 }
 
 
@@ -1117,8 +1118,8 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 		if (!IsLaser()) {
 			if (!m_PlShotAry[i].GetShow()) { continue; }
 			CRectangle srec = m_PlShotAry[i].GetRect();
-			
 			erec = boss.GetBossFrontRect();
+
 			if (srec.CollisionRect(erec))
 			{
 				if (m_PlShotAry[i].GetNatu() == HEAL)
@@ -1155,21 +1156,7 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 		else {
 			if (!m_Laser[i].GetShow()) { continue; }
 
-			erec = boss.GetRect();
 			CRectangle srec = m_Laser[i].GetRect();
-			if (srec.CollisionRect(erec))
-			{
-				if (m_Laser[i].GetNatu() == FIRE) {
-					boss.Damage(FIRE_DAMAGE,false);
-				}
-				else if (m_Laser[i].GetNatu() == FROST) {
-					boss.Damage(FROST_DAMAGE,false);
-					boss.SetAbState(STATE_FROST);
-					boss.SetAbStateWait(FROST_WAIT);
-				}
-				continue;
-			}
-
 			erec = boss.GetBossFrontRect();
 
 			if (srec.CollisionRect(erec))
@@ -1184,6 +1171,21 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 				}
 				continue;
 			}
+
+			erec = boss.GetRect();
+			if (srec.CollisionRect(erec))
+			{
+				if (m_Laser[i].GetNatu() == FIRE) {
+					boss.Damage(FIRE_DAMAGE,false);
+				}
+				else if (m_Laser[i].GetNatu() == FROST) {
+					boss.Damage(FROST_DAMAGE,false);
+					boss.SetAbState(STATE_FROST);
+					boss.SetAbStateWait(FROST_WAIT);
+				}
+				continue;
+			}
+
 		}
 	}
 

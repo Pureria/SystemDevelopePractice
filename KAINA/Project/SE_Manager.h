@@ -1,7 +1,7 @@
 #pragma once
 #include "Mof.h"
 #include "SoundDefine.h"
-#include <string>
+
 class CSE_Manager
 {
 private:
