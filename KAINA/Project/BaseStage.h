@@ -106,6 +106,8 @@ public:
 
 	//水を氷にする	引数：弾のRect
 	void CollisionFreezeWater(CRectangle r);
+	//水とプレイヤーの判定　引数:PlayerのRect
+	bool CollisionWater(CRectangle prec);
 
 	//氷を水にする　引数:弾のRect
 	void CollisionIceFroe(CRectangle r);

@@ -823,6 +823,23 @@ void CPlayer::PlayerDamage(bool flg,float damage)
 
 }
 
+void CPlayer::PlayerDamage(float damage)
+{
+	if (m_HP <= 0)
+		return;
+
+	if (m_DamageWait > 0)
+		return;
+
+	m_HP -= damage;
+	m_DamageWait = 5;
+	if (m_HP <= 0)
+	{
+		m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+	}
+
+}
+
 bool CPlayer::PlayerEnd() {
 	if (m_HP <= 0)
 	{

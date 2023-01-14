@@ -226,6 +226,7 @@ public:
 
 	//引数 ダメージ判定のものがプレイヤーより false : 右	true : 左
 	void PlayerDamage(bool flg, float damage);
+	void PlayerDamage(float damage);
 
 #pragma endregion
 
