@@ -3,7 +3,8 @@
 CEnemy_2::CEnemy_2() :
 	m_bFallFlg(false),
 	m_pEndEffect(),
-	m_pSEManager(){}
+	m_pSEManager()
+{}
 
 CEnemy_2::~CEnemy_2(){}
 
@@ -59,6 +60,7 @@ void CEnemy_2::Initialize(float px, float py, int type)
 **/
 void CEnemy_2::Update(float wx)
 {
+	ReturnWaitStates();
 	if (m_Pos.x - wx + m_pTexture->GetWidth() <= 0 || m_Pos.x - wx > g_pGraphics->GetTargetWidth())
 	{
 		m_bWidthOut = false;
@@ -178,9 +180,12 @@ void CEnemy_2::Update(float wx)
 		m_ShotWait--;
 	}
 
+	AbStateMoveDec();
+
 	//重力
 	m_Move.y += GRAVITY;
 	if (m_Move.y >= 20.0f) { m_Move.y = 20.0f; }
+
 
 	m_CurrentMove = m_Move;
 	//m_Pos.y += m_Move.y;
@@ -339,11 +344,12 @@ void CEnemy_2::Render(float wx, float wy)
 		dr.Right = dr.Left;
 		dr.Left = tmp;
 	}
+
 	//テクスチャの描画
-	if(m_bFallFlg)
-		m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr);
+	if (m_bFallFlg)
+		(GetAbState() == STATE_FROST) ? m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(0, 255, 255)) : m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr);
 	else
-		m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(255, 255, 100));
+		(GetAbState() == STATE_FROST) ? m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(0, 255, 255)) : m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(255, 255, 100));
 }
 
 /**

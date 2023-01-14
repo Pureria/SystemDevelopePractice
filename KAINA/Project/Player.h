@@ -59,8 +59,6 @@ private:
 	CEffect*				m_pEndEffect;
 	bool					m_bDead;
 
-	bool					m_bGoal;
-
 	CTexture                m_ShotHeavyTex;
 	CTexture				m_ShotHealTex;
 
@@ -87,14 +85,19 @@ private:
 	int						m_DrcType;
 
 
-	//レーザーのテクスチャ
-	CTexture                m_LaserFireTex;
-	CTexture                m_LaserFrostTex;
 
 	//ボス部屋用フラグ
 	bool					m_bNextBossScene;
 
 	int						m_SpWait;
+
+
+	//UIテクスチャ
+	CTexture                m_HealTex;
+	CTexture                m_HeavyTex;
+	CTexture				m_FireTex;
+	CTexture				m_FrostTex;
+
 
 
 public:
@@ -146,9 +149,9 @@ public:
 
 
 	CRectangle GetRect()										{
-																		return CRectangle(m_PosX + PLAYER_RECTDECREASE,
-																				m_PosY + 12,
-																				m_PosX + m_SrcRect.GetWidth() - PLAYER_RECTDECREASE,
+																		return CRectangle(m_PosX + PLAYER_RECTDECREASE_WIDTH,
+																				m_PosY + PLAYER_RECTDECREASE_HEIGHT,
+																				m_PosX + m_SrcRect.GetWidth() - PLAYER_RECTDECREASE_WIDTH,
 																				m_PosY + m_SrcRect.GetHeight());
 																}
 	int	 GetLaserDirec(int i)									{		return m_Laser[i].GetDirec();							}
@@ -169,6 +172,7 @@ public:
 	//弾の種類
 	int  GetType()												{		return m_ShotType;										}
 
+	int	 GetNatu()												{		return m_NatuType;										}
 	//銃口の向き
 	int  GetDirec()												{		return m_DrcType;										}
 
@@ -198,7 +202,6 @@ public:
 	
 	inline void SetHp(int hp)									{		m_HP = hp;												}
 
-
 #pragma endregion	
 
 	/************************************************public Is関数*************************************************/
@@ -206,15 +209,11 @@ public:
 #pragma region Is関数
 
 
-	inline bool IsGoal(void)									{		return m_bGoal;											}
-
 	bool IsEnd(void)											{		return m_bDead;											}
 	//上昇中　: true
 	bool IsJump();
 	
 	bool IsLaser()												{		return m_ShotType == LASER;								}
-	
-	//TODO: inline bool IsWallLaser(int i)								{		return m_Laser[i].IsHitWall();							}
 	
 	
 	
@@ -282,6 +281,8 @@ private:
 	//プレイヤーの向きによって移動しているアニメーションを停止アニメーションに変更する関数
 	void MoveStopAnim();
 
+	//弾の種類によって向けている銃口のアニメーションを弾の種類に合ったアニメーションに変更する関数
+	void BltChangeTpBtmAnim();
 
 #pragma endregion
 

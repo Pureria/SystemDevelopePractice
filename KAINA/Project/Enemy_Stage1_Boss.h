@@ -66,6 +66,8 @@ private:
 
 	CEffect*				m_pEndEffect;
 
+	CTexture				m_HPTex;
+	CTexture				m_FrameTex;
 public:
 	CEnemy_Stage1_Boss();
 	~CEnemy_Stage1_Boss();
@@ -75,6 +77,7 @@ public:
 	void CollisionStage(float ox, float oy);
 	void CollisionWall ();
 	void Render(float wx, float wy);
+	void RenderStatus();
 	void RenderDebug(float wx, float wy);
 	void Release(void);
 

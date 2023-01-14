@@ -297,53 +297,51 @@ void CStage2::StgCollBullet() {
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
 		float ox = 0, oy = 0;
-		if (!m_Player.IsLaser()) {
-			if (!m_Player.GetNormalShow(i))
-			{
-				continue;
-			}
+		if (!m_Player.GetNormalShow(i))
+		{
+			continue;
+		}
 
-			CRectangle psrec = m_Player.GetNormalRect(i);
-			if (m_BaseStage.StageAttackCollision(psrec))
-			{
-				m_Player.SetNormalShotShow(false, i);
-				continue;
-			}
+		CRectangle psrec = m_Player.GetNormalRect(i);
+		if (m_BaseStage.StageAttackCollision(psrec))
+		{
+			m_Player.SetNormalShotShow(false, i);
+			continue;
+		}
 
-			//ã‚Ì”»’è
-			psrec.Bottom = psrec.Top + 1;
-			psrec.Expansion(-15, 0);
-			if (m_BaseStage.Collision(psrec))
-			{
-				m_Player.ShotRefTop(i);
-			}
+		//ã‚Ì”»’è
+		psrec.Bottom = psrec.Top + 1;
+		psrec.Expansion(-15, 0);
+		if (m_BaseStage.Collision(psrec))
+		{
+			m_Player.ShotRefTop(i);
+		}
 
-			//‰º‚Ì”»’è
-			psrec = m_Player.GetNormalRect(i);
-			psrec.Top = psrec.Bottom - 1;
-			psrec.Expansion(-15, 0);
-			if (m_BaseStage.Collision(psrec))
-			{
-				m_Player.ShotRefBottom(i);
-			}
+		//‰º‚Ì”»’è
+		psrec = m_Player.GetNormalRect(i);
+		psrec.Top = psrec.Bottom - 1;
+		psrec.Expansion(-15, 0);
+		if (m_BaseStage.Collision(psrec))
+		{
+			m_Player.ShotRefBottom(i);
+		}
 
-			//¶‚Ì”»’è
-			psrec = m_Player.GetNormalRect(i);
-			psrec.Right = psrec.Left + 1;
-			psrec.Expansion(0, -15);
-			if (m_BaseStage.Collision(psrec))
-			{
-				m_Player.ShotRefLeft(i);
-			}
+		//¶‚Ì”»’è
+		psrec = m_Player.GetNormalRect(i);
+		psrec.Right = psrec.Left + 1;
+		psrec.Expansion(0, -15);
+		if (m_BaseStage.Collision(psrec))
+		{
+			m_Player.ShotRefLeft(i);
+		}
 
-			//‰E‚Ì”»’è
-			psrec = m_Player.GetNormalRect(i);
-			psrec.Left = psrec.Right - 1;
-			psrec.Expansion(0, -15);
-			if (m_BaseStage.Collision(psrec))
-			{
-				m_Player.ShotRefRight(i);
-			}
+		//‰E‚Ì”»’è
+		psrec = m_Player.GetNormalRect(i);
+		psrec.Left = psrec.Right - 1;
+		psrec.Expansion(0, -15);
+		if (m_BaseStage.Collision(psrec))
+		{
+			m_Player.ShotRefRight(i);
 		}
 	}
 }

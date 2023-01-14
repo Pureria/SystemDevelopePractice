@@ -17,7 +17,7 @@ private:
 	CPlayer			m_Player;
 
 	//ステージ
-	CBaseStage			m_BaseStage;
+	CBaseStage		m_BaseStage;
 
 	//敵のポインタ配列
 	CEnemy*		    m_EnemyArray;

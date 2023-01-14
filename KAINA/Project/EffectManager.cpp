@@ -25,8 +25,8 @@ bool CEffectManager::Load(void){
 		"Effect/effect03.png",
 		"Effect/EffectFireBar.png",
 		"Effect/WeakDamage.png",
-		"Effect/zanngeki1枚.png",//シールドエフェクト
-		"Effect/effect03.png",//ヒールエフェクト
+		"Effect/Shield.png",		
+		"Effect/kaihuku.png",		
 	};
 	for ( int i = 0; i < EFC_TYPECOUNT; i++ )
 	{

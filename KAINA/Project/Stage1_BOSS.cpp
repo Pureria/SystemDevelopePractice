@@ -140,13 +140,11 @@ void CStage1_Boss::Update(void) {
 	//敵の更新
 	StgCollEne();
 
-	StgCollBoss();
+	//当たり判定の実行
+	m_Player.Collision_Stage1_Boss(m_Boss);
 
 	//アイテムの更新
 	StgCollItm();
-
-	//当たり判定の実行
-	m_Player.Collision_Stage1_Boss(m_Boss);
 
 	//ステージの更新
 	m_Stage.Update(m_Player);
@@ -158,13 +156,6 @@ void CStage1_Boss::Update(void) {
 	m_Stage.SetScroll(STAGE1_BOSS_FIXSCROLL_WIDTH, STAGE1_BOSS_FIXSCROLL_HEIGHT);
 
 	//デバッグ用
-
-	//プレイヤーのゴールフラグでリザルト画面へ
-	if (m_Player.IsGoal())
-	{
-		m_bEnd = true;
-		m_SceneNo = SCENENO_GAMECLEAR;
-	}
 
 	//F2キーでリザルト画面へ
 	if (g_pInput->IsKeyPush(MOFKEY_F2))
@@ -211,57 +202,52 @@ void CStage1_Boss::StgCollBullet()
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
 		float ox = 0, oy = 0;
-		if (!m_Player.IsLaser()) {
-			if (!m_Player.GetNormalShow(i))
-			{
-				continue;
-			}
-
-			CRectangle psrec = m_Player.GetNormalRect(i);
-			//上の判定
-			psrec.Bottom = psrec.Top + 1;
-			psrec.Expansion(-15, 0);
-			if (m_Stage.Collision(psrec))
-			{
-				m_Player.ShotRefTop(i);
-			}
-
-			//下の判定
-			psrec = m_Player.GetNormalRect(i);
-			psrec.Top = psrec.Bottom - 1;
-			psrec.Expansion(-15, 0);
-			if (m_Stage.Collision(psrec))
-			{
-				m_Player.ShotRefBottom(i);
-			}
-
-			//左の判定
-			psrec = m_Player.GetNormalRect(i);
-			psrec.Right = psrec.Left + 1;
-			psrec.Expansion(0, -15);
-			if (m_Stage.Collision(psrec))
-			{
-				m_Player.ShotRefLeft(i);
-			}
-
-			//右の判定
-			psrec = m_Player.GetNormalRect(i);
-			psrec.Left = psrec.Right - 1;
-			psrec.Expansion(0, -15);
-			if (m_Stage.Collision(psrec))
-			{
-				m_Player.ShotRefRight(i);
-			}
-		}
-		else {
+		if (m_Player.IsLaser()) {
 			if (!m_Player.GetLaserShotShow(i)) { continue; }
-			
+
 			if (m_Stage.Collision(m_Player.GetLaserRect(i)))
 			{
 				m_Player.SetWallLaser(i, true);
 			}
 		}
-		
+
+		if (!m_Player.GetNormalShow(i)){			continue;			}
+
+		CRectangle psrec = m_Player.GetNormalRect(i);
+		//上の判定
+		psrec.Bottom = psrec.Top + 1;
+		psrec.Expansion(-15, 0);
+		if (m_Stage.Collision(psrec))
+		{
+			m_Player.ShotRefTop(i);
+		}
+
+		//下の判定
+		psrec = m_Player.GetNormalRect(i);
+		psrec.Top = psrec.Bottom - 1;
+		psrec.Expansion(-15, 0);
+		if (m_Stage.Collision(psrec))
+		{
+			m_Player.ShotRefBottom(i);
+		}
+
+		//左の判定
+		psrec = m_Player.GetNormalRect(i);
+		psrec.Right = psrec.Left + 1;
+		psrec.Expansion(0, -15);
+		if (m_Stage.Collision(psrec))
+		{
+			m_Player.ShotRefLeft(i);
+		}
+
+		//右の判定
+		psrec = m_Player.GetNormalRect(i);
+		psrec.Left = psrec.Right - 1;
+		psrec.Expansion(0, -15);
+		if (m_Stage.Collision(psrec))
+		{
+			m_Player.ShotRefRight(i);
+		}
 	}
 }
 
@@ -321,71 +307,6 @@ void CStage1_Boss::StgCollEne()
 	}
 }
 
-void CStage1_Boss::StgCollBoss() {
-	m_Player.Collision_Stage1_Boss(m_Boss);
-	/*for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-	{
-		if (!m_Player.IsLaser()) {
-			if (!m_Player.GetNormalShow(i)) { continue; }
-
-			CRectangle prec = m_Player.GetNormalRect(i);
-			CRectangle erec = m_Boss.GetBossFrontRect();
-			if (prec.CollisionRect(erec)) {
-				if (m_Player.GetNatuShot(i) == HEAL) {
-					m_Boss.Damage(HEAL_DAMAGE, true);
-					m_Player.SetNormalShotShow(false, i);
-				}
-				else if (m_Player.GetNatuShot(i) == HEAVY) {
-					m_Boss.Damage(HEAVY_DAMAGE, true);
-					m_Player.SetNormalShotShow(false, i);
-				}
-				continue;
-			}
-			else {
-				erec = m_Boss.GetRect();
-				if (prec.CollisionRect(erec)) {
-					if (m_Player.GetNatuShot(i) == HEAL) {
-						m_Boss.Damage(HEAL_DAMAGE, false);
-						m_Player.SetNormalShotShow(false, i);
-					}
-					else if (m_Player.GetNatuShot(i) == HEAVY) {
-						m_Boss.Damage(HEAVY_DAMAGE, false);
-						m_Player.SetNormalShotShow(false, i);
-					}
-					continue;
-				}
-			}
-		}
-		else {
-			if (!m_Player.GetLaserShotShow(i)) { continue; }
-			CRectangle prec = m_Player.GetLaserRect(i);
-			CRectangle erec = m_Boss.GetBossFrontRect();
-			if (prec.CollisionRect(erec)) {
-				if (m_Player.GetNatuLaser(i) == FIRE) {
-					m_Boss.Damage(FIRE_DAMAGE, true);
-					m_Player.SetWallLaser(i,true);
-				}
-				else if (m_Player.GetNatuLaser(i) == FROST) {
-					m_Boss.Damage(FROST_DAMAGE, true);
-					m_Player.SetWallLaser(i,true);
-				}
-				continue;
-			}
-			else {
-				erec = m_Boss.GetRect();
-				if (prec.CollisionRect(erec)) {
-					if (m_Player.GetNatuLaser(i) == FIRE) {
-						m_Boss.Damage(FIRE_DAMAGE, false);
-					}
-					else if (m_Player.GetNatuLaser(i) == FROST) {
-						m_Boss.Damage(FROST_DAMAGE, false);
-					}
-					continue;
-				}
-			}
-		}
-	}*/
-}
 
 void CStage1_Boss::StgCollItm()
 {
@@ -446,6 +367,7 @@ void CStage1_Boss::Render(void) {
 
 	//プレイヤーの状態描画
 	m_Player.RenderStatus();
+	m_Boss.RenderStatus();
 	if (m_Menu.IsShow()) {
 		m_Menu.Render();
 	}

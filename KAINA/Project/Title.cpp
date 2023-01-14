@@ -1,9 +1,6 @@
 #include	"GameDefine.h"
 #include	"Title.h"
 
-//変更するシーン(外部参照、実体はGameApp.cpp)
-//extern int						gChangeScene;
-
 /**
  * デストラクタ
  *
@@ -28,8 +25,6 @@ bool CTitle::Load(void){
 	if (!m_ExitImage.Load("BackGround/Exit.png"))
 		return false;
 
-	if (!m_TImage.Load("BackGround/title2.png"))
-		return false;
 
 	m_BGMManager.Load();
 
@@ -44,8 +39,6 @@ bool CTitle::Load(void){
 void CTitle::Initialize(void){
 
 	this->Load();
-
-	m_bSelectArrow = true;
 
 	m_Alpha = 0;
 
@@ -62,6 +55,8 @@ void CTitle::Initialize(void){
 	m_BGMManager.BGMPlayer(BGM_TITLE);
 
 	m_Alpha = 255;
+
+	m_SelectNo = 0;
 }
 
 /**
@@ -69,7 +64,10 @@ void CTitle::Initialize(void){
  *
  */
 void CTitle::Update(void){
-
+	UpdateExitkey();
+	if (m_FlashCount > 0) {
+		m_FlashCount--;
+	}
 #pragma region Fade
 	if (m_bFadeIn)
 	{
@@ -94,20 +92,20 @@ void CTitle::Update(void){
 	}
 #pragma endregion
 
-	UpdateExitkey();
 	UpdateMenu();
 
 	if (m_Menu.IsShow()) {
 		return;
 	}
+
 	UpdateSelect();
 	//Enterキーでゲーム画面へ
-	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && m_bSelectArrow && !m_bEnd) {
+	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && m_SelectNo == 0 && !m_bEnd) {
 
 		m_bFadeOut = true;
 		m_NowTime = 0;
 		m_Alpha = 0;
-
+		m_FlashCount = START_FLASH_COUNT;
 		for (int i = 0; i < SE_COUNT; i++)
 		{
 			if (m_SEManager[i].IsPlaySE())
@@ -124,7 +122,22 @@ void CTitle::Update(void){
 */
 void CTitle::UpdateSelect() {
 
-	if (g_pInput->IsKeyPush(MOFKEY_W) || g_pInput->IsKeyPush(MOFKEY_S))
+	if (g_pInput->IsKeyPush(MOFKEY_W))
+	{
+		for (int i = 0; i < SE_COUNT; i++)
+		{
+			if (m_SEManager[i].IsPlaySE())
+				continue;
+			m_SEManager[i].SEPlayer(SE_SELECT_CHANGE);
+			break;
+		}
+		if (m_SelectNo > 0) {
+			--m_SelectNo;
+		}
+		
+	}
+
+	if (g_pInput->IsKeyPush(MOFKEY_S))
 	{
 		for (int i = 0; i < SE_COUNT; i++)
 		{
@@ -134,10 +147,9 @@ void CTitle::UpdateSelect() {
 			break;
 		}
 
-		if (!m_bSelectArrow)
-			m_bSelectArrow = true;
-		else
-			m_bSelectArrow = false;
+		if (m_SelectNo < COUNT_NO - 1) {
+			++m_SelectNo;
+		}
 	}
 }
 /*
@@ -157,18 +169,16 @@ void CTitle::UpdateMenu() {
 			}
 		}
 	}
-	else if (!m_bSelectArrow) {
-		if (g_pInput->IsKeyPush(MOFKEY_RETURN)) {
-			for (int i = 0; i < SE_COUNT; i++)
-			{
-				if (m_SEManager[i].IsPlaySE())
-					continue;
-				m_SEManager[i].SEPlayer(SE_SELECT_OK);
-				break;
-			}
-
-			m_Menu.Show(Vector2(g_pGraphics->GetTargetWidth() * 0.5f, g_pGraphics->GetTargetHeight() * 0.5f));
+	else if (g_pInput->IsKeyPush(MOFKEY_RETURN) && m_SelectNo == 1) {
+		for (int i = 0; i < SE_COUNT; i++)
+		{
+			if (m_SEManager[i].IsPlaySE())
+				continue;
+			m_SEManager[i].SEPlayer(SE_SELECT_OK);
+			break;
 		}
+		m_FlashCount = EXIT_FALSH_COUNT;
+		m_Menu.Show(Vector2(g_pGraphics->GetTargetWidth() * 0.5f, g_pGraphics->GetTargetHeight() * 0.5f));
 	}
 }
 
@@ -179,14 +189,28 @@ void CTitle::UpdateMenu() {
 void CTitle::Render(void){
 	CGraphicsUtilities::RenderFillRect(0, 0, 1024, 768, MOF_COLOR_WHITE);
 	m_BackImage.Render(0, 0);
-	m_StartImage.Render(g_pGraphics->GetTargetWidth() * 0.5f - 230,610);
-	m_ExitImage.Render(g_pGraphics->GetTargetWidth() * 0.5f - 190,780);
 
-	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() / 2.5, g_pGraphics->GetTargetHeight() / 1.3, MOF_XRGB( 0, 0, 0), "ゲームスタート");
-	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() / 2.2, g_pGraphics->GetTargetHeight() / 1.2, MOF_XRGB(0, 0, 0), "終了");
-
-	(m_bSelectArrow) ?	m_SelectArrow.Render(g_pGraphics->GetTargetWidth() / 3.5, g_pGraphics->GetTargetHeight() / 1.35, MOF_XRGB(255, 255, 255)) :
-		m_SelectArrow.Render(g_pGraphics->GetTargetWidth() / 3.5, g_pGraphics->GetTargetHeight() / 1.25, MOF_XRGB(255, 255, 255));
+	switch (m_SelectNo)
+	{
+	case 0:
+		m_ExitImage.Render(g_pGraphics->GetTargetWidth() * 0.5f - 190, 780, MOF_XRGB(128, 128, 128));
+		m_SelectArrow.Render(g_pGraphics->GetTargetWidth() * 0.5f - 250, 660, MOF_XRGB(255, 255, 255));
+		if (m_FlashCount % 4 >= 2)
+		{
+			break;
+		}
+		m_StartImage.Render(g_pGraphics->GetTargetWidth() * 0.5f - 230, 610);
+		break;
+	case 1:
+		m_StartImage.Render(g_pGraphics->GetTargetWidth() * 0.5f - 230, 610, MOF_XRGB(128, 128, 128));
+		m_SelectArrow.Render(g_pGraphics->GetTargetWidth() * 0.5f - 250, 840, MOF_XRGB(255, 255, 255));
+		if (m_FlashCount % 4 >= 2)
+		{
+			break;
+		}
+		m_ExitImage.Render(g_pGraphics->GetTargetWidth() * 0.5f - 190, 780);
+		break;
+	}
 
 	CGraphicsUtilities::RenderFillRect(0, 0, g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight(), MOF_ARGB(m_Alpha, 0, 0, 0));
 

@@ -5,6 +5,10 @@ enum tas_EnemyType {
 	Bike,
 };
 
+enum tag_AbNormalState {
+	STATE_IDLE,
+	STATE_FROST,
+};
 /************“G‹¤’Ê**********/
 #define		ENEMY_KNOCKBACK_POWER_Y	5.0f
 #define		ENEMY_KNOCKBACK_TIME	0.5f
