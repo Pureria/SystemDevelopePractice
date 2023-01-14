@@ -1026,7 +1026,7 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 }
 
 bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
-	if (!boss.GetShow())
+	if (boss.GetNowBossHP() <= 0)
 		return false;
 
 	//HP‚ª–³‚­‚È‚é‚Æ“–‚½‚è”»’è‚µ‚È‚¢
@@ -1102,23 +1102,8 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 		if (!IsLaser()) {
 			if (!m_PlShotAry[i].GetShow()) { continue; }
 			CRectangle srec = m_PlShotAry[i].GetRect();
-			if (srec.CollisionRect(erec))
-			{
-				if (m_PlShotAry[i].GetNatu() == HEAL)
-				{
-					m_HP += HEAL_POWER;
-					boss.Damage(HEAL_DAMAGE,false);
-				}
-				else if (m_PlShotAry[i].GetNatu() == HEAVY)
-				{
-					boss.Damage(HEAVY_DAMAGE,false);
-				}
-				m_PlShotAry[i].SetShow(false);
-				continue;
-			}
 			
 			erec = boss.GetBossFrontRect();
-
 			if (srec.CollisionRect(erec))
 			{
 				if (m_PlShotAry[i].GetNatu() == HEAL)
@@ -1129,6 +1114,22 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 				else if (m_PlShotAry[i].GetNatu() == HEAVY)
 				{
 					boss.Damage(HEAVY_DAMAGE, true);
+				}
+				m_PlShotAry[i].SetShow(false);
+				continue;
+			}
+
+			erec = boss.GetRect();
+			if (srec.CollisionRect(erec))
+			{
+				if (m_PlShotAry[i].GetNatu() == HEAL)
+				{
+					m_HP += HEAL_POWER;
+					boss.Damage(HEAL_DAMAGE,false);
+				}
+				else if (m_PlShotAry[i].GetNatu() == HEAVY)
+				{
+					boss.Damage(HEAVY_DAMAGE,false);
 				}
 				m_PlShotAry[i].SetShow(false);
 				continue;

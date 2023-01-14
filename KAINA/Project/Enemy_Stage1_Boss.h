@@ -54,6 +54,7 @@ private:
 		MOTION_ATTACK_SLASH_READY,
 		MOTION_ATTACK_DASH_READY,
 		MOTION_ATTACK_DASH_END,
+		MOTION_END,
 
 
 		MOTION_COUNT,
@@ -112,6 +113,7 @@ public:
 	}
 	void SetReverse(bool reverse) { m_bReverse = reverse; }
 	bool GetReverse() { return m_bReverse; }
+	int GetNowBossHP() { return m_HP; }
 	bool IsJump()
 	{
 		if (m_Move.y <= 0)
