@@ -822,6 +822,37 @@ void CBaseStage::CollisionFreezeWater(CRectangle r)
 	}
 }
 
+bool CBaseStage::CollisionWater(CRectangle prec)
+{
+	int lc = m_ScrollX / m_ChipSize;
+	int rc = (g_pGraphics->GetTargetWidth() + m_ScrollX) / m_ChipSize;
+	int tc = m_ScrollY / m_ChipSize;
+	int bc = (g_pGraphics->GetTargetHeight() + m_ScrollY) / m_ChipSize;
+
+	if (lc < 0) { lc = 0; }
+	if (tc < 0) { tc = 0; }
+	if (rc >= m_XCount) { rc = m_XCount - 1; }
+	if (bc >= m_YCount) { bc = m_YCount - 1; }
+
+	for (int y = tc; y <= bc; y++)
+	{
+		for (int x = lc; x <= rc; x++)
+		{
+			char cn = m_pChipData[y * m_XCount + x] - 1;
+			if (cn == WATER)
+			{
+				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
+				if (prec.CollisionRect(cr))
+				{
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
 
 void CBaseStage::CollisionIceFroe(CRectangle r)
 {

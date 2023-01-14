@@ -278,6 +278,11 @@ void CStage1::StgCollPlayer() {
 			m_intervalFire -= 1;
 	}
 
+	if (m_BaseStage.CollisionWater(m_Player.GetRect()))
+	{
+		m_Player.PlayerDamage(1);
+	}
+
 }
 
 void CStage1::StgCollBullet() {
