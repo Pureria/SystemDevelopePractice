@@ -30,8 +30,8 @@ void CPlayerShot::Update() {
 
 //”­ŽË‚·‚éî•ñ‚ðƒZƒbƒg
 void CPlayerShot::Fire(Vector2& pos, int tb, int natuyype) {
-	m_ShotPos.x = pos.x - m_pShotTex->GetWidth() * 0.5;
-	m_ShotPos.y = pos.y;
+	m_ShotPos.x = pos.x - m_pShotTex->GetWidth() * 0.5f;
+	m_ShotPos.y = pos.y - m_pShotTex->GetHeight() * 0.5f;
 	m_bShow = true;
 	m_DrcType = tb;
 	m_bHitWall = false;

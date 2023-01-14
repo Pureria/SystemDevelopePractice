@@ -132,11 +132,6 @@ void CSE_Manager::SEPlayer(int request) {
 		gSound.Play();
 		break;
 	}
-
-
-
-
-
 }
 
 void CSE_Manager::Release(void) {

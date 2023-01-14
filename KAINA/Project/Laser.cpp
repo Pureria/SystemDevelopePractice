@@ -22,8 +22,8 @@ void Laser::Update() {
 }
 
 void Laser::Fire(Vector2& pos, int tb, int natuyype) {
-	m_ShotPos.x = pos.x;
-	m_ShotPos.y = pos.y;
+	m_ShotPos.x = pos.x - 16;
+	m_ShotPos.y = pos.y - 32;
 	m_bShow = true;
 	m_DrcType = tb;
 	m_NatuType = natuyype;

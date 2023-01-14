@@ -220,6 +220,13 @@ void CStage1_Boss::StgCollBullet()
 		if (m_Stage.Collision(psrec))
 		{
 			m_Player.ShotRefTop(i);
+			for (int j = 0; j < SE_COUNT; j++)
+			{
+				if (m_SEManager[j].IsPlaySE())
+					continue;
+				m_SEManager[j].SEPlayer(SE_WALL_CONTACT);
+				break;
+			}
 		}
 
 		//‰º‚Ì”»’è
@@ -229,6 +236,13 @@ void CStage1_Boss::StgCollBullet()
 		if (m_Stage.Collision(psrec))
 		{
 			m_Player.ShotRefBottom(i);
+			for (int j = 0; j < SE_COUNT; j++)
+			{
+				if (m_SEManager[j].IsPlaySE())
+					continue;
+				m_SEManager[j].SEPlayer(SE_WALL_CONTACT);
+				break;
+			}
 		}
 
 		//¶‚Ì”»’è
@@ -238,6 +252,13 @@ void CStage1_Boss::StgCollBullet()
 		if (m_Stage.Collision(psrec))
 		{
 			m_Player.ShotRefLeft(i);
+			for (int j = 0; j < SE_COUNT; j++)
+			{
+				if (m_SEManager[j].IsPlaySE())
+					continue;
+				m_SEManager[j].SEPlayer(SE_WALL_CONTACT);
+				break;
+			}
 		}
 
 		//‰E‚Ì”»’è
@@ -247,6 +268,13 @@ void CStage1_Boss::StgCollBullet()
 		if (m_Stage.Collision(psrec))
 		{
 			m_Player.ShotRefRight(i);
+			for (int j = 0; j < SE_COUNT; j++)
+			{
+				if (m_SEManager[j].IsPlaySE())
+					continue;
+				m_SEManager[j].SEPlayer(SE_WALL_CONTACT);
+				break;
+			}
 		}
 	}
 }

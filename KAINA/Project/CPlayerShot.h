@@ -12,13 +12,13 @@ public:
 	CPlayerShot();
 	~CPlayerShot() {};
 
-	void Initialize()								override;
-	void Update()									override;
-	void Fire(Vector2& pos, int tb, int natuyype)	override;
-	void Render(float wx, float wy)					override;
-	void RenderDebug(float wx, float wy)			override;
+	void Initialize();
+	void Update();
+	void Fire(Vector2& pos, int tb, int natuyype);
+	void Render(float wx, float wy);
+	void RenderDebug(float wx, float wy);
 
-	inline CRectangle GetRect()						override
+	inline CRectangle GetRect()
 	{
 		return CRectangle(m_ShotPos.x,
 			m_ShotPos.y,

@@ -40,6 +40,4 @@ enum SECode{
 	SE_SELECT_CHANGE,
 	SE_SELECT_OK,
 
-
-	
 };
