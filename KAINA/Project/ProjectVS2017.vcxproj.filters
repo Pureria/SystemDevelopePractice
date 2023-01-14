@@ -76,6 +76,9 @@
     <ClCompile Include="BaseStage.cpp">
       <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game\Objecct\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Stage2.cpp">
+      <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PublicFunction.h">
@@ -167,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="ShotDefine.h">
       <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game\Objecct\Player\Player_obj\Shot_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage2.h">
+      <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

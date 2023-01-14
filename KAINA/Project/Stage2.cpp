@@ -1,23 +1,23 @@
 #include	"GameDefine.h"
-#include	"Stage1.h"
+#include	"Stage2.h"
 
 /**
  * デストラクタ
  *
  */
-CStage1::~CStage1(){
+CStage2::~CStage2(){
 }
 
 /**
  * 読み込み
  * 利用するテクスチャを読み込む。
  */
-bool CStage1::Load(){
+bool CStage2::Load(){
 	//プレイヤーの素材読み込み
 	m_Player.Load();
 	//ステージの素材読み込み
-	m_BaseStage.Load("ChipData/1-1MAP_noWall.txt",m_NowSceneNo);
-	//m_BaseStage.Load("ChipData/New1-1_α.txt", m_NowSceneNo);
+	//m_BaseStage.Load("ChipData/1-1MAP_noWall.txt",m_NowSceneNo);
+	m_BaseStage.Load("ChipData/New1-1_α.txt", m_NowSceneNo);
 	//敵メモリ確保
 	m_EnemyArray	= new CEnemy[m_BaseStage.GetEnemy1Count()];
 	m_Enemy2Array	= new CEnemy_2[m_BaseStage.GetEnemy2Count()];
@@ -37,7 +37,7 @@ bool CStage1::Load(){
  * パラメーターや座標を初期化する。
  * 状態を初期化したいときに実行する。
  */
-void CStage1::Initialize(){
+void CStage2::Initialize(){
 	
 	Load();
 	//プレイヤーの状態初期化
@@ -85,7 +85,7 @@ void CStage1::Initialize(){
  * 更新
  *
  */
-void CStage1::Update(void){
+void CStage2::Update(void){
 #pragma region Fade
 	if (m_bFadeIn)
 	{
@@ -102,7 +102,7 @@ void CStage1::Update(void){
 		if (m_Alpha >= 255)
 		{
 			m_bEnd = true;
-			m_SceneNo = SCENENO_GAMECLEAR;
+			m_SceneNo = SCENENO_GAME_STAGE1_BOSS;
 		}
 		return;
 	}
@@ -192,7 +192,7 @@ void CStage1::Update(void){
 	}
 }
 
-void CStage1::StgCollPlayer() {
+void CStage2::StgCollPlayer() {
 	float ox = 0, oy = 0;
 	if (m_BaseStage.Collision(m_Player.GetRect(), ox, oy))
 	{
@@ -285,7 +285,7 @@ void CStage1::StgCollPlayer() {
 
 }
 
-void CStage1::StgCollBullet() {
+void CStage2::StgCollBullet() {
 
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
@@ -348,7 +348,7 @@ void CStage1::StgCollBullet() {
 	}
 }
 
-void CStage1::StgCollEne() {
+void CStage2::StgCollEne() {
 	float PPosX = m_Player.GetPosX() + 30;
 	float PPosY = m_Player.GetPosY() + 30;
 
@@ -411,7 +411,7 @@ void CStage1::StgCollEne() {
 	}
 }
 
-void CStage1::StgCollItm() {
+void CStage2::StgCollItm() {
 	for (int i = 0; i < m_BaseStage.GetItemCount(); i++)
 	{
 		if (!m_ItemArray[i].GetShow())
@@ -430,7 +430,7 @@ void CStage1::StgCollItm() {
 	}
 }
 
-bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox, float& oy)
+bool CStage2::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox, float& oy)
 {
 	bool re = false;
 
@@ -488,7 +488,7 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
  * 描画
  *
  */
-void CStage1::Render(void){
+void CStage2::Render(void){
 	m_BaseStage.BackTexRender();
 	m_Player.ShotRender(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	m_BaseStage.Render();
@@ -544,7 +544,7 @@ void CStage1::Render(void){
  * デバッグ描画
  *
  */
-void CStage1::RenderDebug(void){
+void CStage2::RenderDebug(void){
 	//ステージデバッグ描画
 	m_BaseStage.RenderDebug();
 	//プレイヤーデバッグ描画
@@ -573,7 +573,7 @@ void CStage1::RenderDebug(void){
  * 解放
  *
  */
-void CStage1::Release(void){
+void CStage2::Release(void){
 	//ステージの開放
 	m_BaseStage.Release(m_NowSceneNo);
 	//プレイヤーの開放
