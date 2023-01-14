@@ -23,6 +23,6 @@ enum tas_EnemyType {
 #define		ENEMY_BOSS_BACK_DEF			0
 
 #define		ENEMY_BOSS_FRONTDEF_DIRECTION 10
-#define		ENEMY_BOSS_ATTACK_WAIT		10
+#define		ENEMY_BOSS_ATTACK_WAIT		40
 
 /***************************/

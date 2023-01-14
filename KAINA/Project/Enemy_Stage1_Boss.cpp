@@ -84,6 +84,15 @@ bool CEnemy_Stage1_Boss::Load()
 			"ダッシュ攻撃後モーション",
 			0,0,320,320,FALSE,
 			{{5,11,4}, {5,12,4}, {5,13,4}, {5,14,4}, {5,15,4}, {5,16,4}, {5,17,4}, {5,18,4}, {5,19,4}, {5,20,4}, {5,21,4}}
+		},
+		{
+			"撃破時モーション",
+			0,0,320,320,FALSE,
+			{{5,0,5},{5,1,5},{5,2,5},{5,3,5},{5,4,5},{5,5,5},
+			{5,6,5},{5,7,5},{5,8,5},{5,9,5},{5,10,5},{5,11,5},
+			{5,12,5},{5,13,5},{5,14,5},{5,15,5},{5,16,5},{5,17,5},
+			{5,18,5},{5,19,5},{5,20,5},{5,21,5},{5,22,5},{5,23,5},
+			{5,24,5},{5,25,5},{5,26,5},{5,27,5},{5,28,5},{5,29,5}}
 		}
 	};
 	m_Motion.Create(anim, MOTION_COUNT);
@@ -127,16 +136,9 @@ void CEnemy_Stage1_Boss::Initialize() {
  *
  */
 void CEnemy_Stage1_Boss::Update() {
-	//非表示
-	if (!m_bShow)
-	{
-		return;
-	}
 
 	if (m_bDead) {
 		m_bEliminated = true;
-		m_bShow = false;
-		return;
 	}
 
 	if (m_DamageWait > 0)
@@ -144,11 +146,7 @@ void CEnemy_Stage1_Boss::Update() {
 
 
 	if (m_HP <= 0) {
-
-		if (!m_pEndEffect || !m_pEndEffect->GetShow())
-		{
-			m_bDead = true;
-		}
+		m_bDead = true;
 	}
 
 	switch (m_Motion.GetMotionNo())
@@ -206,8 +204,8 @@ void CEnemy_Stage1_Boss::Update() {
 					if (rand == 0)
 					{
 						m_Motion.ChangeMotion(MOTION_ATTACK_DASH_READY);
-						
-						
+
+
 					}
 					else if (rand == 1)
 					{
@@ -521,7 +519,10 @@ void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 	if (m_HP <= 0)
 	{
 		//爆発エフェクトを発生させる
-		m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+		//m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+		m_Move.x = 0;
+		m_OldMotionNo = MOTION_END;
+		m_Motion.ChangeMotion(MOTION_END);
 	}
 	else
 	{
