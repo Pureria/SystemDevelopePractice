@@ -48,7 +48,7 @@ void CSelect::Update() {
 				break;
 			case 1:
 				m_bEnd = true;
-				m_SceneNo = SCENENO_GAME_STAGE1;
+				m_SceneNo = SCENENO_GAME_STAGE2;
 				break;
 			case 2:
 				m_bEnd = true;

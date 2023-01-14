@@ -14,6 +14,7 @@
 #include    "CSelect.h"
 
 #include	"Stage1.h"
+#include	"Stage2.h"
 #include	"Stage1_BOSS.h"
 
 #include    "CResult.h"
@@ -79,6 +80,9 @@ MofBool CGameApp::Update(void){
 			break;
 		case SCENENO_GAME_STAGE1:
 			g_pScene = new CStage1();
+			break;
+		case SCENENO_GAME_STAGE2:
+			g_pScene = new CStage2();
 			break;
 		case SCENENO_GAME_STAGE1_BOSS:
 			g_pScene = new CStage1_Boss();
