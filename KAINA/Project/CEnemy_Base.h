@@ -4,6 +4,8 @@
 #include	"EffectManager.h"
 #include	"SE_Manager.h"
 
+#define		FROST_WAIT		120
+
 class CEnemy_Base
 {
 protected:
@@ -39,7 +41,14 @@ protected:
 	float					m_EneTime;
 
 	bool					m_bDead;
+
+	int						m_AbState;
+	int						m_AbStateWait;
+	MofU32					m_Color;
+
 public:
+	CEnemy_Base();
+	virtual ~CEnemy_Base() {};
 	void virtual Initialize(float px, float py, int type)	= 0;
 	void virtual Update(float wx)							= 0;
 	void virtual CollisionStage(float ox, float oy)			= 0;
@@ -55,13 +64,43 @@ public:
 	void virtual KnockBack()											{			return;							}
 
 
-	void SetEffectManager(CEffectManager* pmng)							{			m_pEffectManager = pmng;		}
-	void SetTime(float time)											{			m_EneTime = time;				}
-		
-	bool GetShow()														{			return m_bShow;					}
-	bool GetKnockback()													{			return m_bKnockback;			}
-	int	 GetEnemyType()													{			return m_EnemyType;				}
+	void		SetEffectManager(CEffectManager* pmng)							{			m_pEffectManager = pmng;		}
+	void		SetTime(float time)												{			m_EneTime = time;				}
+	
+	void		SetAbState(int ab)												{			m_AbState = ab;					}
 
-	bool IsDead()														{			return m_bDead;					}
+	//Œ³‚Ìó‘Ô‚É–ß‚·B
+	void		SetAbReturnState()												{			m_AbState = STATE_IDLE;			}
+
+	void		SetAbStateWait(int wait)										{			m_AbStateWait = wait;			}
+
+	bool		GetShow()														{			return m_bShow;					}
+	bool		GetKnockback()													{			return m_bKnockback;			}
+	int			GetEnemyType()													{			return m_EnemyType;				}
+
+	bool		IsDead()														{			return m_bDead;					}
+
+	Vector2		GetMove()														{			return m_Move;					}
+
+	int			GetAbState()													{			return m_AbState;				}
+
+	void		AbStateMoveDec() {
+		switch (GetAbState())
+		{
+		case STATE_FROST:
+			m_Move.x *= 0.8f;
+			m_Move.y *= 0.5f;
+			break;
+		}
+	}
+
+	void ReturnWaitStates() {
+		if (m_AbStateWait > 0) {
+			m_AbStateWait--;
+		}
+		else if (m_AbStateWait <= 0) {
+			SetAbReturnState();
+		}
+	}
 };
 

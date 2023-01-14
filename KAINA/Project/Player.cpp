@@ -26,9 +26,9 @@ m_NatuType(FIRE),
 m_DrcType(RIGHT),
 m_HP(0),
 m_SP(0),
-m_bGoal(false),
 m_PlShotAry(),
-m_bNextBossScene(false){}
+m_bNextBossScene(false),
+m_SpWait(0){}
 
 #pragma endregion
 
@@ -42,13 +42,22 @@ bool CPlayer::Load(){
 
 	if (!m_FrameTexture.Load("Player/Frame.png"))				{		return false;		}
 
-	if (!m_HPBarTexture.Load("Player/hp.png"))					{		return false;		}	
+	if (!m_HPBarTexture.Load("Player/Hp.png"))					{		return false;		}	
 
-	if (!m_SPBarTexture.Load("Player/sp.png"))					{		return false;		}
+	if (!m_SPBarTexture.Load("Player/Sp.png"))					{		return false;		}
 
 	if (!m_ShotHealTex.Load("Player/healammo.png"))				{		return false;		}
 
 	if (!m_ShotHeavyTex.Load("Player/heavyammo.png"))			{		return false;		}
+
+	if (!m_HealTex.Load("Player/heal.png"))						{		return false;		}
+
+	if (!m_HeavyTex.Load("Player/heavy.png"))					{		return false;		}
+
+	if (!m_FireTex.Load("Player/fire.png"))						{		return false;		}
+
+	if (!m_FrostTex.Load("Player/frost.png"))					{		return false;		}
+
 
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)	
 	{
@@ -248,14 +257,13 @@ void CPlayer::Initialize(){
 	m_Motion.ChangeMotion(MOTION_WAIT);
 	m_bDead = false;
 	m_pEndEffect = NULL;
-	m_bGoal = false;
 	m_bTop = false;
 	m_bBottom = false;
 	m_ShotType = NORMAL;
 	m_NatuType = NULL;
 	m_DrcType = NULL;
 	m_bNextBossScene = false;
-
+	m_SpWait = 0;
 	Load();
 }
 
@@ -333,24 +341,25 @@ void CPlayer::Update() {
 	m_Motion.AddTimer(CUtilities::GetFrameSecond());
 	m_SrcRect = m_Motion.GetSrcRect();
 
-	if (m_HP > 100) {
+	if (m_HP >= 100) {
 		m_HP = 100;
 	}
 	
-	if (m_SP > 100) {
+	if (m_SP >= 100) {
 		m_SP = 100;
+	}
+	else {
+		if (m_SpWait > 0) {
+			m_SpWait--;
+			if (m_SpWait <= 0) {
+				m_SP += SP_POWER;
+				m_SpWait = PLAYER_SPWAIT;
+			}
+		}
 	}
 
 	if (m_SP <= 0) {
 		m_SP = 0;
-	}
-
-	if (m_SpWait > 0) {
-		m_SpWait--;
-		if (m_SpWait <= 0) {
-			m_SP += SP_POWER;
-			m_SpWait = PLAYER_SPWAIT;
-		}
 	}
 
 	//ダメージのインターバルを減らす
@@ -358,9 +367,6 @@ void CPlayer::Update() {
 	{
 		m_DamageWait--;
 	}
-
-
-
 }
 
 
@@ -513,6 +519,14 @@ void CPlayer::MoveStopAnim() {
 	}
 }
 
+void CPlayer::BltChangeTpBtmAnim() {
+	if (m_bTop) {
+		m_Motion.ChangeMotion(IsLaser() ? MOTION_NORMAL_MUZZLETOP : MOTION_LASER_MUZZLETOP);
+	}
+	else if(m_bBottom){
+		m_Motion.ChangeMotion(IsLaser() ? MOTION_NORMAL_MUZZLEBOTTOM : MOTION_LASER_MUZZLEBOTTOM);
+	}
+}
 #pragma endregion
 
 
@@ -522,6 +536,7 @@ void CPlayer::MoveStopAnim() {
 void CPlayer::BulletChange() {
 	if (g_pInput->IsKeyPush(MOFKEY_I)) {
 		TypeChange();
+		BltChangeTpBtmAnim();
 	}
 }
 
@@ -798,7 +813,7 @@ void CPlayer::PlayerDamage(bool flg,float damage)
 		return;
 
 	m_HP -= damage;
-	m_DamageWait = 60;
+	m_DamageWait = DAMAGE_WAIT;
 	if (flg)
 	{
 		m_MoveX = -5.0f;
@@ -846,7 +861,6 @@ bool CPlayer::PlayerEnd() {
 		if (!m_pEndEffect || !m_pEndEffect->GetShow())
 		{
 			m_bDead = true;
-			
 			return true;
 		}
 	}
@@ -877,28 +891,7 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 	//敵と弾の当たり判定
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
-		if (!IsLaser()) {
-			if (!m_PlShotAry[i].GetShow()) { continue; }
-			CRectangle srec = m_PlShotAry[i].GetRect();
-			if (srec.CollisionRect(erec))
-			{
-				if (eneType != Turret)
-				{
-					if (m_PlShotAry[i].GetNatu() == HEAL)
-					{
-						m_HP += HEAL_POWER;
-						ene.Damage(HEAL_DAMAGE);
-					}
-					else if (m_PlShotAry[i].GetNatu() == HEAVY)
-					{
-						ene.Damage(HEAVY_DAMAGE);
-					}
-				}
-				m_PlShotAry[i].SetShow(false);
-			}
-
-		}
-		else {
+		if (IsLaser()) {
 			if (!m_Laser[i].GetShow()) { continue; }
 
 			CRectangle srec = m_Laser[i].GetRect();
@@ -912,15 +905,37 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 				}
 				else if (m_Laser[i].GetNatu() == FROST) {
 					ene.Damage(FROST_DAMAGE);
+					ene.SetAbState(STATE_FROST);
+					ene.SetAbStateWait(FROST_WAIT);
 				}
 			}
 		}
+
+		if (!m_PlShotAry[i].GetShow()) { continue; }
+		CRectangle srec = m_PlShotAry[i].GetRect();
+		if (srec.CollisionRect(erec))
+		{
+			if (eneType != Turret)
+			{
+				if (m_PlShotAry[i].GetNatu() == HEAL)
+				{
+					m_HP += HEAL_POWER;
+					m_pEffectManager->Start(SetStartPos(), EFC_HEAL);
+					ene.Damage(HEAL_DAMAGE);
+				}
+				else if (m_PlShotAry[i].GetNatu() == HEAVY)
+				{
+					ene.Damage(HEAVY_DAMAGE);
+				}
+			}
+			m_PlShotAry[i].SetShow(false);
+		}
+		
 	}
 
 	//ダメージ中のため当たり判定を行わない
 	if (m_DamageWait > 0) 
 		return flg;
-
 
 	//敵との当たり判定
 	if (eneType != Turret)
@@ -990,8 +1005,6 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 		}
 	}
 
-
-
 	//プレイヤーと敵の弾同士の当たり判定
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
@@ -1013,6 +1026,8 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 
 				case HEAVY:
 					ene.SetShotShow(false, j);
+					m_PlShotAry[i].SetRectCount();
+					m_PlShotAry[i].SetThroughCount();
 					break;
 				}
 				break;
@@ -1091,7 +1106,7 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 		else
 		{
 			//ダメージエフェクトを発生させる
-			m_pEffectManager->Start(SetStartPos(), EFC_DAMAGE);
+			m_pEffectManager->Start(SetStartPos(), EFC_WEAK);
 		}
 		return true;
 	}
@@ -1107,6 +1122,7 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 				if (m_PlShotAry[i].GetNatu() == HEAL)
 				{
 					m_HP += HEAL_POWER;
+					m_pEffectManager->Start(SetStartPos(), EFC_HEAL);
 					boss.Damage(HEAL_DAMAGE,false);
 				}
 				else if (m_PlShotAry[i].GetNatu() == HEAVY)
@@ -1124,6 +1140,7 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 				if (m_PlShotAry[i].GetNatu() == HEAL)
 				{
 					m_HP += HEAL_POWER;
+					m_pEffectManager->Start(SetStartPos(), EFC_HEAL);
 					boss.Damage(HEAL_DAMAGE, true);
 				}
 				else if (m_PlShotAry[i].GetNatu() == HEAVY)
@@ -1146,6 +1163,8 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 				}
 				else if (m_Laser[i].GetNatu() == FROST) {
 					boss.Damage(FROST_DAMAGE,false);
+					boss.SetAbState(STATE_FROST);
+					boss.SetAbStateWait(FROST_WAIT);
 				}
 				continue;
 			}
@@ -1156,9 +1175,11 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 			{
 				if (m_Laser[i].GetNatu() == FIRE) {
 					boss.Damage(FIRE_DAMAGE, true);
+					m_Laser[i].SetWallHitLaser(true);
 				}
 				else if (m_Laser[i].GetNatu() == FROST) {
 					boss.Damage(FROST_DAMAGE, true);
+					m_Laser[i].SetWallHitLaser(true);
 				}
 				continue;
 			}
@@ -1181,7 +1202,7 @@ bool CPlayer::ColisionItem(CItem& itm)
 	CRectangle irec = itm.GetRect();
 	if (prec.CollisionRect(irec))
 	{
-		itm.Effect(m_HP, m_bGoal,IsJump(),m_bNextBossScene,m_MoveX,m_MoveY);
+		itm.Effect(IsJump(),m_bNextBossScene,m_MoveX,m_MoveY);
 		return true;
 	}
 	return false;
@@ -1293,12 +1314,30 @@ void CPlayer::Render(float wx,float wy){
 
 void CPlayer::RenderStatus() {
 	//HPに応じて短径の幅を変化させる
-	CRectangle hprec(0, 0, 1024 * (m_HP * 0.01f), 128);
-	m_HPBarTexture.Render(0,0, hprec);
-	CRectangle sprec(0, 0, 1024 * (m_SP * 0.01f), 128);
-	m_SPBarTexture.Render(0,0, sprec);
+	CRectangle hprec(0, 0, 795 * (m_HP * 0.01f), 31);
+	m_HPBarTexture.Render(100,24, hprec);
+	CRectangle sprec(0, 0, 702 * (m_SP * 0.01f), 27);
+	m_SPBarTexture.Render(80,51, sprec);
 	//フレームを上部に描画
 	m_FrameTexture.Render(0, 0);
+
+	switch (GetNatu())
+	{
+	case HEAL:
+		m_HealTex.Render(0, 0);
+		break;
+	case HEAVY:
+		m_HeavyTex.Render(0, 0);
+		break;
+	case FIRE:
+		m_FireTex.Render(0, 0);
+		break;
+	case FROST:
+		m_FrostTex.Render(0, 0);
+		break;
+	}
+	
+	
 }
 
 void CPlayer::RenderDebug(float wx, float wy){
@@ -1333,6 +1372,10 @@ void CPlayer::Release(){
 	m_SPBarTexture.Release();
 	m_ShotHealTex.Release();
 	m_ShotHeavyTex.Release();
+	m_HealTex.Release();
+	m_HeavyTex.Release();
+	m_FireTex.Release();
+	m_FrostTex.Release();
 }
 
 #pragma endregion

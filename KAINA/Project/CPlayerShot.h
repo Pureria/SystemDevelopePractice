@@ -26,6 +26,7 @@ public:
 			m_ShotPos.y + m_pShotTex->GetHeight());
 	}
 
+	int GetThroughCount()								{		return m_ThroughCount;	}
 	//テクスチャの配列
 	inline void		SetHealTexture(CTexture* pt)		{		m_pShotTex = pt;		}
 	inline void		SetHeavyTexture(CTexture* pt)		{		m_phShotTex = pt;		}
@@ -39,6 +40,10 @@ public:
 	void SetPowerBottom();
 
 	void SetDirection(int dic);
+
+	void SetThroughCount();
+
+	void SetRectCount()										{		m_ThroughCount++;	}
 
 	//処理を省略するための関数
 private:

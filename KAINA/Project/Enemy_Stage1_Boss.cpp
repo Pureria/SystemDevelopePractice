@@ -9,7 +9,11 @@
 CEnemy_Stage1_Boss::CEnemy_Stage1_Boss() :
 	m_Texture(),
 	m_AttackSlash(),
-	m_bEliminated(false) {};
+	m_bEliminated(false),
+	m_pEndEffect(),
+	m_HPTex(),
+	m_FrameTex()
+{};
 
 /**
  * デストラクタ
@@ -22,6 +26,12 @@ CEnemy_Stage1_Boss::~CEnemy_Stage1_Boss() {
 bool CEnemy_Stage1_Boss::Load()
 {
 	if (!m_Texture.Load("Enemy/Stage1Boss/BossAnimation/Boss1_Animation.png"))
+		return false;
+
+	if (!m_HPTex.Load("Enemy/Stage1Boss/bosshp.png"))
+		return false;
+
+	if (!m_FrameTex.Load("Enemy/Stage1Boss/bossframe.png"))
 		return false;
 
 	//アニメーションを作成
@@ -138,6 +148,8 @@ void CEnemy_Stage1_Boss::Update() {
 		m_bShow = false;
 		return;
 	}
+
+	ReturnWaitStates();
 
 	if (m_DamageWait > 0)
 		m_DamageWait--;
@@ -438,25 +450,25 @@ void CEnemy_Stage1_Boss::Update() {
 		}
 		break;
 	}
-
+	AbStateMoveDec();
 	//重力により下に少しずつ下がる
-m_Move.y += GRAVITY;
-if (m_Move.y >= 20.0f) { m_Move.y = 20.0f; }
+	m_Move.y += GRAVITY;
+	if (m_Move.y >= 20.0f) { m_Move.y = 20.0f; }
 
-m_Pos.x += m_Move.x;
-m_Pos.y += m_Move.y;
+	m_Pos.x += m_Move.x;
+	m_Pos.y += m_Move.y;
 
-/*
-if (m_OldMotionNo == MOTION_ATTACK_SLASH_START)
-{
-	m_Move.x = 0;
-}
-*/
+	/*
+	if (m_OldMotionNo == MOTION_ATTACK_SLASH_START)
+	{
+		m_Move.x = 0;
+	}
+	*/
 
 
-//アニメーションの更新
-m_Motion.AddTimer(CUtilities::GetFrameSecond());
-m_SrcRect = m_Motion.GetSrcRect();
+	//アニメーションの更新
+	m_Motion.AddTimer(CUtilities::GetFrameSecond());
+	m_SrcRect = m_Motion.GetSrcRect();
 }
 
 /**
@@ -575,7 +587,18 @@ void CEnemy_Stage1_Boss::Render(float wx, float wy) {
 		dr.Left = tmp;
 	}
 	//テクスチャの描画
-	m_Texture.Render(m_Pos.x - wx, m_Pos.y - wy, dr);
+	(GetAbState() == STATE_FROST) ? m_Texture.Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(0, 255, 255)) : m_Texture.Render(m_Pos.x - wx, m_Pos.y - wy, dr);
+}
+
+void CEnemy_Stage1_Boss::RenderStatus() {
+
+	if (m_HP <= 0) {
+		return;
+	}
+	CRectangle hprec(0, 0, 800 * (m_HP * 0.01f), 128);
+
+	m_HPTex.Render(g_pGraphics->GetTargetWidth() * 0.5 + 100, -10, hprec);
+	m_FrameTex.Render(g_pGraphics->GetTargetWidth() * 0.5 + 100, -10);
 }
 
 /**
@@ -616,4 +639,6 @@ void CEnemy_Stage1_Boss::RenderDebug(float wx, float wy) {
 void CEnemy_Stage1_Boss::Release(void) {
 	m_Motion.Release();
 	m_Texture.Release();
+	m_HPTex.Release();
+	m_FrameTex.Release();
 }

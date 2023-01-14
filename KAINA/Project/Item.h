@@ -7,8 +7,6 @@
 enum tag_ITEMTYPE {
 	ITEM_SPIDERWEB,					//蜘蛛の巣
 	BOSS_DOOR,
-	ITEM_RECOVER,					//回復
-	ITEM_GOAL,						//ゴール
 
 	ITEM_TYPECOUNT,
 };
@@ -43,7 +41,7 @@ public:
 	void StartDoorAnimation();
 	bool IsEndDoorAnimation();
 
-	void Effect(int& hp, bool& gl, bool jump, bool& BScene, float& PMovex, float& PMoveY);
+	void Effect(bool jump, bool& BScene, float& PMovex, float& PMoveY);
 
 	//ボスがいないステージでは常にTRUE、ボスがいるステージではボスの討伐情報
 	void SetBossEliminated(bool flg) { m_bBossEliminated = flg; }

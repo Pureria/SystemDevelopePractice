@@ -7,7 +7,10 @@
 CSelect::~CSelect() {}
 
 bool CSelect::Load() {
-	if (!m_SelectTex.Load("BackGround/stage select kari.png")) { return false; }
+
+	if(!m_Stage1Str.Load("BackGround/stage1ui.png"))			{			return false;			}
+
+	if(!m_Stage2Str.Load("BackGround/stage2ui.png"))			{			return false;			}
 
 	m_BGMManager.Load();
 
@@ -21,9 +24,14 @@ void CSelect::Initialize() {
 	m_BGMManager.Initialize();
 	m_BGMManager.BGMPlayer(BGM_TITLE);
 	m_Alpha = 255;
+	m_FlashCount = 0;
 }
 void CSelect::Update() {
+	UpdateExitkey();
 
+	if (m_FlashCount > 0) {
+		m_FlashCount--;
+	}
 #pragma region Fade
 	if (m_bFadeIn)
 	{
@@ -50,17 +58,8 @@ void CSelect::Update() {
 				m_bEnd = true;
 				m_SceneNo = SCENENO_GAME_STAGE2;
 				break;
-			case 2:
-				m_bEnd = true;
-				m_SceneNo = SCENENO_GAME_STAGE1;
-				break;
-			case 3:
-				m_bEnd = true;
-				m_SceneNo = SCENENO_GAME_STAGE1;
-				break;
 			}
 		}
-
 		return;
 	}
 #pragma endregion
@@ -95,6 +94,7 @@ void CSelect::Update() {
 		m_bFadeOut = true;
 		m_Alpha = 0;
 		m_NowTime = 0;
+		m_FlashCount = FLASH_COUNT;
 
 		for (int i = 0; i < SE_COUNT; i++)
 		{
@@ -107,24 +107,26 @@ void CSelect::Update() {
 }
 
 void CSelect::Render() {
+	CGraphicsUtilities::RenderFillRect(0, 0, g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight(), MOF_COLOR_BLACK);
 
-	m_SelectTex.Render(0,0);
-
-	const char* MenuString[COUNT_NO] = {
-		"_________________________",
-		"_________________________",
-	};
-	MofU32	color[COUNT_NO];
-
-	for (int i = 0; i < COUNT_NO; ++i) {
-		color[i] = MOF_XRGB( 128, 128, 128);
-	}
-
-	color[m_NowSelect] = MOF_XRGB(255, 0, 0);
-
-
-	for (int i = 0; i < COUNT_NO; ++i) {
-		CGraphicsUtilities::RenderString(350 + 900 * i,600, color[i], MenuString[i]);
+	switch (m_NowSelect)
+	{
+	case 0:
+		m_Stage2Str.Render(1150, 500, MOF_XRGB(128, 128, 128));
+		if (m_FlashCount % 4 >= 2)
+		{
+			break;
+		}
+		m_Stage1Str.Render(350, 500);
+		break;
+	case 1:
+		m_Stage1Str.Render(350, 500, MOF_XRGB(128, 128, 128));
+		if (m_FlashCount % 4 >= 2)
+		{
+			break;
+		}
+		m_Stage2Str.Render(1150, 500);
+		break;
 	}
 
 	CGraphicsUtilities::RenderFillRect(0, 0, g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight(), MOF_ARGB(m_Alpha, 0, 0, 0));
@@ -136,7 +138,8 @@ void CSelect::RenderDebug() {
 
 void CSelect::Release()
 {
-	m_SelectTex.Release(); 
+	m_Stage1Str.Release();
+	m_Stage2Str.Release();
 	m_BGMManager.Release();
 
 	for (int i = 0; i < SE_COUNT; i++)

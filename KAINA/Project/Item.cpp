@@ -93,24 +93,12 @@ void CItem::Update(void){
 	m_SrcRect = m_Motion.GetSrcRect();
 }
 
-void CItem::Effect(int& hp, bool& gl,bool jump, bool& BScene,float& PMoveX,float& PMoveY) {
+void CItem::Effect(bool jump, bool& BScene,float& PMoveX,float& PMoveY) {
 	switch (GetType())
 	{
-	case ITEM_RECOVER:
-		hp += 30;
-		if (hp >= 100)
-		{
-			hp = 100;
-		}
-		SetShow(false);
-		break;
 	case BOSS_DOOR:
 		if (g_pInput->IsKeyPush(MOFKEY_W) && !jump && m_bBossEliminated)
 			BScene = true;
-		break;
-	case ITEM_GOAL:
-		gl = true;
-		SetShow(false);
 		break;
 	case ITEM_SPIDERWEB:
 		PMoveX *= 0.8f;

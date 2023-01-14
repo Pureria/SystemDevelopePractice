@@ -53,65 +53,69 @@ enum tag_NormalNaturalChangeType {
 #define		DAMAGE_WAIT				60
 //************************プレイヤーで使うDefine*************************//
 //移動速度
-#define		PLAYER_SPEED			0.3f
+#define		PLAYER_SPEED					0.3f
 
 //移動最大速度
-#define		PLAYER_MAXSPEED			7.0f
+#define		PLAYER_MAXSPEED					7.0f
 
 //ジャンプ初速
-#define		PLAYER_JUMP				-13.0f
+#define		PLAYER_JUMP						-13.0f
 
 //攻撃幅
-#define		PLAYER_ATTACKWIDTH		30
+#define		PLAYER_ATTACKWIDTH				30
 
 //当たり判定減衰幅
-#define		PLAYER_RECTDECREASE		32
+#define		PLAYER_RECTDECREASE_WIDTH		32
+
+#define		PLAYER_RECTDECREASE_HEIGHT		12
 
 //弾の最大数
-#define		PLAYERSHOT_COUNT		20
+#define		PLAYERSHOT_COUNT				20
 
 //弾の間隔	HEAL
-#define     PLAYERSHOT_HEALWAIT		15
+#define     PLAYERSHOT_HEALWAIT				15
 
 //弾の間隔	HEAVY
-#define     PLAYERSHOT_HEAVYWAIT	60
+#define     PLAYERSHOT_HEAVYWAIT			60
 
 //レーザーの間隔
-#define     LASER_WAIT				120
+#define     LASER_WAIT						120
 
 //SP消費の間隔
-#define		PLAYER_SPWAIT			60
+#define		PLAYER_SPWAIT					60
 
 //HEAL弾の回復量
-#define		HEAL_POWER				5
+#define		HEAL_POWER						3
 
 //SPの回復量
-#define		SP_POWER				5
+#define		SP_POWER						3
 
 
 //HEAL弾のダメージ量
-#define		HEAL_DAMAGE				3
+#define		HEAL_DAMAGE						3
 
 //HEAVY弾のダメージ量
-#define		HEAVY_DAMAGE			6
+#define		HEAVY_DAMAGE					6
 
 //FROST弾のダメージ量
-#define		FROST_DAMAGE			6
+#define		FROST_DAMAGE					6
 
 //FIRE弾のダメージ量
-#define		FIRE_DAMAGE				8
+#define		FIRE_DAMAGE						8
 
 //HEALのSP減少値
-#define		HEAL_DECREASE			1
+#define		HEAL_DECREASE					1
 
 //HEAVYのSP減少値
-#define		HEAVY_DECREASE			6
+#define		HEAVY_DECREASE					6
 
 //FIREのSP減少値
-#define		FIRE_DECREASE			16
+#define		FIRE_DECREASE					16
 
 //FROSTのSP減少値
-#define		FROST_DECREASE			12
+#define		FROST_DECREASE					12
+
+#define		THROUGH_COUNT					3
 
 //************************メニュー表示で使うDefine*************************//
 

@@ -23,10 +23,9 @@ void CPlayerShot::Update() {
 	SpeedSave();
 	m_ShotPos.x += m_MoveX;
 	m_ShotPos.y += m_MoveY;
+
+
 	
-	if (m_ThroughCount >= 2) {
-		m_bShow = false;
-	}
 }
 
 //”­ŽË‚·‚éî•ñ‚ðƒZƒbƒg
@@ -153,6 +152,12 @@ void CPlayerShot::SetDirection(int dic)
 void CPlayerShot::ShotRemove() {
 	if (m_RefCount >= REFLECTION_COUNT)
 	{
+		m_bShow = false;
+	}
+}
+
+void CPlayerShot::SetThroughCount() {
+	if (m_ThroughCount >= THROUGH_COUNT) {
 		m_bShow = false;
 	}
 }

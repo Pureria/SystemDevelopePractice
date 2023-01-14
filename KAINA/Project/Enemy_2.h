@@ -27,6 +27,7 @@ private:
 		
 		MOTION_COUNT,
 	};
+
 public:
 	CEnemy_2();
 	~CEnemy_2();
