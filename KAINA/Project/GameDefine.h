@@ -104,7 +104,7 @@ enum tag_NormalNaturalChangeType {
 #define		FIRE_DAMAGE						8
 
 //HEALÇÃSPå∏è≠íl
-#define		HEAL_DECREASE					1
+#define		HEAL_DECREASE					2
 
 //HEAVYÇÃSPå∏è≠íl
 #define		HEAVY_DECREASE					6
