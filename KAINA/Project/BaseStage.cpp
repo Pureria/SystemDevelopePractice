@@ -351,42 +351,6 @@ void CBaseStage::Update(CPlayer& pl){
 		}
 	}
 
-	/*
-	if (prec.Left - m_ScrollX < g_pGraphics->GetTargetWidth() / 2 - 100)
-	{
-		m_ScrollX -= (g_pGraphics->GetTargetWidth() / 2 - 100) - (prec.Left - m_ScrollX);
-		if (m_ScrollX <= 0)
-		{
-			m_ScrollX = 0;
-		}
-	}
-	else if (prec.Right - m_ScrollX > sw - (g_pGraphics->GetTargetWidth() / 2 + 100))
-	{
-		m_ScrollX += (prec.Right - m_ScrollX) - (sw - (g_pGraphics->GetTargetWidth() / 2 + 100));
-		if (m_ScrollX >= stgw - sw)
-		{
-			m_ScrollX = stgw - sw;
-		}
-	}
-
-	if (prec.Top - m_ScrollY < 100)
-	{
-		m_ScrollY -= 100 - (prec.Top - m_ScrollY);
-		if (m_ScrollY <= 0)
-		{
-			m_ScrollY = 0;
-		}
-	}
-	else if (prec.Bottom - m_ScrollY > sh - 100)
-	{
-		m_ScrollY += (prec.Bottom - m_ScrollY) - (sh - 100);
-		if (m_ScrollY >= stgh - sh)
-		{
-			m_ScrollY = stgh - sh;
-		}
-	}
-	*/
-
 	ButtonGimmic();
 }
 
@@ -477,6 +441,8 @@ bool CBaseStage::Collision(CRectangle r) {
 			if (cn == WATER)
 				continue;
 
+			if (cn == CRACK_STONE)
+				continue;
 			/*
 			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
 			{
@@ -529,7 +495,10 @@ bool CBaseStage::CollisionBoss1(CRectangle r) {
 			if (cn == WATER)
 				continue;
 
-			
+			if (cn == CRACK_STONE)
+				continue;
+
+
 			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
 			{
 				continue;
@@ -593,6 +562,10 @@ bool CBaseStage::Collision(CRectangle r, float& ox, float& oy) {
 			//水の当たり判定
 			if (cn == WATER)
 			{
+				continue;
+			}
+
+			if (cn == CRACK_STONE) {
 				continue;
 			}
 
@@ -739,6 +712,13 @@ bool CBaseStage::StageAttackCollision(CRectangle r)
 				continue;
 			}
 
+			if (cn == CRACK_STONE) {
+				if (cr.CollisionRect(r)) {
+					m_pChipData[y * m_XCount + x] = 0;
+					return true;
+				}
+			}
+
 			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
 			{				
 				if (cr.CollisionRect(r))
@@ -759,14 +739,41 @@ bool CBaseStage::StageAttackCollision(CRectangle r)
 						m_bButtonYellow = true;
 					}
 					return true;
-			}
+				}
 			}
 		}
 	}
 	return false;
 }
 
+void CBaseStage::CollisionCrack(CRectangle r) {
+	int lc = m_ScrollX / m_ChipSize;
+	int rc = (g_pGraphics->GetTargetWidth() + m_ScrollX) / m_ChipSize;
+	int tc = m_ScrollY / m_ChipSize;
+	int bc = (g_pGraphics->GetTargetHeight() + m_ScrollY) / m_ChipSize;
 
+	//ステージの範囲外にはならないようにする
+	if (lc < 0) { lc = 0; }
+	if (tc < 0) { tc = 0; }
+	if (rc >= m_XCount) { rc = m_XCount - 1; }
+	if (bc >= m_YCount) { bc = m_YCount - 1; }
+
+	for (int y = tc; y <= bc; y++)
+	{
+		for (int x = lc; x <= rc; x++)
+		{
+			char cn = m_pChipData[y * m_XCount + x] - 1;
+			if (cn == CRACK_STONE)
+			{
+				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
+				if (cr.CollisionRect(r))
+				{
+					m_pChipData[y * m_XCount + x] = 0;
+				}
+			}
+		}
+	}
+}
 
 void CBaseStage::CollisionFreezeWater(CRectangle r)
 {
@@ -980,7 +987,7 @@ bool CBaseStage::FireBar(CRectangle prec,bool FireEffect)
 				CRectangle UpFireRec(-m_ScrollX + x * m_ChipSize, -m_ScrollY + y * m_ChipSize - (m_ChipSize * 2), (-m_ScrollX + x * m_ChipSize) + m_ChipSize, -m_ScrollY + y * m_ChipSize);
 				//SetFireRec(UpFireRec);
 				if(FireEffect)
-					m_pEffectManager->Start(UpFireRec.GetCenter().x + m_ScrollX, UpFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR);
+					m_pEffectManager->Start(UpFireRec.GetCenter().x + m_ScrollX, UpFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR_TOP);
 				if (prec.CollisionRect(UpFireRec))
 					return true;
 			}
@@ -990,7 +997,7 @@ bool CBaseStage::FireBar(CRectangle prec,bool FireEffect)
 				CRectangle DownFireRec(-m_ScrollX + x * m_ChipSize, -m_ScrollY + y * m_ChipSize + m_ChipSize, (-m_ScrollX + x * m_ChipSize) + m_ChipSize, -m_ScrollY + y * m_ChipSize + (m_ChipSize * 3));
 				//SetFireRec(DownFireRec);
 				if(FireEffect)
-					m_pEffectManager->Start(DownFireRec.GetCenter().x + m_ScrollX, DownFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR);
+					m_pEffectManager->Start(DownFireRec.GetCenter().x + m_ScrollX, DownFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR_BOTTOM);
 				if (prec.CollisionRect(DownFireRec))
 					return true;
 			}

@@ -99,6 +99,8 @@ private:
 	CTexture				m_FireTex;
 	CTexture				m_FrostTex;
 
+	CSE_Manager				m_SEManager[SE_COUNT];
+
 public:
 	CPlayer();
 	~CPlayer() {};
@@ -214,7 +216,10 @@ public:
 	
 	bool IsLaser()												{		return m_ShotType == LASER;								}
 	
-	
+	bool IsShotLaser(int i)										{		return m_PlShotAry[i].IsShotLaser();					}
+
+	bool IsLaser(int i)											{		return m_Laser[i].IsShotLaser();						}
+
 	
 #pragma endregion
 
@@ -311,6 +316,8 @@ private:
 	void TypeChange();
 
 	void DirecMotionChange();
+
+	void SEBltChange();
 
 #pragma endregion
 

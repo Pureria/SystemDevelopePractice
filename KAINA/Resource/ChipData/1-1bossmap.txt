@@ -1,4 +1,4 @@
-BackGround/StageBackGround.png,MapChipTexture/Map1222.png,750,896,
+BackGround/StageBackGround.png,MapChipTexture/Map0115.png,750,896,
 64,
 36,18,
    7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,

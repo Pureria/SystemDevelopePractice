@@ -449,4 +449,9 @@ void CStage1_Boss::Release(void) {
 	m_EffectManager.Release();
 	m_Menu.Release();
 	m_BGMManager.Release();
+
+	for (int j = 0; j < SE_COUNT; j++)
+	{
+		m_SEManager[j].Release();
+	}
 }

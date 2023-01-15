@@ -10,8 +10,7 @@ bool CBGM_Manager::Load(void) {
 	return TRUE;
 }
 void CBGM_Manager::Initialize(void) {
-	
-	
+	Load();
 }
 void CBGM_Manager::BGMPlayer(int request) {
 

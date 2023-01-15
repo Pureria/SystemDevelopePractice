@@ -92,15 +92,50 @@ void CEffect::Initialize(int type){
 			m_Motion.Create(anim, 1);
 			break;
 		}
-		case EFC_FIREBAR:
+		case EFC_FIREBAR_TOP:
 		{
 			SpriteAnimationCreate anim[] =
 			{
 				{
 					"エフェクト",
 					0,0,
-					64,128,
-					FALSE,{{FIREBAR_INTERVAL,0,0}}
+					128,128,
+					FALSE,
+					{
+								{ FIREBAR_INTERVAL, 0, 0 },  { FIREBAR_INTERVAL, 1, 0 },  { FIREBAR_INTERVAL, 2, 0 },  { FIREBAR_INTERVAL, 3, 0 },
+								{ FIREBAR_INTERVAL, 4, 0 },  { FIREBAR_INTERVAL, 5, 0 },  { FIREBAR_INTERVAL, 6, 0 },  { FIREBAR_INTERVAL, 7, 0 },
+								{ FIREBAR_INTERVAL, 8, 0 },  { FIREBAR_INTERVAL, 9, 0 },  { FIREBAR_INTERVAL, 10, 0 }, { FIREBAR_INTERVAL, 11, 0 },
+								{ FIREBAR_INTERVAL, 12, 0 }, { FIREBAR_INTERVAL, 13, 0 }, { FIREBAR_INTERVAL, 14, 0 }, { FIREBAR_INTERVAL, 15, 0 },
+								{ FIREBAR_INTERVAL, 16, 0 }, { FIREBAR_INTERVAL, 17, 0 }, { FIREBAR_INTERVAL, 18, 0 }, { FIREBAR_INTERVAL, 19, 0 },
+								{ FIREBAR_INTERVAL, 20, 0 }, { FIREBAR_INTERVAL, 21, 0 }, { FIREBAR_INTERVAL, 22, 0 }, { FIREBAR_INTERVAL, 23, 0 },
+								{ FIREBAR_INTERVAL, 24, 0 }, { FIREBAR_INTERVAL, 25, 0 }, { FIREBAR_INTERVAL, 26, 0 }, { FIREBAR_INTERVAL, 27, 0 },
+								{ FIREBAR_INTERVAL, 28, 0 }, { FIREBAR_INTERVAL, 29, 0 },
+					}
+				}
+			};
+			m_Motion.Create(anim, 1);
+			break;
+		}
+
+		case EFC_FIREBAR_BOTTOM:
+		{
+			SpriteAnimationCreate anim[] =
+			{
+				{
+					"エフェクト",
+					0,0,
+					128,128,
+					FALSE,
+					{
+								{ FIREBAR_INTERVAL, 0, 0 },  { FIREBAR_INTERVAL, 1, 0 },  { FIREBAR_INTERVAL, 2, 0 },  { FIREBAR_INTERVAL, 3, 0 },
+								{ FIREBAR_INTERVAL, 4, 0 },  { FIREBAR_INTERVAL, 5, 0 },  { FIREBAR_INTERVAL, 6, 0 },  { FIREBAR_INTERVAL, 7, 0 },
+								{ FIREBAR_INTERVAL, 8, 0 },  { FIREBAR_INTERVAL, 9, 0 },  { FIREBAR_INTERVAL, 10, 0 }, { FIREBAR_INTERVAL, 11, 0 },
+								{ FIREBAR_INTERVAL, 12, 0 }, { FIREBAR_INTERVAL, 13, 0 }, { FIREBAR_INTERVAL, 14, 0 }, { FIREBAR_INTERVAL, 15, 0 },
+								{ FIREBAR_INTERVAL, 16, 0 }, { FIREBAR_INTERVAL, 17, 0 }, { FIREBAR_INTERVAL, 18, 0 }, { FIREBAR_INTERVAL, 19, 0 },
+								{ FIREBAR_INTERVAL, 20, 0 }, { FIREBAR_INTERVAL, 21, 0 }, { FIREBAR_INTERVAL, 22, 0 }, { FIREBAR_INTERVAL, 23, 0 },
+								{ FIREBAR_INTERVAL, 24, 0 }, { FIREBAR_INTERVAL, 25, 0 }, { FIREBAR_INTERVAL, 26, 0 }, { FIREBAR_INTERVAL, 27, 0 },
+								{ FIREBAR_INTERVAL, 28, 0 }, { FIREBAR_INTERVAL, 29, 0 },
+					}
 				}
 			};
 			m_Motion.Create(anim, 1);

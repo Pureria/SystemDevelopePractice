@@ -38,6 +38,7 @@ void CGameOver::Initialize(void){
 
 	m_BGMManager.Initialize();
 	m_BGMManager.BGMPlayer(BGM_GAMEOVER);
+
 }
 
 /**
@@ -45,11 +46,23 @@ void CGameOver::Initialize(void){
  *
  */
 void CGameOver::Update(void){
+	UpdateExitkey();
+	if (m_FlashCount > 0) {
+		m_FlashCount--;
+	}
 	//Enterキーでタイトル画面へ
 	if (g_pInput->IsKeyPush(MOFKEY_RETURN) && !m_bEnd)
 	{
 		m_bEnd = true;
 		m_SceneNo = SCENENO_SELECT;
+		m_FlashCount = START_FLASH_COUNT;
+		for (int i = 0; i < SE_COUNT; i++)
+		{
+			if (m_SEManager[i].IsPlaySE())
+				continue;
+			m_SEManager[i].SEPlayer(SE_SELECT_OK);
+			break;
+		}
 	}
 }
 
@@ -59,6 +72,10 @@ void CGameOver::Update(void){
  */
 void CGameOver::Render(void){
 	m_BackImage.Render(0, 0);
+	if (m_FlashCount % 4 >= 2)
+	{
+		return;
+	}
 	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() * 0.5 - 100, g_pGraphics->GetTargetHeight() * 0.5 + 200, MOF_COLOR_WHITE, "Press Enter Key");
 }
 
@@ -76,4 +93,9 @@ void CGameOver::RenderDebug(void){
 void CGameOver::Release(void){
 	m_BackImage.Release();
 	m_BGMManager.Release();
+
+	for (int i = 0; i < SE_COUNT; i++)
+	{
+		m_SEManager[i].Release();
+	}
 }
