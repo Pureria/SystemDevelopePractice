@@ -8,6 +8,7 @@ private:
 	int			m_ThroughCount;
 	float		m_MoveX;
 	float		m_MoveY;
+	float		m_Time;
 public:
 	CPlayerShot();
 	~CPlayerShot() {};
@@ -30,6 +31,8 @@ public:
 	//テクスチャの配列
 	inline void		SetHealTexture(CTexture* pt)		{		m_pShotTex = pt;		}
 	inline void		SetHeavyTexture(CTexture* pt)		{		m_phShotTex = pt;		}
+
+	void ShotTime();
 
 	void SetPowerLeft();
 

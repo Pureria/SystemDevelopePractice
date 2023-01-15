@@ -14,3 +14,6 @@
 
 //レーザーが壁に当たって止まる時間
 #define		LASER_DELAY				0.5f
+
+//弾の生存時間（秒）
+#define		PLAYERSHOT_LIFETIME			5.0f
