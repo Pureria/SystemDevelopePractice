@@ -85,7 +85,7 @@ enum tag_NormalNaturalChangeType {
 #define		PLAYER_SPWAIT					60
 
 //HEAL’e‚Ì‰ñ•œ—Ê
-#define		HEAL_POWER						3
+#define		HEAL_POWER						1
 
 //SP‚Ì‰ñ•œ—Ê
 #define		SP_POWER						3
