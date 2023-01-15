@@ -49,7 +49,7 @@ void CItem::Initialize(float px,float py,int type){
 		"ƒhƒA",
 		0,0,
 		128,256,
-		FALSE,{{30,0,0},{30,1,0},{30,2,0},{30,3,0}}
+		FALSE,{{30,0,0},{30,1,0},{30,2,0},{30,3,0},{30,4,0}}
 		};
 		m_Motion.Create(anim);
 	}

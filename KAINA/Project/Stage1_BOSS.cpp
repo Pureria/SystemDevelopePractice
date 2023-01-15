@@ -202,14 +202,6 @@ void CStage1_Boss::StgCollBullet()
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
 		float ox = 0, oy = 0;
-		if (m_Player.IsLaser()) {
-			if (!m_Player.GetLaserShotShow(i)) { continue; }
-
-			if (m_Stage.Collision(m_Player.GetLaserRect(i)))
-			{
-				m_Player.SetWallLaser(i, true);
-			}
-		}
 
 		if (!m_Player.GetNormalShow(i)){			continue;			}
 
@@ -275,6 +267,16 @@ void CStage1_Boss::StgCollBullet()
 				m_SEManager[j].SEPlayer(SE_WALL_CONTACT);
 				break;
 			}
+		}
+	}
+
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
+	{
+		if (!m_Player.GetLaserShotShow(i)) { continue; }
+
+		if (m_Stage.Collision(m_Player.GetLaserRect(i)))
+		{
+			m_Player.SetWallLaser(i, true);
 		}
 	}
 }
