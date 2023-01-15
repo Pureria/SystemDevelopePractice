@@ -641,8 +641,8 @@ void CEnemy_Stage1_Boss::RenderStatus() {
 	CRectangle hprec(0, 0, 822 * (m_HP * 0.01f), 61);
 
 
-	m_HPTex.Render(g_pGraphics->GetTargetWidth() * 0.39, g_pGraphics->GetTargetHeight() - 112, hprec);
-	m_FrameTex.Render(g_pGraphics->GetTargetWidth() * 0.35, g_pGraphics->GetTargetHeight() - 128);
+	m_HPTex.Render(g_pGraphics->GetTargetWidth() * 0.55f, g_pGraphics->GetTargetHeight() - 112, hprec);
+	m_FrameTex.Render(g_pGraphics->GetTargetWidth() * 0.51f, g_pGraphics->GetTargetHeight() - 128);
 
 }
 /**
