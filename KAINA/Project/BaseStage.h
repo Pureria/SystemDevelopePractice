@@ -8,26 +8,28 @@
 #include	"SE_Manager.h"
 
 //左傾斜チップ
-#define		LEFTSLOPE		9
+#define		LEFTSLOPE			9	
 //右傾斜チップ
-#define		RIGHTSLOPE		4
+#define		RIGHTSLOPE			4
 //水チップ
-#define		WATER			12
+#define		WATER				12
 //氷チップ
-#define		ICE				11
-#define		ICE2			25
+#define		ICE					11
+#define		ICE2				25
 //ボタンチップ
-#define		BUTTON_RED		10
-#define		BUTTON_BLUE		16
-#define		BUTTON_YELLOW	15
+#define		BUTTON_RED			10
+#define		BUTTON_BLUE			16
+#define		BUTTON_YELLOW		15
 //ボタン対応ブロック
 #define		BUTTON_BLOCK_RED	17
 #define		BUTTON_BLOCK_BLUE	18
 #define		BUTTON_BLOCK_YELLOW	19
 //バーナーチップ
-#define		BURNER			13
+#define		BURNER				13
 //リフトチップ
-#define		LIFT			14
+#define		LIFT				14
+
+#define		CRACK_STONE			31
 
 class CBaseStage {
 private:
@@ -125,4 +127,7 @@ public:
 
 	//テスト用
 	void SetFireRec(CRectangle rec) { FireRec = rec; }
+
+	//CrackStoneの処理
+	void CollisionCrack(CRectangle r);
 };

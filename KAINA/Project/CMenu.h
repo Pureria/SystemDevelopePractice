@@ -1,5 +1,6 @@
 #pragma once
 #include	"Mof.h"
+#include	"SE_Manager.h"
 
 //************************メニュークラス*************************
 /*
@@ -40,6 +41,8 @@ private:
 
 	//メニュー項目の最大矩形
 	CRectangle m_HeaderRect;
+
+	CSE_Manager	m_SE;
 
 public:
 	//デフォルトコンストラクタ

@@ -1,8 +1,6 @@
 #include	"GameDefine.h"
 #include	"GameClear.h"
 
-//変更するシーン(外部参照、実体はGameApp.cpp)
-//extern int						gChangeScene;
 
 /**
  * コンストラクタ
@@ -38,8 +36,7 @@ bool CGameClear::Load(void){
  * 状態を初期化したいときに実行する。
  */
 void CGameClear::Initialize(void){
-	this->Load();
-	m_Alpha = 0;
+	Load();
 
 	m_BGMManager.Initialize();
 	m_BGMManager.BGMPlayer(BGM_GAMECLEAR);
@@ -52,6 +49,7 @@ void CGameClear::Initialize(void){
  *
  */
 void CGameClear::Update(void){
+	UpdateExitkey();
 #pragma region Fade
 	if (m_bFadeIn)
 	{
@@ -82,6 +80,13 @@ void CGameClear::Update(void){
 		m_bFadeOut = true;
 		m_Alpha = 0;
 		m_NowTime = 0;
+		for (int i = 0; i < SE_COUNT; i++)
+		{
+			if (m_SEManager[i].IsPlaySE())
+				continue;
+			m_SEManager[i].SEPlayer(SE_SELECT_OK);
+			break;
+		}
 	}
 }
 
@@ -91,8 +96,9 @@ void CGameClear::Update(void){
  */
 void CGameClear::Render(void){
 	m_BackImage.Render(0, 0);
-	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() * 0.5 - 100, g_pGraphics->GetTargetHeight() * 0.5 + 200, MOF_COLOR_WHITE, "Press Enter Key");
 
+	CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() * 0.5 - 100, g_pGraphics->GetTargetHeight() * 0.5 + 200, MOF_COLOR_WHITE, "Press Enter Key");
+	
 	CGraphicsUtilities::RenderFillRect(0, 0, g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight(), MOF_ARGB(m_Alpha, 0, 0, 0));
 }
 
@@ -110,4 +116,9 @@ void CGameClear::RenderDebug(void){
 void CGameClear::Release(void){
 	m_BackImage.Release();
 	m_BGMManager.Release();
+
+	for (int i = 0; i < SE_COUNT; i++)
+	{
+		m_SEManager[i].Release();
+	}
 }

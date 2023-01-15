@@ -21,12 +21,13 @@ void Laser::Update() {
 	ShotLaser();
 }
 
-void Laser::Fire(Vector2& pos, int tb, int natuyype) {
+void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
 	m_ShotPos.x = pos.x - 16;
 	m_ShotPos.y = pos.y - 32;
 	m_bShow = true;
 	m_DrcType = tb;
 	m_NatuType = natuyype;
+	m_ShotType = type;
 	m_bHitWall = false;
 	m_LaserRange = 0;
 	m_LaserDecrealse = 0;
@@ -133,6 +134,7 @@ void Laser::OutRange() {
 	{
 		m_StopCount -= CUtilities::GetFrameSecond();
 	}
+
 }
 
 void Laser::Render(float wx, float wy) {

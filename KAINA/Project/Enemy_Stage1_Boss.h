@@ -5,6 +5,7 @@
 #include	"EffectManager.h"
 #include	"EnemyStateDefine.h"
 #include	"CEnemy_Base.h"
+#include	"SE_Manager.h"
 
 //“–‚½‚è”»’èŒ¸Š•
 #define		BOSS1_RECT_WIDTH_DECREASE		100.0f
@@ -68,6 +69,8 @@ private:
 
 	CTexture				m_HPTex;
 	CTexture				m_FrameTex;
+
+	CSE_Manager				m_SEManager[SE_COUNT];
 public:
 	CEnemy_Stage1_Boss();
 	~CEnemy_Stage1_Boss();

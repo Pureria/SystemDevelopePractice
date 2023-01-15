@@ -15,9 +15,6 @@ bool CTitle::Load(void){
 	//テクスチャの読み込み
 	if (!m_BackImage.Load("BackGround/Title.png"))
 		return false;
-	
-	if (!m_SelectArrow.Load("SelectArrow.png"))
-		return false;
 
 	if (!m_StartImage.Load("BackGround/Start.png"))
 		return false;
@@ -158,7 +155,7 @@ void CTitle::UpdateSelect() {
 */
 void CTitle::UpdateMenu() {
 
-	if (m_Menu.IsShow()) {
+	if (m_Menu.IsShow() && m_FlashCount <= 0) {
 		m_Menu.Update();
 		if (m_Menu.IsEnter()) {
 			if (m_Menu.GetSelect() == 0) {
@@ -194,7 +191,6 @@ void CTitle::Render(void){
 	{
 	case 0:
 		m_ExitImage.Render(g_pGraphics->GetTargetWidth() * 0.5f - 190, 780, MOF_XRGB(128, 128, 128));
-		m_SelectArrow.Render(g_pGraphics->GetTargetWidth() * 0.5f - 250, 660, MOF_XRGB(255, 255, 255));
 		if (m_FlashCount % 4 >= 2)
 		{
 			break;
@@ -203,7 +199,6 @@ void CTitle::Render(void){
 		break;
 	case 1:
 		m_StartImage.Render(g_pGraphics->GetTargetWidth() * 0.5f - 230, 610, MOF_XRGB(128, 128, 128));
-		m_SelectArrow.Render(g_pGraphics->GetTargetWidth() * 0.5f - 250, 840, MOF_XRGB(255, 255, 255));
 		if (m_FlashCount % 4 >= 2)
 		{
 			break;
@@ -214,7 +209,7 @@ void CTitle::Render(void){
 
 	CGraphicsUtilities::RenderFillRect(0, 0, g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight(), MOF_ARGB(m_Alpha, 0, 0, 0));
 
-	if (m_Menu.IsShow()) {
+	if (m_Menu.IsShow() && m_FlashCount <= 0) {
 		m_Menu.Render();
 	}
 	
@@ -234,7 +229,6 @@ void CTitle::RenderDebug(void){
  */
 void CTitle::Release(void){
 	m_BackImage.Release();
-	m_SelectArrow.Release();
 	m_StartImage.Release();
 	m_ExitImage.Release();
 	m_Menu.Release();

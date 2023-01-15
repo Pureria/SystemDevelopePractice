@@ -7,6 +7,7 @@
 
 #define		FILEKEY 0x65
 
+#define		START_FLASH_COUNT	120
 /*
 * 各シーンの共通モジュールを、純粋仮想関数でまとめた基盤となるシーンクラス
 * 
@@ -39,10 +40,10 @@ protected:
 	bool					m_bFadeIn;
 	bool					m_bFadeOut;
 
-
+	int						m_FlashCount;
 
 public:
-	Scene_Base() : m_bEnd(false), m_SceneNo(),m_bChange(false),m_Time(), m_PlayerHp(), m_Alpha(255), m_NowTime(0), m_bFadeIn(true), m_bFadeOut(false) {};
+	Scene_Base() : m_bEnd(false), m_SceneNo(),m_bChange(false),m_Time(), m_PlayerHp(), m_Alpha(255), m_NowTime(0), m_bFadeIn(true), m_bFadeOut(false), m_FlashCount(0){};
 	virtual ~Scene_Base() {};
 
 	virtual void Initialize()  = 0;

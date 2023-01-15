@@ -303,8 +303,13 @@ void CEnemy_Stage1_Boss::Update() {
 		{
 			m_Move.x = 0;
 			m_Move.y = ENEMY_JUMP;
-			m_bTouchGround = false;
+			m_bTouchGround = false; 
 			m_bJump = true;
+			for (int j = 0; j < SE_COUNT; j++)
+			{
+				m_SEManager[j].SEPlayer(SE_BOSS_JUMP);
+				break;
+			}
 		}
 
 		if (m_bJump && m_bTouchGround)
@@ -350,6 +355,11 @@ void CEnemy_Stage1_Boss::Update() {
 				m_Move.x = ENEMY_ATTACKDASH_SPEED;
 				m_Motion.ChangeMotion(MOTION_ATTACK_DASH);
 			}
+			for (int j = 0; j < SE_COUNT; j++)
+			{
+				m_SEManager[j].SEPlayer(SE_BOSS_ATTACK03);
+				break;
+			}
 		}
 		break;
 
@@ -385,6 +395,11 @@ void CEnemy_Stage1_Boss::Update() {
 				//m_bReverse = true;
 				m_bJump = true;
 			}
+			for (int j = 0; j < SE_COUNT; j++)
+			{
+				m_SEManager[j].SEPlayer(SE_BOSS_JUMP);
+				break;
+			}
 		}
 		m_OldMotionNo = MOTION_ATTACK_JUMP;
 		break;
@@ -413,6 +428,11 @@ void CEnemy_Stage1_Boss::Update() {
 				m_AttakSlashRect = CRectangle(m_Pos.x + m_SrcRect.GetWidth() - BOSS1_RECT_WIDTH_DECREASE, m_Pos.y + BOSS1_RECT_HEIGHT_DECREASE, m_Pos.x + m_SrcRect.GetWidth() + ENEMY_ATTACKSLASH_WIDTH - BOSS1_RECT_WIDTH_DECREASE, m_Pos.y + m_SrcRect.GetHeight());
 			}
 			m_AttackSlash = true;
+			for (int j = 0; j < SE_COUNT; j++)
+			{
+				m_SEManager[j].SEPlayer(SE_BOSS_ATTACK01);
+				break;
+			}
 		}
 		//攻撃モーションの終了
 		if (m_Motion.IsEndMotion())
@@ -532,12 +552,28 @@ void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 	{
 		//爆発エフェクトを発生させる
 		//m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+		for (int j = 0; j < SE_COUNT; j++)
+		{
+			if (m_SEManager[j].IsPlaySE()) {
+				continue;
+			}
+			m_SEManager[j].SEPlayer(SE_ENEMY_DIE);
+			break;
+		}
 		m_Move.x = 0;
 		m_OldMotionNo = MOTION_END;
 		m_Motion.ChangeMotion(MOTION_END);
 	}
 	else
 	{
+		for (int j = 0; j < SE_COUNT; j++)
+		{
+			if (m_SEManager[j].IsPlaySE()) {
+				continue;
+			}
+			m_SEManager[j].SEPlayer((direction) ? SE_BOSS_SHIELD : SE_BOSS_DAMAGE);
+			break;
+		}
 		//ダメージエフェクトを発生させる
 		m_pEffectManager->Start(SetStartPos(), (direction) ? EFC_SHIELD : EFC_WEAK);
 	}
@@ -574,6 +610,12 @@ void CEnemy_Stage1_Boss::DeffenceProc(int dmg,int deff) {
 void CEnemy_Stage1_Boss::Render(float wx, float wy) {
 	//非表示
 	if (!m_bShow)
+	{
+		return;
+	}
+
+	//インターバル2フレームごとに描画をしない
+	if (m_DamageWait % 4 >= 2)
 	{
 		return;
 	}
@@ -642,4 +684,9 @@ void CEnemy_Stage1_Boss::Release(void) {
 	m_Texture.Release();
 	m_HPTex.Release();
 	m_FrameTex.Release();
+	
+	for (int j = 0; j < SE_COUNT; j++)
+	{
+		m_SEManager[j].Release();
+	}
 }

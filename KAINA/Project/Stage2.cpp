@@ -216,6 +216,9 @@ void CStage2::StgCollPlayer() {
 		{
 			m_Player.SetWallLaser(i,true);
 		}
+		if (m_Player.IsLaser(i)) {
+			m_BaseStage.CollisionCrack(m_Player.GetLaserRect(i));
+		}
 
 		//TODO: …‚Æ’e‚Ì”»’è
 		if (m_Player.GetNatuLaser(i) == FROST)
@@ -238,7 +241,6 @@ void CStage2::StgCollPlayer() {
 		{
 			m_Player.CollisionStage(ox, oy);
 		}
-
 	}
 
 	//TODO: ‰Š‚Ì”»’è

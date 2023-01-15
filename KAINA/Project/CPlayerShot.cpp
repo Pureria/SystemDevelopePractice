@@ -29,13 +29,14 @@ void CPlayerShot::Update() {
 }
 
 //”­ŽË‚·‚éî•ñ‚ðƒZƒbƒg
-void CPlayerShot::Fire(Vector2& pos, int tb, int natuyype) {
+void CPlayerShot::Fire(Vector2& pos, int tb, int natuyype, int type) {
 	m_ShotPos.x = pos.x - m_pShotTex->GetWidth() * 0.5f;
 	m_ShotPos.y = pos.y - m_pShotTex->GetHeight() * 0.5f;
 	m_bShow = true;
 	m_DrcType = tb;
 	m_bHitWall = false;
 	m_NatuType = natuyype;
+	m_ShotType = type;
 	m_RefCount = 0;
 	m_ThroughCount = 0;
 }

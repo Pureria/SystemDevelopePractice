@@ -23,6 +23,8 @@ protected:
 	//弾の特性
 	int				m_NatuType;
 
+	int				m_ShotType;
+
 //仮想関数まとめ
 public:
 	Shot_Base() : m_pShotTex(), m_phShotTex(), m_ShotPos(0, 0), m_bShow(false), m_bHitWall(false), m_DrcType(RIGHT), m_NatuType(HEAL) {};
@@ -39,7 +41,7 @@ public:
 
 	*処理内容  ：　撃つ瞬間の情報をセット
 	*/
-	virtual void Fire(Vector2& pos, int tb, int natuyype)			= 0;
+	virtual void Fire(Vector2& pos, int tb, int natuyype,int type)			= 0;
 	virtual CRectangle GetRect()									= 0;
 //Set関数
 public:
@@ -55,6 +57,6 @@ public:
 	inline bool		GetShow()						{		return m_bShow;					}
 //Is関数
 public:
-
+	bool			IsShotLaser()					{		return m_ShotType == LASER;		}
 };
 

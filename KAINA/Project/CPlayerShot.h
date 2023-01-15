@@ -14,7 +14,7 @@ public:
 
 	void Initialize();
 	void Update();
-	void Fire(Vector2& pos, int tb, int natuyype);
+	void Fire(Vector2& pos, int tb, int natuyype, int type);
 	void Render(float wx, float wy);
 	void RenderDebug(float wx, float wy);
 
