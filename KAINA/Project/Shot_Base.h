@@ -41,7 +41,7 @@ public:
 
 	*処理内容  ：　撃つ瞬間の情報をセット
 	*/
-	virtual void Fire(Vector2& pos, int tb, int natuyype,int type)			= 0;
+	virtual void Fire(Vector2& pos, int tb, int natuyype,int type)	= 0;
 	virtual CRectangle GetRect()									= 0;
 //Set関数
 public:
