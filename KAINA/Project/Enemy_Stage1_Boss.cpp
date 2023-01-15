@@ -638,12 +638,13 @@ void CEnemy_Stage1_Boss::RenderStatus() {
 	if (m_HP <= 0) {
 		return;
 	}
-	CRectangle hprec(0, 0, 800 * (m_HP * 0.01f), 128);
+	CRectangle hprec(0, 0, 822 * (m_HP * 0.01f), 61);
 
-	m_HPTex.Render(g_pGraphics->GetTargetWidth() * 0.5 + 100, -10, hprec);
-	m_FrameTex.Render(g_pGraphics->GetTargetWidth() * 0.5 + 100, -10);
+
+	m_HPTex.Render(g_pGraphics->GetTargetWidth() * 0.39, g_pGraphics->GetTargetHeight() - 112, hprec);
+	m_FrameTex.Render(g_pGraphics->GetTargetWidth() * 0.35, g_pGraphics->GetTargetHeight() - 128);
+
 }
-
 /**
  * デバッグ描画
  *
@@ -689,4 +690,5 @@ void CEnemy_Stage1_Boss::Release(void) {
 	{
 		m_SEManager[j].Release();
 	}
+
 }
