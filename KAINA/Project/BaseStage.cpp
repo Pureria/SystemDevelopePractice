@@ -441,8 +441,6 @@ bool CBaseStage::Collision(CRectangle r) {
 			if (cn == WATER)
 				continue;
 
-			if (cn == CRACK_STONE)
-				continue;
 			/*
 			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
 			{
@@ -493,9 +491,6 @@ bool CBaseStage::CollisionBoss1(CRectangle r) {
 				continue;
 
 			if (cn == WATER)
-				continue;
-
-			if (cn == CRACK_STONE)
 				continue;
 
 
@@ -712,9 +707,6 @@ bool CBaseStage::StageAttackCollision(CRectangle r)
 				continue;
 			}
 
-			if (cn == CRACK_STONE) {
-				continue;
-			}
 
 			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
 			{				
