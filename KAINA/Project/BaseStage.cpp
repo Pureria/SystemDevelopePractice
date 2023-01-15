@@ -713,10 +713,7 @@ bool CBaseStage::StageAttackCollision(CRectangle r)
 			}
 
 			if (cn == CRACK_STONE) {
-				if (cr.CollisionRect(r)) {
-					m_pChipData[y * m_XCount + x] = 0;
-					return true;
-				}
+				continue;
 			}
 
 			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
@@ -768,7 +765,9 @@ void CBaseStage::CollisionCrack(CRectangle r) {
 				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
 				if (cr.CollisionRect(r))
 				{
-					m_pChipData[y * m_XCount + x] = 0;
+					return;
+					//TODO: 必要なら外す。
+					//m_pChipData[y * m_XCount + x] = 0;
 				}
 			}
 		}
