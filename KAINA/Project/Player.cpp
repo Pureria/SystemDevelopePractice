@@ -270,6 +270,7 @@ void CPlayer::Initialize(){
 	m_DrcType = NULL;
 	m_bNextBossScene = false;
 	m_SpWait = 0;
+	m_SPInterval = 0;
 }
 
 
@@ -354,12 +355,19 @@ void CPlayer::Update() {
 		m_SP = 100;
 	}
 	else {
-		if (m_SpWait > 0) {
-			m_SpWait--;
-			if (m_SpWait <= 0) {
-				m_SP += SP_POWER;
-				m_SpWait = PLAYER_SPWAIT;
+		if (m_SPInterval <= 0)
+		{
+			if (m_SpWait > 0) {
+				m_SpWait--;
+				if (m_SpWait <= 0) {
+					m_SP += SP_POWER;
+					m_SpWait = PLAYER_SPWAIT;
+				}
 			}
+		}
+		else
+		{
+			m_SPInterval--;
 		}
 	}
 
@@ -687,6 +695,7 @@ void CPlayer::FireShot() {
 			for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
 
 				if (m_PlShotAry[i].GetShow())	{		continue;		}
+				m_SPInterval = PLAYER_SP_INTERVAL;
 				for (int j = 0; j < SE_COUNT; j++)
 				{
 					m_SEManager[j].SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_ATTACK_REFLECTION : SE_ATTACK_HEAVY);
@@ -779,6 +788,7 @@ void CPlayer::FireShotLaser() {
 
 			for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
 				if (m_Laser[i].GetShow()) { continue; }
+				m_SPInterval = PLAYER_SP_INTERVAL;
 				for (int j = 0; j < SE_COUNT; j++)
 				{
 					m_SEManager[j].SEPlayer(SE_ATTACK_THROUGH);

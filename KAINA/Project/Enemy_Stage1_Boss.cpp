@@ -191,13 +191,13 @@ void CEnemy_Stage1_Boss::Update() {
 				{
 					if (!m_bReverse)
 					{
-						m_Move.x = -ENEMY_ATTACKDASH_SPEED;
+						m_Move.x = -ENEMY_ATTACKJUMP_SPEED;
 						m_Move.y = ENEMY_JUMP;
 						m_Motion.ChangeMotion(MOTION_ATTACK_JUMP);
 					}
 					else
 					{
-						m_Move.x = ENEMY_ATTACKDASH_SPEED;
+						m_Move.x = ENEMY_ATTACKJUMP_SPEED;
 						m_Move.y = ENEMY_JUMP;
 						m_Motion.ChangeMotion(MOTION_ATTACK_JUMP);
 					}
@@ -224,13 +224,13 @@ void CEnemy_Stage1_Boss::Update() {
 						//ÉWÉÉÉìÉvçUåÇÇ…à⁄çs
 						if (!m_bReverse)
 						{
-							m_Move.x = -ENEMY_ATTACKDASH_SPEED;
+							m_Move.x = -ENEMY_ATTACKJUMP_SPEED;
 							m_Move.y = ENEMY_JUMP;
 							m_Motion.ChangeMotion(MOTION_ATTACK_JUMP);
 						}
 						else
 						{
-							m_Move.x = ENEMY_ATTACKDASH_SPEED;
+							m_Move.x = ENEMY_ATTACKJUMP_SPEED;
 							m_Move.y = ENEMY_JUMP;
 							m_Motion.ChangeMotion(MOTION_ATTACK_JUMP);
 						}
@@ -385,13 +385,13 @@ void CEnemy_Stage1_Boss::Update() {
 			m_Move.y = 1.2f * ENEMY_JUMP;
 			if (!m_bReverse)
 			{
-				m_Move.x = -ENEMY_ATTACKDASH_SPEED * 0.95f;
+				m_Move.x = -ENEMY_ATTACKJUMP_SPEED * 0.95f;
 				//m_bReverse = false;
 				m_bJump = true;
 			}
 			else
 			{
-				m_Move.x = ENEMY_ATTACKDASH_SPEED * 0.95f;
+				m_Move.x = ENEMY_ATTACKJUMP_SPEED * 0.95f;
 				//m_bReverse = true;
 				m_bJump = true;
 			}

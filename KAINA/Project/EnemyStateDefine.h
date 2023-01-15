@@ -19,6 +19,7 @@ enum tag_AbNormalState {
 #define		ENEMY_2_2_HP				15
 #define		ENEMY_2_1_DEFFENCE_POWER	1
 #define		ENEMY_2_2_DEFFENCE_POWER	0
+#define		ENEMY_2_DAMAGE_WAIT			60
 /**************************************/
 
 /*ステージ1ボスのステータス*/

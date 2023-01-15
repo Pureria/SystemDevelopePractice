@@ -43,9 +43,6 @@ enum tag_NormalNaturalChangeType {
 //Fade時間(秒)
 #define		FADE_TIME				2
 
-//弾の反射回数
-#define		REFLECTION_COUNT		5	
-
 //************************全ステージの重力Define*************************//
 //重力
 #define		GRAVITY					0.3f
@@ -81,14 +78,17 @@ enum tag_NormalNaturalChangeType {
 //レーザーの間隔
 #define     LASER_WAIT						120
 
+//SP回復までの時間
+#define		PLAYER_SP_INTERVAL				180
+
 //SP消費の間隔
-#define		PLAYER_SPWAIT					60
+#define		PLAYER_SPWAIT					5
 
 //HEAL弾の回復量
-#define		HEAL_POWER						3
+#define		HEAL_POWER						1
 
 //SPの回復量
-#define		SP_POWER						3
+#define		SP_POWER						2
 
 
 //HEAL弾のダメージ量
@@ -98,22 +98,22 @@ enum tag_NormalNaturalChangeType {
 #define		HEAVY_DAMAGE					6
 
 //FROST弾のダメージ量
-#define		FROST_DAMAGE					6
+#define		FROST_DAMAGE					4
 
 //FIRE弾のダメージ量
-#define		FIRE_DAMAGE						8
+#define		FIRE_DAMAGE						5
 
 //HEALのSP減少値
-#define		HEAL_DECREASE					1
+#define		HEAL_DECREASE					10
 
 //HEAVYのSP減少値
-#define		HEAVY_DECREASE					6
+#define		HEAVY_DECREASE					20
 
 //FIREのSP減少値
-#define		FIRE_DECREASE					16
+#define		FIRE_DECREASE					25
 
 //FROSTのSP減少値
-#define		FROST_DECREASE					12
+#define		FROST_DECREASE					20
 
 #define		THROUGH_COUNT					3
 

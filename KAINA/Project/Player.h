@@ -27,6 +27,7 @@ private:
 	
 	int						m_HP;
 	int						m_SP;
+	int						m_SPInterval;
 	int						m_DamageWait;
 
 	CTexture				m_FrameTexture;

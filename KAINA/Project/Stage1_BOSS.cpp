@@ -324,7 +324,7 @@ void CStage1_Boss::StgCollEne()
 
 	if (!m_Boss.IsJump())
 	{
-		if (m_Boss.GetBossMotionNo() != 4)
+		if (m_Boss.GetBossMotionNo() != 4 || m_Boss.GetBossMotionNo() != 3)
 		{
 			if (m_Stage.CollisionLift(m_Boss.GetRect(), ox, oy))
 			{

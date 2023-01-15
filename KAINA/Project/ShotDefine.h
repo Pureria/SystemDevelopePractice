@@ -7,6 +7,9 @@
 //弾の速さ
 #define	    PLAYERSHOT_SPEED		10
 
+//弾の生存時間（秒）
+#define		PLAYERSHOT_TIME			5
+
 //レーザーの伸びる長さ
 #define     LASER_ATTACKWIDTH		64
 

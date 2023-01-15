@@ -262,9 +262,10 @@ CRectangle CEnemy_2::GetLedgeCheckRect()
 
 void CEnemy_2::Damage(float dmg)
 {
-	if (m_bKnockback || m_pEndEffect)
+	if (m_bKnockback || m_pEndEffect || m_DamageWait > 0)
 		return;
 
+	m_DamageWait = ENEMY_2_DAMAGE_WAIT;
 	DeffenceProc(dmg);
 
 	if (m_HP <= 0)
