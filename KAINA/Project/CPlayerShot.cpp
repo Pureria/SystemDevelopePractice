@@ -48,7 +48,7 @@ void CPlayerShot::ShotTime()
 {
 	m_Time += CUtilities::GetFrameSecond();
 
-	if (m_Time >= PLAYERSHOT_LIFETIME)
+	if (m_Time >= PLAYERSHOT_LIFETIME && m_ShotType == NORMAL)
 		m_bShow = false;
 }
 
