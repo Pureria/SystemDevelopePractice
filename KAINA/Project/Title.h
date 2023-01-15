@@ -4,7 +4,7 @@
 
 #define		COUNT_NO			2
 
-#define		EXIT_FALSH_COUNT	30
+#define		EXIT_FALSH_COUNT	15
 
 class CTitle : public Scene_Base {
 private:
