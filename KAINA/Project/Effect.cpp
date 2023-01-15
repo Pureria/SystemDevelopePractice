@@ -33,6 +33,8 @@ void CEffect::Initialize(int type){
 	m_PosY = 0.0f;
 	m_bShow = false;
 	
+	
+
 	switch (type)
 	{
 		case EFC_DAMAGE:
@@ -102,14 +104,14 @@ void CEffect::Initialize(int type){
 					128,128,
 					FALSE,
 					{
-								{ FIREBAR_INTERVAL, 0, 0 },  { FIREBAR_INTERVAL, 1, 0 },  { FIREBAR_INTERVAL, 2, 0 },  { FIREBAR_INTERVAL, 3, 0 },
-								{ FIREBAR_INTERVAL, 4, 0 },  { FIREBAR_INTERVAL, 5, 0 },  { FIREBAR_INTERVAL, 6, 0 },  { FIREBAR_INTERVAL, 7, 0 },
-								{ FIREBAR_INTERVAL, 8, 0 },  { FIREBAR_INTERVAL, 9, 0 },  { FIREBAR_INTERVAL, 10, 0 }, { FIREBAR_INTERVAL, 11, 0 },
-								{ FIREBAR_INTERVAL, 12, 0 }, { FIREBAR_INTERVAL, 13, 0 }, { FIREBAR_INTERVAL, 14, 0 }, { FIREBAR_INTERVAL, 15, 0 },
-								{ FIREBAR_INTERVAL, 16, 0 }, { FIREBAR_INTERVAL, 17, 0 }, { FIREBAR_INTERVAL, 18, 0 }, { FIREBAR_INTERVAL, 19, 0 },
-								{ FIREBAR_INTERVAL, 20, 0 }, { FIREBAR_INTERVAL, 21, 0 }, { FIREBAR_INTERVAL, 22, 0 }, { FIREBAR_INTERVAL, 23, 0 },
-								{ FIREBAR_INTERVAL, 24, 0 }, { FIREBAR_INTERVAL, 25, 0 }, { FIREBAR_INTERVAL, 26, 0 }, { FIREBAR_INTERVAL, 27, 0 },
-								{ FIREBAR_INTERVAL, 28, 0 }, { FIREBAR_INTERVAL, 29, 0 },
+								{ 3, 0, 0 },  { 3, 1, 0 },  { 3, 2, 0 },  { 3, 3, 0 },
+								{ 3, 4, 0 },  { 3, 5, 0 },  { 3, 6, 0 },  { 3, 7, 0 },
+								{ 3, 8, 0 },  { 3, 9, 0 },  { 3, 10, 0 }, { 3, 11, 0 },
+								{ 3, 12, 0 }, { 3, 13, 0 }, { 3, 14, 0 }, { 3, 15, 0 },
+								{ 3, 16, 0 }, { 3, 17, 0 }, { 3, 18, 0 }, { 3, 19, 0 },
+								{ 3, 20, 0 }, { 3, 21, 0 }, { 3, 22, 0 }, { 3, 23, 0 },
+								{ 3, 24, 0 }, { 3, 25, 0 }, { 3, 26, 0 }, { 3, 27, 0 },
+								{ 3, 28, 0 }, { 3, 29, 0 },
 					}
 				}
 			};
@@ -127,14 +129,14 @@ void CEffect::Initialize(int type){
 					128,128,
 					FALSE,
 					{
-								{ FIREBAR_INTERVAL, 0, 0 },  { FIREBAR_INTERVAL, 1, 0 },  { FIREBAR_INTERVAL, 2, 0 },  { FIREBAR_INTERVAL, 3, 0 },
-								{ FIREBAR_INTERVAL, 4, 0 },  { FIREBAR_INTERVAL, 5, 0 },  { FIREBAR_INTERVAL, 6, 0 },  { FIREBAR_INTERVAL, 7, 0 },
-								{ FIREBAR_INTERVAL, 8, 0 },  { FIREBAR_INTERVAL, 9, 0 },  { FIREBAR_INTERVAL, 10, 0 }, { FIREBAR_INTERVAL, 11, 0 },
-								{ FIREBAR_INTERVAL, 12, 0 }, { FIREBAR_INTERVAL, 13, 0 }, { FIREBAR_INTERVAL, 14, 0 }, { FIREBAR_INTERVAL, 15, 0 },
-								{ FIREBAR_INTERVAL, 16, 0 }, { FIREBAR_INTERVAL, 17, 0 }, { FIREBAR_INTERVAL, 18, 0 }, { FIREBAR_INTERVAL, 19, 0 },
-								{ FIREBAR_INTERVAL, 20, 0 }, { FIREBAR_INTERVAL, 21, 0 }, { FIREBAR_INTERVAL, 22, 0 }, { FIREBAR_INTERVAL, 23, 0 },
-								{ FIREBAR_INTERVAL, 24, 0 }, { FIREBAR_INTERVAL, 25, 0 }, { FIREBAR_INTERVAL, 26, 0 }, { FIREBAR_INTERVAL, 27, 0 },
-								{ FIREBAR_INTERVAL, 28, 0 }, { FIREBAR_INTERVAL, 29, 0 },
+								{ 3, 0, 0 },  { 3, 1, 0 },  { 3, 2, 0 },  { 3, 3, 0 },
+								{ 3, 4, 0 },  { 3, 5, 0 },  { 3, 6, 0 },  { 3, 7, 0 },
+								{ 3, 8, 0 },  { 3, 9, 0 },  { 3, 10, 0 }, { 3, 11, 0 },
+								{ 3, 12, 0 }, { 3, 13, 0 }, { 3, 14, 0 }, { 3, 15, 0 },
+								{ 3, 16, 0 }, { 3, 17, 0 }, { 3, 18, 0 }, { 3, 19, 0 },
+								{ 3, 20, 0 }, { 3, 21, 0 }, { 3, 22, 0 }, { 3, 23, 0 },
+								{ 3, 24, 0 }, { 3, 25, 0 }, { 3, 26, 0 }, { 3, 27, 0 },
+								{ 3, 28, 0 }, { 3, 29, 0 },
 					}
 				}
 			};
