@@ -36,4 +36,5 @@ public:
 	void Release(void);
 	void SetTexture(CTexture* pt){ m_pTexture = pt; }
 	bool GetShow(void){ return m_bShow; }
+	void StopEffect(void) { m_bShow = false; }
 };

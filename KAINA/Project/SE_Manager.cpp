@@ -4,9 +4,18 @@ bool CSE_Manager::Load(void) {
 	return TRUE;
 }
 
+void CSE_Manager::Initialize(void)
+{
+	m_Volume = gSound.GetVolume();
+}
+
 void CSE_Manager::SEPlayer(int request) {
 	if (!IsPlaySE())
 		gSound.Release();
+
+	m_NowSetSE = request;
+
+	gSound.SetVolume(m_Volume);
 
 	switch (request)
 	{
@@ -76,6 +85,7 @@ void CSE_Manager::SEPlayer(int request) {
 		break;
 	case SE_BURNER:
 		gSound.Load("SE/SE_burner.wav");
+		gSound.SetVolume(m_Volume * 0.5f);
 		gSound.Play();
 		break;
 	case SE_ENEMY_ATTACK01:

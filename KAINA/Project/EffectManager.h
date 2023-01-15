@@ -19,6 +19,7 @@ public:
 	void Initialize(void);
 	CEffect* Start(float px,float py,int type);
 	CEffect* Start(Vector2 p,int type);
+	void Stop(int type);
 	void Update(void);
 	void Render(float wx,float wy);
 	void RenderDebug(float wx,float wy);

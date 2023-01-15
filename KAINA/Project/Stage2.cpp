@@ -79,6 +79,11 @@ void CStage2::Initialize(){
 	//BGM‚Ì‰Šú‰»
 	m_BGMManager.Initialize();
 	m_BGMManager.BGMPlayer(BGM_STAGE1);
+
+	for (int i = 0; i < SE_COUNT; i++)
+	{
+		m_SEManager[i].Initialize();
+	}
 }
 
 /**
@@ -243,7 +248,7 @@ void CStage2::StgCollPlayer() {
 		}
 	}
 
-	//TODO: ‰Š‚Ì”»’è
+	//‰Š‚Ì”»’è
 	if (m_bFire)
 	{
 		bool	bFireEffect;
@@ -271,6 +276,15 @@ void CStage2::StgCollPlayer() {
 	}
 	else
 	{
+		for (int i = 0; i < SE_COUNT; i++)
+		{
+			if (m_SEManager[i].GetNowSetSE() == SE_BURNER)
+				m_SEManager[i].StopSE();
+		}
+
+		m_EffectManager.Stop(EFC_FIREBAR_TOP);
+		m_EffectManager.Stop(EFC_FIREBAR_BOTTOM);
+
 		if (m_intervalFire <= 0)
 		{
 			m_bFire = true;

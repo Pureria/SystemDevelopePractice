@@ -962,23 +962,28 @@ bool CBaseStage::FireBar(CRectangle prec,bool FireEffect)
 			if (cn != BURNER)
 				continue;
 
-			//バーナーのSE
-			for (int i = 0; i < SE_COUNT; i++)
-			{
-				if (m_pSEManager[i].IsPlaySE())
-					continue;
-				m_pSEManager[i].SEPlayer(SE_BURNER);
-				break;
-			}
-
 			//上下確認
 			//上方向
 			if (m_pChipData[(y - 1) * m_XCount + x] - 1 <= 0)
 			{
 				CRectangle UpFireRec(-m_ScrollX + x * m_ChipSize, -m_ScrollY + y * m_ChipSize - (m_ChipSize * 2), (-m_ScrollX + x * m_ChipSize) + m_ChipSize, -m_ScrollY + y * m_ChipSize);
 				//SetFireRec(UpFireRec);
-				if(FireEffect)
-					m_pEffectManager->Start(UpFireRec.GetCenter().x + m_ScrollX, UpFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR_TOP);
+				if (FireEffect)
+				{
+					m_pEffectManager->Start(UpFireRec.GetCenter().x + m_ScrollX, UpFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR_BOTTOM);
+					for (int i = 0; i < SE_COUNT; i++)
+					{
+						if (m_pSEManager[i].GetNowSetSE() == SE_BURNER && m_pSEManager[i].IsPlaySE())
+							break;
+
+						if (m_pSEManager[i].IsPlaySE())
+							continue;
+
+						m_pSEManager[i].SEPlayer(SE_BURNER);
+						break;
+					}
+
+				}
 				if (prec.CollisionRect(UpFireRec))
 					return true;
 			}
@@ -987,8 +992,21 @@ bool CBaseStage::FireBar(CRectangle prec,bool FireEffect)
 			{
 				CRectangle DownFireRec(-m_ScrollX + x * m_ChipSize, -m_ScrollY + y * m_ChipSize + m_ChipSize, (-m_ScrollX + x * m_ChipSize) + m_ChipSize, -m_ScrollY + y * m_ChipSize + (m_ChipSize * 3));
 				//SetFireRec(DownFireRec);
-				if(FireEffect)
-					m_pEffectManager->Start(DownFireRec.GetCenter().x + m_ScrollX, DownFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR_BOTTOM);
+				if (FireEffect)
+				{
+					m_pEffectManager->Start(DownFireRec.GetCenter().x + m_ScrollX, DownFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR_TOP);
+					for (int i = 0; i < SE_COUNT; i++)
+					{
+						if (m_pSEManager[i].GetNowSetSE() == SE_BURNER && m_pSEManager[i].IsPlaySE())
+							break;
+
+						if (m_pSEManager[i].IsPlaySE())
+							continue;
+
+						m_pSEManager[i].SEPlayer(SE_BURNER);
+						break;
+					}
+				}
 				if (prec.CollisionRect(DownFireRec))
 					return true;
 			}

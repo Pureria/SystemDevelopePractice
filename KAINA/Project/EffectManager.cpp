@@ -96,6 +96,14 @@ CEffect* CEffectManager::Start(Vector2 p, int type) {
 	return NULL;
 }
 
+void CEffectManager::Stop(int type) {
+	for (int i = 0; i < EFFECTCOUNT; i++)
+	{
+		//Typeと同じエフェクトを使っているすべてストップ
+		m_Effect[i][type].StopEffect();
+	}
+}
+
 /**
  * 更新
  *
