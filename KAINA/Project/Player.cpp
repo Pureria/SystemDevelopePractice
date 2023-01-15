@@ -496,6 +496,9 @@ void CPlayer::MoveKey() {
 			break;
 		}
 	}
+
+	if (m_MoveY > 0)
+		m_bJump = true;
 }
 
 void CPlayer::MoveTpBtmAnim() {
