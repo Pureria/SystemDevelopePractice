@@ -301,80 +301,78 @@ void CStage1::StgCollBullet() {
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
 		float ox = 0, oy = 0;
-		if (!m_Player.IsLaser()) {
-			if (!m_Player.GetNormalShow(i))
-			{
-				continue;
-			}
+		if (!m_Player.GetNormalShow(i))
+		{
+			continue;
+		}
 
-			CRectangle psrec = m_Player.GetNormalRect(i);
-			if (m_BaseStage.StageAttackCollision(psrec))
-			{
-				m_Player.SetNormalShotShow(false, i);
-				continue;
-			}
+		CRectangle psrec = m_Player.GetNormalRect(i);
+		if (m_BaseStage.StageAttackCollision(psrec))
+		{
+			m_Player.SetNormalShotShow(false, i);
+			continue;
+		}
 
-			//ã‚Ì”»’è
-			psrec.Bottom = psrec.Top + 1;
-			psrec.Expansion(-15, 0);
-			if (m_BaseStage.Collision(psrec))
+		//ã‚Ì”»’è
+		psrec.Bottom = psrec.Top + 1;
+		psrec.Expansion(-15, 0);
+		if (m_BaseStage.Collision(psrec))
+		{
+			m_Player.ShotRefTop(i);
+			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_Player.ShotRefTop(i);
-				for (int j = 0; j < SE_COUNT; j++)
-				{
-					if (m_SEManager[j].IsPlaySE())
-						continue;
-					m_SEManager[j].SEPlayer(SE_WALL_CONTACT);
-					break;
-				}
+				if (m_SEManager[j].IsPlaySE())
+					continue;
+				m_SEManager[j].SEPlayer(SE_WALL_CONTACT);
+				break;
 			}
+		}
 
-			//‰º‚Ì”»’è
-			psrec = m_Player.GetNormalRect(i);
-			psrec.Top = psrec.Bottom - 1;
-			psrec.Expansion(-15, 0);
-			if (m_BaseStage.Collision(psrec))
+		//‰º‚Ì”»’è
+		psrec = m_Player.GetNormalRect(i);
+		psrec.Top = psrec.Bottom - 1;
+		psrec.Expansion(-15, 0);
+		if (m_BaseStage.Collision(psrec))
+		{
+			m_Player.ShotRefBottom(i);
+			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_Player.ShotRefBottom(i);
-				for (int j = 0; j < SE_COUNT; j++)
-				{
-					if (m_SEManager[j].IsPlaySE())
-						continue;
-					m_SEManager[j].SEPlayer(SE_WALL_CONTACT);
-					break;
-				}
+				if (m_SEManager[j].IsPlaySE())
+					continue;
+				m_SEManager[j].SEPlayer(SE_WALL_CONTACT);
+				break;
 			}
+		}
 
-			//¶‚Ì”»’è
-			psrec = m_Player.GetNormalRect(i);
-			psrec.Right = psrec.Left + 1;
-			psrec.Expansion(0, -15);
-			if (m_BaseStage.Collision(psrec))
+		//¶‚Ì”»’è
+		psrec = m_Player.GetNormalRect(i);
+		psrec.Right = psrec.Left + 1;
+		psrec.Expansion(0, -15);
+		if (m_BaseStage.Collision(psrec))
+		{
+			m_Player.ShotRefLeft(i);
+			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_Player.ShotRefLeft(i);
-				for (int j = 0; j < SE_COUNT; j++)
-				{
-					if (m_SEManager[j].IsPlaySE())
-						continue;
-					m_SEManager[j].SEPlayer(SE_WALL_CONTACT);
-					break;
-				}
+				if (m_SEManager[j].IsPlaySE())
+					continue;
+				m_SEManager[j].SEPlayer(SE_WALL_CONTACT);
+				break;
 			}
+		}
 
-			//‰E‚Ì”»’è
-			psrec = m_Player.GetNormalRect(i);
-			psrec.Left = psrec.Right - 1;
-			psrec.Expansion(0, -15);
-			if (m_BaseStage.Collision(psrec))
+		//‰E‚Ì”»’è
+		psrec = m_Player.GetNormalRect(i);
+		psrec.Left = psrec.Right - 1;
+		psrec.Expansion(0, -15);
+		if (m_BaseStage.Collision(psrec))
+		{
+			m_Player.ShotRefRight(i);
+			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_Player.ShotRefRight(i);
-				for (int j = 0; j < SE_COUNT; j++)
-				{
-					if (m_SEManager[j].IsPlaySE())
-						continue;
-					m_SEManager[j].SEPlayer(SE_WALL_CONTACT);
-					break;
-				}
+				if (m_SEManager[j].IsPlaySE())
+					continue;
+				m_SEManager[j].SEPlayer(SE_WALL_CONTACT);
+				break;
 			}
 		}
 	}

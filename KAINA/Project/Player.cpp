@@ -1457,7 +1457,7 @@ void CPlayer::Render(float wx,float wy){
 void CPlayer::RenderStatus() {
 	//HP‚É‰‚¶‚Ä’ZŒa‚Ì•‚ğ•Ï‰»‚³‚¹‚é
 	CRectangle hprec(0, 0, 795 * (m_HP * 0.01f), 31);
-	m_HPBarTexture.Render(100,24, hprec);
+	m_HPBarTexture.Render(100,23, hprec);
 	CRectangle sprec(0, 0, 702 * (m_SP * 0.01f), 27);
 	m_SPBarTexture.Render(80,51, sprec);
 	//ƒtƒŒ[ƒ€‚ğã•”‚É•`‰æ
