@@ -13,6 +13,7 @@ void CPlayerShot::Initialize() {
 	m_DrcType = RIGHT;
 	m_RefCount = 0;
 	m_ThroughCount = 0;
+	m_Time = 0;
 }
 
 void CPlayerShot::Update() {
@@ -21,6 +22,7 @@ void CPlayerShot::Update() {
 
 	Direction();
 	SpeedSave();
+	ShotTime();
 	m_ShotPos.x += m_MoveX;
 	m_ShotPos.y += m_MoveY;
 
@@ -39,6 +41,15 @@ void CPlayerShot::Fire(Vector2& pos, int tb, int natuyype, int type) {
 	m_ShotType = type;
 	m_RefCount = 0;
 	m_ThroughCount = 0;
+	m_Time = 0;
+}
+
+void CPlayerShot::ShotTime()
+{
+	m_Time += CUtilities::GetFrameSecond();
+
+	if (m_Time >= PLAYERSHOT_LIFETIME && m_ShotType == NORMAL)
+		m_bShow = false;
 }
 
 void CPlayerShot::Direction() {
