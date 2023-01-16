@@ -43,9 +43,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game\Objecct\Enemy\Enemy_1</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyShot.cpp">
-      <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game\Objecct\Enemy\Enemy_1</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy_2.cpp">
       <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game\Objecct\Enemy\Enemy_2</Filter>
     </ClCompile>
@@ -78,6 +75,9 @@
     </ClCompile>
     <ClCompile Include="Stage2.cpp">
       <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyShot.cpp">
+      <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game\Objecct\Enemy\Enemy_Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,9 +135,6 @@
     <ClInclude Include="Enemy.h">
       <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game\Objecct\Enemy\Enemy_1</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyShot.h">
-      <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game\Objecct\Enemy\Enemy_1</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy_2.h">
       <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game\Objecct\Enemy\Enemy_2</Filter>
     </ClInclude>
@@ -173,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="Stage2.h">
       <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyShot.h">
+      <Filter>ソースファイル\Gbl\Scene_Base\AllScene_Class\Game\Objecct\Enemy\Enemy_Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

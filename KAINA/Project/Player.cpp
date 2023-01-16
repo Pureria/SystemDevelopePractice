@@ -1156,6 +1156,49 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 	CRectangle prec = GetRect();
 	CRectangle erec = boss.GetRect();
 
+	for (int i = 0; i < ENEMY_BOSS_SLASH_COUNT; i++)
+	{
+		if (!boss.ShotArrayBool(i))
+			continue;
+
+		if (prec.CollisionRect(boss.ShotArrayRect(i)))
+		{
+			m_HP -= ENEMY_ATTAK_POWER;
+			m_DamageWait = DAMAGE_WAIT;
+			if (prec.Left < boss.ShotArrayRect(i).Left)
+			{
+				m_MoveX = -5.0f;
+			}
+			else
+			{
+				m_MoveX = 5.0f;
+			}
+			m_Motion.ChangeMotion(MOTION_DAMAGE);
+
+			if (m_HP <= 0)
+			{
+				for (int j = 0; j < SE_COUNT; j++)
+				{
+					m_SEManager[j].SEPlayer(SE_PLAYER_DIE);
+					break;
+				}
+				//爆発エフェクトを発生させる
+				m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+			}
+			else
+			{
+				for (int j = 0; j < SE_COUNT; j++)
+				{
+					m_SEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
+					break;
+				}
+				//ダメージエフェクトを発生させる
+				m_pEffectManager->Start(SetStartPos(), EFC_DAMAGE);
+			}
+			return true;
+		}
+	}
+
 	if (prec.CollisionRect(erec))
 	{
 		m_HP -=  ENEMY_ATTAK_POWER;

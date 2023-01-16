@@ -4,7 +4,8 @@ CEnemyShot::CEnemyShot():
 m_pTexture(NULL),
 m_Pos(0.0f,0.0f),
 m_Spd(0.0f,0.0f),
-m_bShow(false) {
+m_bShow(false),
+m_bReverse(false){
 }
 
 CEnemyShot::~CEnemyShot(){
@@ -17,6 +18,7 @@ void CEnemyShot::Initialize()
 	m_Spd.x = 0;
 	m_Spd.y = 0;
 	m_bShow = false;
+	m_bReverse = false;
 }
 
 void CEnemyShot::Fire(float px, float py, float sx, float sy)
@@ -61,8 +63,15 @@ void CEnemyShot::Render(float wx, float wy)
 {
 	if (!m_bShow)
 		return;
-
-	m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy);
+	
+	CRectangle dr = CRectangle(0, 0, m_pTexture->GetWidth(), m_pTexture->GetHeight());
+	if (m_bReverse)
+	{
+		float tmp = dr.Right;
+		dr.Right = dr.Left;
+		dr.Left = tmp;
+	}
+		m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr);
 }
 
 void CEnemyShot::RenderDebug(float wx, float wy)

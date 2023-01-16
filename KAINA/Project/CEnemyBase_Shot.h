@@ -13,11 +13,11 @@ public:
 	CEnemyBase_Shot() : m_ShotArray(),m_ShotWait(0) {};
 	virtual ~CEnemyBase_Shot() {};
 	//’e‚ÌShow‚ğ•Ô‚·
-	bool		ShotArrayBool(int i) { return m_ShotArray[i].GetShow(); }
-	//’e‚ÌShowERectangle‚ğ•Ô‚·
-	CRectangle	ShotArrayRect(int i) { return m_ShotArray[i].GetRect(); }
+	virtual bool		ShotArrayBool(int i) { return m_ShotArray[i].GetShow(); }
+	//’e‚ÌRectangle‚ğ•Ô‚·
+	virtual CRectangle	ShotArrayRect(int i) { return m_ShotArray[i].GetRect(); }
 	//’e‚ÌShow‚ğƒZƒbƒg‚·‚é
-	void		SetShotShow(bool flg, int i) { m_ShotArray[i].SetShow(flg); }
+	virtual void		SetShotShow(bool flg, int i) { m_ShotArray[i].SetShow(flg); }
 
 };
 
