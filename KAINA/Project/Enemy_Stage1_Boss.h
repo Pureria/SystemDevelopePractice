@@ -150,6 +150,7 @@ public:
 		return Vector2(m_Pos.x + m_SrcRect.GetWidth() * 0.5f, m_Pos.y + m_SrcRect.GetHeight() * 0.5f);
 	}
 
+	void	AbStateMoveDec() override;
 
 	//TODO: ‚Ç‚¤‚É‚©‚µ‚æ‚¤
 	void Initialize(float px, float py, int type) {};
