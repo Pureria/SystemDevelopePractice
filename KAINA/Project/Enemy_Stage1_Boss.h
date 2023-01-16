@@ -25,6 +25,8 @@
 #define		ENEMY_ATTACKSLASH_WIDTH			150.0f
 #define		ENEMY_ATTACKSLASH_MOVE			90
 
+
+
 class CEnemy_Stage1_Boss : public CEnemy_Base {
 private:
 	CTexture				m_Texture;
@@ -71,6 +73,8 @@ private:
 	CTexture				m_FrameTex;
 
 	CSE_Manager				m_SEManager[SE_COUNT];
+
+
 public:
 	CEnemy_Stage1_Boss();
 	~CEnemy_Stage1_Boss();
@@ -146,6 +150,7 @@ public:
 		return Vector2(m_Pos.x + m_SrcRect.GetWidth() * 0.5f, m_Pos.y + m_SrcRect.GetHeight() * 0.5f);
 	}
 
+	void	AbStateMoveDec() override;
 
 	//TODO: ‚Ç‚¤‚É‚©‚µ‚æ‚¤
 	void Initialize(float px, float py, int type) {};
