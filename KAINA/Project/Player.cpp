@@ -29,7 +29,7 @@ m_SP(0),
 m_PlShotAry(),
 m_bNextBossScene(false),
 m_SpWait(0),
-m_SEManager()
+m_pSEManager()
 {}
 
 #pragma endregion
@@ -60,11 +60,17 @@ bool CPlayer::Load(){
 
 	if (!m_FrostTex.Load("Player/frost.png"))					{		return false;		}
 
+	if (!m_FireLazerTexture.Load("Player/LaserFireTexture.png")){		return false;		}
+
+	if (!m_FrostLazerTexture.Load("Player/LaserFrostTexture.png")) {	return false;		}		
+
 
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)	
 	{
 		m_PlShotAry[i].SetHealTexture(&m_ShotHealTex); 
 		m_PlShotAry[i].SetHeavyTexture(&m_ShotHeavyTex);
+		m_Laser[i].SetFireTexture(&m_FireLazerTexture);
+		m_Laser[i].SetFrostTexture(&m_FrostLazerTexture);
 	}
 
 	//アニメーションを作成
@@ -231,11 +237,6 @@ bool CPlayer::Load(){
 	};
 
 	m_Motion.Create(anim, MOTION_COUNT);
-
-	for (int j = 0; j < SE_COUNT; j++)
-	{
-		m_SEManager[j].Load();
-	}
 
 	return true;
 }
@@ -493,7 +494,9 @@ void CPlayer::MoveKey() {
 		m_Motion.ChangeMotion(MOTION_JUMPSTART);
 		for (int j = 0; j < SE_COUNT; j++)
 		{
-			m_SEManager[j].SEPlayer(SE_JUMP);
+			if (m_pSEManager[j].IsPlaySE())
+				continue;
+			m_pSEManager[j].SEPlayer(SE_JUMP);
 			break;
 		}
 	}
@@ -640,19 +643,22 @@ void CPlayer::DirecMotionChange() {
 void CPlayer::SEBltChange() {
 	for (int j = 0; j < SE_COUNT; j++)
 	{
+		if (m_pSEManager[j].IsPlaySE())
+			continue;
+
 		switch (GetNatu())
 		{
 		case HEAL:
-			m_SEManager[j].SEPlayer(SE_HEAVY);
+			m_pSEManager[j].SEPlayer(SE_HEAVY);
 			break;
 		case HEAVY:
-			m_SEManager[j].SEPlayer(SE_HEAL);
+			m_pSEManager[j].SEPlayer(SE_HEAL);
 			break;
 		case FIRE:
-			m_SEManager[j].SEPlayer(SE_ICE);
+			m_pSEManager[j].SEPlayer(SE_ICE);
 			break;
 		case FROST:
-			m_SEManager[j].SEPlayer(SE_FIRE);
+			m_pSEManager[j].SEPlayer(SE_FIRE);
 			break;
 		}
 		break;
@@ -695,7 +701,10 @@ void CPlayer::FireShot() {
 				if (m_PlShotAry[i].GetShow())	{		continue;		}
 				for (int j = 0; j < SE_COUNT; j++)
 				{
-					m_SEManager[j].SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_ATTACK_REFLECTION : SE_ATTACK_HEAVY);
+					if (m_pSEManager[j].IsPlaySE())
+						continue;
+
+					m_pSEManager[j].SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_ATTACK_REFLECTION : SE_ATTACK_HEAVY);
 					break;
 				}
 				m_ShotWait = (m_PlShotAry[i].GetNatu() == HEAL) ? PLAYERSHOT_HEALWAIT : PLAYERSHOT_HEAVYWAIT;
@@ -787,7 +796,9 @@ void CPlayer::FireShotLaser() {
 				if (m_Laser[i].GetShow()) { continue; }
 				for (int j = 0; j < SE_COUNT; j++)
 				{
-					m_SEManager[j].SEPlayer(SE_ATTACK_THROUGH);
+					if (m_pSEManager[j].IsPlaySE())
+						continue;
+					m_pSEManager[j].SEPlayer(SE_ATTACK_THROUGH);
 					break;
 				}
 				m_ShotWait = LASER_WAIT;
@@ -878,7 +889,9 @@ void CPlayer::PlayerDamage(bool flg,float damage)
 	{
 		for (int j = 0; j < SE_COUNT; j++)
 		{
-			m_SEManager[j].SEPlayer(SE_PLAYER_DIE);
+			if (m_pSEManager[j].IsPlaySE())
+				continue;
+			m_pSEManager[j].SEPlayer(SE_PLAYER_DIE);
 			break;
 		}
 		//爆発エフェクトを発生させる
@@ -888,7 +901,9 @@ void CPlayer::PlayerDamage(bool flg,float damage)
 	{
 		for (int j = 0; j < SE_COUNT; j++)
 		{
-			m_SEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
+			if (m_pSEManager[j].IsPlaySE())
+				continue;
+			m_pSEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
 			break;
 		}
 		//ダメージエフェクトを発生させる
@@ -911,7 +926,9 @@ void CPlayer::PlayerDamage(float damage)
 	{
 		for (int j = 0; j < SE_COUNT; j++)
 		{
-			m_SEManager[j].SEPlayer(SE_PLAYER_DIE);
+			if (m_pSEManager[j].IsPlaySE())
+				continue;
+			m_pSEManager[j].SEPlayer(SE_PLAYER_DIE);
 			break;
 		}
 		m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
@@ -919,7 +936,9 @@ void CPlayer::PlayerDamage(float damage)
 	else {
 		for (int j = 0; j < SE_COUNT; j++)
 		{
-			m_SEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
+			if (m_pSEManager[j].IsPlaySE())
+				continue;
+			m_pSEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
 			break;
 		}
 	}
@@ -980,7 +999,9 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 			}
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_SEManager[j].SEPlayer((m_Laser[i].GetNatu() == FIRE) ? SE_FIRE : SE_ICE);
+				if (m_pSEManager[j].IsPlaySE())
+					continue;
+				//m_pSEManager[j].SEPlayer((m_Laser[i].GetNatu() == FIRE) ? SE_FIRE : SE_ICE);
 				break;
 			}
 		}
@@ -1006,7 +1027,9 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 				}
 				for (int j = 0; j < SE_COUNT; j++)
 				{
-					m_SEManager[j].SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_HEAL : SE_HEAVY);
+					if (m_pSEManager[j].IsPlaySE())
+						continue;
+					//m_pSEManager[j].SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_HEAL : SE_HEAVY);
 					break;
 				}
 			}
@@ -1040,7 +1063,9 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 			{
 				for (int j = 0; j < SE_COUNT; j++)
 				{
-					m_SEManager[j].SEPlayer(SE_PLAYER_DIE);
+					if (m_pSEManager[j].IsPlaySE())
+						continue;
+					m_pSEManager[j].SEPlayer(SE_PLAYER_DIE);
 					break;
 				}
 				//爆発エフェクトを発生させる
@@ -1050,7 +1075,9 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 			{
 				for (int j = 0; j < SE_COUNT; j++)
 				{
-					m_SEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
+					if (m_pSEManager[j].IsPlaySE())
+						continue;
+					m_pSEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
 					break;
 				}
 				//ダメージエフェクトを発生させる
@@ -1086,7 +1113,9 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 			{
 				for (int j = 0; j < SE_COUNT; j++)
 				{
-					m_SEManager[j].SEPlayer(SE_PLAYER_DIE);
+					if (m_pSEManager[j].IsPlaySE())
+						continue;
+					m_pSEManager[j].SEPlayer(SE_PLAYER_DIE);
 					break;
 				}
 				//爆発エフェクトを発生させる
@@ -1096,7 +1125,9 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 			{
 				for (int j = 0; j < SE_COUNT; j++)
 				{
-					m_SEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
+					if (m_pSEManager[j].IsPlaySE())
+						continue;
+					m_pSEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
 					break;
 				}
 				//ダメージエフェクトを発生させる
@@ -1179,7 +1210,9 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 			{
 				for (int j = 0; j < SE_COUNT; j++)
 				{
-					m_SEManager[j].SEPlayer(SE_PLAYER_DIE);
+					if (m_pSEManager[j].IsPlaySE())
+						continue;
+					m_pSEManager[j].SEPlayer(SE_PLAYER_DIE);
 					break;
 				}
 				//爆発エフェクトを発生させる
@@ -1189,7 +1222,9 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 			{
 				for (int j = 0; j < SE_COUNT; j++)
 				{
-					m_SEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
+					if (m_pSEManager[j].IsPlaySE())
+						continue;
+					m_pSEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
 					break;
 				}
 				//ダメージエフェクトを発生させる
@@ -1217,7 +1252,9 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 		{
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_SEManager[j].SEPlayer(SE_PLAYER_DIE);
+				if (m_pSEManager[j].IsPlaySE())
+					continue;
+				m_pSEManager[j].SEPlayer(SE_PLAYER_DIE);
 				break;
 			}
 			//爆発エフェクトを発生させる
@@ -1227,7 +1264,9 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 		{
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_SEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
+				if (m_pSEManager[j].IsPlaySE())
+					continue;
+				m_pSEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
 				break;
 			}
 			//ダメージエフェクトを発生させる
@@ -1254,7 +1293,9 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 		{
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_SEManager[j].SEPlayer(SE_PLAYER_DIE);
+				if (m_pSEManager[j].IsPlaySE())
+					continue;
+				m_pSEManager[j].SEPlayer(SE_PLAYER_DIE);
 				break;
 			}
 			//爆発エフェクトを発生させる
@@ -1264,7 +1305,9 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 		{
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_SEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
+				if (m_pSEManager[j].IsPlaySE())
+					continue;
+				m_pSEManager[j].SEPlayer(SE_PLAYER_DAMAGE);
 				break;
 			}
 			//ダメージエフェクトを発生させる
@@ -1295,7 +1338,9 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 			}
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_SEManager[j].SEPlayer((m_Laser[i].GetNatu() == FIRE) ? SE_FIRE : SE_ICE);
+				if (m_pSEManager[j].IsPlaySE())
+					continue;
+				//m_pSEManager[j].SEPlayer((m_Laser[i].GetNatu() == FIRE) ? SE_FIRE : SE_ICE);
 				break;
 			}
 			continue;
@@ -1314,7 +1359,9 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 			}
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_SEManager[j].SEPlayer((m_Laser[i].GetNatu() == FIRE) ? SE_FIRE : SE_ICE);
+				if (m_pSEManager[j].IsPlaySE())
+					continue;
+				//m_pSEManager[j].SEPlayer((m_Laser[i].GetNatu() == FIRE) ? SE_FIRE : SE_ICE);
 				break;
 			}
 			continue;
@@ -1341,7 +1388,9 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 			}
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_SEManager[j].SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_HEAL : SE_HEAVY);
+				if (m_pSEManager[j].IsPlaySE())
+					continue;
+				//m_pSEManager[j].SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_HEAL : SE_HEAVY);
 				break;
 			}
 			m_PlShotAry[i].SetShow(false);
@@ -1363,7 +1412,9 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 			}
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_SEManager[j].SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_HEAL : SE_HEAVY);
+				if (m_pSEManager[j].IsPlaySE())
+					continue;
+				//m_pSEManager[j].SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_HEAL : SE_HEAVY);
 				break;
 			}
 			m_PlShotAry[i].SetShow(false);
@@ -1414,7 +1465,9 @@ bool CPlayer::CollisionAttackItem(CItem& itm)
 					itm.SetShow(false);
 					for (int j = 0; j < SE_COUNT; j++)
 					{
-						m_SEManager[j].SEPlayer(SE_FIRE_SPIDERWEB);
+						if (m_pSEManager[j].IsPlaySE())
+							continue;
+						m_pSEManager[j].SEPlayer(SE_FIRE_SPIDERWEB);
 						break;
 					}
 				}
@@ -1567,11 +1620,8 @@ void CPlayer::Release(){
 	m_HeavyTex.Release();
 	m_FireTex.Release();
 	m_FrostTex.Release();
-
-	for (int j = 0; j < SE_COUNT; j++)
-	{
-		m_SEManager[j].Release();
-	}
+	m_FireLazerTexture.Release();
+	m_FrostLazerTexture.Release();
 }
 
 #pragma endregion

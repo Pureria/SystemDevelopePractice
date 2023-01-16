@@ -33,6 +33,8 @@ private:
 	CTexture				m_FrameTexture;
 	CTexture				m_HPBarTexture;
 	CTexture				m_SPBarTexture;
+	CTexture				m_FireLazerTexture;
+	CTexture				m_FrostLazerTexture;
 
 	CEffectManager*			m_pEffectManager;
 
@@ -100,7 +102,7 @@ private:
 	CTexture				m_FireTex;
 	CTexture				m_FrostTex;
 
-	CSE_Manager				m_SEManager[SE_COUNT];
+	CSE_Manager*			m_pSEManager;
 
 public:
 	CPlayer();
@@ -203,6 +205,8 @@ public:
 	inline void SetPlayerPos(float PosX, float PosY)			{		m_PosX = PosX; m_PosY = PosY;							}
 	
 	inline void SetHp(int hp)									{		m_HP = hp;												}
+
+	void SetSEManager(CSE_Manager* sem)							{		m_pSEManager = sem;										}
 
 #pragma endregion	
 

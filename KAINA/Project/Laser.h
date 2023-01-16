@@ -4,6 +4,8 @@
 class Laser : public Shot_Base
 {
 private:
+	
+
 	//レーザーの当たった座標の保管
 	Vector2			m_LaserHitPos;
 
@@ -29,7 +31,8 @@ public:
 public:
 	//発射する情報をセット
 	void Fire(Vector2& pos, int tb, int natuyype, int type);
-	void SetTexture(CTexture* pt)								{		m_pShotTex = pt;				}
+	void SetFireTexture(CTexture* pt)								{		m_pShotTex = pt;				}
+	void SetFrostTexture(CTexture* pt)								{		m_phShotTex = pt; }
 	//ステージに当たった場合　true	: false
 	void SetWallHitLaser(bool flg)								{		m_bHitWall = flg;				}
 	void DirecPosSet();

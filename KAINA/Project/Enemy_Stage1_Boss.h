@@ -76,7 +76,7 @@ private:
 	CTexture				m_HPTex;
 	CTexture				m_FrameTex;
 
-	CSE_Manager				m_SEManager[SE_COUNT];
+	CSE_Manager*			m_pSEManager;
 
 
 public:
@@ -101,6 +101,7 @@ public:
 	//引数 : dmg = ダメージ : direction = 盾に当たった場合true、当たらなかった場合false
 	void Damage(int dmg, bool direction);
 	void SetEffectManager(CEffectManager* pmng) { m_pEffectManager = pmng; }
+	void SetSEManager(CSE_Manager* sem) { m_pSEManager = sem; }
 
 	//プレイヤーの座標セット
 	void SetTargetPos(float tx, float ty) { m_TargetPosX = tx; m_TargetPosY = ty; }
