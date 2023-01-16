@@ -148,6 +148,7 @@ void Laser::Render(float wx, float wy) {
 
 	MofU32 Color = 0;
 	
+	/*
 	switch (GetNatu())
 	{
 	case FIRE:
@@ -158,6 +159,12 @@ void Laser::Render(float wx, float wy) {
 		break;
 	}
 	CGraphicsUtilities::RenderFillRect(lzrec, Color,MOF_COLOR_WHITE, MOF_COLOR_WHITE,Color);
+	*/
+
+	if(GetNatu() == FIRE)
+		m_pShotTex->Render(lzrec.Left, lzrec.Top, lzrec);
+	else
+		m_phShotTex->Render(lzrec.Left, lzrec.Top, lzrec);
 
 
 	return;

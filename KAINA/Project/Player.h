@@ -33,6 +33,8 @@ private:
 	CTexture				m_FrameTexture;
 	CTexture				m_HPBarTexture;
 	CTexture				m_SPBarTexture;
+	CTexture				m_FireLazerTexture;
+	CTexture				m_FrostLazerTexture;
 
 	CEffectManager*			m_pEffectManager;
 

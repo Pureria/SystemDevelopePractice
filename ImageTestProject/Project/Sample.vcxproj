@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{582B9C61-742D-4D2B-9C72-42C088CE473D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SimpleProject</RootNamespace>
+    <RootNamespace>Project</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -42,14 +42,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../../MofLibrary/Include;../../../MofLibrary/Include;$(IncludePath);</IncludePath>
-    <LibraryPath>../../MofLibrary/Library;../../../MofLibrary/Library;$(LibraryPath);</LibraryPath>
+    <IncludePath>../../MofLibrary/Include;C:\MofLibrary\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>../../MofLibrary/Library;$(LibraryPath);C:\MofLibrary\Include;</LibraryPath>
     <OutDir>$(SolutionDir)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>../../MofLibrary/Include;../../../MofLibrary/Include;$(IncludePath);</IncludePath>
-    <LibraryPath>../../MofLibrary/Library;../../../MofLibrary/Library;$(LibraryPath);</LibraryPath>
+    <IncludePath>../../MofLibrary/Include;$(IncludePath);</IncludePath>
+    <LibraryPath>../../MofLibrary/Library;$(LibraryPath);</LibraryPath>
     <OutDir>$(SolutionDir)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -65,11 +65,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\Library\Library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>LIBCMTD;</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>LIBCMTD</IgnoreSpecificDefaultLibraries>
     </Link>
-    <ResourceCompile>
-      <PreprocessorDefinitions>USERNAME=$(USERNAME);</PreprocessorDefinitions>
-    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -88,77 +85,17 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)\Library\Library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>LIBCMT;</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
     </Link>
-    <ResourceCompile>
-      <PreprocessorDefinitions>USERNAME=$(USERNAME);</PreprocessorDefinitions>
-    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CEnemyBase_Shot.cpp" />
-    <ClCompile Include="CEnemy_Base.cpp" />
-    <ClCompile Include="CMenu.cpp" />
-    <ClCompile Include="CPlayerShot.cpp" />
-    <ClCompile Include="CSelect.cpp" />
-    <ClCompile Include="Effect.cpp" />
-    <ClCompile Include="EffectManager.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyShot.cpp" />
-    <ClCompile Include="Enemy_2.cpp" />
-    <ClCompile Include="Enemy_Stage1_Boss.cpp" />
-    <ClCompile Include="Laser.cpp" />
-    <ClCompile Include="SE_Manager.cpp" />
-    <ClCompile Include="Shot_Base.cpp" />
-    <ClCompile Include="BGM_Manager.cpp" />
-    <ClCompile Include="Stage1.cpp" />
     <ClCompile Include="GameApp.cpp" />
-    <ClCompile Include="GameClear.cpp" />
-    <ClCompile Include="GameOver.cpp" />
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="BaseStage.cpp" />
-    <ClCompile Include="Stage1_BOSS.cpp" />
-    <ClCompile Include="Stage2.cpp" />
-    <ClCompile Include="Title.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CEnemyBase_Shot.h" />
-    <ClInclude Include="CEnemy_Base.h" />
-    <ClInclude Include="CMenu.h" />
-    <ClInclude Include="CPlayerShot.h" />
-    <ClInclude Include="CSelect.h" />
-    <ClInclude Include="PublicFunction.h" />
-    <ClInclude Include="ShotDefine.h" />
-    <ClInclude Include="SoundDefine.h" />
-    <ClInclude Include="Effect.h" />
-    <ClInclude Include="EffectManager.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyShot.h" />
-    <ClInclude Include="EnemyStateDefine.h" />
-    <ClInclude Include="Enemy_2.h" />
-    <ClInclude Include="Enemy_Stage1_Boss.h" />
-    <ClInclude Include="Laser.h" />
-    <ClInclude Include="SE_Manager.h" />
-    <ClInclude Include="Shot_Base.h" />
-    <ClInclude Include="BGM_Manager.h" />
-    <ClInclude Include="Stage1.h" />
     <ClInclude Include="GameApp.h" />
-    <ClInclude Include="GameClear.h" />
-    <ClInclude Include="GameDefine.h" />
-    <ClInclude Include="GameOver.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Scene_Base.h" />
-    <ClInclude Include="BaseStage.h" />
-    <ClInclude Include="Stage1_BOSS.h" />
-    <ClInclude Include="Stage2.h" />
-    <ClInclude Include="Title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Version.rc" />
-  </ItemGroup>
 </Project>

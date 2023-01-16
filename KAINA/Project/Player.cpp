@@ -60,11 +60,17 @@ bool CPlayer::Load(){
 
 	if (!m_FrostTex.Load("Player/frost.png"))					{		return false;		}
 
+	if (!m_FireLazerTexture.Load("Player/LaserFireTexture.png")){		return false;		}
+
+	if (!m_FrostLazerTexture.Load("Player/LaserFrostTexture.png")) {	return false;		}		
+
 
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)	
 	{
 		m_PlShotAry[i].SetHealTexture(&m_ShotHealTex); 
 		m_PlShotAry[i].SetHeavyTexture(&m_ShotHeavyTex);
+		m_Laser[i].SetFireTexture(&m_FireLazerTexture);
+		m_Laser[i].SetFrostTexture(&m_FrostLazerTexture);
 	}
 
 	//アニメーションを作成
@@ -1567,6 +1573,8 @@ void CPlayer::Release(){
 	m_HeavyTex.Release();
 	m_FireTex.Release();
 	m_FrostTex.Release();
+	m_FireLazerTexture.Release();
+	m_FrostLazerTexture.Release();
 
 	for (int j = 0; j < SE_COUNT; j++)
 	{
