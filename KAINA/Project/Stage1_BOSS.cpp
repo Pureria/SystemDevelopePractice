@@ -287,20 +287,6 @@ void CStage1_Boss::StgCollEne()
 
 	//ボスの更新
 	m_Boss.SetTargetPos(PPosX, PPosY);
-	//3 = ダッシュ攻撃中
-	/*
-	if (m_Boss.GetBossMotionNo() == 3)
-	{
-		if (m_Stage.Collision(m_Boss.GetBossSideRect()))
-		{
-			if (m_Boss.GetReverse())
-				m_Boss.SetReverse(false);
-			else
-				m_Boss.SetReverse(true);
-			m_Boss.SetMotionMove();
-		}
-	}
-	*/
 	m_Boss.Update();
 	float ox = 0; float oy = 0;
 	if (m_Stage.Collision(m_Boss.GetRect(), ox, oy))
@@ -312,6 +298,17 @@ void CStage1_Boss::StgCollEne()
 	if (m_Stage.Collision(m_Boss.GetBossSideRect()))
 	{
 		m_Boss.CollisionWall();
+	}
+
+	for (int i = 0; i < ENEMY_BOSS_SLASH_COUNT; i++)
+	{
+		if (!m_Boss.ShotArrayBool(i))
+			continue;
+
+		if (m_Stage.CollisionBoss1(m_Boss.ShotArrayRect(i)))
+		{
+			m_Boss.SetShotShow(false, i);
+		}
 	}
 	
 

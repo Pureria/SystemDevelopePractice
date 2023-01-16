@@ -10,6 +10,7 @@ private:
 
 	//TRUE : •\Ž¦		FALSE : ”ñ•\Ž¦
 	bool		m_bShow;
+	bool		m_bReverse;
 public:
 	CEnemyShot();
 	~CEnemyShot();
@@ -22,6 +23,7 @@ public:
 	void SetTexture(CTexture* pt) { m_pTexture = pt; }
 	bool GetShow() { return m_bShow; }
 	void SetShow(bool bs) { m_bShow = bs; }
+	void SetReverse(bool flg) { m_bReverse = flg; }
 
 	Vector2 GetPos() { return m_Pos; }
 

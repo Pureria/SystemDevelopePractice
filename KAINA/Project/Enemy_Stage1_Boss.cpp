@@ -8,6 +8,7 @@
  */
 CEnemy_Stage1_Boss::CEnemy_Stage1_Boss() :
 	m_Texture(),
+	m_ShotTexture(),
 	m_AttackSlash(),
 	m_bEliminated(false),
 	m_pEndEffect(),
@@ -33,6 +34,14 @@ bool CEnemy_Stage1_Boss::Load()
 
 	if (!m_FrameTex.Load("Enemy/Stage1Boss/bossframe.png"))
 		return false;
+
+	if (!m_ShotTexture.Load("Enemy/Stage1Boss/boss_zangeki.png"))
+		return false;
+
+	for (int i = 0; i < ENEMY_BOSS_SLASH_COUNT; i++)
+	{
+		m_ShotArray[i].SetTexture(&m_ShotTexture);
+	}
 
 	//アニメーションを作成
 	SpriteAnimationCreate anim[] = {
@@ -138,6 +147,11 @@ void CEnemy_Stage1_Boss::Initialize() {
 	m_bDead = false;
 	m_bEliminated = false;
 	m_DamageWait = 0;
+
+	for (int i = 0; i < ENEMY_BOSS_SLASH_COUNT; i++)
+	{
+		m_ShotArray[i].Initialize();
+	}
 	
 }
 
@@ -146,6 +160,10 @@ void CEnemy_Stage1_Boss::Initialize() {
  *
  */
 void CEnemy_Stage1_Boss::Update() {
+	for (int i = 0; i < ENEMY_BOSS_SLASH_COUNT; i++)
+	{
+		m_ShotArray[i].Update();
+	}
 
 	if (m_bDead) {
 		m_bEliminated = true;
@@ -421,11 +439,27 @@ void CEnemy_Stage1_Boss::Update() {
 			{
 				//m_Move.x = -ENEMY_ATTACKSLASH_MOVE;
 				m_AttakSlashRect = CRectangle(m_Pos.x - ENEMY_ATTACKSLASH_WIDTH + BOSS1_RECT_WIDTH_DECREASE, m_Pos.y + BOSS1_RECT_HEIGHT_DECREASE, m_Pos.x + BOSS1_RECT_WIDTH_DECREASE, m_Pos.y + m_SrcRect.GetHeight());
+				for (int i = 0; i < ENEMY_BOSS_SLASH_COUNT; i++)
+				{
+					if (m_ShotArray[i].GetShow())
+						continue;
+					m_ShotArray[i].SetReverse(true);
+					m_ShotArray[i].Fire(m_Pos.x, m_Pos.y + 80.0f, -10.0f, 0);
+					break;
+				}
 			}
 			else
 			{
 				//m_Move.x = ENEMY_ATTACKSLASH_MOVE;
 				m_AttakSlashRect = CRectangle(m_Pos.x + m_SrcRect.GetWidth() - BOSS1_RECT_WIDTH_DECREASE, m_Pos.y + BOSS1_RECT_HEIGHT_DECREASE, m_Pos.x + m_SrcRect.GetWidth() + ENEMY_ATTACKSLASH_WIDTH - BOSS1_RECT_WIDTH_DECREASE, m_Pos.y + m_SrcRect.GetHeight());
+				for (int i = 0; i < ENEMY_BOSS_SLASH_COUNT; i++)
+				{
+					if (m_ShotArray[i].GetShow())
+						continue;
+					m_ShotArray[i].SetReverse(false);
+					m_ShotArray[i].Fire(m_Pos.x + m_SrcRect.GetWidth(), m_Pos.y + 80.0f, 10.0f, 0);
+					break;
+				}
 			}
 			m_AttackSlash = true;
 			for (int j = 0; j < SE_COUNT; j++)
@@ -600,7 +634,7 @@ void CEnemy_Stage1_Boss::DeffenceProc(int dmg,int deff) {
 	if (def < 0) { m_HP += def; }
 }
 //TODO : AbStateMoveDec
-void	AbStateMoveDec() {
+void	CEnemy_Stage1_Boss::AbStateMoveDec() {
 
 }
 /**
@@ -611,6 +645,11 @@ void	AbStateMoveDec() {
  * [in]			wy					ワールドの変化
  */
 void CEnemy_Stage1_Boss::Render(float wx, float wy) {
+	for (int i = 0; i < ENEMY_BOSS_SLASH_COUNT; i++)
+	{
+		m_ShotArray[i].Render(wx, wy);
+	}
+
 	//非表示
 	if (!m_bShow)
 	{
@@ -656,6 +695,12 @@ void CEnemy_Stage1_Boss::RenderStatus() {
  * [in]			wy					ワールドの変化
  */
 void CEnemy_Stage1_Boss::RenderDebug(float wx, float wy) {
+	//弾の描画
+	for (int i = 0; i < ENEMY_BOSS_SLASH_COUNT; i++)
+	{
+		m_ShotArray[i].RenderDebug(wx, wy);
+	}
+
 	//非表示
 	if (!m_bShow)
 	{
@@ -686,6 +731,7 @@ void CEnemy_Stage1_Boss::RenderDebug(float wx, float wy) {
 void CEnemy_Stage1_Boss::Release(void) {
 	m_Motion.Release();
 	m_Texture.Release();
+	m_ShotTexture.Release();
 	m_HPTex.Release();
 	m_FrameTex.Release();
 	
@@ -693,5 +739,4 @@ void CEnemy_Stage1_Boss::Release(void) {
 	{
 		m_SEManager[j].Release();
 	}
-
 }

@@ -29,4 +29,6 @@ enum tag_AbNormalState {
 #define		ENEMY_BOSS_FRONTDEF_DIRECTION 10
 #define		ENEMY_BOSS_ATTACK_WAIT		40
 
+#define		ENEMY_BOSS_SLASH_COUNT		5
+
 /***************************/

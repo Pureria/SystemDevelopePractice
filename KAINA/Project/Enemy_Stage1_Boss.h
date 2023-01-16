@@ -4,7 +4,7 @@
 #include	"GameDefine.h"
 #include	"EffectManager.h"
 #include	"EnemyStateDefine.h"
-#include	"CEnemy_Base.h"
+#include	"CEnemyBase_Shot.h"
 #include	"SE_Manager.h"
 
 //当たり判定減衰幅
@@ -27,9 +27,10 @@
 
 
 
-class CEnemy_Stage1_Boss : public CEnemy_Base {
+class CEnemy_Stage1_Boss : public CEnemyBase_Shot {
 private:
 	CTexture				m_Texture;
+	CTexture				m_ShotTexture;
 	bool					m_bIsEnemyPosLeft;
 	bool					m_bIsOnLift;
 	bool					m_bJump;
@@ -38,6 +39,9 @@ private:
 	bool					m_bEliminated;
 
 	CRectangle				m_AttakSlashRect;
+
+	//変数のオーバーライドされる？
+	CEnemyShot				m_ShotArray[ENEMY_BOSS_SLASH_COUNT];
 
 
 	//ボスのHP
@@ -151,6 +155,9 @@ public:
 	}
 
 	void	AbStateMoveDec() override;
+	bool	ShotArrayBool(int i) override { return m_ShotArray[i].GetShow(); }
+	CRectangle	ShotArrayRect(int i) override { return m_ShotArray[i].GetRect(); }
+	void		SetShotShow(bool flg, int i) override { m_ShotArray[i].SetShow(flg); }
 
 	//TODO: どうにかしよう
 	void Initialize(float px, float py, int type) {};
