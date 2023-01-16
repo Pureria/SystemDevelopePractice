@@ -630,7 +630,7 @@ void CEnemy_Stage1_Boss::Render(float wx, float wy) {
 		dr.Left = tmp;
 	}
 	//テクスチャの描画
-	(GetAbState() == STATE_FROST) ? m_Texture.Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(0, 255, 255)) : m_Texture.Render(m_Pos.x - wx, m_Pos.y - wy, dr);
+	(GetAbStateNo() == STATE_FROST) ? m_Texture.Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(0, 255, 255)) : m_Texture.Render(m_Pos.x - wx, m_Pos.y - wy, dr);
 }
 
 void CEnemy_Stage1_Boss::RenderStatus() {

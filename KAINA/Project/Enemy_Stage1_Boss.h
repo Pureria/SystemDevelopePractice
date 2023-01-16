@@ -25,6 +25,8 @@
 #define		ENEMY_ATTACKSLASH_WIDTH			150.0f
 #define		ENEMY_ATTACKSLASH_MOVE			90
 
+
+
 class CEnemy_Stage1_Boss : public CEnemy_Base {
 private:
 	CTexture				m_Texture;
@@ -71,6 +73,8 @@ private:
 	CTexture				m_FrameTex;
 
 	CSE_Manager				m_SEManager[SE_COUNT];
+
+
 public:
 	CEnemy_Stage1_Boss();
 	~CEnemy_Stage1_Boss();
