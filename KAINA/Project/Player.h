@@ -22,6 +22,7 @@ private:
 	float					m_MoveX;
 	float					m_MoveY;
 	bool					m_bJump;
+	bool					m_bFall;
 	bool					m_bReverse;
 	CRectangle				m_SrcRect;
 	

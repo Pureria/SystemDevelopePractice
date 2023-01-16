@@ -270,6 +270,7 @@ void CPlayer::Initialize(){
 	m_DrcType = NULL;
 	m_bNextBossScene = false;
 	m_SpWait = 0;
+	m_bFall = false;
 }
 
 
@@ -485,7 +486,7 @@ void CPlayer::MoveKey() {
 	}
 
 	//Eキーでジャンプ
-	if (g_pInput->IsKeyHold(MOFKEY_SPACE) && !m_bJump)
+	if (g_pInput->IsKeyHold(MOFKEY_SPACE) && !m_bJump && !m_bFall)
 	{
 		m_bJump = true;
 		m_MoveY = PLAYER_JUMP;
@@ -497,8 +498,10 @@ void CPlayer::MoveKey() {
 		}
 	}
 
-	if (m_MoveY > 0)
-		m_bJump = true;
+	if (m_MoveY > 0.0f)
+		m_bFall = true;
+	else
+		m_bFall = false;
 }
 
 void CPlayer::MoveTpBtmAnim() {
