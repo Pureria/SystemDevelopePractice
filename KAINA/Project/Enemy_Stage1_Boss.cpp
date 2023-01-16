@@ -325,7 +325,9 @@ void CEnemy_Stage1_Boss::Update() {
 			m_bJump = true;
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_SEManager[j].SEPlayer(SE_BOSS_JUMP);
+				if (m_pSEManager[j].IsPlaySE())
+					continue;
+				m_pSEManager[j].SEPlayer(SE_BOSS_JUMP);
 				break;
 			}
 		}
@@ -375,7 +377,9 @@ void CEnemy_Stage1_Boss::Update() {
 			}
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_SEManager[j].SEPlayer(SE_BOSS_ATTACK03);
+				if (m_pSEManager[j].IsPlaySE())
+					continue;
+				m_pSEManager[j].SEPlayer(SE_BOSS_ATTACK03);
 				break;
 			}
 		}
@@ -415,7 +419,9 @@ void CEnemy_Stage1_Boss::Update() {
 			}
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_SEManager[j].SEPlayer(SE_BOSS_JUMP);
+				if (m_pSEManager[j].IsPlaySE())
+					continue;
+				m_pSEManager[j].SEPlayer(SE_BOSS_JUMP);
 				break;
 			}
 		}
@@ -464,7 +470,9 @@ void CEnemy_Stage1_Boss::Update() {
 			m_AttackSlash = true;
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				m_SEManager[j].SEPlayer(SE_BOSS_ATTACK01);
+				if (m_pSEManager[j].IsPlaySE())
+					continue;
+				m_pSEManager[j].SEPlayer(SE_BOSS_ATTACK01);
 				break;
 			}
 		}
@@ -588,10 +596,10 @@ void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 		//m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
 		for (int j = 0; j < SE_COUNT; j++)
 		{
-			if (m_SEManager[j].IsPlaySE()) {
+			if (m_pSEManager[j].IsPlaySE()) {
 				continue;
 			}
-			m_SEManager[j].SEPlayer(SE_ENEMY_DIE);
+			m_pSEManager[j].SEPlayer(SE_ENEMY_DIE);
 			break;
 		}
 		m_Move.x = 0;
@@ -602,10 +610,10 @@ void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 	{
 		for (int j = 0; j < SE_COUNT; j++)
 		{
-			if (m_SEManager[j].IsPlaySE()) {
+			if (m_pSEManager[j].IsPlaySE()) {
 				continue;
 			}
-			m_SEManager[j].SEPlayer((direction) ? SE_BOSS_SHIELD : SE_BOSS_DAMAGE);
+			m_pSEManager[j].SEPlayer((direction) ? SE_BOSS_SHIELD : SE_BOSS_DAMAGE);
 			break;
 		}
 		//ダメージエフェクトを発生させる
@@ -734,9 +742,4 @@ void CEnemy_Stage1_Boss::Release(void) {
 	m_ShotTexture.Release();
 	m_HPTex.Release();
 	m_FrameTex.Release();
-	
-	for (int j = 0; j < SE_COUNT; j++)
-	{
-		m_SEManager[j].Release();
-	}
 }

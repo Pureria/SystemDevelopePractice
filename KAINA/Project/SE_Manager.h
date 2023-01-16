@@ -5,7 +5,7 @@
 class CSE_Manager
 {
 private:
-	CSoundBuffer gSound;
+	CSoundBuffer gSound[SE_CNT];
 	int			m_NowSetSE;
 	int			m_Volume;
 public:
@@ -15,9 +15,9 @@ public:
 	void SEPlayer(int request);
 	void Release(void);
 
-	bool IsPlaySE() { return gSound.IsPlay(); }
+	bool IsPlaySE();
 
-	void StopSE() { gSound.Stop(); }
+	void StopSE();
 	int GetNowSetSE() { return m_NowSetSE; }
 };
 

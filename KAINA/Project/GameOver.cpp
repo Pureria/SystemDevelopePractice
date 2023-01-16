@@ -58,9 +58,9 @@ void CGameOver::Update(void){
 		m_FlashCount = START_FLASH_COUNT;
 		for (int i = 0; i < SE_COUNT; i++)
 		{
-			if (m_SEManager[i].IsPlaySE())
+			if (m_pSEManager[i].IsPlaySE())
 				continue;
-			m_SEManager[i].SEPlayer(SE_SELECT_OK);
+			m_pSEManager[i].SEPlayer(SE_SELECT_OK);
 			break;
 		}
 	}
@@ -93,9 +93,4 @@ void CGameOver::RenderDebug(void){
 void CGameOver::Release(void){
 	m_BackImage.Release();
 	m_BGMManager.Release();
-
-	for (int i = 0; i < SE_COUNT; i++)
-	{
-		m_SEManager[i].Release();
-	}
 }

@@ -68,9 +68,9 @@ void CSelect::Update() {
 		if (m_NowSelect < COUNT_NO - 1) {
 			for (int i = 0; i < SE_COUNT; i++)
 			{
-				if (m_SEManager[i].IsPlaySE())
+				if (m_pSEManager[i].IsPlaySE())
 					continue;
-				m_SEManager[i].SEPlayer(SE_SELECT_CHANGE);
+				m_pSEManager[i].SEPlayer(SE_SELECT_CHANGE);
 				break;
 			}
 
@@ -81,9 +81,9 @@ void CSelect::Update() {
 		if (m_NowSelect > 0) {
 			for (int i = 0; i < SE_COUNT; i++)
 			{
-				if (m_SEManager[i].IsPlaySE())
+				if (m_pSEManager[i].IsPlaySE())
 					continue;
-				m_SEManager[i].SEPlayer(SE_SELECT_CHANGE);
+				m_pSEManager[i].SEPlayer(SE_SELECT_CHANGE);
 				break;
 			}
 			--m_NowSelect;
@@ -98,9 +98,9 @@ void CSelect::Update() {
 
 		for (int i = 0; i < SE_COUNT; i++)
 		{
-			if (m_SEManager[i].IsPlaySE())
+			if (m_pSEManager[i].IsPlaySE())
 				continue;
-			m_SEManager[i].SEPlayer(SE_SELECT_OK);
+			m_pSEManager[i].SEPlayer(SE_SELECT_OK);
 			break;
 		}
 	}
@@ -141,9 +141,4 @@ void CSelect::Release()
 	m_Stage1Str.Release();
 	m_Stage2Str.Release();
 	m_BGMManager.Release();
-
-	for (int i = 0; i < SE_COUNT; i++)
-	{
-		m_SEManager[i].Release();
-	}
 }

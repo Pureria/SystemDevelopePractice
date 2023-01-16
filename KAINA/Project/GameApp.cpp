@@ -22,7 +22,10 @@
 #include	"GameOver.h"
 #include	"Scene_Base.h"
 
+#include	"SE_Manager.h"
+
 Scene_Base*				g_pScene = NULL;
+CSE_Manager				g_SEManager[SE_COUNT];
 
 //デバッグ表示フラグ
 bool					g_bDebug = false;
@@ -41,7 +44,13 @@ MofBool CGameApp::Initialize(void){
 	CUtilities::SetCurrentDirectory("Resource");
 	//シーンの必要リソースを全て読み込む
 	
+	for (int i = 0; i < SE_COUNT; i++)
+	{
+		g_SEManager[i].Initialize();
+	}
+
 	g_pScene = new CTitle();
+	g_pScene->SetSEManager(g_SEManager);
 	g_pScene->Initialize();
 	
 	return TRUE;
@@ -94,6 +103,7 @@ MofBool CGameApp::Update(void){
 			g_pScene = new CGameOver();
 			break;
 		}
+		g_pScene->SetSEManager(g_SEManager);
 		g_pScene->Initialize();
 	}
 
@@ -140,6 +150,11 @@ MofBool CGameApp::Release(void){
 
 	if (g_pScene != nullptr) {
 		g_pScene->Release();
+	}
+
+	for (int i = 0; i < SE_COUNT; i++)
+	{
+		g_SEManager[i].Release();
 	}
 	return TRUE;
 }
