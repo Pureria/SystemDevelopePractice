@@ -15,6 +15,7 @@ public:
 	~CEnemyShot();
 	void Initialize();
 	void Fire(float px, float py, float sx, float sy);
+	void Update();
 	void Update(float wx);
 	void Render(float wx,float wy);
 	void RenderDebug(float wx, float wy);

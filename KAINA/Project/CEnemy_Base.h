@@ -82,14 +82,14 @@ public:
 
 	Vector2		GetMove()														{			return m_Move;					}
 
-	int			GetAbState()													{			return m_AbState;				}
+	int			GetAbStateNo()													{			return m_AbState;				}
 
 	void		AbStateMoveDec() {
-		switch (GetAbState())
+		switch (GetAbStateNo())
 		{
 		case STATE_FROST:
 			m_Move.x *= 0.8f;
-			m_Move.y *= 0.5f;
+			m_Move.y *= 0.0f;
 			break;
 		}
 	}
