@@ -5,4 +5,4 @@ KAINA/*.pdb
 KAINA/*.ilk
 KAINA/Project/Debug
 MofLibrary/
-KAINA/Resource/SaveDataFile
+KAINA/Resource/SaveDataFile/Save.txt
