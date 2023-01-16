@@ -42,6 +42,20 @@ void CEnemyShot::Update(float wx)
 		m_bShow = false;
 }
 
+void CEnemyShot::Update()
+{
+	if (!m_bShow)
+		return;
+
+	m_Pos.x += m_Spd.x;
+	m_Pos.y += m_Spd.y;
+
+	//‰æ–ÊŠO‚ÅÁ‹Ž
+	if (m_Pos.x + m_pTexture->GetWidth() < 0 || m_Pos.x > g_pGraphics->GetTargetWidth() ||
+		m_Pos.y + m_pTexture->GetHeight() < 0 || m_Pos.y > g_pGraphics->GetTargetHeight())
+		m_bShow = false;
+}
+
 
 void CEnemyShot::Render(float wx, float wy)
 {

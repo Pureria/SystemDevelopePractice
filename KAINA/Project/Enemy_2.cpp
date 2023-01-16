@@ -347,9 +347,9 @@ void CEnemy_2::Render(float wx, float wy)
 
 	//テクスチャの描画
 	if (m_bFallFlg)
-		(GetAbState() == STATE_FROST) ? m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(0, 255, 255)) : m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr);
+		(GetAbStateNo() == STATE_FROST) ? m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(0, 255, 255)) : m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr);
 	else
-		(GetAbState() == STATE_FROST) ? m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(0, 255, 255)) : m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(255, 255, 100));
+		(GetAbStateNo() == STATE_FROST) ? m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(0, 255, 255)) : m_pTexture->Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(255, 255, 100));
 }
 
 /**

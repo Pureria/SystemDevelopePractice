@@ -140,3 +140,6 @@ enum tag_NormalNaturalChangeType {
 #define		ENEMY_ATTAK_POWER				10
 
 #define		STAGE1_BOSS_SLASH_DAMAGE		30
+
+#define		BOSS_SLASH_COUNT				5
+#define		BOSS_SHOT_WAIT					5

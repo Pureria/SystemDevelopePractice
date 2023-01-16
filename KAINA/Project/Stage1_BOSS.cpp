@@ -202,14 +202,6 @@ void CStage1_Boss::StgCollBullet()
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
 		float ox = 0, oy = 0;
-		if (m_Player.IsLaser()) {
-			if (!m_Player.GetLaserShotShow(i)) { continue; }
-
-			if (m_Stage.Collision(m_Player.GetLaserRect(i)))
-			{
-				m_Player.SetWallLaser(i, true);
-			}
-		}
 
 		if (!m_Player.GetNormalShow(i)){			continue;			}
 
@@ -277,6 +269,16 @@ void CStage1_Boss::StgCollBullet()
 			}
 		}
 	}
+
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
+		if (!m_Player.GetLaserShotShow(i)) { continue; }
+
+		if (m_Stage.Collision(m_Player.GetLaserRect(i)))
+		{
+			m_Player.SetWallLaser(i, true);
+		}
+	}
+	
 }
 
 void CStage1_Boss::StgCollEne()
@@ -312,6 +314,7 @@ void CStage1_Boss::StgCollEne()
 	{
 		m_Boss.CollisionWall();
 	}
+	
 
 	//4 = ƒWƒƒƒ“ƒvUŒ‚
 	if (m_Boss.GetBossMotionNo() == 4)
@@ -319,6 +322,15 @@ void CStage1_Boss::StgCollEne()
 		if (m_Stage.CollisionBoss1(CRectangle(m_Boss.GetRect().Left, m_Boss.GetRect().Bottom - 1, m_Boss.GetRect().Right, m_Boss.GetRect().Bottom)))
 		{
 			m_Boss.SetJumpAttackEnd();
+		}
+	}
+
+	if (m_Boss.GetBossMotionNo() == 5) {
+		for (int i = 0; i < BOSS_SLASH_COUNT; i++) {
+			if (m_Boss.GetSlashShow(i)) { continue; }
+			if (m_Stage.Collision(m_Boss.GetSlashRect(i))) {
+				m_Boss.SetShow(false, i);
+			}
 		}
 	}
 
@@ -363,6 +375,10 @@ void CStage1_Boss::StgCollItm()
 void CStage1_Boss::Render(void) {
 	m_Stage.BackTexRender();
 	m_Player.ShotRender(m_Stage.GetScrollX(),m_Stage.GetScrollY());
+	if (m_Boss.GetBossMotionNo() == 5) {
+		m_Boss.RenderShot(m_Stage.GetScrollX(), m_Stage.GetScrollY());
+	}
+	
 	//ƒXƒe[ƒW‚Ì•`‰æ
 	m_Stage.Render();
 
@@ -377,7 +393,6 @@ void CStage1_Boss::Render(void) {
 
 	//ƒvƒŒƒCƒ„[‚Ì•`‰æ
 	m_Player.Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
-
 	//“G‚Ì•`‰æ
 	m_Boss.Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
 
@@ -454,4 +469,6 @@ void CStage1_Boss::Release(void) {
 	{
 		m_SEManager[j].Release();
 	}
+
+
 }
