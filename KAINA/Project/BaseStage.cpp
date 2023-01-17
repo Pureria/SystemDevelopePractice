@@ -766,7 +766,7 @@ void CBaseStage::CollisionCrack(CRectangle r) {
 	}
 }
 
-void CBaseStage::CollisionFreezeWater(CRectangle r)
+void CBaseStage::CollisionFreezeWater(CRectangle r, CRectangle prec)
 {
 	int lc = m_ScrollX / m_ChipSize;
 	int rc = (g_pGraphics->GetTargetWidth() + m_ScrollX) / m_ChipSize;
@@ -787,32 +787,35 @@ void CBaseStage::CollisionFreezeWater(CRectangle r)
 			if (cn == WATER)
 			{
 				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
-				if (cr.CollisionRect(r))
+				if (!cr.CollisionRect(prec))
 				{
-					m_pChipData[y * m_XCount + x] = 12;
+					//TODO: 修正が必要
+					if (cr.CollisionRect(r)) {
+						m_pChipData[y * m_XCount + x] = 12;
 
-					//左の水
-					if (m_pChipData[y * m_XCount + (x - 1)] - 1 == WATER)
-					{
-						m_pChipData[y * m_XCount + (x - 1)] = 12;
-					}
+						//左の水
+						if (m_pChipData[y * m_XCount + (x - 1)] - 1 == WATER)
+						{
+							m_pChipData[y * m_XCount + (x - 1)] = 12;
+						}
 
-					//右の水
-					if (m_pChipData[y * m_XCount + (x + 1)] - 1 == WATER)
-					{
-						m_pChipData[y * m_XCount + (x + 1)] = 12;
-					}
+						//右の水
+						if (m_pChipData[y * m_XCount + (x + 1)] - 1 == WATER)
+						{
+							m_pChipData[y * m_XCount + (x + 1)] = 12;
+						}
 
-					//上の水
-					if (m_pChipData[(y - 1) * m_XCount + x] - 1 == WATER)
-					{
-						m_pChipData[(y - 1) * m_XCount + x] = 12;
-					}
+						//上の水
+						if (m_pChipData[(y - 1) * m_XCount + x] - 1 == WATER)
+						{
+							m_pChipData[(y - 1) * m_XCount + x] = 12;
+						}
 
-					//下の水
-					if (m_pChipData[(y + 1) * m_XCount + x] - 1 == WATER)
-					{
-						m_pChipData[(y + 1) * m_XCount + x] = 12;
+						//下の水
+						if (m_pChipData[(y + 1) * m_XCount + x] - 1 == WATER)
+						{
+							m_pChipData[(y + 1) * m_XCount + x] = 12;
+						}
 					}
 				}
 			}

@@ -107,7 +107,7 @@ public:
 	void ButtonGimmic();
 
 	//水を氷にする	引数：弾のRect
-	void CollisionFreezeWater(CRectangle r);
+	void CollisionFreezeWater(CRectangle r,CRectangle prec);
 	//水とプレイヤーの判定　引数:PlayerのRect
 	bool CollisionWater(CRectangle prec);
 
