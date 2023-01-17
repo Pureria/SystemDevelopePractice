@@ -19,5 +19,10 @@ public:
 
 	void StopSE();
 	int GetNowSetSE() { return m_NowSetSE; }
+
+	/*bool TitleLoad();
+	bool SelectLoad();
+	bool GameLoad();
+	bool Load();*/
 };
 
