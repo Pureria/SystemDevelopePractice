@@ -34,7 +34,7 @@ public:
 	void SetFireTexture(CTexture* pt)								{		m_pShotTex = pt;				}
 	void SetFrostTexture(CTexture* pt)								{		m_phShotTex = pt; }
 	//ステージに当たった場合　true	: false
-	void SetWallHitLaser(bool flg)								{		m_bHitWall = flg;				}
+	void SetWallHitLaser(bool flg)									{		m_bHitWall = flg;				}
 	void DirecPosSet();
 	//Get関数
 public:

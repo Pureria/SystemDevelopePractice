@@ -37,7 +37,7 @@ void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
 void Laser::ShotLaser() {
 
 	if (!m_bHitWall) {
-		if (m_LaserRange < 1000)
+		//if (m_LaserRange < 1000)
 			m_LaserRange += LASER_ATTACKWIDTH;
 
 		return;
@@ -126,7 +126,7 @@ void Laser::OutRange() {
 
 	if (m_StopCount <= 0)
 	{
-		m_LaserDecrealse += LASER_ATTACKWIDTH * 0.5;
+		m_LaserDecrealse += LASER_ATTACKWIDTH;
 		if (GetRect().Left > GetRect().Right || GetRect().Top > GetRect().Bottom) {
 			m_bShow = false;
 			m_bHitWall = false;
@@ -149,8 +149,7 @@ void Laser::Render(float wx, float wy) {
 	lzrec.Bottom -= wy;
 
 	MofU32 Color = 0;
-	
-	/*
+
 	switch (GetNatu())
 	{
 	case FIRE:
@@ -161,12 +160,12 @@ void Laser::Render(float wx, float wy) {
 		break;
 	}
 	CGraphicsUtilities::RenderFillRect(lzrec, Color,MOF_COLOR_WHITE, MOF_COLOR_WHITE,Color);
-	*/
+	
 
-	if(GetNatu() == FIRE)
+	/*if (GetNatu() == FIRE)
 		m_pShotTex->Render(lzrec.Left, lzrec.Top, lzrec);
 	else
-		m_phShotTex->Render(lzrec.Left, lzrec.Top, lzrec);
+		m_phShotTex->Render(lzrec.Left, lzrec.Top, lzrec);*/
 
 
 	return;
