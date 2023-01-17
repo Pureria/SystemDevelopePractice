@@ -29,7 +29,8 @@ m_SP(0),
 m_PlShotAry(),
 m_bNextBossScene(false),
 m_SpWait(0),
-m_pSEManager()
+m_pSEManager(),
+m_bShow(false)
 {}
 
 #pragma endregion
@@ -272,6 +273,7 @@ void CPlayer::Initialize(){
 	m_bNextBossScene = false;
 	m_SpWait = 0;
 	m_bFall = false;
+	m_bShow = true;
 }
 
 
@@ -282,10 +284,13 @@ void CPlayer::Initialize(){
 #pragma region Update関数
 
 void CPlayer::Update() {
+
 	UpdateShot();
 
 	//HPが無くなると爆発の終了を待機して終了
 	if (PlayerEnd())	{			return;				}
+	if (!m_bShow)
+		return;
 
 	//移動フラグ、このフレームでの移動があったかを保存
 	m_bMove = false;
@@ -896,6 +901,7 @@ void CPlayer::PlayerDamage(bool flg,float damage)
 		}
 		//爆発エフェクトを発生させる
 		m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+		m_bShow = false;
 	}
 	else
 	{
@@ -932,6 +938,7 @@ void CPlayer::PlayerDamage(float damage)
 			break;
 		}
 		m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+		m_bShow = false;
 	}
 	else {
 		for (int j = 0; j < SE_COUNT; j++)
@@ -1070,6 +1077,7 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 				}
 				//爆発エフェクトを発生させる
 				m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+				m_bShow = false;
 			}
 			else
 			{
@@ -1120,6 +1128,7 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 				}
 				//爆発エフェクトを発生させる
 				m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+				m_bShow = false;
 			}
 			else
 			{
@@ -1217,6 +1226,7 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 				}
 				//爆発エフェクトを発生させる
 				m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+				m_bShow = false;
 			}
 			else
 			{
@@ -1259,6 +1269,7 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 			}
 			//爆発エフェクトを発生させる
 			m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+			m_bShow = false;
 		}
 		else
 		{
@@ -1300,6 +1311,7 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 			}
 			//爆発エフェクトを発生させる
 			m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+			m_bShow = false;
 		}
 		else
 		{
@@ -1533,6 +1545,8 @@ bool CPlayer::IsJump()
 #pragma region Render関数
 
 void CPlayer::Render(float wx,float wy){
+	if (!m_bShow)
+		return;
 
 	//インターバル2フレームごとに描画をしない
 	if (m_DamageWait % 4 >= 2)
@@ -1638,6 +1652,7 @@ void CPlayer::Fall() {
 		m_HP = 0;
 		//爆発エフェクトを発生させる
 		m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
+		m_bShow = false;
 	}
 }
 

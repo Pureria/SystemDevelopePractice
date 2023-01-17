@@ -24,6 +24,7 @@ private:
 	bool					m_bJump;
 	bool					m_bFall;
 	bool					m_bReverse;
+	bool					m_bShow;
 	CRectangle				m_SrcRect;
 	
 	int						m_HP;
