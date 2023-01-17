@@ -8,7 +8,7 @@
 #define	    PLAYERSHOT_SPEED		10
 
 //ÉåÅ[ÉUÅ[ÇÃêLÇ—ÇÈí∑Ç≥
-#define     LASER_ATTACKWIDTH		400
+#define     LASER_ATTACKWIDTH		64
 
 #define		LASER_FIRE_COUNT		3
 
