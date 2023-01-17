@@ -229,7 +229,7 @@ void CStage1::StgCollPlayer() {
 		//TODO: …‚Æ’e‚Ì”»’è
 		if (m_Player.GetNatuLaser(i) == FROST)
 		{
-			m_BaseStage.CollisionFreezeWater(m_Player.GetLaserRect(i));
+			m_BaseStage.CollisionFreezeWater(m_Player.GetLaserRect(i),m_Player.GetRect());
 		}
 
 		//TODO: •X‚Æ’e‚Ì”»’è

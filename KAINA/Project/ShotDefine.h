@@ -8,7 +8,7 @@
 #define	    PLAYERSHOT_SPEED		10
 
 //レーザーの伸びる長さ
-#define     LASER_ATTACKWIDTH		64
+#define     LASER_ATTACKWIDTH		400
 
 #define		LASER_FIRE_COUNT		3
 
@@ -16,4 +16,4 @@
 #define		LASER_DELAY				0.5f
 
 //弾の生存時間（秒）
-#define		PLAYERSHOT_LIFETIME			5.0f
+#define		PLAYERSHOT_LIFETIME		5.0f

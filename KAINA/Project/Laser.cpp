@@ -37,7 +37,9 @@ void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
 void Laser::ShotLaser() {
 
 	if (!m_bHitWall) {
-		m_LaserRange += LASER_ATTACKWIDTH;
+		if (m_LaserRange < 1000)
+			m_LaserRange += LASER_ATTACKWIDTH;
+
 		return;
 	}
 	else {

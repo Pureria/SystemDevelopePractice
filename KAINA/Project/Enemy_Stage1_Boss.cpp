@@ -600,7 +600,7 @@ void CEnemy_Stage1_Boss::DeffenceProc(int dmg,int deff) {
 	if (def < 0) { m_HP += def; }
 }
 //TODO : AbStateMoveDec
-void	AbStateMoveDec() {
+void	CEnemy_Stage1_Boss::AbStateMoveDec() {
 
 }
 /**
