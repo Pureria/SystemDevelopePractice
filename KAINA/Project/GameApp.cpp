@@ -66,7 +66,6 @@ MofBool CGameApp::Update(void){
 	//キーの更新
 	g_pInput->RefreshKey();
 	
-	
 	g_pScene->Update();
 	gTimer += CUtilities::GetFrameSecond();
 	g_pScene->SetTime(gTimer);
@@ -74,7 +73,7 @@ MofBool CGameApp::Update(void){
 	if (g_pScene->IsEnd()) {
 		g_pScene->Release();
 
-		int	Change = g_pScene->GetNextScene();
+		int Change = g_pScene->GetNextScene();
 		
 		delete  g_pScene;
 
@@ -112,6 +111,14 @@ MofBool CGameApp::Update(void){
 	{
 		g_bDebug = ((g_bDebug) ? false : true);
 	}
+
+	if (g_pInput->IsKeyPush(MOFKEY_B)) {
+		delete  g_pScene;
+		g_pScene = new CStage1_Boss();
+		g_pScene->SetSEManager(g_SEManager);
+		g_pScene->Initialize();
+	}
+	
 	return TRUE;
 }
 /*************************************************************************//*!
