@@ -16,34 +16,29 @@ void Laser::Initialize() {
 }
 
 void Laser::Update() {
-	if (!m_bShow) { return; }
-
 	ShotLaser();
 }
 
 void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
 	m_ShotPos.x = pos.x - 16;
 	m_ShotPos.y = pos.y - 32;
-	m_bShow = true;
 	m_DrcType = tb;
 	m_NatuType = natuyype;
 	m_ShotType = type;
-	m_bHitWall = false;
 	m_LaserRange = 0;
 	m_LaserDecrealse = 0;
 	m_StopCount = LASER_DELAY;
 }
 
 void Laser::ShotLaser() {
-
-	if (!m_bHitWall) {
-		//if (m_LaserRange < 1000)
-			m_LaserRange += LASER_ATTACKWIDTH;
-
+	
+	if (m_LaserRange < 1000) {
+		m_LaserRange += LASER_ATTACKWIDTH;
+		m_bShow = false;
 		return;
 	}
 	else {
-		DirecPosSet();
+		m_bShow = true;
 		OutRange();
 	}
 }
@@ -91,34 +86,6 @@ CRectangle Laser::GetRect() {
 		break;
 	}
 	return Rec;
-}
-
-void Laser::DirecPosSet() {
-	CRectangle rec = GetRect();
-
-	switch (GetDirec())
-	{
-	case RIGHT:
-		m_LaserHitPos.x = rec.Right;
-		m_LaserHitPos.y = rec.Top;
-		break;
-	case LEFT:
-		m_LaserHitPos.x = rec.Left;
-		m_LaserHitPos.y = rec.Bottom;
-		break;
-	}
-}
-
-CRectangle* Laser::GetFireRect() {
-	CRectangle rec = GetRect();
-
-	CRectangle FireRec[3] =	{ CRectangle(rec.Left, m_LaserHitPos.y - 50, m_LaserHitPos.x, rec.Bottom - 50),
-							  CRectangle(rec.Left, m_LaserHitPos.y - 5, m_LaserHitPos.x, rec.Bottom + 5),
-							  CRectangle(rec.Left, m_LaserHitPos.y + 60, m_LaserHitPos.x, rec.Bottom + 60),
-	};
-	 
-	return m_FireRec;
-	
 }
 
 void Laser::OutRange() {
