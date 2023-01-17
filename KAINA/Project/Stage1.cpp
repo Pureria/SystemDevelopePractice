@@ -42,7 +42,7 @@ void CStage1::Initialize(){
 	Load();
 	//プレイヤーの状態初期化
 	m_Player.Initialize();
-	m_Player.SetSEManager(m_pSEManager);
+	m_Player.SetSEManager(&m_pSEManager);
 	m_Player.SetPlayerPos(m_BaseStage.GetIniPlayerPos().x, m_BaseStage.GetIniPlayerPos().y);
 	//ステージの状態初期化
 	m_BaseStage.Initialize(m_EnemyArray, m_Enemy2Array, m_ItemArray);
@@ -69,13 +69,13 @@ void CStage1::Initialize(){
 	for (int i = 0; i < m_BaseStage.GetEnemy2Count(); i++)
 	{
 		m_Enemy2Array[i].SetEffectManager(&m_EffectManager);
-		m_Enemy2Array[i].SetSEManager(&m_pSEManager[0]);
+		m_Enemy2Array[i].SetSEManager(&m_pSEManager);
 	}
 
 	//ステージにエフェクトクラスの設定
 	m_BaseStage.SetEffectManager(&m_EffectManager);
 	//ステージにSEマネージャーの設定
-	m_BaseStage.SetSEManager(&m_pSEManager[0]);
+	m_BaseStage.SetSEManager(&m_pSEManager);
 
 	//BGMの初期化
 	m_BGMManager.Initialize();
@@ -276,8 +276,8 @@ void CStage1::StgCollPlayer() {
 	{
 		for (int i = 0; i < SE_COUNT; i++)
 		{
-			if (m_pSEManager[i].GetNowSetSE() == SE_BURNER &&m_pSEManager[i].IsPlaySE())
-				m_pSEManager[i].StopSE();
+			if (m_pSEManager.GetNowSetSE() == SE_BURNER &&m_pSEManager.IsPlaySE())
+				m_pSEManager.StopSE();
 		}
 
 		m_EffectManager.Stop(EFC_FIREBAR_TOP);
@@ -302,8 +302,12 @@ void CStage1::StgCollPlayer() {
 
 void CStage1::StgCollBullet() {
 
+	float x, y;
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
 	{
+		if (m_BaseStage.GetMapChipPos(m_Player.GetLaserRect(i), x, y, false)) {
+			m_Player.SetMapChipPos(Vector2(x, y), i);
+		}
 		if (m_Player.GetLaserShotShow(i)) {
 			m_BaseStage.StageAttackCollision(m_Player.GetLaserRect(i));
 		}
@@ -332,9 +336,9 @@ void CStage1::StgCollBullet() {
 			m_Player.ShotRefTop(i);
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				if (m_pSEManager[j].IsPlaySE())
+				if (m_pSEManager.IsPlaySE())
 					continue;
-				m_pSEManager[j].SEPlayer(SE_WALL_CONTACT);
+				m_pSEManager.SEPlayer(SE_WALL_CONTACT);
 				break;
 			}
 		}
@@ -348,9 +352,9 @@ void CStage1::StgCollBullet() {
 			m_Player.ShotRefBottom(i);
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				if (m_pSEManager[j].IsPlaySE())
+				if (m_pSEManager.IsPlaySE())
 					continue;
-				m_pSEManager[j].SEPlayer(SE_WALL_CONTACT);
+				m_pSEManager.SEPlayer(SE_WALL_CONTACT);
 				break;
 			}
 		}
@@ -364,9 +368,9 @@ void CStage1::StgCollBullet() {
 			m_Player.ShotRefLeft(i);
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				if (m_pSEManager[j].IsPlaySE())
+				if (m_pSEManager.IsPlaySE())
 					continue;
-				m_pSEManager[j].SEPlayer(SE_WALL_CONTACT);
+				m_pSEManager.SEPlayer(SE_WALL_CONTACT);
 				break;
 			}
 		}
@@ -380,9 +384,9 @@ void CStage1::StgCollBullet() {
 			m_Player.ShotRefRight(i);
 			for (int j = 0; j < SE_COUNT; j++)
 			{
-				if (m_pSEManager[j].IsPlaySE())
+				if (m_pSEManager.IsPlaySE())
 					continue;
-				m_pSEManager[j].SEPlayer(SE_WALL_CONTACT);
+				m_pSEManager.SEPlayer(SE_WALL_CONTACT);
 				break;
 			}
 		}

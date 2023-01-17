@@ -82,9 +82,9 @@ void CGameClear::Update(void){
 		m_NowTime = 0;
 		for (int i = 0; i < SE_COUNT; i++)
 		{
-			if (m_pSEManager[i].IsPlaySE())
+			if (m_pSEManager.IsPlaySE())
 				continue;
-			m_pSEManager[i].SEPlayer(SE_SELECT_OK);
+			m_pSEManager.SEPlayer(SE_SELECT_OK);
 			break;
 		}
 	}

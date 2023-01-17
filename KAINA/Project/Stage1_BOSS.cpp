@@ -36,13 +36,13 @@ void CStage1_Boss::Initialize() {
 	Load();
 	//プレイヤーの状態初期化
 	m_Player.Initialize();
-	m_Player.SetSEManager(m_pSEManager);
+	m_Player.SetSEManager(&m_pSEManager);
 	m_Player.SetPlayerPos(m_Stage.GetIniPlayerPos().x, m_Stage.GetIniPlayerPos().y);
 	GetSaveToFile();
 	m_Player.SetHp(m_PlayerHp);
 	//ボスの状態初期化
 	m_Boss.Initialize();
-	m_Boss.SetSEManager(m_pSEManager);
+	m_Boss.SetSEManager(&m_pSEManager);
 
 	//ステージの状態初期化
 	m_Stage.Initialize(m_ItemArray);
@@ -214,13 +214,8 @@ void CStage1_Boss::StgCollBullet()
 		if (m_Stage.Collision(psrec))
 		{
 			m_Player.ShotRefTop(i);
-			for (int j = 0; j < SE_COUNT; j++)
-			{
-				if (m_pSEManager[j].IsPlaySE())
-					continue;
-				m_pSEManager[j].SEPlayer(SE_WALL_CONTACT);
-				break;
-			}
+			if (m_pSEManager.IsPlaySE())
+				m_pSEManager.SEPlayer(SE_WALL_CONTACT);
 		}
 
 		//下の判定
@@ -230,13 +225,8 @@ void CStage1_Boss::StgCollBullet()
 		if (m_Stage.Collision(psrec))
 		{
 			m_Player.ShotRefBottom(i);
-			for (int j = 0; j < SE_COUNT; j++)
-			{
-				if (m_pSEManager[j].IsPlaySE())
-					continue;
-				m_pSEManager[j].SEPlayer(SE_WALL_CONTACT);
-				break;
-			}
+			if (m_pSEManager.IsPlaySE())
+				m_pSEManager.SEPlayer(SE_WALL_CONTACT);
 		}
 
 		//左の判定
@@ -246,13 +236,8 @@ void CStage1_Boss::StgCollBullet()
 		if (m_Stage.Collision(psrec))
 		{
 			m_Player.ShotRefLeft(i);
-			for (int j = 0; j < SE_COUNT; j++)
-			{
-				if (m_pSEManager[j].IsPlaySE())
-					continue;
-				m_pSEManager[j].SEPlayer(SE_WALL_CONTACT);
-				break;
-			}
+			if (m_pSEManager.IsPlaySE())
+				m_pSEManager.SEPlayer(SE_WALL_CONTACT);
 		}
 
 		//右の判定
@@ -262,13 +247,8 @@ void CStage1_Boss::StgCollBullet()
 		if (m_Stage.Collision(psrec))
 		{
 			m_Player.ShotRefRight(i);
-			for (int j = 0; j < SE_COUNT; j++)
-			{
-				if (m_pSEManager[j].IsPlaySE())
-					continue;
-				m_pSEManager[j].SEPlayer(SE_WALL_CONTACT);
-				break;
-			}
+			if (m_pSEManager.IsPlaySE())
+				m_pSEManager.SEPlayer(SE_WALL_CONTACT);
 		}
 	}
 

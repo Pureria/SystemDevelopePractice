@@ -59,6 +59,8 @@ void CMenu::Create(char* pTitle, char** pText, int cnt) {
 		m_Rect.Bottom += trec.Bottom + m_VSpace;
 	}
 	m_Rect.Bottom += m_VSpace;
+
+	m_SE.SelectLoad();
 }
 
 void CMenu::Update() {

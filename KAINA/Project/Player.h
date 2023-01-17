@@ -21,6 +21,7 @@ private:
 	bool					m_bMove;
 	float					m_MoveX;
 	float					m_MoveY;
+	float					m_SPInterval;
 	bool					m_bJump;
 	bool					m_bFall;
 	bool					m_bReverse;
@@ -206,6 +207,8 @@ public:
 	inline void SetHp(int hp)									{		m_HP = hp;												}
 
 	void SetSEManager(CSE_Manager* sem)							{		m_pSEManager = sem;										}
+
+	void SetMapChipPos(Vector2 pos, int i)						{		m_Laser[i].SetMapChipPos(pos);							}
 
 #pragma endregion	
 

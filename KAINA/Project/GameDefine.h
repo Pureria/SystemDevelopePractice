@@ -90,6 +90,9 @@ enum tag_NormalNaturalChangeType {
 //SPの回復量
 #define		SP_POWER						3
 
+//SPの回復までのインターバル(秒)
+#define		PLAYERSHOT_INTERVAL				3.0f
+
 
 //HEAL弾のダメージ量
 #define		HEAL_DAMAGE						3

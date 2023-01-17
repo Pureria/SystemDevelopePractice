@@ -1,5 +1,7 @@
 #pragma once
 
+#define		SE_TYPE		5
+
 enum BGMCode
 {
 	BGM_TITLE,
@@ -42,3 +44,4 @@ enum SECode{
 	SE_SELECT_OK,
 	SE_CNT,
 };
+
