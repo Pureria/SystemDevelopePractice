@@ -126,7 +126,7 @@ void Laser::OutRange() {
 
 	if (m_StopCount <= 0)
 	{
-		m_LaserDecrealse += LASER_ATTACKWIDTH;
+		m_LaserDecrealse += LASER_ATTACKWIDTH * 2;
 		if (GetRect().Left > GetRect().Right || GetRect().Top > GetRect().Bottom) {
 			m_bShow = false;
 			m_bHitWall = false;
