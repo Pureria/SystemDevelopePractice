@@ -406,6 +406,48 @@ void CBaseStage::ButtonGimmic()
 }
 
 
+//戻り値FALSE	:	ブロック衝突なし	TRUE	:	ブロック衝突あり
+bool CBaseStage::GetMapChipPos(CRectangle r, float& posx, float& posy, bool waterColl)
+{
+	bool re = false;
+	//当たり判定する短径の左上と右下のチップ位置を求める
+	int lc = m_ScrollX / m_ChipSize;
+	int rc = (g_pGraphics->GetTargetWidth() + m_ScrollX) / m_ChipSize;
+	int tc = m_ScrollY / m_ChipSize;
+	int bc = (g_pGraphics->GetTargetHeight() + m_ScrollY) / m_ChipSize;
+
+	//ステージの範囲外にはならないようにする
+	if (lc < 0) { lc = 0; }
+	if (tc < 0) { tc = 0; }
+	if (rc >= m_XCount) { rc = m_XCount - 1; }
+	if (bc >= m_YCount) { bc = m_YCount - 1; }
+
+	for (int y = tc; y <= bc; y++)
+	{
+		for (int x = lc; x <= rc; x++)
+		{
+			char cn = m_pChipData[y * m_XCount + x] - 1;
+			if (cn < 0)
+			{
+				continue;
+			}
+
+			if (cn == WATER && !waterColl)	continue;
+
+			if (cn == CRACK_STONE) continue;
+
+			CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
+			posx = x * m_ChipSize;
+			posy = y * m_ChipSize;
+			re = true;
+
+		}
+	}
+
+	return re;
+}
+
+
 //当たり判定
 bool CBaseStage::Collision(CRectangle r) {
 	//当たり判定する短径の左上と右下のチップ位置を求める
