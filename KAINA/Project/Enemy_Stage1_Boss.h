@@ -40,7 +40,6 @@ private:
 
 	CRectangle				m_AttakSlashRect;
 
-	//変数のオーバーライドされる？
 	CEnemyShot				m_ShotArray[ENEMY_BOSS_SLASH_COUNT];
 
 
