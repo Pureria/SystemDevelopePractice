@@ -8,8 +8,3 @@ MofLibrary/
 KAINA/Resource/SaveDataFile/Save.txt
 
 #一時除外ファイル
-ImageTestProject/*.vs
-ImageTestProject/*.exe
-ImageTestProject/*.pdb
-ImageTestProject/*.ilk
-ImageTestProject/Project/Debug
