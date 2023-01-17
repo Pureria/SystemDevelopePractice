@@ -24,6 +24,7 @@ bool CTitle::Load(void){
 
 
 	m_BGMManager.Load();
+	
 
 	return true;
 }
@@ -54,6 +55,9 @@ void CTitle::Initialize(void){
 	m_Alpha = 255;
 
 	m_SelectNo = 0;
+
+	m_pSEManager.TitleLoad();
+
 }
 
 /**
@@ -105,9 +109,9 @@ void CTitle::Update(void){
 		m_FlashCount = START_FLASH_COUNT;
 		for (int i = 0; i < SE_COUNT; i++)
 		{
-			if (m_pSEManager[i].IsPlaySE())
+			if (m_pSEManager.IsPlaySE())
 				continue;
-			m_pSEManager[i].SEPlayer(SE_SELECT_OK);
+			m_pSEManager.SEPlayer(SE_SELECT_OK);
 			break;
 		}
 	}
@@ -123,9 +127,9 @@ void CTitle::UpdateSelect() {
 	{
 		for (int i = 0; i < SE_COUNT; i++)
 		{
-			if (m_pSEManager[i].IsPlaySE())
+			if (m_pSEManager.IsPlaySE())
 				continue;
-			m_pSEManager[i].SEPlayer(SE_SELECT_CHANGE);
+			m_pSEManager.SEPlayer(SE_SELECT_CHANGE);
 			break;
 		}
 		if (m_SelectNo > 0) {
@@ -138,9 +142,9 @@ void CTitle::UpdateSelect() {
 	{
 		for (int i = 0; i < SE_COUNT; i++)
 		{
-			if (m_pSEManager[i].IsPlaySE())
+			if (m_pSEManager.IsPlaySE())
 				continue;
-			m_pSEManager[i].SEPlayer(SE_SELECT_CHANGE);
+			m_pSEManager.SEPlayer(SE_SELECT_CHANGE);
 			break;
 		}
 
@@ -169,9 +173,9 @@ void CTitle::UpdateMenu() {
 	else if (g_pInput->IsKeyPush(MOFKEY_RETURN) && m_SelectNo == 1) {
 		for (int i = 0; i < SE_COUNT; i++)
 		{
-			if (m_pSEManager[i].IsPlaySE())
+			if (m_pSEManager.IsPlaySE())
 				continue;
-			m_pSEManager[i].SEPlayer(SE_SELECT_OK);
+			m_pSEManager.SEPlayer(SE_SELECT_OK);
 			break;
 		}
 		m_FlashCount = EXIT_FALSH_COUNT;

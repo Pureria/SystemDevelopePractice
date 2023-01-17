@@ -30,7 +30,7 @@ protected:
 	CBGM_Manager			m_BGMManager;
 
 	//SE
-	CSE_Manager*			m_pSEManager;
+	CSE_Manager				m_pSEManager;
 
 	CPublicFunction			m_Function;
 
@@ -87,7 +87,7 @@ public:
 		}
 	}
 
-	void SetSEManager(CSE_Manager* sem) { m_pSEManager = sem; }
+	void SetSEManager(CSE_Manager* sem) { m_pSEManager = *sem; }
 		
 };
 

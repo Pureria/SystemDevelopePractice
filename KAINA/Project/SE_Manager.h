@@ -5,12 +5,11 @@
 class CSE_Manager
 {
 private:
-	CSoundBuffer gSound[SE_CNT];
+	CSoundBuffer m_Sound[SE_CNT][SE_TYPE];
 	int			m_NowSetSE;
 	int			m_Volume;
 public:
 
-	void Initialize(void);
 	bool Load(void);
 	void SEPlayer(int request);
 	void Release(void);
@@ -18,11 +17,14 @@ public:
 	bool IsPlaySE();
 
 	void StopSE();
-	int GetNowSetSE() { return m_NowSetSE; }
+	int  GetNowSetSE() { return m_NowSetSE; }
 
-	/*bool TitleLoad();
-	bool SelectLoad();
-	bool GameLoad();
-	bool Load();*/
+	void TitleLoad();
+	void SelectLoad();
+	void GameLoad();
+	void BossLoad();
+	void PlayerLoad();
+	void StageLoad();
+	void EnemyLoad();
 };
 

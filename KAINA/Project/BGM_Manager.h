@@ -5,9 +5,9 @@
 class CBGM_Manager
 {
 private:
-	CSoundBuffer gSound;
+	CSoundBuffer m_Sound;
 public:
-	CBGM_Manager() : gSound(){}
+	CBGM_Manager() : m_Sound(){}
 	~CBGM_Manager(){}
 
 	bool Load(void);

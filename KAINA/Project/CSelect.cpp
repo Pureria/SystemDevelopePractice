@@ -14,6 +14,8 @@ bool CSelect::Load() {
 
 	m_BGMManager.Load();
 
+	m_pSEManager.Load();
+
 	return true;
 }
 
@@ -66,26 +68,17 @@ void CSelect::Update() {
 
 	if (g_pInput->IsKeyPush(MOFKEY_D)) {
 		if (m_NowSelect < COUNT_NO - 1) {
-			for (int i = 0; i < SE_COUNT; i++)
-			{
-				if (m_pSEManager[i].IsPlaySE())
-					continue;
-				m_pSEManager[i].SEPlayer(SE_SELECT_CHANGE);
-				break;
-			}
+
+			if (!m_pSEManager.IsPlaySE())
+				m_pSEManager.SEPlayer(SE_SELECT_CHANGE);
 
 			++m_NowSelect;
 		}
 	}
 	if (g_pInput->IsKeyPush(MOFKEY_A)) {
 		if (m_NowSelect > 0) {
-			for (int i = 0; i < SE_COUNT; i++)
-			{
-				if (m_pSEManager[i].IsPlaySE())
-					continue;
-				m_pSEManager[i].SEPlayer(SE_SELECT_CHANGE);
-				break;
-			}
+			if (!m_pSEManager.IsPlaySE())
+				m_pSEManager.SEPlayer(SE_SELECT_CHANGE);
 			--m_NowSelect;
 		}
 	}
@@ -96,13 +89,8 @@ void CSelect::Update() {
 		m_NowTime = 0;
 		m_FlashCount = FLASH_COUNT;
 
-		for (int i = 0; i < SE_COUNT; i++)
-		{
-			if (m_pSEManager[i].IsPlaySE())
-				continue;
-			m_pSEManager[i].SEPlayer(SE_SELECT_OK);
-			break;
-		}
+		if (!m_pSEManager.IsPlaySE())
+			m_pSEManager.SEPlayer(SE_SELECT_OK);
 	}
 }
 

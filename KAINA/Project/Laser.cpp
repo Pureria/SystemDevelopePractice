@@ -16,6 +16,11 @@ void Laser::Initialize() {
 }
 
 void Laser::Update() {
+	while (m_LaserRange < m_LaserHitPos.x)
+	{
+		m_LaserRange += LASER_ATTACKWIDTH;
+		m_bShow = false;
+	}
 	ShotLaser();
 }
 
@@ -32,15 +37,8 @@ void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
 
 void Laser::ShotLaser() {
 	
-	if (m_LaserRange < 1000) {
-		m_LaserRange += LASER_ATTACKWIDTH;
-		m_bShow = false;
-		return;
-	}
-	else {
-		m_bShow = true;
-		OutRange();
-	}
+	m_bShow = true;
+	OutRange();
 }
 
 CRectangle Laser::GetRect() {
@@ -93,11 +91,7 @@ void Laser::OutRange() {
 
 	if (m_StopCount <= 0)
 	{
-		m_LaserDecrealse += LASER_ATTACKWIDTH * 2;
-		if (GetRect().Left > GetRect().Right || GetRect().Top > GetRect().Bottom) {
-			m_bShow = false;
-			m_bHitWall = false;
-		}
+		m_bShow = false;
 	}
 	else
 	{

@@ -25,7 +25,6 @@
 #include	"SE_Manager.h"
 
 Scene_Base*				g_pScene = NULL;
-CSE_Manager				g_SEManager[SE_COUNT];
 
 //デバッグ表示フラグ
 bool					g_bDebug = false;
@@ -43,14 +42,8 @@ MofBool CGameApp::Initialize(void){
 	//リソース配置ディレクトリの設定
 	CUtilities::SetCurrentDirectory("Resource");
 	//シーンの必要リソースを全て読み込む
-	
-	for (int i = 0; i < SE_COUNT; i++)
-	{
-		g_SEManager[i].Initialize();
-	}
 
 	g_pScene = new CTitle();
-	g_pScene->SetSEManager(g_SEManager);
 	g_pScene->Initialize();
 	
 	return TRUE;
@@ -102,7 +95,6 @@ MofBool CGameApp::Update(void){
 			g_pScene = new CGameOver();
 			break;
 		}
-		g_pScene->SetSEManager(g_SEManager);
 		g_pScene->Initialize();
 	}
 
@@ -115,7 +107,6 @@ MofBool CGameApp::Update(void){
 	if (g_pInput->IsKeyPush(MOFKEY_B)) {
 		delete  g_pScene;
 		g_pScene = new CStage1_Boss();
-		g_pScene->SetSEManager(g_SEManager);
 		g_pScene->Initialize();
 	}
 	
@@ -159,9 +150,5 @@ MofBool CGameApp::Release(void){
 		g_pScene->Release();
 	}
 
-	for (int i = 0; i < SE_COUNT; i++)
-	{
-		g_SEManager[i].Release();
-	}
 	return TRUE;
 }
