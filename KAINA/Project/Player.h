@@ -163,8 +163,6 @@ public:
 
 	CRectangle GetLaserRect(int i)								{		return m_Laser[i].GetRect();							}
 
-	CRectangle* GetLaserFireRect(int i)							{ 		return m_Laser[i].GetFireRect();						}
-
 	CRectangle GetNormalRect(int i)								{ 		return m_PlShotAry[i].GetRect();						}
 
 	bool GetNormalShow(int i)									{ 		return m_PlShotAry[i].GetShow();						}

@@ -17,9 +17,6 @@ private:
 	//レーザーの拡張範囲の変数
 	int				m_LaserRange;
 
-	CRectangle		m_FireRec[LASER_FIRE_COUNT];
-
-
 public:
 	Laser();
 	~Laser() {};
@@ -35,15 +32,14 @@ public:
 	void SetFrostTexture(CTexture* pt)								{		m_phShotTex = pt; }
 	//ステージに当たった場合　true	: false
 	void SetWallHitLaser(bool flg)									{		m_bHitWall = flg;				}
-	void DirecPosSet();
 	//Get関数
 public:
 	CRectangle GetRect();
 
-	CRectangle* GetFireRect();
 
+	bool GetWallHit()												{		return m_bHitWall;				}
 
-	bool GetWallHit()											{		return m_bHitWall;				}
+	void SetMapChipPos(Vector2 pos)									{		m_LaserHitPos = pos;			}
 
 	//処理を省略するための関数
 private:

@@ -798,7 +798,7 @@ void CPlayer::FireShotLaser() {
 			DirecMotionChange();
 
 			for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
-				if (m_Laser[i].GetShow()) { continue; }
+				if (m_Laser[i].GetShow()) { 	continue;	}
 				for (int j = 0; j < SE_COUNT; j++)
 				{
 					if (m_pSEManager[j].IsPlaySE())
