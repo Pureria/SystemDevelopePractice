@@ -63,15 +63,17 @@ void CMenu::Create(char* pTitle, char** pText, int cnt) {
 	m_SE.SelectLoad();
 }
 
+void CMenu::InitSE() {
+	return;
+}
+
+
 void CMenu::Update() {
 	if (!m_bShow) {
 		return;
 	}
 	if (g_pInput->IsKeyPush(MOFKEY_RETURN)) {
 		m_bEnter = true;
-		if (m_SE.IsPlaySE()) {
-			return;
-		}
 		m_SE.SEPlayer(SE_SELECT_OK);
 	}
 	//è„â∫ÇÃÉLÅ[Ç≈ëIë
@@ -80,19 +82,12 @@ void CMenu::Update() {
 		if (m_Select < 0) {
 			m_Select = m_Count - 1;
 		}
-		if (m_SE.IsPlaySE()) {
-			return;
-		}
 		m_SE.SEPlayer(SE_SELECT_CHANGE);	
 	}
 	else if (g_pInput->IsKeyPush(MOFKEY_S)) {
 		m_Select++;
 		if (m_Select >= m_Count) {
 			m_Select = 0;
-		}
-
-		if (m_SE.IsPlaySE()) {
-			return;
 		}
 		m_SE.SEPlayer(SE_SELECT_CHANGE);
 	}
@@ -160,5 +155,5 @@ void CMenu::Release() {
 	}
 	m_Rect = CRectangle(0, 0, 0, 0);
 
-	m_SE.Release();
+	m_SE.SelectRelease();
 }

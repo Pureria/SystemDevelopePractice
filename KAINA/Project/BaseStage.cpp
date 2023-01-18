@@ -195,6 +195,7 @@ bool CBaseStage::Load(char* pName , int nowscene){
 	//ƒtƒ@ƒCƒ‹‚ð•Â‚¶‚é
 	fclose(fp);
 	free(pBuffer);
+	m_SEManager.StageLoad();
 	return true;
 }
 
@@ -920,13 +921,7 @@ void CBaseStage::CollisionIceFroe(CRectangle r)
 				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
 				if (cr.CollisionRect(r))
 				{
-					for (int i = 0; i < SE_COUNT; i++)
-					{
-						if (m_pSEManager[i].IsPlaySE())
-							continue;
-						m_pSEManager[i].SEPlayer(SE_FIRE_ICE);
-						break;
-					}
+					m_SEManager.SEPlayer(SE_FIRE_ICE);
 					m_pChipData[y * m_XCount + x] = 13;
 				}
 			}
@@ -935,13 +930,7 @@ void CBaseStage::CollisionIceFroe(CRectangle r)
 				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
 				if (cr.CollisionRect(r))
 				{
-					for (int i = 0; i < SE_COUNT; i++)
-					{
-						if (m_pSEManager[i].IsPlaySE())
-							continue;
-						m_pSEManager[i].SEPlayer(SE_FIRE_ICE);
-						break;
-					}
+					m_SEManager.SEPlayer(SE_FIRE_ICE);
 					m_pChipData[y * m_XCount + x] = 0;
 				}
 			}
@@ -1016,18 +1005,7 @@ bool CBaseStage::FireBar(CRectangle prec,bool FireEffect)
 				if (FireEffect)
 				{
 					m_pEffectManager->Start(UpFireRec.GetCenter().x + m_ScrollX, UpFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR_BOTTOM);
-					for (int i = 0; i < SE_COUNT; i++)
-					{
-						if (m_pSEManager[i].GetNowSetSE() == SE_BURNER && m_pSEManager[i].IsPlaySE())
-							break;
-
-						if (m_pSEManager[i].IsPlaySE())
-							continue;
-
-						m_pSEManager[i].SEPlayer(SE_BURNER);
-						break;
-					}
-
+					m_SEManager.SEPlayer(SE_BURNER);
 				}
 				if (prec.CollisionRect(UpFireRec))
 					return true;
@@ -1040,17 +1018,8 @@ bool CBaseStage::FireBar(CRectangle prec,bool FireEffect)
 				if (FireEffect)
 				{
 					m_pEffectManager->Start(DownFireRec.GetCenter().x + m_ScrollX, DownFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR_TOP);
-					for (int i = 0; i < SE_COUNT; i++)
-					{
-						if (m_pSEManager[i].GetNowSetSE() == SE_BURNER && m_pSEManager[i].IsPlaySE())
-							break;
-
-						if (m_pSEManager[i].IsPlaySE())
-							continue;
-
-						m_pSEManager[i].SEPlayer(SE_BURNER);
-						break;
-					}
+					
+					m_SEManager.SEPlayer(SE_BURNER);
 				}
 				if (prec.CollisionRect(DownFireRec))
 					return true;
@@ -1153,4 +1122,6 @@ void CBaseStage::Release(int nowscene){
 		delete[] m_pItemTexture;
 		m_pItemTexture = NULL;
 	}
+
+	m_SEManager.StageRelease();
 }

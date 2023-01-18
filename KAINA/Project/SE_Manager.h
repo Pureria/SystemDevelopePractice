@@ -9,12 +9,10 @@ private:
 	int			m_NowSetSE;
 	int			m_Volume;
 public:
-
+	CSE_Manager();
+	~CSE_Manager() { Release(); }
 	bool Load(void);
 	void SEPlayer(int request);
-	void Release(void);
-
-	bool IsPlaySE();
 
 	void StopSE();
 	int  GetNowSetSE() { return m_NowSetSE; }
@@ -25,6 +23,20 @@ public:
 	void BossLoad();
 	void PlayerLoad();
 	void StageLoad();
-	void EnemyLoad();
+	void Enemy1Load();
+	void Enemy2Load();
+
+
+	void Release();
+
+
+	void TitleRelease();
+	void SelectRelease();
+	void GameRelease();
+	void BossRelease();
+	void PlayerRelease();
+	void StageRelease();
+	void Enemy1Release();
+	void Enemy2Release();
 };
 

@@ -72,7 +72,7 @@ private:
 	bool					m_bButtonYellow;
 
 	//SE
-	CSE_Manager*			m_pSEManager;
+	CSE_Manager				m_SEManager;
 
 	//テスト用
 	CRectangle				FireRec;
@@ -94,8 +94,6 @@ public:
 	bool CollisionBoss1(CRectangle r);
 	bool Collision(CRectangle r, float& ox, float& oy);
 
-	//SEManagerのセット
-	void		SetSEManager(CSE_Manager* pmng) { m_pSEManager = pmng; }
 
 	//引数　：　プレイヤーの攻撃Rect		プレイヤーがステージに攻撃した時の処理(ボタン処理)
 	bool StageAttackCollision(CRectangle r);

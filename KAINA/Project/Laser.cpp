@@ -4,7 +4,8 @@ Laser::Laser() :
 	m_LaserHitPos(0, 0),
 	m_LaserRange(0),
 	m_LaserDecrealse(0),
-	m_StopCount(0)
+	m_StopCount(0),
+	m_HitRange(0)
 {};
 
 
@@ -16,10 +17,14 @@ void Laser::Initialize() {
 }
 
 void Laser::Update() {
-	while (m_LaserRange < m_LaserHitPos.x)
+	/*while (m_HitRange < m_LaserHitPos.x)
 	{
-		m_LaserRange += LASER_ATTACKWIDTH;
+		m_HitRange += LASER_ATTACKWIDTH;
 		m_bShow = false;
+	}*/
+	if (!m_bHitWall) {
+		m_LaserRange += LASER_ATTACKWIDTH;
+		return;
 	}
 	ShotLaser();
 }
@@ -30,14 +35,16 @@ void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
 	m_DrcType = tb;
 	m_NatuType = natuyype;
 	m_ShotType = type;
-	m_LaserRange = 0;
 	m_LaserDecrealse = 0;
 	m_StopCount = LASER_DELAY;
+	m_bShow = true;
+	m_bHitWall = false;
 }
 
 void Laser::ShotLaser() {
 	
-	m_bShow = true;
+	//m_bShow = true;
+	//m_LaserRange = m_HitRange;
 	OutRange();
 }
 
@@ -144,5 +151,5 @@ void Laser::RenderDebug(float wx, float wy) {
 
 	CGraphicsUtilities::RenderRect(lzrec, MOF_XRGB(255, 0, 0));
 
-
+	CGraphicsUtilities::RenderString(1500,100, "%.0f",m_HitRange);
 }

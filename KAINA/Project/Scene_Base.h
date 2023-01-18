@@ -30,7 +30,7 @@ protected:
 	CBGM_Manager			m_BGMManager;
 
 	//SE
-	CSE_Manager				m_pSEManager;
+	CSE_Manager				m_SEManager;
 
 	CPublicFunction			m_Function;
 
@@ -86,8 +86,6 @@ public:
 			SaveDataFile.close();
 		}
 	}
-
-	void SetSEManager(CSE_Manager* sem) { m_pSEManager = *sem; }
 		
 };
 

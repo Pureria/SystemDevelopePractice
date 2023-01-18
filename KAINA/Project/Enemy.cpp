@@ -45,6 +45,7 @@ void CEnemy::Initialize(float px,float py,int type){
 		},
 	};
 	m_Motion.Create( anim, MOTION_COUNT );
+	m_SEManager.Enemy1Load();
 }
 
 /**
@@ -91,6 +92,9 @@ void CEnemy::Update(float wx){
 			m_ShotArray[i].Fire(m_Pos.x, m_Pos.y + 20, -5, 0);
 			m_ShotWait = ENEMY_SHOT_WAIT;
 			break;
+		}
+		if (m_bWidthOut) {
+			m_SEManager.SEPlayer(SE_ENEMY_ATTACK02);
 		}
 	}
 	else
@@ -185,4 +189,5 @@ void CEnemy::SetTexture(CTexture* pt, CTexture* st)
  */
 void CEnemy::Release(void){
 	m_Motion.Release();
+	m_SEManager.Enemy1Release();
 }

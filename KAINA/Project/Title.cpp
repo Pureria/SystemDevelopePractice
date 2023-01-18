@@ -5,7 +5,7 @@
  * デストラクタ
  *
  */
-CTitle::~CTitle(){}
+CTitle::~CTitle() { Release(); }
 
 /**
  * 読み込み
@@ -25,6 +25,7 @@ bool CTitle::Load(void){
 
 	m_BGMManager.Load();
 	
+	m_SEManager.TitleLoad();
 
 	return true;
 }
@@ -56,7 +57,6 @@ void CTitle::Initialize(void){
 
 	m_SelectNo = 0;
 
-	m_pSEManager.TitleLoad();
 
 }
 
@@ -107,13 +107,8 @@ void CTitle::Update(void){
 		m_NowTime = 0;
 		m_Alpha = 0;
 		m_FlashCount = START_FLASH_COUNT;
-		for (int i = 0; i < SE_COUNT; i++)
-		{
-			if (m_pSEManager.IsPlaySE())
-				continue;
-			m_pSEManager.SEPlayer(SE_SELECT_OK);
-			break;
-		}
+		
+		m_SEManager.SEPlayer(SE_SELECT_OK);
 	}
 }
 
@@ -125,13 +120,7 @@ void CTitle::UpdateSelect() {
 
 	if (g_pInput->IsKeyPush(MOFKEY_W))
 	{
-		for (int i = 0; i < SE_COUNT; i++)
-		{
-			if (m_pSEManager.IsPlaySE())
-				continue;
-			m_pSEManager.SEPlayer(SE_SELECT_CHANGE);
-			break;
-		}
+		m_SEManager.SEPlayer(SE_SELECT_CHANGE);
 		if (m_SelectNo > 0) {
 			--m_SelectNo;
 		}
@@ -140,13 +129,8 @@ void CTitle::UpdateSelect() {
 
 	if (g_pInput->IsKeyPush(MOFKEY_S))
 	{
-		for (int i = 0; i < SE_COUNT; i++)
-		{
-			if (m_pSEManager.IsPlaySE())
-				continue;
-			m_pSEManager.SEPlayer(SE_SELECT_CHANGE);
-			break;
-		}
+		
+		m_SEManager.SEPlayer(SE_SELECT_CHANGE);
 
 		if (m_SelectNo < COUNT_NO - 1) {
 			++m_SelectNo;
@@ -171,13 +155,8 @@ void CTitle::UpdateMenu() {
 		}
 	}
 	else if (g_pInput->IsKeyPush(MOFKEY_RETURN) && m_SelectNo == 1) {
-		for (int i = 0; i < SE_COUNT; i++)
-		{
-			if (m_pSEManager.IsPlaySE())
-				continue;
-			m_pSEManager.SEPlayer(SE_SELECT_OK);
-			break;
-		}
+		
+		m_SEManager.SEPlayer(SE_SELECT_OK);
 		m_FlashCount = EXIT_FALSH_COUNT;
 		m_Menu.Show(Vector2(g_pGraphics->GetTargetWidth() * 0.5f, g_pGraphics->GetTargetHeight() * 0.5f));
 	}
@@ -237,4 +216,5 @@ void CTitle::Release(void){
 	m_ExitImage.Release();
 	m_Menu.Release();
 	m_BGMManager.Release();
+	m_SEManager.TitleRelease();
 }
