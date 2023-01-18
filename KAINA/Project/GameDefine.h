@@ -66,8 +66,11 @@ enum tag_NormalNaturalChangeType {
 
 //当たり判定減衰幅
 #define		PLAYER_RECTDECREASE_WIDTH		32
-
 #define		PLAYER_RECTDECREASE_HEIGHT		12
+
+//水の当たり判定減衰幅
+#define		PLAYER_WATERDEC_WIDTH			44
+#define		PLAYER_WATERDEC_HEIGHT			20
 
 //弾の最大数
 #define		PLAYERSHOT_COUNT				20
@@ -81,17 +84,17 @@ enum tag_NormalNaturalChangeType {
 //レーザーの間隔
 #define     LASER_WAIT						120
 
-//SP消費の間隔
-#define		PLAYER_SPWAIT					60
+//SP消費の間隔			
+#define		PLAYER_SPWAIT					5	
 
 //HEAL弾の回復量
 #define		HEAL_POWER						1
 
 //SPの回復量
-#define		SP_POWER						3
+#define		SP_POWER						1
 
 //SPの回復までのインターバル(秒)
-#define		PLAYERSHOT_INTERVAL				3.0f
+#define		PLAYERSHOT_INTERVAL				180
 
 
 //HEAL弾のダメージ量

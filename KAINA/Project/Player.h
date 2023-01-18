@@ -70,7 +70,7 @@ private:
 
 	//弾の配列
 	CPlayerShot 			m_PlShotAry[PLAYERSHOT_COUNT];
-	Laser					m_Laser[PLAYERSHOT_COUNT];
+	Laser					m_Laser;
 
 	//弾の間隔
 	int						m_ShotWait;
@@ -104,7 +104,7 @@ private:
 	CTexture				m_FireTex;
 	CTexture				m_FrostTex;
 
-	CSE_Manager*			m_pSEManager;
+	CSE_Manager			   m_SEManager;
 
 public:
 	CPlayer();
@@ -160,9 +160,10 @@ public:
 																				m_PosX + m_SrcRect.GetWidth() - PLAYER_RECTDECREASE_WIDTH,
 																				m_PosY + m_SrcRect.GetHeight());
 																}
-	int	 GetLaserDirec(int i)									{		return m_Laser[i].GetDirec();							}
 
-	CRectangle GetLaserRect(int i)								{		return m_Laser[i].GetRect();							}
+	int	 GetLaserDirec()										{		return m_Laser.GetDirec();								}
+
+	CRectangle GetLaserRect()									{		return m_Laser.GetRect();								}
 
 	CRectangle GetNormalRect(int i)								{ 		return m_PlShotAry[i].GetRect();						}
 
@@ -182,13 +183,20 @@ public:
 
 	int  GetNatuShot(int i)										{		return m_PlShotAry[i].GetNatu();						}
 
-	int  GetNatuLaser(int i)									{		return m_Laser[i].GetNatu();							}
+	int  GetNatuLaser()											{		return m_Laser.GetNatu();								}
 
-	bool GetLaserShotShow(int i)								{		return m_Laser[i].GetShow();							}
+	bool GetLaserShotShow()										{		return m_Laser.GetShow();								}
 
 	inline int GetHp()											{		return m_HP;											}
 
-	inline bool GetLaserWallHit(int i)							{		return m_Laser[i].GetWallHit();							}
+	inline bool GetLaserWallHit()								{		return m_Laser.GetWallHit();							}
+	//水用の当たり判定
+	CRectangle	GetWaterRect()									{
+																		return CRectangle(m_PosX + PLAYER_WATERDEC_WIDTH,
+																			m_PosY + PLAYER_WATERDEC_HEIGHT,
+																			m_PosX + m_SrcRect.GetWidth() - PLAYER_WATERDEC_WIDTH,
+																			m_PosY + m_SrcRect.GetHeight() - PLAYER_WATERDEC_HEIGHT);
+																}
 	
 #pragma endregion
 
@@ -200,15 +208,13 @@ public:
 
 	void SetNormalShotShow(bool flg, int i)						{		m_PlShotAry[i].SetShow(flg);							}
 	//ステージに当たった場合　true	: false
-	void SetWallLaser(int i,bool flg)							{		m_Laser[i].SetWallHitLaser(flg);						}
+	void SetWallLaser(bool flg)									{		m_Laser.SetWallHitLaser(flg);							}
 	
 	inline void SetPlayerPos(float PosX, float PosY)			{		m_PosX = PosX; m_PosY = PosY;							}
 	
 	inline void SetHp(int hp)									{		m_HP = hp;												}
 
-	void SetSEManager(CSE_Manager* sem)							{		m_pSEManager = sem;										}
-
-	void SetMapChipPos(Vector2 pos, int i)						{		m_Laser[i].SetMapChipPos(pos);							}
+	void SetMapChipPos(Vector2& pos)							{		m_Laser.SetMapChipPos(pos);								}
 
 #pragma endregion	
 
@@ -225,7 +231,7 @@ public:
 	
 	bool IsShotLaser(int i)										{		return m_PlShotAry[i].IsShotLaser();					}
 
-	bool IsLaser(int i)											{		return m_Laser[i].IsShotLaser();						}
+	bool GetIsLaser()											{		return m_Laser.IsShotLaser();							}
 
 	
 #pragma endregion
@@ -259,7 +265,7 @@ private:
 	//レーザーの発射状態の管理
 	void FireShotLaser();
 	//レーザーの向きを撃つ瞬間にセット
-	void ShotRevLaser(int i);
+	void ShotRevLaser();
 
 #pragma endregion
 	

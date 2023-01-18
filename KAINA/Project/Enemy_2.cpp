@@ -2,8 +2,7 @@
 
 CEnemy_2::CEnemy_2() :
 	m_bFallFlg(false),
-	m_pEndEffect(),
-	m_pSEManager()
+	m_pEndEffect()
 {}
 
 CEnemy_2::~CEnemy_2(){}
@@ -50,6 +49,7 @@ void CEnemy_2::Initialize(float px, float py, int type)
 		},
 	};
 	m_Motion.Create(anim, MOTION_COUNT);
+	m_SEManager.Enemy1Load();
 }
 
 /**
@@ -172,6 +172,10 @@ void CEnemy_2::Update(float wx)
 				}
 				break;
 			}
+			if (m_bWidthOut) {
+				m_SEManager.SEPlayer(SE_ENEMY_ATTACK01);
+			}
+				
 		}
 	}
 	else
@@ -269,24 +273,12 @@ void CEnemy_2::Damage(float dmg)
 	if (m_HP <= 0 && m_bShow)
 	{
 		m_pEndEffect = m_pEffectManager->Start(m_Pos.x + (m_SrcRect.GetWidth() * 0.5), m_Pos.y + (m_SrcRect.GetHeight() * 0.5), EFC_EXPLOSION01);
-		for (int i = 0; i < SE_COUNT; i++)
-		{
-			if (m_pSEManager[i].IsPlaySE())
-				continue;
-			m_pSEManager[i].SEPlayer(SE_ENEMY_DIE);
-			break;
-		}
+		m_SEManager.SEPlayer(SE_ENEMY_DIE);
 		m_bShow = false;
 	}
 	else if(m_DamageWait <= 0)
 	{
-		for (int i = 0; i < SE_COUNT; i++)
-		{
-			if (m_pSEManager[i].IsPlaySE())
-				continue;
-			m_pSEManager[i].SEPlayer(SE_ENEMY_DAMAGE);
-			break;
-		}
+		m_SEManager.SEPlayer(SE_ENEMY_DAMAGE);
 
 		m_bKnockback = true;
 		Flip();
@@ -399,4 +391,5 @@ void CEnemy_2::DeffenceProc(int dmg) {
 void CEnemy_2::Release()
 {
 	m_Motion.Release();
+	m_SEManager.Enemy2Release();
 }

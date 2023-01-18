@@ -46,6 +46,8 @@ protected:
 	int						m_AbStateWait;
 	MofU32					m_Color;
 
+	CSE_Manager				m_SEManager;
+
 public:
 	CEnemy_Base();
 	virtual ~CEnemy_Base() {};

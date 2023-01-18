@@ -12,6 +12,7 @@
  *
  */
 CGameClear::~CGameClear(){
+	Release();
 }
 
 /**
@@ -26,7 +27,7 @@ bool CGameClear::Load(void){
 	}
 
 	m_BGMManager.Load();
-
+	m_SEManager.SelectLoad();
 	return true;
 }
 
@@ -80,13 +81,7 @@ void CGameClear::Update(void){
 		m_bFadeOut = true;
 		m_Alpha = 0;
 		m_NowTime = 0;
-		for (int i = 0; i < SE_COUNT; i++)
-		{
-			if (m_pSEManager.IsPlaySE())
-				continue;
-			m_pSEManager.SEPlayer(SE_SELECT_OK);
-			break;
-		}
+		m_SEManager.SEPlayer(SE_SELECT_OK);
 	}
 }
 
@@ -116,4 +111,5 @@ void CGameClear::RenderDebug(void){
 void CGameClear::Release(void){
 	m_BackImage.Release();
 	m_BGMManager.Release();
+	m_SEManager.SelectRelease();
 }

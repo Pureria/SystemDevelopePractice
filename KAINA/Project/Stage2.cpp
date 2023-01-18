@@ -6,6 +6,7 @@
  *
  */
 CStage2::~CStage2(){
+	Release();
 }
 
 /**
@@ -29,6 +30,8 @@ bool CStage2::Load(){
 	//BGMの読み込み
 	m_BGMManager.Load();
 	
+	m_SEManager.GameLoad();
+
 	return true;
 }
 
@@ -42,7 +45,6 @@ void CStage2::Initialize(){
 	Load();
 	//プレイヤーの状態初期化
 	m_Player.Initialize();
-	m_Player.SetSEManager(&m_pSEManager);
 	m_Player.SetPlayerPos(m_BaseStage.GetIniPlayerPos().x, m_BaseStage.GetIniPlayerPos().y);
 	//ステージの状態初期化
 	m_BaseStage.Initialize(m_EnemyArray, m_Enemy2Array, m_ItemArray);
@@ -69,13 +71,10 @@ void CStage2::Initialize(){
 	for (int i = 0; i < m_BaseStage.GetEnemy2Count(); i++)
 	{
 		m_Enemy2Array[i].SetEffectManager(&m_EffectManager);
-		m_Enemy2Array[i].SetSEManager(&m_pSEManager);
 	}
 
 	//ステージにエフェクトクラスの設定
 	m_BaseStage.SetEffectManager(&m_EffectManager);
-	//ステージにSEマネージャーの設定
-	m_BaseStage.SetSEManager(&m_pSEManager);
 
 	//BGMの初期化
 	m_BGMManager.Initialize();
@@ -208,30 +207,25 @@ void CStage2::StgCollPlayer() {
 		}
 	}
 
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
+
+	ox = 0, oy = 0;
+	if (m_BaseStage.Collision(m_Player.GetLaserRect(), ox, oy))
 	{
-		if (!m_Player.GetLaserShotShow(i)) { continue; }
+		m_Player.SetWallLaser(true);
+	}
+	if (m_Player.GetIsLaser()) {
+		m_BaseStage.CollisionCrack(m_Player.GetLaserRect());
+	}
 
-		ox = 0, oy = 0;
-		if (m_BaseStage.Collision(m_Player.GetLaserRect(i), ox, oy))
-		{
-			m_Player.SetWallLaser(i,true);
-		}
-		if (m_Player.IsLaser(i)) {
-			m_BaseStage.CollisionCrack(m_Player.GetLaserRect(i));
-		}
+	if (m_Player.GetNatuLaser() == FROST)
+	{
+		m_BaseStage.CollisionFreezeWater(m_Player.GetLaserRect(), m_Player.GetRect());
+	}
 
-		//TODO: 水と弾の判定
-		if (m_Player.GetNatuLaser(i) == FROST)
-		{
-			m_BaseStage.CollisionFreezeWater(m_Player.GetLaserRect(i), m_Player.GetRect());
-		}
-
-		//TODO: 氷と弾の判定
-		if (m_Player.GetNatuLaser(i) == FIRE)
-		{
-			m_BaseStage.CollisionIceFroe(m_Player.GetLaserRect(i));
-		}
+	//TODO: 氷と弾の判定
+	if (m_Player.GetNatuLaser() == FIRE)
+	{
+		m_BaseStage.CollisionIceFroe(m_Player.GetLaserRect());
 	}
 
 	//TODO: 砲台とプレイヤーの当たり判定
@@ -274,8 +268,8 @@ void CStage2::StgCollPlayer() {
 	{
 		for (int i = 0; i < SE_COUNT; i++)
 		{
-			if (m_pSEManager.GetNowSetSE() == SE_BURNER)
-				m_pSEManager.StopSE();
+			if (m_SEManager.GetNowSetSE() == SE_BURNER)
+				m_SEManager.StopSE();
 		}
 
 		m_EffectManager.Stop(EFC_FIREBAR_TOP);
@@ -290,7 +284,7 @@ void CStage2::StgCollPlayer() {
 			m_intervalFire -= 1;
 	}
 
-	if (m_BaseStage.CollisionWater(m_Player.GetRect()))
+	if (m_BaseStage.CollisionWater(m_Player.GetWaterRect()))
 	{
 		m_Player.PlayerDamage(1);
 	}
@@ -299,11 +293,8 @@ void CStage2::StgCollPlayer() {
 
 void CStage2::StgCollBullet() {
 
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-	{
-		if (m_Player.GetLaserShotShow(i)) {
-			m_BaseStage.StageAttackCollision(m_Player.GetLaserRect(i));
-		}
+	if (m_Player.GetLaserShotShow()) {
+		m_BaseStage.StageAttackCollision(m_Player.GetLaserRect());
 	}
 
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
@@ -327,13 +318,8 @@ void CStage2::StgCollBullet() {
 		if (m_BaseStage.Collision(psrec))
 		{
 			m_Player.ShotRefTop(i);
-			for (int j = 0; j < SE_COUNT; j++)
-			{
-				if (m_pSEManager.IsPlaySE())
-					continue;
-				m_pSEManager.SEPlayer(SE_WALL_CONTACT);
-				break;
-			}
+			
+			m_SEManager.SEPlayer(SE_WALL_CONTACT);
 		}
 
 		//下の判定
@@ -343,13 +329,8 @@ void CStage2::StgCollBullet() {
 		if (m_BaseStage.Collision(psrec))
 		{
 			m_Player.ShotRefBottom(i);
-			for (int j = 0; j < SE_COUNT; j++)
-			{
-				if (m_pSEManager.IsPlaySE())
-					continue;
-				m_pSEManager.SEPlayer(SE_WALL_CONTACT);
-				break;
-			}
+			
+			m_SEManager.SEPlayer(SE_WALL_CONTACT);
 		}
 
 		//左の判定
@@ -359,13 +340,8 @@ void CStage2::StgCollBullet() {
 		if (m_BaseStage.Collision(psrec))
 		{
 			m_Player.ShotRefLeft(i);
-			for (int j = 0; j < SE_COUNT; j++)
-			{
-				if (m_pSEManager.IsPlaySE())
-					continue;
-				m_pSEManager.SEPlayer(SE_WALL_CONTACT);
-				break;
-			}
+			
+			m_SEManager.SEPlayer(SE_WALL_CONTACT);
 		}
 
 		//右の判定
@@ -375,13 +351,8 @@ void CStage2::StgCollBullet() {
 		if (m_BaseStage.Collision(psrec))
 		{
 			m_Player.ShotRefRight(i);
-			for (int j = 0; j < SE_COUNT; j++)
-			{
-				if (m_pSEManager.IsPlaySE())
-					continue;
-				m_pSEManager.SEPlayer(SE_WALL_CONTACT);
-				break;
-			}
+			
+			m_SEManager.SEPlayer(SE_WALL_CONTACT);
 		}
 	}
 }
@@ -639,4 +610,6 @@ void CStage2::Release(void){
 	m_EffectManager.Release();
 	m_Menu.Release();
 	m_BGMManager.Release();
+	m_SEManager.GameRelease();
+
 }

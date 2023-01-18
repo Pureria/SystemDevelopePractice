@@ -116,6 +116,7 @@ bool CEnemy_Stage1_Boss::Load()
 	};
 	m_Motion.Create(anim, MOTION_COUNT);
 
+	m_SEManager.BossLoad();
 	return true;
 }
 
@@ -323,13 +324,7 @@ void CEnemy_Stage1_Boss::Update() {
 			m_Move.y = ENEMY_JUMP;
 			m_bTouchGround = false; 
 			m_bJump = true;
-			for (int j = 0; j < SE_COUNT; j++)
-			{
-				if (m_pSEManager[j].IsPlaySE())
-					continue;
-				m_pSEManager[j].SEPlayer(SE_BOSS_JUMP);
-				break;
-			}
+			m_SEManager.SEPlayer(SE_BOSS_JUMP);
 		}
 
 		if (m_bJump && m_bTouchGround)
@@ -375,13 +370,7 @@ void CEnemy_Stage1_Boss::Update() {
 				m_Move.x = ENEMY_ATTACKDASH_SPEED;
 				m_Motion.ChangeMotion(MOTION_ATTACK_DASH);
 			}
-			for (int j = 0; j < SE_COUNT; j++)
-			{
-				if (m_pSEManager[j].IsPlaySE())
-					continue;
-				m_pSEManager[j].SEPlayer(SE_BOSS_ATTACK03);
-				break;
-			}
+			m_SEManager.SEPlayer(SE_BOSS_ATTACK03);
 		}
 		break;
 
@@ -417,13 +406,7 @@ void CEnemy_Stage1_Boss::Update() {
 				//m_bReverse = true;
 				m_bJump = true;
 			}
-			for (int j = 0; j < SE_COUNT; j++)
-			{
-				if (m_pSEManager[j].IsPlaySE())
-					continue;
-				m_pSEManager[j].SEPlayer(SE_BOSS_JUMP);
-				break;
-			}
+			m_SEManager.SEPlayer(SE_BOSS_JUMP);
 		}
 		m_OldMotionNo = MOTION_ATTACK_JUMP;
 		break;
@@ -468,13 +451,7 @@ void CEnemy_Stage1_Boss::Update() {
 				}
 			}
 			m_AttackSlash = true;
-			for (int j = 0; j < SE_COUNT; j++)
-			{
-				if (m_pSEManager[j].IsPlaySE())
-					continue;
-				m_pSEManager[j].SEPlayer(SE_BOSS_ATTACK01);
-				break;
-			}
+			m_SEManager.SEPlayer(SE_BOSS_ATTACK01);
 		}
 		//攻撃モーションの終了
 		if (m_Motion.IsEndMotion())
@@ -594,28 +571,14 @@ void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 	{
 		//爆発エフェクトを発生させる
 		//m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
-		for (int j = 0; j < SE_COUNT; j++)
-		{
-			if (m_pSEManager[j].IsPlaySE()) {
-				continue;
-			}
-			m_pSEManager[j].SEPlayer(SE_ENEMY_DIE);
-			break;
-		}
+		m_SEManager.SEPlayer(SE_ENEMY_DIE);
 		m_Move.x = 0;
 		m_OldMotionNo = MOTION_END;
 		m_Motion.ChangeMotion(MOTION_END);
 	}
 	else
 	{
-		for (int j = 0; j < SE_COUNT; j++)
-		{
-			if (m_pSEManager[j].IsPlaySE()) {
-				continue;
-			}
-			m_pSEManager[j].SEPlayer((direction) ? SE_BOSS_SHIELD : SE_BOSS_DAMAGE);
-			break;
-		}
+		m_SEManager.SEPlayer((direction) ? SE_BOSS_SHIELD : SE_BOSS_DAMAGE);
 		//ダメージエフェクトを発生させる
 		m_pEffectManager->Start(SetStartPos(), (direction) ? EFC_SHIELD : EFC_WEAK);
 	}
@@ -750,4 +713,5 @@ void CEnemy_Stage1_Boss::Release(void) {
 	m_ShotTexture.Release();
 	m_HPTex.Release();
 	m_FrameTex.Release();
+	m_SEManager.BossRelease();
 }

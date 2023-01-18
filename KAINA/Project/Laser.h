@@ -7,15 +7,17 @@ private:
 	
 
 	//レーザーの当たった座標の保管
-	Vector2			m_LaserHitPos;
+	Vector2				m_LaserHitPos;
 
 	//レーザー減衰幅の変数
-	float			m_LaserDecrealse;
+	float				m_LaserDecrealse;
 	//レーザーが止まる時間
-	float			m_StopCount;
+	float				m_StopCount;
 
 	//レーザーの拡張範囲の変数
-	int				m_LaserRange;
+	float				m_LaserRange;
+
+	float				m_HitRange;
 
 public:
 	Laser();
@@ -39,7 +41,7 @@ public:
 
 	bool GetWallHit()												{		return m_bHitWall;				}
 
-	void SetMapChipPos(Vector2 pos)									{		m_LaserHitPos = pos;			}
+	void SetMapChipPos(Vector2& pos)								{		m_LaserHitPos = pos;			}
 
 	//処理を省略するための関数
 private:

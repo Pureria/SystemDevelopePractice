@@ -2,9 +2,8 @@
 #include "Mof.h"
 #include "GameDefine.h"
 
-//extern int gChangeScene;
 
-CSelect::~CSelect() {}
+CSelect::~CSelect() { Release(); }
 
 bool CSelect::Load() {
 
@@ -14,7 +13,7 @@ bool CSelect::Load() {
 
 	m_BGMManager.Load();
 
-	m_pSEManager.Load();
+	m_SEManager.SelectLoad();
 
 	return true;
 }
@@ -68,17 +67,15 @@ void CSelect::Update() {
 
 	if (g_pInput->IsKeyPush(MOFKEY_D)) {
 		if (m_NowSelect < COUNT_NO - 1) {
-
-			if (!m_pSEManager.IsPlaySE())
-				m_pSEManager.SEPlayer(SE_SELECT_CHANGE);
+			m_SEManager.SEPlayer(SE_SELECT_CHANGE);
 
 			++m_NowSelect;
 		}
 	}
 	if (g_pInput->IsKeyPush(MOFKEY_A)) {
 		if (m_NowSelect > 0) {
-			if (!m_pSEManager.IsPlaySE())
-				m_pSEManager.SEPlayer(SE_SELECT_CHANGE);
+			m_SEManager.SEPlayer(SE_SELECT_CHANGE);
+				
 			--m_NowSelect;
 		}
 	}
@@ -88,9 +85,7 @@ void CSelect::Update() {
 		m_Alpha = 0;
 		m_NowTime = 0;
 		m_FlashCount = FLASH_COUNT;
-
-		if (!m_pSEManager.IsPlaySE())
-			m_pSEManager.SEPlayer(SE_SELECT_OK);
+		m_SEManager.SEPlayer(SE_SELECT_OK);
 	}
 }
 
@@ -129,4 +124,5 @@ void CSelect::Release()
 	m_Stage1Str.Release();
 	m_Stage2Str.Release();
 	m_BGMManager.Release();
+	m_SEManager.SelectRelease();
 }
