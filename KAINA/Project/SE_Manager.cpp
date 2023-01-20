@@ -66,9 +66,9 @@ void CSE_Manager::StopSE(int request)
 	
 }
 
-/******************************************ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€å„ã‚¯ãƒ©ã‚¹ã®Load()ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€*********************************************/
+/******************************************@@@@@@@@ŠeƒNƒ‰ƒX‚ÌLoad()@@@@@@@@@*********************************************/
 
-//Titleç”»é¢ã¸
+//Title‰æ–Ê‚Ö
 void CSE_Manager::TitleLoad() {
 
 	for (int j = 0; j < SE_TYPE; j++)
@@ -78,7 +78,7 @@ void CSE_Manager::TitleLoad() {
 	}
 }
 
-//ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¸
+//ƒXƒe[ƒW‘I‘ğAƒƒjƒ…[‚Ö
 void CSE_Manager::SelectLoad() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
@@ -87,7 +87,7 @@ void CSE_Manager::SelectLoad() {
 	}
 }
 
-//ã‚²ãƒ¼ãƒ ã¸
+//ƒQ[ƒ€‚Ö
 void CSE_Manager::GameLoad() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
@@ -98,7 +98,7 @@ void CSE_Manager::GameLoad() {
 	m_Sound[SE_BURNER][0].SetVolume(m_Volume * 0.5f);
 }
 
-//ãƒœã‚¹ã¸
+//ƒ{ƒX‚Ö
 void CSE_Manager::BossLoad() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
@@ -117,7 +117,7 @@ void CSE_Manager::BossLoad() {
 
 }
 
-//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¸
+//ƒvƒŒƒCƒ„[‚Ö
 void CSE_Manager::PlayerLoad() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
@@ -145,7 +145,7 @@ void CSE_Manager::PlayerLoad() {
 	}
 }
 
-//ã‚¹ãƒ†ãƒ¼ã‚¸ã¸
+//ƒXƒe[ƒW‚Ö
 void CSE_Manager::StageLoad() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
@@ -157,7 +157,7 @@ void CSE_Manager::StageLoad() {
 	//m_Sound[SE_BURNER][0].SetVolume(m_Volume * 0.5f);
 }
 
-//æ•µ1ã¸
+//“G1‚Ö
 void CSE_Manager::Enemy1Load() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
@@ -165,7 +165,7 @@ void CSE_Manager::Enemy1Load() {
 	}
 }
 
-//æ•µï¼’ã¸
+//“G‚Q‚Ö
 void CSE_Manager::Enemy2Load() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
@@ -176,7 +176,7 @@ void CSE_Manager::Enemy2Load() {
 }
 
 
-/******************************************ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€å„ã‚¯ãƒ©ã‚¹ã®Relsease()ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€*********************************************/
+/******************************************@@@@@@@@ŠeƒNƒ‰ƒX‚ÌRelsease()@@@@@@@@@*********************************************/
 
 
 
@@ -189,7 +189,7 @@ void CSE_Manager::TitleRelease() {
 	}
 }
 
-//ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¸
+//ƒXƒe[ƒW‘I‘ğAƒƒjƒ…[‚Ö
 void CSE_Manager::SelectRelease() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
@@ -198,7 +198,7 @@ void CSE_Manager::SelectRelease() {
 	}
 }
 
-//ã‚²ãƒ¼ãƒ ã¸
+//ƒQ[ƒ€‚Ö
 void CSE_Manager::GameRelease() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
@@ -207,7 +207,7 @@ void CSE_Manager::GameRelease() {
 	m_Sound[SE_BURNER][0].Release();
 }
 
-//ãƒœã‚¹ã¸
+//ƒ{ƒX‚Ö
 void CSE_Manager::BossRelease() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
@@ -221,7 +221,7 @@ void CSE_Manager::BossRelease() {
 
 }
 
-//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¸
+//ƒvƒŒƒCƒ„[‚Ö
 void CSE_Manager::PlayerRelease() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
@@ -239,7 +239,7 @@ void CSE_Manager::PlayerRelease() {
 	}
 }
 
-//ã‚¹ãƒ†ãƒ¼ã‚¸ã¸
+//ƒXƒe[ƒW‚Ö
 void CSE_Manager::StageRelease() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
@@ -249,7 +249,7 @@ void CSE_Manager::StageRelease() {
 	m_Sound[SE_BURNER][0].Release();
 }
 
-//æ•µã¸
+//“G‚Ö
 void CSE_Manager::Enemy1Release() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{

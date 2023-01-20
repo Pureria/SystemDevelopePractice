@@ -1044,7 +1044,7 @@ bool CBaseStage::FireBar(CRectangle prec,bool FireEffect)
 				if (FireEffect)
 				{
 					m_pEffectManager->Start(UpFireRec.GetCenter().x + m_ScrollX, UpFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR_BOTTOM);
-					
+					m_SEManager.SEPlayer(SE_BURNER);
 				}
 				if (prec.CollisionRect(UpFireRec))
 					return true;
@@ -1057,6 +1057,7 @@ bool CBaseStage::FireBar(CRectangle prec,bool FireEffect)
 				if (FireEffect)
 				{
 					m_pEffectManager->Start(DownFireRec.GetCenter().x + m_ScrollX, DownFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR_TOP);
+					m_SEManager.SEPlayer(SE_BURNER);
 				}
 				if (prec.CollisionRect(DownFireRec))
 					return true;
