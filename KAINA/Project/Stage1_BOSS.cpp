@@ -269,7 +269,7 @@ void CStage1_Boss::StgCollEne()
 		m_Boss.CollisionStage(ox, oy);
 	}
 
-	if (m_Stage.Collision(m_Boss.GetBossSideRect()))
+	if (m_Stage.CollLiftThrough(m_Boss.GetBossSideRect()))
 	{
 		m_Boss.CollisionWall();
 	}
