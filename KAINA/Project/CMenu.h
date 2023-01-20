@@ -42,7 +42,10 @@ private:
 	//メニュー項目の最大矩形
 	CRectangle m_HeaderRect;
 
-	CSE_Manager	m_SE;
+	CSE_Manager		m_SE;
+
+	CTexture		m_TutorialTex;
+
 
 public:
 	//デフォルトコンストラクタ

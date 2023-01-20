@@ -36,7 +36,12 @@ private:
 
 	int				m_NowSceneNo;
 
+	CRectangle		m_PopUpRect;
 
+	CTexture		m_FrostTex;
+	CTexture		m_FireWebTex;
+	CTexture		m_NatuChangeTex;
+	CTexture		m_TypeChangeTex;
 
 public:
 	CStage1() : m_Player(),m_BaseStage(),m_EnemyArray(),m_EffectManager(),m_ItemArray(),m_NowSceneNo(SCENENO_GAME_STAGE1){};
@@ -48,6 +53,8 @@ public:
 	void RenderDebug(void);
 	void Release(void);
 
+
+
 private:
 	void StgCollPlayer();
 	void StgCollEne();
@@ -55,4 +62,6 @@ private:
 	void StgCollBullet();
 
 	bool EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox, float& oy);
+
+
 };

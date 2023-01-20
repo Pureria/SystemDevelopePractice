@@ -29,6 +29,9 @@ bool CEffectManager::Load(void){
 		"Effect/Shield.png",		
 		"Effect/kaihuku.png",	
 		"Effect/temoto.png",	
+		"Effect/temoto2.png",	
+		"Effect/bluetemoto.png",	
+		"Effect/bluetemoto2.png",	
 	};
 	for ( int i = 0; i < EFC_TYPECOUNT; i++ )
 	{
