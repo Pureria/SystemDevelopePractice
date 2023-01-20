@@ -27,6 +27,9 @@ private:
 	CTexture*			m_pFireLaserUpDownTexture;
 	CTexture*			m_pFrostLaserUpDownTexture;
 
+	float				m_ScrollX;
+	float				m_ScrollY;
+
 public:
 	Laser();
 	~Laser() {};
@@ -41,25 +44,27 @@ public:
 	void Fire(Vector2& pos, int tb, int natuyype, int type);
 	void Fire(float x, float y, int tb, int natuyype, int type);
 
-	void SetFireTexture(CTexture* pt)								{		m_pShotTex = pt;				}
-	void SetFrostTexture(CTexture* pt)								{		m_phShotTex = pt;				}
-	void SetFireLaserUpDownTexture(CTexture* pt)					{ m_pFireLaserUpDownTexture = pt;		}
-	void SetFrostLaserUpDownTexture(CTexture* pt)					{		m_pFrostLaserUpDownTexture = pt;}
+	void SetFireTexture(CTexture* pt)								{		m_pShotTex = pt;					}
+	void SetFrostTexture(CTexture* pt)								{		m_phShotTex = pt;					}
+	void SetFireLaserUpDownTexture(CTexture* pt)					{ m_pFireLaserUpDownTexture = pt;			}
+	void SetFrostLaserUpDownTexture(CTexture* pt)					{		m_pFrostLaserUpDownTexture = pt;	}
 
 	//ステージに当たった場合　true	: false
-	void SetWallHitLaser(bool flg)									{		m_bHitWall = flg;				}
+	void SetWallHitLaser(bool flg)									{		m_bHitWall = flg;					}
 	//Get関数
 public:
 	CRectangle GetRect();
 	//CRectangle GetSearchRect();
 
-	bool GetWallHit()												{		return m_bHitWall;				}
+	bool GetWallHit()												{		return m_bHitWall;					}
 
-	void SetMapChipPos(Vector2& pos)								{		m_LaserHitPos = pos;			}
+	void SetMapChipPos(Vector2& pos)								{		m_LaserHitPos = pos;				}
 
 	void SetUp();
 
-	int	GetDecrealse()												{		return m_LaserDecrealse;		}
+	int	GetDecrealse()												{		return m_LaserDecrealse;			}
+
+	void SetScroll(float x, float y)								{		m_ScrollX = x;		m_ScrollY = y;	}
 
 	//処理を省略するための関数
 private:

@@ -162,12 +162,13 @@ void CStage1::Update(void){
 	*/
 	//プレイヤーの更新
 	m_Player.Update();
+	float wx = m_BaseStage.GetScrollX();
+	float wy = m_BaseStage.GetScrollY();
 
+	m_Player.SetScroll(wx,wy);
 	//ステージとプレイヤーの当たり判定
 	StgCollPlayer();
 
-	float wx = m_BaseStage.GetScrollX();
-	float wy = m_BaseStage.GetScrollY();
 
 	StgCollBullet();
 	
@@ -522,8 +523,6 @@ void CStage1::Render(void){
 	float x = m_BaseStage.GetScrollX();
 	float y = m_BaseStage.GetScrollY();
 	m_BaseStage.BackTexRender();
-	m_Player.ShotRender(x, y);
-	m_BaseStage.Render();
 
 	m_FrostTex.Render(3000 - x,280 - y);
 	m_FireWebTex.Render(1300 - x, 280 - y);
@@ -541,8 +540,12 @@ void CStage1::Render(void){
 
 	m_Player.UIRender(m_BaseStage.GetScrollX(),m_BaseStage.GetScrollY());
 
+	//エフェクトの描画
+	m_EffectManager.Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	//プレイヤーの描画
 	m_Player.Render(m_BaseStage.GetScrollX(),m_BaseStage.GetScrollY());
+	m_Player.ShotRender(x, y);
+	m_BaseStage.Render();
 
 	//敵の描画
 	for (int i = 0; i < m_BaseStage.GetEnemy1Count(); i++)
@@ -565,8 +568,6 @@ void CStage1::Render(void){
 		}
 	}
 
-	//エフェクトの描画
-	m_EffectManager.Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 
 	//プレイヤーの状態描画
 	m_Player.RenderStatus();

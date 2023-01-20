@@ -243,6 +243,8 @@ public:
 
 	void SetMapChipPos(Vector2& pos)							{		m_Laser.SetMapChipPos(pos);								}
 
+	void SetScroll(float x, float y)							{		m_Laser.SetScroll(x,y);									}
+
 #pragma endregion	
 
 	/************************************************public Isä÷êî*************************************************/

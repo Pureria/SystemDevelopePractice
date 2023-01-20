@@ -201,6 +201,11 @@ void Laser::OutRange() {
 		m_StopCount -= CUtilities::GetFrameSecond();
 	}
 
+	/*if (m_ShotPos.x < 0 - m_ScrollX || GetRect().Right > g_pGraphics->GetTargetWidth() + 200 - m_ScrollX ||
+		GetRect().Bottom > g_pGraphics->GetTargetHeight() + 200 - m_ScrollY) {
+		m_bShow = false;
+	}*/
+
 }
 
 void Laser::Render(float wx, float wy) {

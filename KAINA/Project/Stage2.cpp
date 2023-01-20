@@ -498,8 +498,6 @@ bool CStage2::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
  */
 void CStage2::Render(void){
 	m_BaseStage.BackTexRender();
-	m_Player.ShotRender(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
-	m_BaseStage.Render();
 
 
 	//ドアの描画
@@ -513,8 +511,12 @@ void CStage2::Render(void){
 
 	m_Player.UIRender(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 
+	//エフェクトの描画
+	m_EffectManager.Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	//プレイヤーの描画
+	m_Player.ShotRender(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	m_Player.Render(m_BaseStage.GetScrollX(),m_BaseStage.GetScrollY());
+	m_BaseStage.Render();
 
 	//敵の描画
 	for (int i = 0; i < m_BaseStage.GetEnemy1Count(); i++)
@@ -537,8 +539,6 @@ void CStage2::Render(void){
 		}
 	}
 
-	//エフェクトの描画
-	m_EffectManager.Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 
 	//プレイヤーの状態描画
 	m_Player.RenderStatus();
