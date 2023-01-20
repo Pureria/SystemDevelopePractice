@@ -433,7 +433,7 @@ void CEnemy_Stage1_Boss::Update() {
 					if (m_ShotArray[i].GetShow())
 						continue;
 					m_ShotArray[i].SetReverse(true);
-					m_ShotArray[i].Fire(m_Pos.x, m_Pos.y + 80.0f, -10.0f, 0);
+					m_ShotArray[i].Fire(m_Pos.x, m_Pos.y + 80.0f, -30.0f, 0);
 					break;
 				}
 			}
@@ -446,7 +446,7 @@ void CEnemy_Stage1_Boss::Update() {
 					if (m_ShotArray[i].GetShow())
 						continue;
 					m_ShotArray[i].SetReverse(false);
-					m_ShotArray[i].Fire(m_Pos.x + m_SrcRect.GetWidth(), m_Pos.y + 80.0f, 10.0f, 0);
+					m_ShotArray[i].Fire(m_Pos.x + m_SrcRect.GetWidth(), m_Pos.y + 80.0f, 30.0f, 0);
 					break;
 				}
 			}

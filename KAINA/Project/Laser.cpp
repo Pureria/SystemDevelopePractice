@@ -164,7 +164,7 @@ void Laser::Render(float wx, float wy) {
 	lzrec.Right -= wx;
 	lzrec.Bottom -= wy;
 
-	MofU32 Color = 0;
+	/*/MofU32 Color = 0;
 
 	switch (GetNatu())
 	{
@@ -175,13 +175,13 @@ void Laser::Render(float wx, float wy) {
 		Color = MOF_XRGB(0, 255, 255);
 		break;
 	}
-	CGraphicsUtilities::RenderFillRect(lzrec, Color,MOF_COLOR_WHITE, MOF_COLOR_WHITE,Color);
+	CGraphicsUtilities::RenderFillRect(lzrec, Color,MOF_COLOR_WHITE, MOF_COLOR_WHITE,Color);*/
 	
 
-	/*if (GetNatu() == FIRE)
+	if (GetNatu() == FIRE)
 		m_pShotTex->Render(lzrec.Left, lzrec.Top, lzrec);
 	else
-		m_phShotTex->Render(lzrec.Left, lzrec.Top, lzrec);*/
+		m_phShotTex->Render(lzrec.Left, lzrec.Top, lzrec);
 
 
 	return;
