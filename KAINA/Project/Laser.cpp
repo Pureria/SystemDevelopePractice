@@ -16,7 +16,7 @@ Laser::Laser() :
 void Laser::Initialize() {
 	SpriteAnimationCreate anim[] = {
 		{
-			"ƒŒ[ƒU[Side",
+			"Æ’Å’Â[Æ’UÂ[Side",
 			0,0,
 			1920,128,
 			TRUE,
@@ -29,7 +29,7 @@ void Laser::Initialize() {
 			}
 		},
 		{
-			"ƒŒ[ƒU[Height",
+			"Æ’Å’Â[Æ’UÂ[Height",
 			0,0,
 			128,1920,
 			TRUE,
@@ -146,13 +146,6 @@ CRectangle Laser::GetRect() {
 	return Rec;
 }
 
-/*CRectangle Laser::GetSearchRect() {
-	return CRectangle(m_ShotPos.x,
-		m_ShotPos.y,
-		m_ShotPos.x + m_LaserRange * (GetRev()) ? -1 : 1,
-		m_ShotPos.y + 10);
-}*/
-
 void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
 	m_ShotPos.x = pos.x - 16;
 	m_ShotPos.y = pos.y - 32;
@@ -163,8 +156,19 @@ void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
 	m_StopCount = LASER_DELAY;
 	m_bShow = true;
 	m_bHitWall = false;
-	/*m_bRev = GetRev();
-	m_HitRange = m_LaserHitPos.x;*/
+	m_LaserRange = 0;
+}
+
+void Laser::Fire(float x,float y, int tb, int natuyype, int type) {
+	m_ShotPos.x = x - 16;
+	m_ShotPos.y = y - 32;
+	m_DrcType = tb;
+	m_NatuType = natuyype;
+	m_ShotType = type;
+	m_LaserDecrealse = 0;
+	m_StopCount = LASER_DELAY;
+	m_bShow = true;
+	m_bHitWall = false;
 	m_LaserRange = 0;
 
 	if (m_DrcType == LEFT || m_DrcType == RIGHT)
@@ -174,7 +178,7 @@ void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
 }
 
 void Laser::OutRange() {
-	//Á‚¦‚éˆ—
+	//ÂÃâ€šÂ¦â€šÃ©ÂË†â€”Â
 
 	if (m_StopCount <= 0)
 	{
@@ -210,7 +214,7 @@ void Laser::Render(float wx, float wy) {
 		Color = MOF_XRGB(0, 255, 255);
 		break;
 	}
-	CGraphicsUtilities::RenderFillRect(lzrec, Color,MOF_COLOR_WHITE, MOF_COLOR_WHITE,Color);*/
+	//CGraphicsUtilities::RenderFillRect(lzrec, Color,MOF_COLOR_WHITE, MOF_COLOR_WHITE,Color);*/
 	
 
 	switch (GetDirec())
@@ -256,7 +260,6 @@ void Laser::RenderDebug(float wx, float wy) {
 
 	CGraphicsUtilities::RenderRect(lzrec, MOF_XRGB(255, 0, 0));
 
-	CGraphicsUtilities::RenderString(1500,100, "%.0f",m_HitRange);
 
 }
 

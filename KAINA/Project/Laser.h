@@ -6,20 +6,20 @@ class Laser : public Shot_Base
 private:
 	
 
-	//ƒŒ[ƒU[‚Ì“–‚½‚Á‚½À•W‚Ì•ÛŠÇ
-	Vector2				m_LaserHitPos;
+	//ãƒ¬ãƒ¼ã‚¶ãƒ¼ã®å½“ãŸã£ãŸåº§æ¨™ã®ä¿ç®¡
+	Vector2					m_LaserHitPos;
 
-	//ƒŒ[ƒU[Œ¸Š•‚Ì•Ï”
-	float				m_LaserDecrealse;
-	//ƒŒ[ƒU[‚ª~‚Ü‚éŠÔ
-	float				m_StopCount;
+	//ãƒ¬ãƒ¼ã‚¶ãƒ¼æ¸›è¡°å¹…ã®å¤‰æ•°
+	float					m_LaserDecrealse;
+	//ãƒ¬ãƒ¼ã‚¶ãƒ¼ãŒæ­¢ã¾ã‚‹æ™‚é–“
+	float					m_StopCount;
 
-	//ƒŒ[ƒU[‚ÌŠg’£”ÍˆÍ‚Ì•Ï”
-	int					m_LaserRange;
+	//ãƒ¬ãƒ¼ã‚¶ãƒ¼ã®æ‹¡å¼µç¯„å›²ã®å¤‰æ•°
+	int						m_LaserRange;
 
-	int					m_HitRange;
+	int						m_HitRange;
 
-	bool				m_bRev;
+	bool					m_bRev;
 
 	CSpriteMotionController m_Motion;
 	CRectangle			m_SrcRect;
@@ -35,17 +35,20 @@ public:
 	void Render(float wx, float wy);
 	void RenderDebug(float wx, float wy);
 	void Release();
-	//SetŠÖ”
+	//Seté–¢æ•°
 public:
-	//”­Ë‚·‚éî•ñ‚ğƒZƒbƒg
+	//ç™ºå°„ã™ã‚‹æƒ…å ±ã‚’ã‚»ãƒƒãƒˆ
 	void Fire(Vector2& pos, int tb, int natuyype, int type);
+	void Fire(float x, float y, int tb, int natuyype, int type);
+
 	void SetFireTexture(CTexture* pt)								{		m_pShotTex = pt;				}
 	void SetFrostTexture(CTexture* pt)								{		m_phShotTex = pt;				}
 	void SetFireLaserUpDownTexture(CTexture* pt)					{ m_pFireLaserUpDownTexture = pt;		}
 	void SetFrostLaserUpDownTexture(CTexture* pt)					{		m_pFrostLaserUpDownTexture = pt;}
-	//ƒXƒe[ƒW‚É“–‚½‚Á‚½ê‡@true	: false
+
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã«å½“ãŸã£ãŸå ´åˆã€€true	: false
 	void SetWallHitLaser(bool flg)									{		m_bHitWall = flg;				}
-	//GetŠÖ”
+	//Geté–¢æ•°
 public:
 	CRectangle GetRect();
 	//CRectangle GetSearchRect();
@@ -58,13 +61,13 @@ public:
 
 	int	GetDecrealse()												{		return m_LaserDecrealse;		}
 
-	//ˆ—‚ğÈ—ª‚·‚é‚½‚ß‚ÌŠÖ”
+	//å‡¦ç†ã‚’çœç•¥ã™ã‚‹ãŸã‚ã®é–¢æ•°
 private:
 
-	//Laser‚Ìˆ—
+	//Laserã®å‡¦ç†
 	void ShotLaser();
 
-	//Á‹ˆ—
+	//æ¶ˆå»å‡¦ç†
 	void OutRange();
 
 	bool GetRev();

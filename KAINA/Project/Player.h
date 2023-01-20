@@ -115,7 +115,7 @@ private:
 	CTexture				m_FireTex;
 	CTexture				m_FrostTex;
 
-	CSE_Manager			   m_SEManager;
+	CSE_Manager			    m_SEManager;
 
 	CTexture				m_Heal2Tex;
 	CTexture				m_Heavy2Tex;
@@ -128,7 +128,6 @@ private:
 	CTexture				m_Fi2Tex;
 
 	int						m_UiWait;
-	int						m_UiInterval;
 
 public:
 	CPlayer();

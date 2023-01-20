@@ -106,7 +106,7 @@ MofBool CGameApp::Update(void){
 	{
 		g_bDebug = ((g_bDebug) ? false : true);
 	}
-
+	//TODO: 外すデバッグ
 	if (g_pInput->IsKeyPush(MOFKEY_B)) {
 		delete  g_pScene;
 		g_pScene = new CStage1_Boss();

@@ -61,6 +61,7 @@ void CMenu::Create(char* pTitle, char** pText, int cnt) {
 	m_Rect.Bottom += m_VSpace;
 
 	m_SE.SelectLoad();
+
 }
 
 void CMenu::InitSE() {
@@ -113,6 +114,7 @@ void CMenu::Show(Vector2 cp) {
 	m_HeaderRect.Right = m_Rect.Left + m_HeaderRect.GetWidth();
 	m_HeaderRect.Left = m_Rect.Left;
 
+	
 }
 
 void CMenu::Render() {
@@ -137,6 +139,8 @@ void CMenu::Render() {
 			((m_Select == i) ? MOF_XRGB(255, 255, 255) : MOF_XRGB(128, 128, 128)), m_pText[i]);
 		py += trec.Bottom + m_VSpace;
 	}
+
+	m_TutorialTex.RenderScale(200, 50, 0.5f);
 }
 
 void CMenu::Release() {
@@ -156,4 +160,6 @@ void CMenu::Release() {
 	m_Rect = CRectangle(0, 0, 0, 0);
 
 	m_SE.SelectRelease();
+	m_TutorialTex.Release();
+
 }

@@ -633,11 +633,11 @@ void CPlayer::BulletChange() {
 void CPlayer::TypeChange() {
 	if (m_ShotType == NORMAL) {
 		m_ShotType = LASER;
-		m_NatuType = FIRE;
+		m_NatuType = (GetNatu() == HEAVY) ? FROST : FIRE;
 	}
 	else {
 		m_ShotType = NORMAL;
-		m_NatuType = HEAL;
+		m_NatuType = (GetNatu() == FROST) ? HEAVY : HEAL;
 	}
 }
 
@@ -877,24 +877,31 @@ void CPlayer::ShotRevLaser() {
 	if (m_SP <= 0) {
 		return;
 	}
-	//TODO LASER
-	m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_LASER_HAND);
 	if (!m_bReverse) {
 		if (m_bTop) {
 			m_Laser.Fire(SetStartPos(), RIGHTTOP, m_NatuType,LASER);
 			m_SpWait = PLAYER_SPWAIT;
 			m_SP -= (m_Laser.GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 
+
+			m_pEndEffect = m_pEffectManager->Start(SetStartPos().x, SetStartPos().y - 32, 
+				(GetNatuLaser() == FIRE) ? EFC_FIRE_HAND_TB : EFC_FROST_HAND_TB);
 		}
 		else if (m_bBottom) {
-			m_Laser.Fire(SetStartPos(), RIGHTBOTTOM, m_NatuType, LASER);
+			m_Laser.Fire(SetStartPos().x,SetStartPos().y + 70, RIGHTBOTTOM, m_NatuType, LASER);
 			m_SpWait = PLAYER_SPWAIT;
 			m_SP -= (m_Laser.GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
+
+			m_pEndEffect = m_pEffectManager->Start(SetStartPos().x, SetStartPos().y + 64, 
+				(GetNatuLaser() == FIRE) ? EFC_FIRE_HAND_TB : EFC_FROST_HAND_TB);
 		}
 		else {
 			m_Laser.Fire(SetStartPos(), RIGHT, m_NatuType, LASER);
 			m_SpWait = PLAYER_SPWAIT;
 			m_SP -= (m_Laser.GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
+
+			m_pEndEffect = m_pEffectManager->Start(SetStartPos(), 
+				(GetNatuLaser() == FIRE) ? EFC_FIRE_HAND_LR : EFC_FROST_HAND_LR);
 		}
 	}
 	else {
@@ -902,16 +909,25 @@ void CPlayer::ShotRevLaser() {
 			m_Laser.Fire(SetStartPos(), LEFTTOP, m_NatuType, LASER);
 			m_SpWait = PLAYER_SPWAIT;
 			m_SP -= (m_Laser.GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
+
+			m_pEndEffect = m_pEffectManager->Start(SetStartPos().x, SetStartPos().y - 32, 
+				(GetNatuLaser() == FIRE) ? EFC_FIRE_HAND_TB : EFC_FROST_HAND_TB);
 		}
 		else if (m_bBottom) {
-			m_Laser.Fire(SetStartPos(), LEFTBOTTOM, m_NatuType, LASER);
+			m_Laser.Fire(SetStartPos().x, SetStartPos().y + 70, LEFTBOTTOM, m_NatuType, LASER);
 			m_SpWait = PLAYER_SPWAIT;
 			m_SP -= (m_Laser.GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
+
+			m_pEndEffect = m_pEffectManager->Start(SetStartPos().x, SetStartPos().y + 64, 
+				(GetNatuLaser() == FIRE) ? EFC_FIRE_HAND_TB : EFC_FROST_HAND_TB);
 		}
 		else {
 			m_Laser.Fire(SetStartPos(), LEFT, m_NatuType, LASER);
 			m_SpWait = PLAYER_SPWAIT;
 			m_SP -= (m_Laser.GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
+
+			m_pEndEffect = m_pEffectManager->Start(SetStartPos(), 
+				(GetNatuLaser() == FIRE) ? EFC_FIRE_HAND_LR : EFC_FROST_HAND_LR);
 		}
 	}
 }
