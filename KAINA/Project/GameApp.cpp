@@ -67,6 +67,8 @@ MofBool CGameApp::Update(void){
 		g_pScene->Release();
 
 		int Change = g_pScene->GetNextScene();
+
+		int Old = g_pScene->GetOldScene();
 		
 		delete  g_pScene;
 
@@ -96,6 +98,7 @@ MofBool CGameApp::Update(void){
 			break;
 		}
 		g_pScene->Initialize();
+		g_pScene->SetOldScene(Old);
 	}
 
 	//デバッグ表示の切り替え

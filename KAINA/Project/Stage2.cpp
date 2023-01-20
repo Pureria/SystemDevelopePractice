@@ -103,6 +103,7 @@ void CStage2::Update(void){
 		{
 			m_bEnd = true;
 			m_SceneNo = SCENENO_GAME_STAGE1_BOSS;
+			SetOldScene(SCENENO_GAME_STAGE2);
 		}
 		return;
 	}
@@ -116,6 +117,7 @@ void CStage2::Update(void){
 			if (m_Menu.GetSelect() == 1) {
 				m_bEnd = true;
 				m_SceneNo = SCENENO_SELECT;
+				SetOldScene(SCENENO_GAME_STAGE2);
 			}
 			m_Menu.Hide();
 		}
@@ -182,6 +184,7 @@ void CStage2::Update(void){
 	{
 		m_bEnd = true;
 		m_SceneNo = SCENENO_GAMEOVER;
+		SetOldScene(SCENENO_GAME_STAGE2);
 	}
 
 	//F3キーでリザルト画面へ
@@ -507,6 +510,8 @@ void CStage2::Render(void){
 			m_ItemArray[i].Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 		}
 	}
+
+	m_Player.UIRender();
 
 	//プレイヤーの描画
 	m_Player.Render(m_BaseStage.GetScrollX(),m_BaseStage.GetScrollY());

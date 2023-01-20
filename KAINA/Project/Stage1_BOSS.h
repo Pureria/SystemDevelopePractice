@@ -26,13 +26,11 @@ private:
 	//アイテムのポインタ配列
 	CItem*				m_ItemArray;
 
-	//ポーズ
-	CMenu				m_Menu;
 
 	int					m_NowSceneNo;
 
 public:
-	CStage1_Boss() : m_Player(), m_Stage(), m_Boss(), m_EffectManager(), m_ItemArray(), m_Menu() , m_NowSceneNo(SCENENO_GAME_STAGE1_BOSS) {};
+	CStage1_Boss() : m_Player(), m_Stage(), m_Boss(), m_EffectManager(), m_ItemArray(), m_NowSceneNo(SCENENO_GAME_STAGE1_BOSS) {};
 	~CStage1_Boss();
 	bool Load();
 	void Initialize();

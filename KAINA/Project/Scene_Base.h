@@ -4,6 +4,7 @@
 #include	"BGM_Manager.h"
 #include	"SE_Manager.h"
 #include	"PublicFunction.h"
+#include	"CMenu.h"
 
 #define		FILEKEY 0x65
 
@@ -19,12 +20,15 @@ protected:
 	bool					m_bEnd;
 	//次のシーン
 	int						m_SceneNo;
-	//
-	bool					m_bChange;
+
+	//ひとつ前のシーン
+	int						m_OldSceneNo;
 
 	float					m_Time;
 	//プレイヤーのHPを保存する変数
 	int						m_PlayerHp;
+
+	CMenu					m_Menu;
 
 	//BGM
 	CBGM_Manager			m_BGMManager;
@@ -43,7 +47,7 @@ protected:
 	int						m_FlashCount;
 
 public:
-	Scene_Base() : m_bEnd(false), m_SceneNo(),m_bChange(false),m_Time(), m_PlayerHp(), m_Alpha(255), m_NowTime(0), m_bFadeIn(true), m_bFadeOut(false), m_FlashCount(0){};
+	Scene_Base() : m_bEnd(false), m_SceneNo(), m_OldSceneNo(0),m_Time(), m_PlayerHp(), m_Alpha(255), m_NowTime(0), m_bFadeIn(true), m_bFadeOut(false), m_FlashCount(0){};
 	virtual ~Scene_Base() {};
 
 	virtual void Initialize()  = 0;
@@ -53,6 +57,7 @@ public:
 	virtual void Release()     = 0;
 
 	int GetNextScene()		    { return m_SceneNo; }
+	int GetOldScene()			{ return m_OldSceneNo; }
 	bool IsEnd()				{ return m_bEnd; }
 
 
@@ -65,6 +70,9 @@ public:
 	void SetTime(float time) {
 		m_Time += time;
 	}
+
+	//ボスステージは入れない
+	void SetOldScene(int no)	{ m_OldSceneNo = no; }
 
 	float Time() {
 

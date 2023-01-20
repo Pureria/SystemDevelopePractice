@@ -69,6 +69,7 @@ void CGameClear::Update(void){
 		{
 			m_bEnd = true;
 			m_SceneNo = SCENENO_SELECT;
+			SetOldScene(SCENENO_GAMECLEAR);
 		}
 
 		return;

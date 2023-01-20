@@ -102,7 +102,7 @@ public:
 	int GetEnemy1Count() { return m_Enemy1Count; }
 	int GetEnemy2Count() { return m_Enemy2_1Count + m_Enemy2_2Count; }
 	int GetItemCount() { return m_ItemCount; }
-	bool GetMapChipPos(CRectangle r, float& posx, float& posy, bool waterColl);
+	//bool GetMapChipPos(CRectangle r, float& posx, float& posy, bool waterColl);
 
 	void ButtonGimmic();
 
@@ -130,4 +130,6 @@ public:
 
 	//CrackStone‚Ìˆ—
 	void CollisionCrack(CRectangle r);
+
+	Vector2 GetMapChipPos(CRectangle r, bool waterColl);
 };

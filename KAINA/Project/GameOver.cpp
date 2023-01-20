@@ -1,10 +1,6 @@
 #include	"GameDefine.h"
 #include	"GameOver.h"
 
-//変更するシーン(外部参照、実体はGameApp.cpp)
-//extern int						gChangeScene;
-
-
 /**
  * デストラクタ
  *
@@ -26,6 +22,8 @@ bool CGameOver::Load(void){
 
 	m_BGMManager.Load();
 	m_SEManager.SelectLoad();
+
+
 	return true;
 }
 
@@ -37,9 +35,41 @@ bool CGameOver::Load(void){
 void CGameOver::Initialize(void){
 	Load();
 
+	char* m_pTitle = "リトライしますか？";
+
+	char* m_pMenuString[TEXTCOUNT_MAX] = {
+						"リトライする",
+						"タイトルへ",
+	};
+	// ポーズ機能に必要な値を渡す。	
+	m_Menu.Create(m_pTitle, m_pMenuString, TEXTCOUNT_MAX);
+
 	m_BGMManager.Initialize();
 	m_BGMManager.BGMPlayer(BGM_GAMEOVER);
 
+}
+
+void CGameOver::UpdateMenu() {
+	if (m_Menu.IsShow()) {
+		m_Menu.Update();
+		if (m_Menu.IsEnter()) {
+			if (m_Menu.GetSelect() == 0) {
+				m_bEnd = true;
+				m_SceneNo = (GetOldScene() == SCENENO_GAME_STAGE1) ? SCENENO_GAME_STAGE1 : SCENENO_GAME_STAGE2;
+				SetOldScene(SCENENO_GAMEOVER);
+			}
+			else {
+				m_bEnd = true;
+				m_SceneNo = SCENENO_TITLE;
+				SetOldScene(SCENENO_GAMEOVER);
+			}
+		}
+	}
+	else if (g_pInput->IsKeyPush(MOFKEY_RETURN)) {
+
+		m_SEManager.SEPlayer(SE_SELECT_OK);
+		m_Menu.Show(Vector2(g_pGraphics->GetTargetWidth() * 0.5f, g_pGraphics->GetTargetHeight() * 0.5f));
+	}
 }
 
 /**
@@ -48,6 +78,11 @@ void CGameOver::Initialize(void){
  */
 void CGameOver::Update(void){
 	UpdateExitkey();
+	UpdateMenu();
+	if (m_Menu.IsShow()) {
+		return;
+	}
+
 	if (m_FlashCount > 0) {
 		m_FlashCount--;
 	}
@@ -67,6 +102,9 @@ void CGameOver::Update(void){
  */
 void CGameOver::Render(void){
 	m_BackImage.Render(0, 0);
+	if (m_Menu.IsShow()) {
+		m_Menu.Render();
+	}
 	if (m_FlashCount % 4 >= 2)
 	{
 		return;
@@ -88,5 +126,6 @@ void CGameOver::RenderDebug(void){
 void CGameOver::Release(void){
 	m_BackImage.Release();
 	m_BGMManager.Release();
+	m_Menu.Release();
 	m_SEManager.SelectRelease();
 }
