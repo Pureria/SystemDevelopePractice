@@ -14,7 +14,7 @@ public:
 	bool Load(void);
 	void SEPlayer(int request);
 
-	void StopSE();
+	void StopSE(int request);
 	int  GetNowSetSE() { return m_NowSetSE; }
 
 	void TitleLoad();
