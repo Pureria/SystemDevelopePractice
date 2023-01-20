@@ -335,10 +335,6 @@ void CStage1_Boss::StgCollItm()
  */
 void CStage1_Boss::Render(void) {
 	m_Stage.BackTexRender();
-	m_Player.ShotRender(m_Stage.GetScrollX(),m_Stage.GetScrollY());
-	
-	//ステージの描画
-	m_Stage.Render();
 
 	//ドアの描画
 	for (int i = 0; i < m_Stage.GetItemCount(); i++)
@@ -350,8 +346,15 @@ void CStage1_Boss::Render(void) {
 	}
 	m_Player.UIRender(0, 0);
 
+	//エフェクトの描画
+	m_EffectManager.Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
+
 	//プレイヤーの描画
 	m_Player.Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
+	m_Player.ShotRender(m_Stage.GetScrollX(),m_Stage.GetScrollY());
+	
+	//ステージの描画
+	m_Stage.Render();
 	//敵の描画
 	m_Boss.Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
 
@@ -363,9 +366,6 @@ void CStage1_Boss::Render(void) {
 			m_ItemArray[i].Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
 		}
 	}
-
-	//エフェクトの描画
-	m_EffectManager.Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
 
 	//プレイヤーの状態描画
 	m_Player.RenderStatus();
