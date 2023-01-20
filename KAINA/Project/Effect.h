@@ -13,7 +13,10 @@ enum tag_EFFECTTYPE {
 	EFC_WEAK,						//弱点
 	EFC_SHIELD,						//シールド
 	EFC_HEAL,						//プレイヤー回復*/
-	EFC_LASER_HAND,					//Laserの手元
+	EFC_FIRE_HAND_LR,				//Laserの手元
+	EFC_FIRE_HAND_TB,				//上下
+	EFC_FROST_HAND_LR,
+	EFC_FROST_HAND_TB,
 
 	EFC_TYPECOUNT,
 };

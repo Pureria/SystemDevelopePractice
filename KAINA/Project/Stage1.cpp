@@ -30,7 +30,11 @@ bool CStage1::Load(){
 	m_BGMManager.Load();
 
 	m_SEManager.GameLoad();
-	
+
+	m_FrostTex.Load("BackGround/frosttutorial.png");
+	m_FireWebTex.Load("BackGround/webtutorial.png");
+	m_NatuChangeTex.Load("BackGround/特性変更.png");
+	m_TypeChangeTex.Load("BackGround/弾変更.png");
 	return true;
 }
 
@@ -78,6 +82,8 @@ void CStage1::Initialize(){
 	//BGMの初期化
 	m_BGMManager.Initialize();
 	m_BGMManager.BGMPlayer(BGM_STAGE1);
+
+	m_PopUpRect = CRectangle(3300, 960, 3364, 1024);
 }
 
 /**
@@ -509,10 +515,16 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
  *
  */
 void CStage1::Render(void){
+	float x = m_BaseStage.GetScrollX();
+	float y = m_BaseStage.GetScrollY();
 	m_BaseStage.BackTexRender();
-	m_Player.ShotRender(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
+	m_Player.ShotRender(x, y);
 	m_BaseStage.Render();
 
+	m_FrostTex.Render(3000 - x,280 - y);
+	m_FireWebTex.Render(1300 - x, 280 - y);
+	m_NatuChangeTex.Render(3000 - x, 380 - y);
+	m_TypeChangeTex.Render(1700 - x, 380 - y);
 
 	//ドアの描画
 	for (int i = 0; i < m_BaseStage.GetItemCount(); i++)
@@ -558,6 +570,8 @@ void CStage1::Render(void){
 	if (m_Menu.IsShow()) {
 		m_Menu.Render();
 	}
+
+	
 
 	CGraphicsUtilities::RenderFillRect(0, 0, g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight(), MOF_ARGB(m_Alpha, 0, 0, 0));
 }
@@ -624,4 +638,9 @@ void CStage1::Release(void){
 	m_Menu.Release();
 	m_BGMManager.Release();
 	m_SEManager.GameRelease();
+
+	m_FrostTex.Release();
+	m_FireWebTex.Release();
+	m_NatuChangeTex.Release();
+	m_TypeChangeTex.Release();
 }

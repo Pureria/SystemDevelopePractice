@@ -44,6 +44,7 @@ void CSE_Manager::SEPlayer(int request) {
 			if (m_Sound[request][j].IsPlay()) { continue; }
 		
 			m_Sound[request][j].Play();
+			break;
 		}
 	}
 }
@@ -133,7 +134,7 @@ void CSE_Manager::PlayerLoad() {
 		
 		m_Sound[SE_JUMP][j].Load("SE/SE_Player_Jump.mp3");
 		
-		m_Sound[SE_HEAVY][j].Load("SE/SE_Heal.mp3");
+		m_Sound[SE_HEAVY][j].Load("SE/SE_Attack_Heavy.mp3");
 		
 		m_Sound[SE_HEAL][j].Load("SE/SE_Heal.mp3");
 		

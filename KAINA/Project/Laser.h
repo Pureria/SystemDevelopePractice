@@ -7,19 +7,19 @@ private:
 	
 
 	//レーザーの当たった座標の保管
-	Vector2				m_LaserHitPos;
+	Vector2					m_LaserHitPos;
 
 	//レーザー減衰幅の変数
-	float				m_LaserDecrealse;
+	float					m_LaserDecrealse;
 	//レーザーが止まる時間
-	float				m_StopCount;
+	float					m_StopCount;
 
 	//レーザーの拡張範囲の変数
-	int					m_LaserRange;
+	int						m_LaserRange;
 
-	int					m_HitRange;
+	int						m_HitRange;
 
-	bool				m_bRev;
+	bool					m_bRev;
 
 	CSpriteMotionController m_Motion;
 
@@ -34,8 +34,10 @@ public:
 public:
 	//発射する情報をセット
 	void Fire(Vector2& pos, int tb, int natuyype, int type);
+	void Fire(float x, float y, int tb, int natuyype, int type);
+
 	void SetFireTexture(CTexture* pt)								{		m_pShotTex = pt;				}
-	void SetFrostTexture(CTexture* pt)								{		m_phShotTex = pt; }
+	void SetFrostTexture(CTexture* pt)								{		m_phShotTex = pt;				}
 	//ステージに当たった場合　true	: false
 	void SetWallHitLaser(bool flg)									{		m_bHitWall = flg;				}
 	//Get関数
