@@ -396,13 +396,13 @@ void CEnemy_Stage1_Boss::Update() {
 			m_Move.y = 1.2f * ENEMY_JUMP;
 			if (!m_bReverse)
 			{
-				m_Move.x = -ENEMY_ATTACKDASH_SPEED * 0.95f;
+				m_Move.x = -ENEMY_ATTACKJUMP_SPEED * 0.95f;
 				//m_bReverse = false;
 				m_bJump = true;
 			}
 			else
 			{
-				m_Move.x = ENEMY_ATTACKDASH_SPEED * 0.95f;
+				m_Move.x = ENEMY_ATTACKJUMP_SPEED * 0.95f;
 				//m_bReverse = true;
 				m_bJump = true;
 			}
@@ -651,10 +651,17 @@ void CEnemy_Stage1_Boss::RenderStatus() {
 	if (m_HP <= 0) {
 		return;
 	}
-	CRectangle hprec(822 * (m_HP * 0.01f), 0, 0, 61);
 
-	m_HPTex.Render(g_pGraphics->GetTargetWidth() * 0.465f + (822 - 822 * (m_HP * 0.01f)), g_pGraphics->GetTargetHeight() - 112, hprec);
+
+	/*CRectangle hprec(822 * (m_HP * 0.01f), 0, 0, 61);
+
+	m_HPTex.Render(g_pGraphics->GetTargetWidth() * 0.465f + (822 - 822 * (m_HP * 0.01f)), g_pGraphics->GetTargetHeight() - 112, hprec);*/
   
+	CRectangle hprec(822, 0, 0, 61);
+	m_HPTex.RenderScale(g_pGraphics->GetTargetWidth() * 0.465f + (822 - 822 * (m_HP * 0.01f)), 
+						g_pGraphics->GetTargetHeight() - 112, 
+						m_HP * 0.01f, 1.0f, hprec, MOF_COLOR_WHITE);//âÊëúÇà≥èkÇ∑ÇÈï\é¶*/
+
 	CRectangle frec(0, 0, 1024, 128);
 
 	float t = frec.Right;

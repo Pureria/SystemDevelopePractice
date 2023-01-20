@@ -131,5 +131,8 @@ public:
 	//CrackStoneの処理
 	void CollisionCrack(CRectangle r);
 
+	//リフトスルー専用の関数
+	bool CollLiftThrough(CRectangle r);
+
 	Vector2 GetMapChipPos(CRectangle r, bool waterColl);
 };

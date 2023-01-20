@@ -39,7 +39,7 @@ public:
 	//Getä÷êî
 public:
 	CRectangle GetRect();
-	CRectangle GetSearchRect();
+	//CRectangle GetSearchRect();
 
 	bool GetWallHit()												{		return m_bHitWall;				}
 

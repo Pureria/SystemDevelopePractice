@@ -18,7 +18,7 @@ void Laser::Initialize() {
 }
 
 void Laser::SetUp() {
-	
+	return;
 }
 
 void Laser::Update() {
@@ -27,10 +27,10 @@ void Laser::Update() {
 		m_HitRange++;
 		m_bShow = false;
 	}*/
-	if (!m_bHitWall) {
-		m_LaserRange += LASER_ATTACKWIDTH;
-		return;
-	}
+
+	if (!m_bShow) { return; }
+
+	
 	ShotLaser();
 }
 
@@ -62,8 +62,10 @@ bool Laser::GetRev() {
 }
 
 void Laser::ShotLaser() {
-	
-	m_bShow = true;
+	if (!m_bHitWall) {
+		m_LaserRange += LASER_ATTACKWIDTH;
+		return;
+	}
 	
 	OutRange();
 }
@@ -113,12 +115,12 @@ CRectangle Laser::GetRect() {
 	return Rec;
 }
 
-CRectangle Laser::GetSearchRect() {
+/*CRectangle Laser::GetSearchRect() {
 	return CRectangle(m_ShotPos.x,
 		m_ShotPos.y,
 		m_ShotPos.x + m_LaserRange * (GetRev()) ? -1 : 1,
 		m_ShotPos.y + 10);
-}
+}*/
 
 void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
 	m_ShotPos.x = pos.x - 16;
@@ -131,8 +133,8 @@ void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
 	m_bShow = true;
 	m_bHitWall = false;
 	/*m_bRev = GetRev();
-	m_HitRange = m_LaserHitPos.x;
-	m_LaserRange = m_HitRange;*/
+	m_HitRange = m_LaserHitPos.x;*/
+	m_LaserRange = 0;
 }
 
 void Laser::OutRange() {
@@ -140,8 +142,11 @@ void Laser::OutRange() {
 
 	if (m_StopCount <= 0)
 	{
-		m_LaserDecrealse += LASER_ATTACKWIDTH;
-		m_bShow = false;
+		m_LaserDecrealse += LASER_ATTACKWIDTH * 2;
+		if (GetRect().Left > GetRect().Right || GetRect().Top > GetRect().Bottom) {
+			m_bShow = false;
+			m_bHitWall = false;
+		}
 	}
 	else
 	{
@@ -196,11 +201,4 @@ void Laser::RenderDebug(float wx, float wy) {
 
 	CGraphicsUtilities::RenderString(1500,100, "%.0f",m_HitRange);
 
-	CRectangle lrec = GetSearchRect();
-	lrec.Left -= wx;
-	lrec.Top -= wy;
-	lrec.Right -= wx;
-	lrec.Bottom -= wy;
-
-	CGraphicsUtilities::RenderRect(lrec, MOF_XRGB(0, 255, 0));
 }

@@ -42,45 +42,45 @@ m_UiWait(0)
 
 bool CPlayer::Load(){
 	//ÉeÉNÉXÉ`ÉÉÇÃì«Ç›çûÇ›
-	if (!m_Texture.Load("Player/chara_ren.png"))				{		return false;		}
+	if (!m_Texture.Load("Player/chara_ren.png"))					{		return false;		}
 
-	if (!m_FrameTexture.Load("Player/Frame.png"))				{		return false;		}
+	if (!m_FrameTexture.Load("Player/Frame.png"))					{		return false;		}
 
-	if (!m_HPBarTexture.Load("Player/Hp.png"))					{		return false;		}	
+	if (!m_HPBarTexture.Load("Player/Hp.png"))						{		return false;		}	
 
-	if (!m_SPBarTexture.Load("Player/Sp.png"))					{		return false;		}
+	if (!m_SPBarTexture.Load("Player/Sp.png"))						{		return false;		}
 
-	if (!m_ShotHealTex.Load("Player/healammo.png"))				{		return false;		}
+	if (!m_ShotHealTex.Load("Player/healammo.png"))					{		return false;		}
 
-	if (!m_ShotHeavyTex.Load("Player/heavyammo.png"))			{		return false;		}
+	if (!m_ShotHeavyTex.Load("Player/heavyammo.png"))				{		return false;		}
 
-	if (!m_HealTex.Load("Player/heal.png"))						{		return false;		}
+	if (!m_HealTex.Load("Player/heal.png"))							{		return false;		}
 
-	if (!m_HeavyTex.Load("Player/heavy.png"))					{		return false;		}
+	if (!m_HeavyTex.Load("Player/heavy.png"))						{		return false;		}
 
-	if (!m_FireTex.Load("Player/fire.png"))						{		return false;		}
+	if (!m_FireTex.Load("Player/fire.png"))							{		return false;		}
 
-	if (!m_FrostTex.Load("Player/frost.png"))					{		return false;		}
+	if (!m_FrostTex.Load("Player/frost.png"))						{		return false;		}
 
-	if (!m_FireLazerTexture.Load("Player/LaserFireTexture.png")){		return false;		}
+	if (!m_FireLazerTexture.Load("Player/LaserFireTexture.png"))	{		return false;		}
 
-	if (!m_FrostLazerTexture.Load("Player/LaserFrostTexture.png")) {	return false;		}		
+	if (!m_FrostLazerTexture.Load("Player/LaserFrostTexture.png"))	{		return false;		}		
 
-	if (!m_Heavy2Tex.Load("Player/heavy2.png"))						{ return false; }
+	if (!m_Heavy2Tex.Load("Player/heavy2.png"))						{		return false;		}
 
-	if (!m_Frost2Tex.Load("Player/frost2.png"))						{ return false; }
+	if (!m_Frost2Tex.Load("Player/frost2.png"))						{		return false;		}
 	
-	if (!m_Heal2Tex.Load("Player/heal2.png"))						{ return false; }
+	if (!m_Heal2Tex.Load("Player/heal2.png"))						{		return false;		}
 	
-	if (!m_Fire2Tex.Load("Player/blaze2.png"))						{ return false; }
+	if (!m_Fire2Tex.Load("Player/blaze2.png"))						{		return false;		}
 
-	if (!m_H2Tex.Load("Player/heavyic.png")) { return false; }
+	if (!m_H2Tex.Load("Player/heavyic.png"))						{		return false;		}
 
-	if (!m_HeTex.Load("Player/healic.png")) { return false; }
+	if (!m_HeTex.Load("Player/healic.png"))							{		return false;		}	
 
-	if (!m_Fr2Tex.Load("Player/frostic.png")) { return false; }
+	if (!m_Fr2Tex.Load("Player/frostic.png"))						{		return false;		}
 
-	if (!m_Fi2Tex.Load("Player/blazeic.png")) { return false; }
+	if (!m_Fi2Tex.Load("Player/blazeic.png"))						{		return false;		}
 
 
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)	
@@ -393,13 +393,6 @@ void CPlayer::Update() {
 		{
 			m_SPInterval--;
 		}
-		/*if (m_SpWait > 0) {
-			m_SpWait--;
-			if (m_SpWait <= 0) {
-				m_SP += SP_POWER;
-				m_SpWait = PLAYER_SPWAIT;
-			}
-		}*/
 	}
 
 	if (m_SP <= 0) {
@@ -1478,10 +1471,14 @@ void CPlayer::Render(float wx,float wy){
 
 void CPlayer::RenderStatus() {
 	//HPÇ…âûÇ∂ÇƒíZåaÇÃïùÇïœâªÇ≥ÇπÇÈ
-	CRectangle hprec(0, 0, 795 * (m_HP * 0.01f), 31);
-	m_HPBarTexture.Render(100,23, hprec);
-	CRectangle sprec(0, 0, 702 * (m_SP * 0.01f), 27);
-	m_SPBarTexture.Render(80,51, sprec);
+	/*CRectangle hprec(0, 0, 795 * (m_HP * 0.01f), 31);
+	m_HPBarTexture.Render(100,23, hprec);*/
+	CRectangle rec(0, 0, 795, 31);
+	m_HPBarTexture.RenderScale(100, 23, m_HP * 0.01f, 1.0f, rec, MOF_COLOR_WHITE);//âÊëúÇà≥èkÇ∑ÇÈï\é¶*/
+	/*CRectangle sprec(0, 0, 702 * (m_SP * 0.01f), 27);
+	m_SPBarTexture.Render(80,51, sprec);*/
+	CRectangle sprec(0, 0, 702, 27);
+	m_SPBarTexture.RenderScale(80, 51, m_SP * 0.01f, 1.0f, sprec, MOF_COLOR_WHITE);//âÊëúÇà≥èkÇ∑ÇÈï\é¶*/
 	//ÉtÉåÅ[ÉÄÇè„ïîÇ…ï`âÊ
 	m_FrameTexture.Render(0, 0);
 
