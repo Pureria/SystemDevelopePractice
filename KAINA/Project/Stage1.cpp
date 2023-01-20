@@ -227,6 +227,10 @@ void CStage1::StgCollPlayer() {
 	{
 		m_Player.SetWallLaser(true);
 	}
+	else if (m_Player.GetLaserRect().Left <= -3000 + m_BaseStage.GetScrollX() || m_Player.GetLaserRect().Right >= g_pGraphics->GetTargetWidth() * 1.5 + m_BaseStage.GetScrollX() + 100)
+	{
+		m_Player.SetWallLaser(true);
+	}
 
 	if (m_Player.GetIsLaser()) {
 		m_BaseStage.CollisionCrack(m_Player.GetLaserRect());
