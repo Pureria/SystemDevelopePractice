@@ -40,6 +40,14 @@ enum tag_NormalNaturalChangeType {
 	FROST,
 };
 
+//レーザーアニメーション用enum
+enum tag_LaserAnimation {
+	LASER_SIDE,
+	LASER_UPDOWN,
+
+	LASER_ANIMATION_COUNT,
+};
+
 //Fade時間(秒)
 #define		FADE_TIME				2
 

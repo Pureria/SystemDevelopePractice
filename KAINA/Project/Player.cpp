@@ -65,9 +65,9 @@ bool CPlayer::Load(){
 
 	if (!m_FrostTex.Load("Player/frost.png"))						{		return false;		}
 
-	if (!m_FireLazerTexture.Load("Player/LaserFireTexture.png"))	{		return false;		}
+	if (!m_FireLazerTexture.Load("Player/laser2.png"))				{		return false;		}
 
-	if (!m_FrostLazerTexture.Load("Player/LaserFrostTexture.png"))	{		return false;		}		
+	if (!m_FrostLazerTexture.Load("Player/bluelaser2.png"))			{		return false;		}		
 
 	if (!m_Heavy2Tex.Load("Player/heavy2.png"))						{		return false;		}
 
@@ -85,14 +85,21 @@ bool CPlayer::Load(){
 
 	if (!m_Fi2Tex.Load("Player/blazeic.png"))						{		return false;		}
 
+	if (!m_FireLaserUpDownTexture.Load("Player/laser3.png"))		{		return false;		}
+
+	if (!m_FrostLaserUpDownTexture.Load("Player/bluelaser3.png"))	{		return false;		}
+
 
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)	
 	{
 		m_PlShotAry[i].SetHealTexture(&m_ShotHealTex); 
 		m_PlShotAry[i].SetHeavyTexture(&m_ShotHeavyTex);
-		m_Laser.SetFireTexture(&m_FireLazerTexture);
-		m_Laser.SetFrostTexture(&m_FrostLazerTexture);
 	}
+
+	m_Laser.SetFireTexture(&m_FireLazerTexture);
+	m_Laser.SetFrostTexture(&m_FrostLazerTexture);
+	m_Laser.SetFireLaserUpDownTexture(&m_FireLaserUpDownTexture);
+	m_Laser.SetFrostLaserUpDownTexture(&m_FrostLaserUpDownTexture);
 
 	//アニメーションを作成
 	SpriteAnimationCreate anim[] = {
@@ -272,6 +279,7 @@ bool CPlayer::Load(){
 void CPlayer::Initialize(){
 
 	Load();
+	m_Laser.Initialize();
 	m_SEManager.PlayerLoad();
 	m_PosX = 200;
 	m_PosY = 0;
@@ -1646,6 +1654,9 @@ void CPlayer::Release(){
 	m_Heavy2Tex.Release();
 	m_Fire2Tex.Release();
 	m_Frost2Tex.Release();
+	m_FireLaserUpDownTexture.Release();
+	m_FrostLaserUpDownTexture.Release();
+	m_Laser.Release();
 
 	m_H2Tex.Release();
 

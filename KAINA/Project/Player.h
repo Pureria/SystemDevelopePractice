@@ -45,6 +45,9 @@ private:
 	CTexture				m_FireLazerTexture;
 	CTexture				m_FrostLazerTexture;
 
+	CTexture				m_FireLaserUpDownTexture;
+	CTexture				m_FrostLaserUpDownTexture;
+
 	CEffectManager*			m_pEffectManager;
 	CPublicFunction			m_PublicFunction;
 
