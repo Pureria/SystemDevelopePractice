@@ -30,7 +30,8 @@ m_PlShotAry(),
 m_bNextBossScene(false),
 m_SpWait(0),
 m_SEManager(),
-m_bShow(false)
+m_bShow(false),
+m_UiWait(0)
 {}
 
 #pragma endregion
@@ -64,6 +65,22 @@ bool CPlayer::Load(){
 	if (!m_FireLazerTexture.Load("Player/LaserFireTexture.png")){		return false;		}
 
 	if (!m_FrostLazerTexture.Load("Player/LaserFrostTexture.png")) {	return false;		}		
+
+	if (!m_Heavy2Tex.Load("Player/heavy2.png"))						{ return false; }
+
+	if (!m_Frost2Tex.Load("Player/frost2.png"))						{ return false; }
+	
+	if (!m_Heal2Tex.Load("Player/heal2.png"))						{ return false; }
+	
+	if (!m_Fire2Tex.Load("Player/blaze2.png"))						{ return false; }
+
+	if (!m_H2Tex.Load("Player/heavyic.png")) { return false; }
+
+	if (!m_HeTex.Load("Player/healic.png")) { return false; }
+
+	if (!m_Fr2Tex.Load("Player/frostic.png")) { return false; }
+
+	if (!m_Fi2Tex.Load("Player/blazeic.png")) { return false; }
 
 
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)	
@@ -394,6 +411,10 @@ void CPlayer::Update() {
 	{
 		m_DamageWait--;
 	}
+	if (m_UiWait > 0) {
+		m_UiWait--;
+	}
+	
 }
 
 void CPlayer::UpdateShot() {
@@ -586,10 +607,12 @@ void CPlayer::TypeChange() {
 void CPlayer::NatuChange() {
 	if (g_pInput->IsKeyPush(MOFKEY_O)) {
 		SEBltChange();
+		m_UiWait = UI_WAIT;
 		switch (m_NatuType)
 		{
 		case HEAL:
 			m_NatuType = HEAVY;
+			
 			break;
 		case HEAVY:
 			m_NatuType = HEAL;
@@ -1466,19 +1489,76 @@ void CPlayer::RenderStatus() {
 	{
 	case HEAL:
 		m_HealTex.Render(0, 0);
+		m_Heal2Tex.RenderScale(100, 75, 0.7f);
+		m_Heavy2Tex.RenderScale(250, 75, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Fire2Tex.RenderScale(400, 75, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Frost2Tex.RenderScale(550, 75, 0.7f, MOF_XRGB(125, 125, 125));
 		break;
 	case HEAVY:
 		m_HeavyTex.Render(0, 0);
+		m_Heal2Tex.RenderScale(100, 75, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Heavy2Tex.RenderScale(250, 75, 0.7f);
+		m_Fire2Tex.RenderScale(400, 75, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Frost2Tex.RenderScale(550, 75, 0.7f, MOF_XRGB(125, 125, 125));
+
 		break;
 	case FIRE:
 		m_FireTex.Render(0, 0);
+		m_Heal2Tex.RenderScale(100, 75, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Heavy2Tex.RenderScale(250, 75, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Fire2Tex.RenderScale(400, 75, 0.7f);
+		m_Frost2Tex.RenderScale(550, 75, 0.7f, MOF_XRGB(125, 125, 125));
+
 		break;
 	case FROST:
 		m_FrostTex.Render(0, 0);
+		m_Heal2Tex.RenderScale(100, 75, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Heavy2Tex.RenderScale(250, 75, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Fire2Tex.RenderScale(400, 75,0.7f,MOF_XRGB(125, 125, 125));
+		m_Frost2Tex.RenderScale(550, 75, 0.7f);
+
 		break;
 	}
 	
-	
+}
+
+void  CPlayer::UIRender() {
+	switch (GetNatu())
+	{
+	case HEAL:
+	{
+		if (m_UiWait > 0) {
+			m_HeTex.RenderScale(SetStartPos().x - 85  + m_HeTex.GetWidth() * 0.5f, SetStartPos().y - 100,0.5,TEXALIGN_CENTERCENTER);
+		}
+		break;
+		
+	}
+		
+	case HEAVY:
+	{
+		if (m_UiWait > 0) {
+			m_H2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f, SetStartPos().y - 100, 0.5, TEXALIGN_CENTERCENTER);
+		}
+		break;
+	}
+
+	case FIRE: 
+	{
+		if (m_UiWait > 0) {
+			m_Fi2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f, SetStartPos().y - 100, 0.5, TEXALIGN_CENTERCENTER);
+		}
+		break;
+	}
+		
+	case FROST: 
+	{
+		if (m_UiWait > 0) {
+			m_Fr2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f, SetStartPos().y - 100, 0.5, TEXALIGN_CENTERCENTER);
+
+		}
+		break;
+	}
+	}
 }
 
 void CPlayer::RenderDebug(float wx, float wy){
@@ -1523,7 +1603,18 @@ void CPlayer::Release(){
 	m_FireLazerTexture.Release();
 	m_FrostLazerTexture.Release();
 	m_SEManager.Release();
+	m_Heal2Tex.Release();
+	m_Heavy2Tex.Release();
+	m_Fire2Tex.Release();
+	m_Frost2Tex.Release();
 
+	m_H2Tex.Release();
+
+	m_HeTex.Release();
+
+	m_Fr2Tex.Release();
+
+	m_Fi2Tex.Release();
 }
 
 #pragma endregion

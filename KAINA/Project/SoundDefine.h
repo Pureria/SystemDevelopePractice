@@ -17,7 +17,7 @@ enum SECode{
 	SE_ATTACK_HEAVY,			//’Ç‰ÁÏ‚Ý
 	SE_WALL_CONTACT,			//’Ç‰ÁÏ‚Ý		//ƒvƒŒƒCƒ„[‚Ì‹…‚ª•Ç‚É‚Ô‚Â‚©‚é
 	SE_FIREBER,					
-	SE_DIVEWATER,				
+	SE_DIVEWATER,				//’Ç‰ÁÏ‚Ý
 	SE_INSIDEWATER,				
 	SE_PLAYER_DAMAGE,			//’Ç‰ÁÏ‚Ý
 	SE_PLAYER_DIE,				//’Ç‰ÁÏ‚Ý

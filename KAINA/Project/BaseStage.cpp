@@ -408,7 +408,7 @@ void CBaseStage::ButtonGimmic()
 
 
 //戻り値FALSE	:	ブロック衝突なし	TRUE	:	ブロック衝突あり
-bool CBaseStage::GetMapChipPos(CRectangle r, float& posx, float& posy, bool waterColl)
+/*bool CBaseStage::GetMapChipPos(CRectangle r, float& posx, float& posy, bool waterColl)
 {
 	bool re = false;
 	//当たり判定する短径の左上と右下のチップ位置を求める
@@ -438,16 +438,54 @@ bool CBaseStage::GetMapChipPos(CRectangle r, float& posx, float& posy, bool wate
 			if (cn == CRACK_STONE) continue;
 
 			CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
-			posx = x * m_ChipSize;
-			posy = y * m_ChipSize;
+			posx = cr.Left;
+			posy = cr.Right;
 			re = true;
+		}
+	}
 
+	return re;
+}*/
+
+Vector2 CBaseStage::GetMapChipPos(CRectangle r, bool waterColl)
+{
+	Vector2 re = Vector2(0,0);
+	//当たり判定する短径の左上と右下のチップ位置を求める
+	int lc = m_ScrollX / m_ChipSize;
+	int rc = (g_pGraphics->GetTargetWidth() + m_ScrollX) / m_ChipSize;
+	int tc = m_ScrollY / m_ChipSize;
+	int bc = (g_pGraphics->GetTargetHeight() + m_ScrollY) / m_ChipSize;
+
+	//ステージの範囲外にはならないようにする
+	if (lc < 0) { lc = 0; }
+	if (tc < 0) { tc = 0; }
+	if (rc >= m_XCount) { rc = m_XCount - 1; }
+	if (bc >= m_YCount) { bc = m_YCount - 1; }
+
+	for (int y = tc; y <= bc; y++)
+	{
+		for (int x = lc; x <= rc; x++)
+		{
+			char cn = m_pChipData[y * m_XCount + x] - 1;
+			if (cn < 0)
+			{
+				continue;
+			}
+
+			if (cn == WATER && !waterColl)	continue;
+
+			if (cn == CRACK_STONE) continue;
+
+			CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
+			if (cr.CollisionRect(r)) {
+				re = Vector2(x * m_ChipSize, y * m_ChipSize);
+				return re;
+			}
 		}
 	}
 
 	return re;
 }
-
 
 //当たり判定
 bool CBaseStage::Collision(CRectangle r) {
@@ -888,6 +926,7 @@ bool CBaseStage::CollisionWater(CRectangle prec)
 				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
 				if (prec.CollisionRect(cr))
 				{
+					m_SEManager.SEPlayer(SE_DIVEWATER);
 					return true;
 				}
 			}
@@ -1005,7 +1044,7 @@ bool CBaseStage::FireBar(CRectangle prec,bool FireEffect)
 				if (FireEffect)
 				{
 					m_pEffectManager->Start(UpFireRec.GetCenter().x + m_ScrollX, UpFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR_BOTTOM);
-					m_SEManager.SEPlayer(SE_BURNER);
+					
 				}
 				if (prec.CollisionRect(UpFireRec))
 					return true;
@@ -1018,8 +1057,6 @@ bool CBaseStage::FireBar(CRectangle prec,bool FireEffect)
 				if (FireEffect)
 				{
 					m_pEffectManager->Start(DownFireRec.GetCenter().x + m_ScrollX, DownFireRec.GetCenter().y + m_ScrollY, EFC_FIREBAR_TOP);
-					
-					m_SEManager.SEPlayer(SE_BURNER);
 				}
 				if (prec.CollisionRect(DownFireRec))
 					return true;

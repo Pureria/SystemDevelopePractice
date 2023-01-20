@@ -11,6 +11,8 @@
 #include	"Laser.h"
 #include	"SE_Manager.h"
 
+#define		UI_WAIT		60
+#define		UI_INTERVAL 30
 
 class CPlayer {
 private:
@@ -106,6 +108,19 @@ private:
 
 	CSE_Manager			   m_SEManager;
 
+	CTexture				m_Heal2Tex;
+	CTexture				m_Heavy2Tex;
+	CTexture				m_Frost2Tex;
+	CTexture				m_Fire2Tex;
+
+	CTexture				m_H2Tex;
+	CTexture				m_HeTex;
+	CTexture				m_Fr2Tex;
+	CTexture				m_Fi2Tex;
+
+	int						m_UiWait;
+	int						m_UiInterval;
+
 public:
 	CPlayer();
 	~CPlayer() {};
@@ -145,6 +160,8 @@ public:
 	void ShotRefRight(int i)									{		m_PlShotAry[i].SetPowerRight();							}
 	//弾の反射（下）
 	void ShotRefBottom(int i)									{		m_PlShotAry[i].SetPowerBottom();						}
+
+	void SetUp()												{		m_Laser.SetUp();										}
 
 
 #pragma endregion
@@ -189,7 +206,7 @@ public:
 
 	inline int GetHp()											{		return m_HP;											}
 
-	inline bool GetLaserWallHit()								{		return m_Laser.GetWallHit();							}
+	 bool GetLaserWallHit()										{		return m_Laser.GetWallHit();							}
 	//水用の当たり判定
 	CRectangle	GetWaterRect()									{
 																		return CRectangle(m_PosX + PLAYER_WATERDEC_WIDTH,
@@ -197,6 +214,8 @@ public:
 																			m_PosX + m_SrcRect.GetWidth() - PLAYER_WATERDEC_WIDTH,
 																			m_PosY + m_SrcRect.GetHeight() - PLAYER_WATERDEC_HEIGHT);
 																}
+
+	CRectangle	GetLaserSearchRect()							{		return m_Laser.GetSearchRect();								}
 	
 #pragma endregion
 
@@ -245,7 +264,14 @@ public:
 	void PlayerDamage(float damage);
 
 #pragma endregion
+	/************************************************public Render関数**********************************************/
 
+#pragma region Render関数
+
+	//プレイヤーの落下処理
+	void UIRender();
+
+#pragma endregion
 
 
 private:
@@ -308,7 +334,7 @@ private:
 #pragma region Set関数
 
 	//発生位置
-	inline Vector2 SetStartPos() {
+	Vector2 SetStartPos() {
 		return Vector2(m_PosX + m_SrcRect.GetWidth() * 0.5f, m_PosY + m_SrcRect.GetHeight() * 0.5f);
 	}
 
@@ -345,5 +371,7 @@ private:
 	bool PlayerEnd();
 
 #pragma endregion
+
+
 
 };

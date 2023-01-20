@@ -15,9 +15,11 @@ private:
 	float				m_StopCount;
 
 	//ƒŒ[ƒU[‚ÌŠg’£”ÍˆÍ‚Ì•Ï”
-	float				m_LaserRange;
+	int					m_LaserRange;
 
-	float				m_HitRange;
+	int					m_HitRange;
+
+	bool				m_bRev;
 
 public:
 	Laser();
@@ -37,11 +39,13 @@ public:
 	//GetŠÖ”
 public:
 	CRectangle GetRect();
-
+	CRectangle GetSearchRect();
 
 	bool GetWallHit()												{		return m_bHitWall;				}
 
 	void SetMapChipPos(Vector2& pos)								{		m_LaserHitPos = pos;			}
+
+	void SetUp();
 
 	//ˆ—‚ğÈ—ª‚·‚é‚½‚ß‚ÌŠÖ”
 private:
@@ -51,5 +55,7 @@ private:
 
 	//Á‹ˆ—
 	void OutRange();
+
+	bool GetRev();
 };
 

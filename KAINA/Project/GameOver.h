@@ -13,4 +13,6 @@ public:
 	void Render(void);
 	void RenderDebug(void);
 	void Release(void);
+
+	void UpdateMenu();
 };

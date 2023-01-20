@@ -102,6 +102,7 @@ void CStage1::Update(void){
 		{
 			m_bEnd = true;
 			m_SceneNo = SCENENO_GAMECLEAR;
+			SetOldScene(SCENENO_GAME_STAGE1);
 		}
 		return;
 	}
@@ -115,6 +116,7 @@ void CStage1::Update(void){
 			if (m_Menu.GetSelect() == 1) {
 				m_bEnd = true;
 				m_SceneNo = SCENENO_SELECT;
+				SetOldScene(SCENENO_GAME_STAGE1);
 			}
 			m_Menu.Hide();
 		}
@@ -146,9 +148,15 @@ void CStage1::Update(void){
 		}
 		return;
 	}
-
+	/*
+	m_Player.SetUp();
+	
+	Vector2 xy = m_BaseStage.GetMapChipPos(m_Player.GetLaserSearchRect(), false);
+	m_Player.SetMapChipPos(xy);
+	*/
 	//プレイヤーの更新
 	m_Player.Update();
+
 	//ステージとプレイヤーの当たり判定
 	StgCollPlayer();
 
@@ -156,6 +164,7 @@ void CStage1::Update(void){
 	float wy = m_BaseStage.GetScrollY();
 
 	StgCollBullet();
+	
 
 	//敵の更新
 	StgCollEne();
@@ -181,6 +190,7 @@ void CStage1::Update(void){
 	{
 		m_bEnd = true;
 		m_SceneNo = SCENENO_GAMEOVER;
+		SetOldScene(SCENENO_GAME_STAGE1);
 	}
 
 	//F3キーでリザルト画面へ
@@ -239,6 +249,8 @@ void CStage1::StgCollPlayer() {
 
 	}
 
+	
+
 	//炎の判定
 	if (m_bFire)
 	{
@@ -267,7 +279,6 @@ void CStage1::StgCollPlayer() {
 	}
 	else
 	{
-		m_SEManager.StopSE();
 
 		m_EffectManager.Stop(EFC_FIREBAR_TOP);
 		m_EffectManager.Stop(EFC_FIREBAR_BOTTOM);
@@ -281,6 +292,7 @@ void CStage1::StgCollPlayer() {
 			m_intervalFire -= 1;
 	}
 
+	
 
 	if (m_BaseStage.CollisionWater(m_Player.GetWaterRect()))
 	{
@@ -291,11 +303,6 @@ void CStage1::StgCollPlayer() {
 
 void CStage1::StgCollBullet() {
 
-	float x = 0, y = 0;
-
-	if (m_BaseStage.GetMapChipPos(m_Player.GetLaserRect(), x, y, false)) {
-		m_Player.SetMapChipPos(Vector2(x, y));
-	}
 	if (m_Player.GetLaserShotShow()) {
 		m_BaseStage.StageAttackCollision(m_Player.GetLaserRect());
 	}
@@ -513,6 +520,8 @@ void CStage1::Render(void){
 			m_ItemArray[i].Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 		}
 	}
+
+	m_Player.UIRender();
 
 	//プレイヤーの描画
 	m_Player.Render(m_BaseStage.GetScrollX(),m_BaseStage.GetScrollY());

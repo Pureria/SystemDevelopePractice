@@ -54,10 +54,12 @@ void CSelect::Update() {
 			case 0:
 				m_bEnd = true;
 				m_SceneNo = SCENENO_GAME_STAGE1;
+				SetOldScene(SCENENO_SELECT);
 				break;
 			case 1:
 				m_bEnd = true;
 				m_SceneNo = SCENENO_GAME_STAGE2;
+				SetOldScene(SCENENO_SELECT);
 				break;
 			}
 		}

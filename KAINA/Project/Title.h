@@ -13,11 +13,11 @@ private:
 	CTexture				m_ExitImage;
 
 	//ゲーム終了確認画面
-	CMenu					m_Menu;
+	
 	int						m_SelectNo;
 
 public:
-	CTitle() : m_BackImage(),m_Menu(),m_StartImage(),m_ExitImage(),m_SelectNo(0){};
+	CTitle() : m_BackImage(),m_StartImage(),m_ExitImage(),m_SelectNo(0){};
 	~CTitle();
 	bool Load(void);
 	void Initialize(void);

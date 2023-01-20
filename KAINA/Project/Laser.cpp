@@ -5,7 +5,8 @@ Laser::Laser() :
 	m_LaserRange(0),
 	m_LaserDecrealse(0),
 	m_StopCount(0),
-	m_HitRange(0)
+	m_HitRange(0),
+	m_bRev(false)
 {};
 
 
@@ -16,10 +17,14 @@ void Laser::Initialize() {
 	m_bHitWall = false;
 }
 
+void Laser::SetUp() {
+	
+}
+
 void Laser::Update() {
-	/*while (m_HitRange < m_LaserHitPos.x)
+	/*while (m_HitRange < g_pGraphics->GetTargetWidth())
 	{
-		m_HitRange += LASER_ATTACKWIDTH;
+		m_HitRange++;
 		m_bShow = false;
 	}*/
 	if (!m_bHitWall) {
@@ -29,22 +34,37 @@ void Laser::Update() {
 	ShotLaser();
 }
 
-void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
-	m_ShotPos.x = pos.x - 16;
-	m_ShotPos.y = pos.y - 32;
-	m_DrcType = tb;
-	m_NatuType = natuyype;
-	m_ShotType = type;
-	m_LaserDecrealse = 0;
-	m_StopCount = LASER_DELAY;
-	m_bShow = true;
-	m_bHitWall = false;
+
+bool Laser::GetRev() {
+	bool flg = false;
+	switch (GetDirec())
+	{
+	case RIGHT:
+		flg = false;
+		break;
+	case LEFT:
+		flg = true;
+		break;
+	case RIGHTTOP:
+		flg = false;
+		break;
+	case LEFTTOP:
+		flg = true;
+		break;
+	case RIGHTBOTTOM:
+		flg = false;
+		break;
+	case LEFTBOTTOM:
+		flg = true;
+		break;
+	}
+	return flg;
 }
 
 void Laser::ShotLaser() {
 	
-	//m_bShow = true;
-	//m_LaserRange = m_HitRange;
+	m_bShow = true;
+	
 	OutRange();
 }
 
@@ -93,11 +113,34 @@ CRectangle Laser::GetRect() {
 	return Rec;
 }
 
+CRectangle Laser::GetSearchRect() {
+	return CRectangle(m_ShotPos.x,
+		m_ShotPos.y,
+		m_ShotPos.x + m_LaserRange * (GetRev()) ? -1 : 1,
+		m_ShotPos.y + 10);
+}
+
+void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
+	m_ShotPos.x = pos.x - 16;
+	m_ShotPos.y = pos.y - 32;
+	m_DrcType = tb;
+	m_NatuType = natuyype;
+	m_ShotType = type;
+	m_LaserDecrealse = 0;
+	m_StopCount = LASER_DELAY;
+	m_bShow = true;
+	m_bHitWall = false;
+	/*m_bRev = GetRev();
+	m_HitRange = m_LaserHitPos.x;
+	m_LaserRange = m_HitRange;*/
+}
+
 void Laser::OutRange() {
 	//è¡Ç¶ÇÈèàóù
 
 	if (m_StopCount <= 0)
 	{
+		m_LaserDecrealse += LASER_ATTACKWIDTH;
 		m_bShow = false;
 	}
 	else
@@ -152,4 +195,12 @@ void Laser::RenderDebug(float wx, float wy) {
 	CGraphicsUtilities::RenderRect(lzrec, MOF_XRGB(255, 0, 0));
 
 	CGraphicsUtilities::RenderString(1500,100, "%.0f",m_HitRange);
+
+	CRectangle lrec = GetSearchRect();
+	lrec.Left -= wx;
+	lrec.Top -= wy;
+	lrec.Right -= wx;
+	lrec.Bottom -= wy;
+
+	CGraphicsUtilities::RenderRect(lrec, MOF_XRGB(0, 255, 0));
 }
