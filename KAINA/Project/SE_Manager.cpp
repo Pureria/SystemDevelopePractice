@@ -95,7 +95,7 @@ void CSE_Manager::GameLoad() {
 	}
 
 	m_Sound[SE_BURNER][0].Load("SE/SE_burner.wav");
-	m_Sound[SE_BURNER][0].SetVolume(m_Volume * 0.5f);
+	//m_Sound[SE_BURNER][0].SetVolume(m_Volume * 0.5f);
 }
 
 //É{ÉXÇ÷

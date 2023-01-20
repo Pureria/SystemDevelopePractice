@@ -10,6 +10,7 @@
 #include	"CPlayerShot.h"
 #include	"Laser.h"
 #include	"SE_Manager.h"
+#include	"PublicFunction.h"
 
 #define		UI_WAIT		60
 #define		UI_INTERVAL 30
@@ -24,6 +25,9 @@ private:
 	float					m_MoveX;
 	float					m_MoveY;
 	float					m_SPInterval;
+	float					m_UIAnimationTimer;
+	bool					m_bUIAnimation;
+	bool					m_bUIAnimationEnd;
 	bool					m_bJump;
 	bool					m_bFall;
 	bool					m_bReverse;
@@ -33,6 +37,7 @@ private:
 	int						m_HP;
 	int						m_SP;
 	int						m_DamageWait;
+	int						m_UIAnimationAlpha;
 
 	CTexture				m_FrameTexture;
 	CTexture				m_HPBarTexture;
@@ -41,6 +46,7 @@ private:
 	CTexture				m_FrostLazerTexture;
 
 	CEffectManager*			m_pEffectManager;
+	CPublicFunction			m_PublicFunction;
 
 	//モーション種類定義
 	enum tag_MOTION {
@@ -268,8 +274,7 @@ public:
 
 #pragma region Render関数
 
-	//プレイヤーの落下処理
-	void UIRender();
+	void UIRender(float wx, float wy);
 
 #pragma endregion
 
@@ -369,6 +374,9 @@ private:
 
 	//プレイヤー死亡時の処理
 	bool PlayerEnd();
+
+	//UIアニメーション用関数
+	void UIAnimationUpdate();
 
 #pragma endregion
 

@@ -348,7 +348,7 @@ void CStage1_Boss::Render(void) {
 			m_ItemArray[i].Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
 		}
 	}
-	m_Player.UIRender();
+	m_Player.UIRender(0, 0);
 
 	//ƒvƒŒƒCƒ„[‚Ì•`‰æ
 	m_Player.Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
