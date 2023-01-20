@@ -215,7 +215,7 @@ public:
 																			m_PosY + m_SrcRect.GetHeight() - PLAYER_WATERDEC_HEIGHT);
 																}
 
-	CRectangle	GetLaserSearchRect()							{		return m_Laser.GetSearchRect();								}
+	//CRectangle	GetLaserSearchRect()							{		return m_Laser.GetSearchRect();								}
 	
 #pragma endregion
 

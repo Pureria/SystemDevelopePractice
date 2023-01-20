@@ -651,10 +651,17 @@ void CEnemy_Stage1_Boss::RenderStatus() {
 	if (m_HP <= 0) {
 		return;
 	}
-	CRectangle hprec(822 * (m_HP * 0.01f), 0, 0, 61);
 
-	m_HPTex.Render(g_pGraphics->GetTargetWidth() * 0.465f + (822 - 822 * (m_HP * 0.01f)), g_pGraphics->GetTargetHeight() - 112, hprec);
+
+	/*CRectangle hprec(822 * (m_HP * 0.01f), 0, 0, 61);
+
+	m_HPTex.Render(g_pGraphics->GetTargetWidth() * 0.465f + (822 - 822 * (m_HP * 0.01f)), g_pGraphics->GetTargetHeight() - 112, hprec);*/
   
+	CRectangle hprec(822, 0, 0, 61);
+	m_HPTex.RenderScale(g_pGraphics->GetTargetWidth() * 0.465f + (822 - 822 * (m_HP * 0.01f)), 
+						g_pGraphics->GetTargetHeight() - 112, 
+						m_HP * 0.01f, 1.0f, hprec, MOF_COLOR_WHITE);//‰æ‘œ‚ğˆ³k‚·‚é•\¦*/
+
 	CRectangle frec(0, 0, 1024, 128);
 
 	float t = frec.Right;
