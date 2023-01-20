@@ -11,10 +11,51 @@ Laser::Laser() :
 
 
 void Laser::Initialize() {
-	m_ShotPos = Vector2(0, 0);
-	m_bShow = false;
-	m_DrcType = RIGHT;
-	m_bHitWall = false;
+	/*switch (GetDirec()) 
+	{
+		case (LEFT || RIGHT):
+		{
+			//アニメーションを作成
+			SpriteAnimationCreate anim[] = {
+				{
+					"レーザー左右",
+					0,1280,
+					128,128,
+					FALSE,
+					{
+						{5,0,0},{5,1,0},{5,2,0},{5,3,0},{5,4,0},{5,5,0},
+						{5,6,0},{5,7,0},{5,8,0},{5,9,0},{5,10,0},{5,11,0},
+						{5,12,0},{5,13,0},{5,14,0},{5,15,0},{5,16,0},{5,17,0},
+						{5,18,0},{5,19,0},{5,20,0},{5,21,0},{5,22,0},{5,23,0},
+					}
+				}
+			};
+			m_Motion.Create(anim, 1);
+			break;
+		}
+		//TODO:　レーザーの手元
+		case (RIGHTTOP || LEFTTOP || RIGHTBOTTOM || LEFTBOTTOM):
+		{
+			//アニメーションを作成
+			SpriteAnimationCreate anim[] = {
+				{
+					"レーザー左右",
+					0,1280,
+					128,128,
+					FALSE,
+					{
+						{5,0,0},{5,1,0},{5,2,0},{5,3,0},{5,4,0},{5,5,0},
+						{5,6,0},{5,7,0},{5,8,0},{5,9,0},{5,10,0},{5,11,0},
+						{5,12,0},{5,13,0},{5,14,0},{5,15,0},{5,16,0},{5,17,0},
+						{5,18,0},{5,19,0},{5,20,0},{5,21,0},{5,22,0},{5,23,0},
+					}
+				}
+			};
+			m_Motion.Create(anim, 1);
+			break;
+		}
+	}*/
+	return;
 }
 
 void Laser::SetUp() {
@@ -164,7 +205,7 @@ void Laser::Render(float wx, float wy) {
 	lzrec.Right -= wx;
 	lzrec.Bottom -= wy;
 
-	MofU32 Color = 0;
+	/*/MofU32 Color = 0;
 
 	switch (GetNatu())
 	{
@@ -175,13 +216,13 @@ void Laser::Render(float wx, float wy) {
 		Color = MOF_XRGB(0, 255, 255);
 		break;
 	}
-	CGraphicsUtilities::RenderFillRect(lzrec, Color,MOF_COLOR_WHITE, MOF_COLOR_WHITE,Color);
+	CGraphicsUtilities::RenderFillRect(lzrec, Color,MOF_COLOR_WHITE, MOF_COLOR_WHITE,Color);*/
 	
 
-	/*if (GetNatu() == FIRE)
+	if (GetNatu() == FIRE)
 		m_pShotTex->Render(lzrec.Left, lzrec.Top, lzrec);
 	else
-		m_phShotTex->Render(lzrec.Left, lzrec.Top, lzrec);*/
+		m_phShotTex->Render(lzrec.Left, lzrec.Top, lzrec);
 
 
 	return;

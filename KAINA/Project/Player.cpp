@@ -869,12 +869,14 @@ void CPlayer::ShotRevLaser() {
 	if (m_SP <= 0) {
 		return;
 	}
-
+	//TODO LASER
+	m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_LASER_HAND);
 	if (!m_bReverse) {
 		if (m_bTop) {
 			m_Laser.Fire(SetStartPos(), RIGHTTOP, m_NatuType,LASER);
 			m_SpWait = PLAYER_SPWAIT;
 			m_SP -= (m_Laser.GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
+
 		}
 		else if (m_bBottom) {
 			m_Laser.Fire(SetStartPos(), RIGHTBOTTOM, m_NatuType, LASER);

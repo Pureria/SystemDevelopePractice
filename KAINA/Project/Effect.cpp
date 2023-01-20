@@ -215,6 +215,27 @@ void CEffect::Initialize(int type){
 			m_Motion.Create(anim, 1);
 			break;
 		}
+		//TODO:　レーザーの手元
+		case EFC_LASER_HAND:
+		{
+			//アニメーションを作成
+			SpriteAnimationCreate anim[] = {
+				{
+					"エフェクト",
+					0, 0,
+					254, 250,
+					TRUE,
+					{
+								{ 5, 0, 0 }, { 5, 1, 0},{ 5, 2, 0}, {5, 3, 0},
+								{ 5, 4, 0 }, { 5, 5, 0 }, { 5, 6, 0 }, { 5, 7, 0 },
+								{ 5, 8, 0 }, { 5, 9, 0 }, { 5, 10, 0 },{ 5, 11, 0 },
+								{ 5, 12, 0 },{ 5, 13, 0 },{ 5, 14, 0 },
+					}
+				}
+			};
+			m_Motion.Create(anim, 1);
+			break;
+		}
 	}
 }
 
@@ -292,6 +313,7 @@ void CEffect::RenderDebug(float wx,float wy){
 	{
 		return;
 	}
+
 }
 
 /**

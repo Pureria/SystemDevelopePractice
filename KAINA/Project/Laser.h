@@ -21,6 +21,8 @@ private:
 
 	bool				m_bRev;
 
+	CSpriteMotionController m_Motion;
+
 public:
 	Laser();
 	~Laser() {};
@@ -46,6 +48,8 @@ public:
 	void SetMapChipPos(Vector2& pos)								{		m_LaserHitPos = pos;			}
 
 	void SetUp();
+
+	int	GetDecrealse()												{		return m_LaserDecrealse;		}
 
 	//ˆ—‚ğÈ—ª‚·‚é‚½‚ß‚ÌŠÖ”
 private:
