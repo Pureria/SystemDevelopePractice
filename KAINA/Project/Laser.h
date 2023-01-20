@@ -6,15 +6,15 @@ class Laser : public Shot_Base
 private:
 	
 
-	//ãƒ¬ãƒ¼ã‚¶ãƒ¼ã®å½“ãŸã£ãŸåº§æ¨™ã®ä¿ç®¡
+	//ƒŒ[ƒU[‚Ì“–‚½‚Á‚½À•W‚Ì•ÛŠÇ
 	Vector2					m_LaserHitPos;
 
-	//ãƒ¬ãƒ¼ã‚¶ãƒ¼æ¸›è¡°å¹…ã®å¤‰æ•°
+	//ƒŒ[ƒU[Œ¸Š•‚Ì•Ï”
 	float					m_LaserDecrealse;
-	//ãƒ¬ãƒ¼ã‚¶ãƒ¼ãŒæ­¢ã¾ã‚‹æ™‚é–“
+	//ƒŒ[ƒU[‚ª~‚Ü‚éŠÔ
 	float					m_StopCount;
 
-	//ãƒ¬ãƒ¼ã‚¶ãƒ¼ã®æ‹¡å¼µç¯„å›²ã®å¤‰æ•°
+	//ƒŒ[ƒU[‚ÌŠg’£”ÍˆÍ‚Ì•Ï”
 	int						m_LaserRange;
 
 	int						m_HitRange;
@@ -35,9 +35,9 @@ public:
 	void Render(float wx, float wy);
 	void RenderDebug(float wx, float wy);
 	void Release();
-	//Seté–¢æ•°
+	//SetŠÖ”
 public:
-	//ç™ºå°„ã™ã‚‹æƒ…å ±ã‚’ã‚»ãƒƒãƒˆ
+	//”­Ë‚·‚éî•ñ‚ğƒZƒbƒg
 	void Fire(Vector2& pos, int tb, int natuyype, int type);
 	void Fire(float x, float y, int tb, int natuyype, int type);
 
@@ -46,9 +46,9 @@ public:
 	void SetFireLaserUpDownTexture(CTexture* pt)					{ m_pFireLaserUpDownTexture = pt;		}
 	void SetFrostLaserUpDownTexture(CTexture* pt)					{		m_pFrostLaserUpDownTexture = pt;}
 
-	//ã‚¹ãƒ†ãƒ¼ã‚¸ã«å½“ãŸã£ãŸå ´åˆã€€true	: false
+	//ƒXƒe[ƒW‚É“–‚½‚Á‚½ê‡@true	: false
 	void SetWallHitLaser(bool flg)									{		m_bHitWall = flg;				}
-	//Geté–¢æ•°
+	//GetŠÖ”
 public:
 	CRectangle GetRect();
 	//CRectangle GetSearchRect();
@@ -61,13 +61,13 @@ public:
 
 	int	GetDecrealse()												{		return m_LaserDecrealse;		}
 
-	//å‡¦ç†ã‚’çœç•¥ã™ã‚‹ãŸã‚ã®é–¢æ•°
+	//ˆ—‚ğÈ—ª‚·‚é‚½‚ß‚ÌŠÖ”
 private:
 
-	//Laserã®å‡¦ç†
+	//Laser‚Ìˆ—
 	void ShotLaser();
 
-	//æ¶ˆå»å‡¦ç†
+	//Á‹ˆ—
 	void OutRange();
 
 	bool GetRev();

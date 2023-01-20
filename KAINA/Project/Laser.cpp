@@ -16,7 +16,7 @@ Laser::Laser() :
 void Laser::Initialize() {
 	SpriteAnimationCreate anim[] = {
 		{
-			"ƒŒ[ƒU[Side",
+			"LaserSide",
 			0,0,
 			1920,128,
 			TRUE,
@@ -29,7 +29,7 @@ void Laser::Initialize() {
 			}
 		},
 		{
-			"ƒŒ[ƒU[Height",
+			"LaserHeight",
 			0,0,
 			128,1920,
 			TRUE,
@@ -157,6 +157,13 @@ void Laser::Fire(Vector2& pos, int tb, int natuyype,int type) {
 	m_bShow = true;
 	m_bHitWall = false;
 	m_LaserRange = 0;
+
+	if (m_DrcType == LEFT || m_DrcType == RIGHT)
+		m_Motion.ChangeMotion(LASER_SIDE);
+	else
+		m_Motion.ChangeMotion(LASER_UPDOWN);
+
+	m_Motion.SetTime(0.0f);
 }
 
 void Laser::Fire(float x,float y, int tb, int natuyype, int type) {
@@ -175,10 +182,11 @@ void Laser::Fire(float x,float y, int tb, int natuyype, int type) {
 		m_Motion.ChangeMotion(LASER_SIDE);
 	else
 		m_Motion.ChangeMotion(LASER_UPDOWN);
+
+	m_Motion.SetTime(0.0f);
 }
 
 void Laser::OutRange() {
-	//Á‚¦‚éˆ—
 
 	if (m_StopCount <= 0)
 	{
