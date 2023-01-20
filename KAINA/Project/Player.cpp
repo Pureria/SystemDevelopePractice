@@ -31,7 +31,10 @@ m_bNextBossScene(false),
 m_SpWait(0),
 m_SEManager(),
 m_bShow(false),
-m_UiWait(0)
+m_UiWait(0),
+m_UIAnimationTimer(0),
+m_bUIAnimation(false),
+m_bUIAnimationEnd(false)
 {}
 
 #pragma endregion
@@ -304,6 +307,7 @@ void CPlayer::Initialize(){
 void CPlayer::Update() {
 
 	UpdateShot();
+	UIAnimationUpdate();
 
 	//HPÇ™ñ≥Ç≠Ç»ÇÈÇ∆îöî≠ÇÃèIóπÇë“ã@ÇµÇƒèIóπ
 	if (PlayerEnd())	{			return;				}
@@ -408,6 +412,38 @@ void CPlayer::Update() {
 		m_UiWait--;
 	}
 	
+}
+
+void CPlayer::UIAnimationUpdate()
+{
+	if (!m_bUIAnimation)
+		return;
+
+	m_UIAnimationTimer += CUtilities::GetFrameSecond();
+
+	if (!m_bUIAnimationEnd)
+	{
+		if (m_UIAnimationAlpha < 255)
+		{
+			m_UIAnimationAlpha = m_PublicFunction.Animation(0, PLAYER_UI_UP, 0, 255, m_UIAnimationTimer);
+		}
+		else if (m_UIAnimationTimer > PLAYER_UI_UP + PLAYER_UI_STOP)
+		{
+			m_bUIAnimationEnd = true;
+			m_UIAnimationTimer = 0;
+		}
+	}
+	else
+	{
+		if (m_UIAnimationAlpha > 0)
+		{
+			m_UIAnimationAlpha = m_PublicFunction.Animation(0, PLAYER_UI_DOWN, 255, 0, m_UIAnimationTimer);
+		}
+		else
+		{
+			m_bUIAnimation = false;
+		}
+	}
 }
 
 void CPlayer::UpdateShot() {
@@ -600,7 +636,12 @@ void CPlayer::TypeChange() {
 void CPlayer::NatuChange() {
 	if (g_pInput->IsKeyPush(MOFKEY_O)) {
 		SEBltChange();
-		m_UiWait = UI_WAIT;
+		//m_UiWait = UI_WAIT;
+		m_bUIAnimation = true;
+		m_UIAnimationAlpha = 0;
+		m_UIAnimationTimer = 0;
+		m_bUIAnimationEnd = false;
+
 		switch (m_NatuType)
 		{
 		case HEAL:
@@ -1519,42 +1560,41 @@ void CPlayer::RenderStatus() {
 	
 }
 
-void  CPlayer::UIRender() {
+void  CPlayer::UIRender(float wx, float wy) {
 	switch (GetNatu())
 	{
-	case HEAL:
-	{
-		if (m_UiWait > 0) {
-			m_HeTex.RenderScale(SetStartPos().x - 85  + m_HeTex.GetWidth() * 0.5f, SetStartPos().y - 100,0.5,TEXALIGN_CENTERCENTER);
-		}
-		break;
-		
-	}
-		
-	case HEAVY:
-	{
-		if (m_UiWait > 0) {
-			m_H2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f, SetStartPos().y - 100, 0.5, TEXALIGN_CENTERCENTER);
-		}
-		break;
-	}
-
-	case FIRE: 
-	{
-		if (m_UiWait > 0) {
-			m_Fi2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f, SetStartPos().y - 100, 0.5, TEXALIGN_CENTERCENTER);
-		}
-		break;
-	}
-		
-	case FROST: 
-	{
-		if (m_UiWait > 0) {
-			m_Fr2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f, SetStartPos().y - 100, 0.5, TEXALIGN_CENTERCENTER);
+		case HEAL:
+		{
+			if (m_bUIAnimation) {
+				m_HeTex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f - wx, SetStartPos().y - 100 - wy, 0.5, MOF_ARGB(m_UIAnimationAlpha,255,255,255), TEXALIGN_CENTERCENTER);
+			}
+			break;
 
 		}
-		break;
-	}
+
+		case HEAVY:
+		{
+			if (m_bUIAnimation) {
+				m_H2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f - wx, SetStartPos().y - 100 - wy, 0.5, MOF_ARGB(m_UIAnimationAlpha, 255, 255, 255), TEXALIGN_CENTERCENTER);
+			}
+			break;
+		}
+
+		case FIRE:
+		{
+			if (m_bUIAnimation) {
+				m_Fi2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f - wx, SetStartPos().y - 100 - wy, 0.5, MOF_ARGB(m_UIAnimationAlpha, 255, 255, 255), TEXALIGN_CENTERCENTER);
+				break;
+			}
+		}
+		case FROST:
+		{
+			if (m_bUIAnimation) {
+				m_Fr2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f - wx, SetStartPos().y - 100 - wy, 0.5, MOF_ARGB(m_UIAnimationAlpha, 255, 255, 255), TEXALIGN_CENTERCENTER);
+
+			}
+			break;
+		}
 	}
 }
 

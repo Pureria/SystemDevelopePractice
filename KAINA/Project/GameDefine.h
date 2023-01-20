@@ -123,6 +123,11 @@ enum tag_NormalNaturalChangeType {
 
 #define		THROUGH_COUNT					3
 
+//頭上UI表示時間（秒）
+#define		PLAYER_UI_UP					0.5f
+#define		PLAYER_UI_STOP					1.0f
+#define		PLAYER_UI_DOWN					0.5f
+
 //************************メニュー表示で使うDefine*************************//
 
 

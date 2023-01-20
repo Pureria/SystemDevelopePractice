@@ -511,7 +511,7 @@ void CStage2::Render(void){
 		}
 	}
 
-	m_Player.UIRender();
+	m_Player.UIRender(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 
 	//ƒvƒŒƒCƒ„[‚Ì•`‰æ
 	m_Player.Render(m_BaseStage.GetScrollX(),m_BaseStage.GetScrollY());
