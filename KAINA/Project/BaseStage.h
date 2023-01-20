@@ -93,6 +93,7 @@ public:
 	bool Collision(CRectangle r);
 	bool CollisionBoss1(CRectangle r);
 	bool Collision(CRectangle r, float& ox, float& oy);
+	void StopBurnerSE() { m_SEManager.StopSE(SE_BURNER); }
 
 
 	//引数　：　プレイヤーの攻撃Rect		プレイヤーがステージに攻撃した時の処理(ボタン処理)

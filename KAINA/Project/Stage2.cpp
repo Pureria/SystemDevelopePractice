@@ -269,11 +269,7 @@ void CStage2::StgCollPlayer() {
 	}
 	else
 	{
-		for (int i = 0; i < SE_COUNT; i++)
-		{
-			if (m_SEManager.GetNowSetSE() == SE_BURNER)
-				m_SEManager.StopSE();
-		}
+		//m_SEManager.StopSE(SE_FIREBER);
 
 		m_EffectManager.Stop(EFC_FIREBAR_TOP);
 		m_EffectManager.Stop(EFC_FIREBAR_BOTTOM);

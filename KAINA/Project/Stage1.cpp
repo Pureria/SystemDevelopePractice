@@ -2,31 +2,31 @@
 #include	"Stage1.h"
 
 /**
- * ƒfƒXƒgƒ‰ƒNƒ^
+ * ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  *
  */
 CStage1::~CStage1(){
 }
 
 /**
- * “Ç‚İ‚İ
- * —˜—p‚·‚éƒeƒNƒXƒ`ƒƒ‚ğ“Ç‚İ‚ŞB
+ * èª­ã¿è¾¼ã¿
+ * åˆ©ç”¨ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’èª­ã¿è¾¼ã‚€ã€‚
  */
 bool CStage1::Load(){
-	//ƒvƒŒƒCƒ„[‚Ì‘fŞ“Ç‚İ‚İ
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç´ æèª­ã¿è¾¼ã¿
 	m_Player.Load();
-	//ƒXƒe[ƒW‚Ì‘fŞ“Ç‚İ‚İ
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã®ç´ æèª­ã¿è¾¼ã¿
 	m_BaseStage.Load("ChipData/1-1MAP_noWall.txt",m_NowSceneNo);
-	//m_BaseStage.Load("ChipData/New1-1_ƒ¿.txt", m_NowSceneNo);
-	//“Gƒƒ‚ƒŠŠm•Û
+	//m_BaseStage.Load("ChipData/New1-1_Î±.txt", m_NowSceneNo);
+	//æ•µãƒ¡ãƒ¢ãƒªç¢ºä¿
 	m_EnemyArray	= new CEnemy[m_BaseStage.GetEnemy1Count()];
 	m_Enemy2Array	= new CEnemy_2[m_BaseStage.GetEnemy2Count()];
-	//ƒAƒCƒeƒ€ƒƒ‚ƒŠŠm•Û
+	//ã‚¢ã‚¤ãƒ†ãƒ ãƒ¡ãƒ¢ãƒªç¢ºä¿
 	m_ItemArray		= new CItem[m_BaseStage.GetItemCount()];
-	//ƒGƒtƒFƒNƒg‚Ì‘fŞ“Ç‚İ‚İ
+	//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ç´ æèª­ã¿è¾¼ã¿
 	m_EffectManager.Load();	
 
-	//BGM‚Ì“Ç‚İ‚İ
+	//BGMã®èª­ã¿è¾¼ã¿
 	m_BGMManager.Load();
 
 	m_SEManager.GameLoad();
@@ -35,30 +35,30 @@ bool CStage1::Load(){
 }
 
 /**
- * ‰Šú‰»
- * ƒpƒ‰ƒ[ƒ^[‚âÀ•W‚ğ‰Šú‰»‚·‚éB
- * ó‘Ô‚ğ‰Šú‰»‚µ‚½‚¢‚Æ‚«‚ÉÀs‚·‚éB
+ * åˆæœŸåŒ–
+ * ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã‚„åº§æ¨™ã‚’åˆæœŸåŒ–ã™ã‚‹ã€‚
+ * çŠ¶æ…‹ã‚’åˆæœŸåŒ–ã—ãŸã„ã¨ãã«å®Ÿè¡Œã™ã‚‹ã€‚
  */
 void CStage1::Initialize(){
 	
 	Load();
-	//ƒvƒŒƒCƒ„[‚Ìó‘Ô‰Šú‰»
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®çŠ¶æ…‹åˆæœŸåŒ–
 	m_Player.Initialize();
 	m_Player.SetPlayerPos(m_BaseStage.GetIniPlayerPos().x, m_BaseStage.GetIniPlayerPos().y);
-	//ƒXƒe[ƒW‚Ìó‘Ô‰Šú‰»
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã®çŠ¶æ…‹åˆæœŸåŒ–
 	m_BaseStage.Initialize(m_EnemyArray, m_Enemy2Array, m_ItemArray);
-	//ƒGƒtƒFƒNƒg‚Ìó‘Ô‰Šú‰»
+	//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®çŠ¶æ…‹åˆæœŸåŒ–
 	m_EffectManager.Initialize();
-	//ƒvƒŒƒCƒ„[‚Æ“G‚ÉƒGƒtƒFƒNƒgƒNƒ‰ƒX‚Ìİ’è
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨æ•µã«ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¯ãƒ©ã‚¹ã®è¨­å®š
 	m_Player.SetEffectManager(&m_EffectManager);
 	for (int i = 0; i < m_BaseStage.GetEnemy1Count(); i++)
 	{
 		m_EnemyArray[i].SetEffectManager(&m_EffectManager);
 	}
-	char* m_pTitle = "ƒ|[ƒY";
+	char* m_pTitle = "ãƒãƒ¼ã‚º";
 	char* m_pMenuString[TEXTCOUNT_MAX] = {
-						"ƒQ[ƒ€‚É–ß‚é",
-						"ƒXƒe[ƒW‘I‘ğ‰æ–Ê‚Ö",
+						"ã‚²ãƒ¼ãƒ ã«æˆ»ã‚‹",
+						"ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠç”»é¢ã¸",
 	};
 
 	m_Menu.Create(m_pTitle, m_pMenuString, TEXTCOUNT_MAX);
@@ -66,22 +66,22 @@ void CStage1::Initialize(){
 	m_intervalFire = FIREBAR_INTERVAL;
 	m_bFire = false;
 
-	//Enemy2‚ÉƒGƒtƒFƒNƒgƒNƒ‰ƒX‚Ìİ’è
+	//Enemy2ã«ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¯ãƒ©ã‚¹ã®è¨­å®š
 	for (int i = 0; i < m_BaseStage.GetEnemy2Count(); i++)
 	{
 		m_Enemy2Array[i].SetEffectManager(&m_EffectManager);
 	}
 
-	//ƒXƒe[ƒW‚ÉƒGƒtƒFƒNƒgƒNƒ‰ƒX‚Ìİ’è
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã«ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¯ãƒ©ã‚¹ã®è¨­å®š
 	m_BaseStage.SetEffectManager(&m_EffectManager);
 
-	//BGM‚Ì‰Šú‰»
+	//BGMã®åˆæœŸåŒ–
 	m_BGMManager.Initialize();
 	m_BGMManager.BGMPlayer(BGM_STAGE1);
 }
 
 /**
- * XV
+ * æ›´æ–°
  *
  */
 void CStage1::Update(void){
@@ -126,7 +126,7 @@ void CStage1::Update(void){
 		m_Menu.Show(Vector2(g_pGraphics->GetTargetWidth() * 0.5f, g_pGraphics->GetTargetHeight() * 0.5f));
 	}
 
-	//ƒ{ƒX•”‰®ƒhƒAƒAƒjƒ[ƒVƒ‡ƒ“
+	//ãƒœã‚¹éƒ¨å±‹ãƒ‰ã‚¢ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 	if (m_Player.GetNextBossScene())
 	{
 		for (int i = 0; i < m_BaseStage.GetItemCount(); i++)
@@ -154,10 +154,10 @@ void CStage1::Update(void){
 	Vector2 xy = m_BaseStage.GetMapChipPos(m_Player.GetLaserSearchRect(), false);
 	m_Player.SetMapChipPos(xy);
 	*/
-	//ƒvƒŒƒCƒ„[‚ÌXV
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ›´æ–°
 	m_Player.Update();
 
-	//ƒXƒe[ƒW‚ÆƒvƒŒƒCƒ„[‚Ì“–‚½‚è”»’è
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å½“ãŸã‚Šåˆ¤å®š
 	StgCollPlayer();
 
 	float wx = m_BaseStage.GetScrollX();
@@ -166,26 +166,26 @@ void CStage1::Update(void){
 	StgCollBullet();
 	
 
-	//“G‚ÌXV
+	//æ•µã®æ›´æ–°
 	StgCollEne();
 
-	//ƒAƒCƒeƒ€‚ÌXV
+	//ã‚¢ã‚¤ãƒ†ãƒ ã®æ›´æ–°
 	StgCollItm();
 
-	//ƒXƒe[ƒW‚ÌXV
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã®æ›´æ–°
 	m_BaseStage.Update(m_Player);
 
-	//ƒGƒtƒFƒNƒg‚ÌXV
+	//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®æ›´æ–°
 	m_EffectManager.Update();
 
-	//F2ƒL[‚ÅƒŠƒUƒ‹ƒg‰æ–Ê‚Ö
+	//F2ã‚­ãƒ¼ã§ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã¸
 	if (g_pInput->IsKeyPush(MOFKEY_F2))
 	{
 		m_bEnd = true;
 		m_SceneNo = SCENENO_GAMECLEAR;
 	}
 
-	//ƒvƒŒƒCƒ„[‚ÌI—¹ƒtƒ‰ƒO‚ÅƒŠƒUƒ‹ƒg‰æ–Ê‚Ö
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®çµ‚äº†ãƒ•ãƒ©ã‚°ã§ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã¸
 	if (m_Player.IsEnd())
 	{
 		m_bEnd = true;
@@ -193,7 +193,7 @@ void CStage1::Update(void){
 		SetOldScene(SCENENO_GAME_STAGE1);
 	}
 
-	//F3ƒL[‚ÅƒŠƒUƒ‹ƒg‰æ–Ê‚Ö
+	//F3ã‚­ãƒ¼ã§ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã¸
 	if (g_pInput->IsKeyPush(MOFKEY_F3))
 	{
 		m_bEnd = true;
@@ -226,19 +226,19 @@ void CStage1::StgCollPlayer() {
 		m_BaseStage.CollisionCrack(m_Player.GetLaserRect());
 	}
 
-	//TODO: …‚Æ’e‚Ì”»’è
+	//TODO: æ°´ã¨å¼¾ã®åˆ¤å®š
 	if (m_Player.GetNatuLaser() == FROST)
 	{
 		m_BaseStage.CollisionFreezeWater(m_Player.GetLaserRect(), m_Player.GetRect());
 	}
 
-	//TODO: •X‚Æ’e‚Ì”»’è
+	//TODO: æ°·ã¨å¼¾ã®åˆ¤å®š
 	if (m_Player.GetNatuLaser() == FIRE)
 	{
 		m_BaseStage.CollisionIceFroe(m_Player.GetLaserRect());
 	}
 
-	//TODO: –C‘ä‚ÆƒvƒŒƒCƒ„[‚Ì“–‚½‚è”»’è
+	//TODO: ç ²å°ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å½“ãŸã‚Šåˆ¤å®š
 	for (int i = 0; i < m_BaseStage.GetEnemy1Count(); i++)
 	{
 		ox = 0; oy = 0;
@@ -251,7 +251,7 @@ void CStage1::StgCollPlayer() {
 
 	
 
-	//‰Š‚Ì”»’è
+	//ç‚ã®åˆ¤å®š
 	if (m_bFire)
 	{
 		bool	bFireEffect;
@@ -279,6 +279,8 @@ void CStage1::StgCollPlayer() {
 	}
 	else
 	{
+		//m_SEManager.StopSE(SE_FIREBER);
+		m_BaseStage.StopBurnerSE();
 
 		m_EffectManager.Stop(EFC_FIREBAR_TOP);
 		m_EffectManager.Stop(EFC_FIREBAR_BOTTOM);
@@ -322,7 +324,7 @@ void CStage1::StgCollBullet() {
 			continue;
 		}
 
-		//ã‚Ì”»’è
+		//ä¸Šã®åˆ¤å®š
 		psrec.Bottom = psrec.Top + 1;
 		psrec.Expansion(-15, 0);
 		if (m_BaseStage.Collision(psrec))
@@ -331,7 +333,7 @@ void CStage1::StgCollBullet() {
 			m_SEManager.SEPlayer(SE_WALL_CONTACT);
 		}
 
-		//‰º‚Ì”»’è
+		//ä¸‹ã®åˆ¤å®š
 		psrec = m_Player.GetNormalRect(i);
 		psrec.Top = psrec.Bottom - 1;
 		psrec.Expansion(-15, 0);
@@ -342,7 +344,7 @@ void CStage1::StgCollBullet() {
 			m_SEManager.SEPlayer(SE_WALL_CONTACT);
 		}
 
-		//¶‚Ì”»’è
+		//å·¦ã®åˆ¤å®š
 		psrec = m_Player.GetNormalRect(i);
 		psrec.Right = psrec.Left + 1;
 		psrec.Expansion(0, -15);
@@ -353,7 +355,7 @@ void CStage1::StgCollBullet() {
 			m_SEManager.SEPlayer(SE_WALL_CONTACT);
 		}
 
-		//‰E‚Ì”»’è
+		//å³ã®åˆ¤å®š
 		psrec = m_Player.GetNormalRect(i);
 		psrec.Left = psrec.Right - 1;
 		psrec.Expansion(0, -15);
@@ -384,7 +386,7 @@ void CStage1::StgCollEne() {
 		{
 			m_EnemyArray[i].CollisionStage(ox, oy);
 
-			//TODO: “G‚Ì’e‚ÆƒXƒe[ƒW‚Ì“–‚½‚è”»’è
+			//TODO: æ•µã®å¼¾ã¨ã‚¹ãƒ†ãƒ¼ã‚¸ã®å½“ãŸã‚Šåˆ¤å®š
 			for (int j = 0; j < ENEMY_SHOT_COUNT; j++)
 			{
 				if (m_BaseStage.Collision(m_EnemyArray[i].ShotArrayRect(j)))
@@ -414,7 +416,7 @@ void CStage1::StgCollEne() {
 		{
 			m_Enemy2Array[i].CollisionStage(ox, oy);
 
-			//TODO: “G‚Ì’e‚ÆƒXƒe[ƒW‚Ì“–‚½‚è”»’è
+			//TODO: æ•µã®å¼¾ã¨ã‚¹ãƒ†ãƒ¼ã‚¸ã®å½“ãŸã‚Šåˆ¤å®š
 			for (int j = 0; j < ENEMY_SHOT_COUNT; j++)
 			{
 				if (m_BaseStage.Collision(m_Enemy2Array[i].ShotArrayRect(j)))
@@ -455,7 +457,7 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
 	CRectangle brec = playerRect;
 	brec.Top = brec.Bottom - 1;
 	brec.Expansion(-6, -0);
-	//TODO: ‰º‚Æ“–‚½‚è”»’è
+	//TODO: ä¸‹ã¨å½“ãŸã‚Šåˆ¤å®š
 	if (eneRect.CollisionRect(brec))
 	{
 		re = true;
@@ -464,7 +466,7 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
 		playerRect.Bottom += eneRect.Top - brec.Bottom;
 	}
 
-	//TODO: ã‚Ì“–‚½‚è”»’è
+	//TODO: ä¸Šã®å½“ãŸã‚Šåˆ¤å®š
 	CRectangle trec = playerRect;
 	trec.Bottom = trec.Top + 1;
 	trec.Expansion(-12, 0);
@@ -476,7 +478,7 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
 		playerRect.Bottom += eneRect.Bottom - trec.Top;
 	}
 
-	//TODO: ¶‰E‚Ì“–‚½‚è”»’è
+	//TODO: å·¦å³ã®å½“ãŸã‚Šåˆ¤å®š
 	CRectangle lrec = playerRect;
 	lrec.Right = lrec.Left + 1;
 	lrec.Expansion(0, -12);
@@ -503,7 +505,7 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
 }
 
 /**
- * •`‰æ
+ * æç”»
  *
  */
 void CStage1::Render(void){
@@ -512,7 +514,7 @@ void CStage1::Render(void){
 	m_BaseStage.Render();
 
 
-	//ƒhƒA‚Ì•`‰æ
+	//ãƒ‰ã‚¢ã®æç”»
 	for (int i = 0; i < m_BaseStage.GetItemCount(); i++)
 	{
 		if (m_ItemArray[i].GetType() == BOSS_DOOR)
@@ -523,22 +525,22 @@ void CStage1::Render(void){
 
 	m_Player.UIRender();
 
-	//ƒvƒŒƒCƒ„[‚Ì•`‰æ
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æç”»
 	m_Player.Render(m_BaseStage.GetScrollX(),m_BaseStage.GetScrollY());
 
-	//“G‚Ì•`‰æ
+	//æ•µã®æç”»
 	for (int i = 0; i < m_BaseStage.GetEnemy1Count(); i++)
 	{
 		m_EnemyArray[i].Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	}
 
-	//“G2‚Ì•`‰æ
+	//æ•µ2ã®æç”»
 	for (int i = 0; i < m_BaseStage.GetEnemy2Count(); i++)
 	{
 		m_Enemy2Array[i].Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	}
 
-	//ƒAƒCƒeƒ€‚Ì•`‰æ
+	//ã‚¢ã‚¤ãƒ†ãƒ ã®æç”»
 	for (int i = 0; i < m_BaseStage.GetItemCount(); i++)
 	{
 		if (m_ItemArray[i].GetType() != BOSS_DOOR)
@@ -547,10 +549,10 @@ void CStage1::Render(void){
 		}
 	}
 
-	//ƒGƒtƒFƒNƒg‚Ì•`‰æ
+	//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®æç”»
 	m_EffectManager.Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 
-	//ƒvƒŒƒCƒ„[‚Ìó‘Ô•`‰æ
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®çŠ¶æ…‹æç”»
 	m_Player.RenderStatus();
 
 	if (m_Menu.IsShow()) {
@@ -561,63 +563,63 @@ void CStage1::Render(void){
 }
 
 /**
- * ƒfƒoƒbƒO•`‰æ
+ * ãƒ‡ãƒãƒƒã‚°æç”»
  *
  */
 void CStage1::RenderDebug(void){
-	//ƒXƒe[ƒWƒfƒoƒbƒO•`‰æ
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ãƒ‡ãƒãƒƒã‚°æç”»
 	m_BaseStage.RenderDebug();
-	//ƒvƒŒƒCƒ„[ƒfƒoƒbƒO•`‰æ
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒ‡ãƒãƒƒã‚°æç”»
 	m_Player.RenderDebug(m_BaseStage.GetScrollX(),m_BaseStage.GetScrollY());
-	//“G‚ÌƒfƒoƒbƒO•`‰æ
+	//æ•µã®ãƒ‡ãƒãƒƒã‚°æç”»
 	for (int i = 0; i < m_BaseStage.GetEnemy1Count(); i++)
 	{
 		m_EnemyArray[i].RenderDebug(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	}
-	//“G2‚ÌƒfƒoƒbƒO•`‰æ
+	//æ•µ2ã®ãƒ‡ãƒãƒƒã‚°æç”»
 	for (int i = 0; i < m_BaseStage.GetEnemy2Count(); i++)
 	{
 		m_Enemy2Array[i].RenderDebug(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	}
-	//ƒAƒCƒeƒ€‚ÌƒfƒoƒbƒO•`‰æ
+	//ã‚¢ã‚¤ãƒ†ãƒ ã®ãƒ‡ãƒãƒƒã‚°æç”»
 	for (int i = 0; i < m_BaseStage.GetItemCount(); i++)
 	{
 		m_ItemArray[i].RenderDebug(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	}
 
-	//ƒGƒtƒFƒNƒg‚ÌƒfƒoƒbƒO•`‰æ
+	//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ãƒ‡ãƒãƒƒã‚°æç”»
 	m_EffectManager.RenderDebug(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 }
 
 /**
- * ‰ğ•ú
+ * è§£æ”¾
  *
  */
 void CStage1::Release(void){
-	//ƒXƒe[ƒW‚ÌŠJ•ú
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã®é–‹æ”¾
 	m_BaseStage.Release(m_NowSceneNo);
-	//ƒvƒŒƒCƒ„[‚ÌŠJ•ú
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®é–‹æ”¾
 	m_Player.Release();
-	//“G‚Ì‰ğ•ú
+	//æ•µã®è§£æ”¾
 	if (m_EnemyArray)
 	{
 		delete[] m_EnemyArray;
 		m_EnemyArray = NULL;
 	}
-	//“G2‚ÌŠJ•ú
+	//æ•µ2ã®é–‹æ”¾
 	if (m_Enemy2Array)
 	{
 		delete[] m_Enemy2Array;
 		m_Enemy2Array = NULL;
 	}
-	//ƒAƒCƒeƒ€‚Ì‰ğ•ú
+	//ã‚¢ã‚¤ãƒ†ãƒ ã®è§£æ”¾
 	if (m_ItemArray)
 	{
 		delete[] m_ItemArray;
 		m_ItemArray = NULL;
 	}
 	
-	//ƒGƒtƒFƒNƒg‚Ì‰ğ•ú
+	//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®è§£æ”¾
 	m_EffectManager.Release();
 	m_Menu.Release();
 	m_BGMManager.Release();
