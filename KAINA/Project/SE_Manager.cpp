@@ -31,21 +31,37 @@ void CSE_Manager::SEPlayer(int request) {
 		}
 	}
 	*/
-	for (int j = 0; j < SE_TYPE; j++)
+
+	if (request == SE_BURNER)
 	{
-		if (m_Sound[request][j].IsPlay()) { continue; }
+		if (!m_Sound[SE_BURNER][0].IsPlay())
+			m_Sound[SE_BURNER][0].Play();
+	}
+	else
+	{
+		for (int j = 0; j < SE_TYPE; j++)
+		{
+			if (m_Sound[request][j].IsPlay()) { continue; }
 		
-		m_Sound[request][j].Play();
+			m_Sound[request][j].Play();
+		}
 	}
 }
 
 
-void CSE_Manager::StopSE()
+void CSE_Manager::StopSE(int request)
 {
-	for (int j = 0; j < SE_TYPE; j++) {
+	if (request == SE_BURNER)
+	{
+		m_Sound[request][0].Stop();
+	}
+	else
+	{
+		for (int j = 0; j < SE_TYPE; j++) {
 
-		if (m_Sound[m_NowSetSE][j].IsPlay()) { continue; }
-		m_Sound[m_NowSetSE][j].Stop();
+			if (m_Sound[request][j].IsPlay()) { continue; }
+			m_Sound[request][j].Stop();
+		}
 	}
 	
 }
@@ -76,9 +92,10 @@ void CSE_Manager::GameLoad() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
 		m_Sound[SE_WALL_CONTACT][j].Load("SE/SE_Wall_Contact.mp3");
-		m_Sound[SE_BURNER][j].Load("SE/SE_burner.wav");
-		m_Sound[SE_BURNER][j].SetVolume(m_Volume * 0.5f);
 	}
+
+	m_Sound[SE_BURNER][0].Load("SE/SE_burner.wav");
+	m_Sound[SE_BURNER][0].SetVolume(m_Volume * 0.5f);
 }
 
 //ƒ{ƒX‚Ö
@@ -132,10 +149,10 @@ void CSE_Manager::PlayerLoad() {
 void CSE_Manager::StageLoad() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
-		m_Sound[SE_FIRE_ICE][j].Load("SE/SE_Fire_Ice.mp3");
-		m_Sound[SE_BURNER][j].Load("SE/SE_burner.wav");
-		m_Sound[SE_BURNER][j].SetVolume(m_Volume * 0.5f);
+		m_Sound[SE_FIRE_ICE][j];
 	}
+	m_Sound[SE_BURNER][0].Load("SE/SE_burner.wav");
+	//m_Sound[SE_BURNER][0].SetVolume(m_Volume * 0.5f);
 }
 
 //“G1‚Ö
@@ -184,8 +201,8 @@ void CSE_Manager::GameRelease() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
 		m_Sound[SE_WALL_CONTACT][j].Release();
-		m_Sound[SE_BURNER][j].Release();
 	}
+	m_Sound[SE_BURNER][0].Release();
 }
 
 //ƒ{ƒX‚Ö
@@ -225,8 +242,8 @@ void CSE_Manager::StageRelease() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
 		m_Sound[SE_FIRE_ICE][j].Release();
-		m_Sound[SE_BURNER][j].Release();
 	}
+	m_Sound[SE_BURNER][0].Release();
 }
 
 //“G‚Ö

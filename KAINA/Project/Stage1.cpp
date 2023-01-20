@@ -267,7 +267,8 @@ void CStage1::StgCollPlayer() {
 	}
 	else
 	{
-		m_SEManager.StopSE();
+		//m_SEManager.StopSE(SE_FIREBER);
+		m_BaseStage.StopBurnerSE();
 
 		m_EffectManager.Stop(EFC_FIREBAR_TOP);
 		m_EffectManager.Stop(EFC_FIREBAR_BOTTOM);

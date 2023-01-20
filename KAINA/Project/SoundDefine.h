@@ -15,8 +15,7 @@ enum SECode{
 	SE_ATTACK_REFLECTION,		//追加済み
 	SE_ATTACK_THROUGH,			//追加済み
 	SE_ATTACK_HEAVY,			//追加済み
-	SE_WALL_CONTACT,			//追加済み		//プレイヤーの球が壁にぶつかる
-	SE_FIREBER,					
+	SE_WALL_CONTACT,			//追加済み		//プレイヤーの球が壁にぶつかる			
 	SE_DIVEWATER,				
 	SE_INSIDEWATER,				
 	SE_PLAYER_DAMAGE,			//追加済み
