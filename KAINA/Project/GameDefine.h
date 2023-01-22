@@ -58,6 +58,9 @@ enum tag_LaserAnimation {
 //重力
 #define		GRAVITY					0.3f
 
+//プレイヤー用重力
+#define		PLAYER_GRAVITY			0.6f
+
 #define		DAMAGE_WAIT				60
 //************************プレイヤーで使うDefine*************************//
 //移動速度
@@ -67,7 +70,7 @@ enum tag_LaserAnimation {
 #define		PLAYER_MAXSPEED					7.0f
 
 //ジャンプ初速
-#define		PLAYER_JUMP						-13.0f
+#define		PLAYER_JUMP						-18.0f
 
 //攻撃幅
 #define		PLAYER_ATTACKWIDTH				30
