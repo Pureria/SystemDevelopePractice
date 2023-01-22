@@ -392,6 +392,7 @@ void CPlayer::Update() {
 	if (m_SP >= 100) {
 		m_SP = 100;
 	}
+
 	else {
 		if (m_SPInterval <= 0)
 		{
@@ -414,10 +415,10 @@ void CPlayer::Update() {
 	}
 
 	//ƒ_ƒ[ƒW‚ÌƒCƒ“ƒ^[ƒoƒ‹‚ğŒ¸‚ç‚·
-	if (m_DamageWait > 0)
-	{
+	if (m_DamageWait > 0) {
 		m_DamageWait--;
 	}
+
 	if (m_SPRedWait > 0) {
 		m_SPRedWait--;
 	}
@@ -619,6 +620,7 @@ void CPlayer::BltChangeTpBtmAnim() {
 		m_Motion.ChangeMotion(IsLaser() ? MOTION_NORMAL_MUZZLEBOTTOM : MOTION_LASER_MUZZLEBOTTOM);
 	}
 }
+
 #pragma endregion
 
 
@@ -629,6 +631,10 @@ void CPlayer::BulletChange() {
 	if (g_pInput->IsKeyPush(MOFKEY_I)) {
 		TypeChange();
 		BltChangeTpBtmAnim();
+		m_bUIAnimation = true;
+		m_UIAnimationAlpha = 0;
+		m_UIAnimationTimer = 0;
+		m_bUIAnimationEnd = false;
 	}
 }
 
@@ -657,7 +663,6 @@ void CPlayer::NatuChange() {
 		{
 		case HEAL:
 			m_NatuType = HEAVY;
-			
 			break;
 		case HEAVY:
 			m_NatuType = HEAL;
@@ -790,11 +795,15 @@ void CPlayer::FireShot() {
 
 //’e‚ÌŒü‚«‚ğŒ‚‚ÂuŠÔ‚ÉƒZƒbƒg
 void CPlayer::ShotRev(int i) {
-	if (m_SP <= 0) {	
+	if (m_SP <= 0 ||
+		((m_PlShotAry[i].GetNatu() == HEAL) && m_SP < HEAL_DECREASE) ||
+		((m_PlShotAry[i].GetNatu() == HEAVY) && m_SP < HEAVY_DECREASE)) 
+	{
 		m_SPRedWait = SP_RED_WAIT;
 		m_SEManager.SEPlayer(SE_OUTOFBULLETS);
 		return;
 	}
+
 	m_SEManager.SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_ATTACK_REFLECTION : SE_ATTACK_HEAVY);
 	if (!m_bReverse) {
 		if (m_bTop) {
@@ -875,11 +884,16 @@ void CPlayer::FireShotLaser() {
 
 //’e‚ÌŒü‚«‚ğŒ‚‚ÂuŠÔ‚ÉƒZƒbƒg
 void CPlayer::ShotRevLaser() {
-	if (m_SP <= 0) {
+	if (m_SP <= 0 || 
+		((m_Laser.GetNatu() == FIRE) && m_SP < FIRE_DECREASE) ||
+		((m_Laser.GetNatu() == FROST) && m_SP < FROST_DECREASE)) 
+	{
+
 		m_SPRedWait = SP_RED_WAIT;
 		m_SEManager.SEPlayer(SE_OUTOFBULLETS);
 		return;
 	}
+
 	m_SEManager.SEPlayer(SE_ATTACK_THROUGH);
 	if (!m_bReverse) {
 		if (m_bTop) {
@@ -1137,7 +1151,7 @@ bool CPlayer::CollisionEnemy(CEnemyBase_Shot& ene, int eneType) {
 		CRectangle esrec = ene.ShotArrayRect(i);
 		if (prec.CollisionRect(esrec))
 		{
-			m_HP -= 5;
+			m_HP -= ENEMY_ATTAK_POWER;
 			m_DamageWait = DAMAGE_WAIT;
 			if (prec.Left < erec.Left)
 			{
@@ -1212,14 +1226,102 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 		return false;
 
 
+	//“G‚Ì’ZŒa‚Æ©•ª‚Ì’ZŒa‚Åƒ_ƒ[ƒW
+	CRectangle prec = GetRect();
+	CRectangle erec;
+
+	//“G‚Æ’e‚Ì“–‚½‚è”»’è
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
+	{
+		if (!m_Laser.GetShow()) { continue; }
+
+		CRectangle srec = m_Laser.GetRect();
+		erec = boss.GetBossFrontRect();
+
+		if (srec.CollisionRect(erec))
+		{
+			if (m_Laser.GetNatu() == FIRE) {
+				boss.Damage(FIRE_DAMAGE, true);
+				m_Laser.SetWallHitLaser(true);
+
+			}
+			else if (m_Laser.GetNatu() == FROST) {
+				boss.Damage(FROST_DAMAGE, true);
+				m_Laser.SetWallHitLaser(true);
+
+			}
+			m_SEManager.SEPlayer((m_Laser.GetNatu() == FIRE) ? SE_FIRE : SE_ICE);
+			continue;
+		}
+
+		erec = boss.GetRect();
+		if (srec.CollisionRect(erec))
+		{
+			if (m_Laser.GetNatu() == FIRE) {
+				boss.Damage(FIRE_DAMAGE, false);
+			}
+			else if (m_Laser.GetNatu() == FROST) {
+				boss.Damage(FROST_DAMAGE, false);
+				boss.SetAbState(STATE_FROST);
+				boss.SetAbStateWait(FROST_WAIT);
+			}
+			m_SEManager.SEPlayer((m_Laser.GetNatu() == FIRE) ? SE_FIRE : SE_ICE);
+			
+			continue;
+		}
+	}
+	//“G‚Æ’e‚Ì“–‚½‚è”»’è
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
+		if (!m_PlShotAry[i].GetShow()) { continue; }
+		CRectangle srec = m_PlShotAry[i].GetRect();
+		erec = boss.GetBossFrontRect();
+
+		if (srec.CollisionRect(erec))
+		{
+			if (m_PlShotAry[i].GetNatu() == HEAL)
+			{
+				m_HP += HEAL_POWER;
+				m_pEffectManager->Start(SetStartPos(), EFC_HEAL);
+				boss.Damage(HEAL_DAMAGE, true);
+			}
+			else if (m_PlShotAry[i].GetNatu() == HEAVY)
+			{
+				boss.Damage(HEAVY_DAMAGE, true);
+
+			}
+			
+			m_SEManager.SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_HEAL : SE_HEAVY);
+			
+			m_PlShotAry[i].SetShow(false);
+			continue;
+		}
+
+		erec = boss.GetRect();
+		if (srec.CollisionRect(erec))
+		{
+			if (m_PlShotAry[i].GetNatu() == HEAL)
+			{
+				m_HP += HEAL_POWER;
+				m_pEffectManager->Start(SetStartPos(), EFC_HEAL);
+				boss.Damage(HEAL_DAMAGE, false);
+			}
+			else if (m_PlShotAry[i].GetNatu() == HEAVY)
+			{
+				boss.Damage(HEAVY_DAMAGE, false);
+			}
+			
+			m_SEManager.SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_HEAL : SE_HEAVY);
+			
+			m_PlShotAry[i].SetShow(false);
+			continue;
+		}
+	}
+
 	//ƒ_ƒ[ƒW’†‚Ì‚½‚ß“–‚½‚è”»’è‚ğs‚í‚È‚¢
 	if (m_DamageWait > 0)
 		return false;
 
-	//“G‚Ì’ZŒa‚Æ©•ª‚Ì’ZŒa‚Åƒ_ƒ[ƒW
-	CRectangle prec = GetRect();
-	CRectangle erec = boss.GetRect();
-
+	erec = boss.GetRect();
 	for (int i = 0; i < ENEMY_BOSS_SLASH_COUNT; i++)
 	{
 		if (!boss.ShotArrayBool(i))
@@ -1314,7 +1416,6 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 		}
 		else
 		{
-
 			m_SEManager.SEPlayer(SE_PLAYER_DAMAGE);
 			//ƒ_ƒ[ƒWƒGƒtƒFƒNƒg‚ğ”­¶‚³‚¹‚é
 			m_pEffectManager->Start(SetStartPos(), EFC_WEAK);
@@ -1322,92 +1423,6 @@ bool CPlayer::Collision_Stage1_Boss(CEnemy_Stage1_Boss& boss) {
 		return true;
 	}
 
-	//“G‚Æ’e‚Ì“–‚½‚è”»’è
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-	{
-		if (!m_Laser.GetShow()) { continue; }
-
-		CRectangle srec = m_Laser.GetRect();
-		erec = boss.GetBossFrontRect();
-
-		if (srec.CollisionRect(erec))
-		{
-			if (m_Laser.GetNatu() == FIRE) {
-				boss.Damage(FIRE_DAMAGE, true);
-				m_Laser.SetWallHitLaser(true);
-
-			}
-			else if (m_Laser.GetNatu() == FROST) {
-				boss.Damage(FROST_DAMAGE, true);
-				m_Laser.SetWallHitLaser(true);
-
-			}
-			m_SEManager.SEPlayer((m_Laser.GetNatu() == FIRE) ? SE_FIRE : SE_ICE);
-			continue;
-		}
-
-		erec = boss.GetRect();
-		if (srec.CollisionRect(erec))
-		{
-			if (m_Laser.GetNatu() == FIRE) {
-				boss.Damage(FIRE_DAMAGE, false);
-			}
-			else if (m_Laser.GetNatu() == FROST) {
-				boss.Damage(FROST_DAMAGE, false);
-				boss.SetAbState(STATE_FROST);
-				boss.SetAbStateWait(FROST_WAIT);
-			}
-			m_SEManager.SEPlayer((m_Laser.GetNatu() == FIRE) ? SE_FIRE : SE_ICE);
-			
-			continue;
-		}
-	}
-	//“G‚Æ’e‚Ì“–‚½‚è”»’è
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++) {
-		if (!m_PlShotAry[i].GetShow()) { continue; }
-		CRectangle srec = m_PlShotAry[i].GetRect();
-		erec = boss.GetBossFrontRect();
-
-		if (srec.CollisionRect(erec))
-		{
-			if (m_PlShotAry[i].GetNatu() == HEAL)
-			{
-				m_HP += HEAL_POWER;
-				m_pEffectManager->Start(SetStartPos(), EFC_HEAL);
-				boss.Damage(HEAL_DAMAGE, true);
-			}
-			else if (m_PlShotAry[i].GetNatu() == HEAVY)
-			{
-				boss.Damage(HEAVY_DAMAGE, true);
-
-			}
-			
-			m_SEManager.SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_HEAL : SE_HEAVY);
-			
-			m_PlShotAry[i].SetShow(false);
-			continue;
-		}
-
-		erec = boss.GetRect();
-		if (srec.CollisionRect(erec))
-		{
-			if (m_PlShotAry[i].GetNatu() == HEAL)
-			{
-				m_HP += HEAL_POWER;
-				m_pEffectManager->Start(SetStartPos(), EFC_HEAL);
-				boss.Damage(HEAL_DAMAGE, false);
-			}
-			else if (m_PlShotAry[i].GetNatu() == HEAVY)
-			{
-				boss.Damage(HEAVY_DAMAGE, false);
-			}
-			
-			m_SEManager.SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_HEAL : SE_HEAVY);
-			
-			m_PlShotAry[i].SetShow(false);
-			continue;
-		}
-	}
 
 	return false;
 
@@ -1549,16 +1564,13 @@ void CPlayer::Render(float wx,float wy){
 }
 
 void CPlayer::RenderStatus() {
-	//HP‚É‰‚¶‚Ä’ZŒa‚Ì•‚ğ•Ï‰»‚³‚¹‚é
-	/*CRectangle hprec(0, 0, 795 * (m_HP * 0.01f), 31);
-	m_HPBarTexture.Render(100,23, hprec);*/
+
 	CRectangle rec(0, 0, 795, 31);
-	m_HPBarTexture.RenderScale(100, 23, m_HP * 0.01f, 1.0f, rec, MOF_COLOR_WHITE);//‰æ‘œ‚ğˆ³k‚·‚é•\¦*/
-	/*CRectangle sprec(0, 0, 702 * (m_SP * 0.01f), 27);
-	m_SPBarTexture.Render(80,51, sprec);*/
+	m_HPBarTexture.RenderScale(100, 22, m_HP * 0.01f, 1.0f, rec, MOF_COLOR_WHITE);//‰æ‘œ‚ğˆ³k‚·‚é•\¦*/
+
 	CRectangle sprec(0, 0, 702, 27);
 	m_SPBarTexture.RenderScale(80, 51, m_SP * 0.01f, 1.0f, sprec, MOF_COLOR_WHITE);//‰æ‘œ‚ğˆ³k‚·‚é•\¦*/
-	//ƒtƒŒ[ƒ€‚ğã•”‚É•`‰æ
+	
 	m_FrameTexture.Render(0, 0);
 
 	if (m_SPRedWait % 16 >= 8)

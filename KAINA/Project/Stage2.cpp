@@ -511,11 +511,12 @@ void CStage2::Render(void){
 	}
 
 
+	m_BaseStage.WaterRender();
 	//エフェクトの描画
 	m_EffectManager.Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	//プレイヤーの描画
-	m_Player.ShotRender(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	m_Player.Render(m_BaseStage.GetScrollX(),m_BaseStage.GetScrollY());
+	m_Player.ShotRender(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	m_BaseStage.Render();
 
 	//敵の描画

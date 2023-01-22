@@ -533,13 +533,20 @@ void CStage1::Render(void){
 	}
 
 
+	//プレイヤーの描画
+	m_BaseStage.WaterRender();
 	//エフェクトの描画
 	m_EffectManager.Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
-	//プレイヤーの描画
+
 	m_Player.Render(m_BaseStage.GetScrollX(),m_BaseStage.GetScrollY());
 	m_Player.ShotRender(x, y);
 	
 	m_BaseStage.Render();
+
+	m_FrostTex.RenderScale(3100 - x,400 - y,0.5f);
+	m_FireWebTex.RenderScale(1600 - x, 400 - y, 0.5f);
+	m_NatuChangeTex.RenderScale(3100 - x, 500 - y, 0.5f);
+	m_TypeChangeTex.RenderScale(1800 - x, 500 - y, 0.5f);
 
 	//敵の描画
 	for (int i = 0; i < m_BaseStage.GetEnemy1Count(); i++)

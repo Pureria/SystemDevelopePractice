@@ -237,6 +237,7 @@ void CSE_Manager::PlayerRelease() {
 		m_Sound[SE_ICE][j].Release();
 		m_Sound[SE_FIRE][j].Release();
 		m_Sound[SE_FIRE_SPIDERWEB][j].Release();
+		m_Sound[SE_OUTOFBULLETS][j].Release();
 	}
 }
 

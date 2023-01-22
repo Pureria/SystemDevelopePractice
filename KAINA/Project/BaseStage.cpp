@@ -1129,6 +1129,36 @@ void CBaseStage::Render(void){
 			//マップチップの短径
 			CRectangle cr(m_ChipSize * (cn % tcx), m_ChipSize * (cn / tcx), m_ChipSize * (cn % tcx + 1), m_ChipSize * (cn / tcx + 1));
 			//マップチップの描画
+			if (cn != WATER) {
+				m_ChipTexture.Render(-m_ScrollX + x * m_ChipSize, -m_ScrollY + y * m_ChipSize, cr);
+			}
+		}
+	}
+}
+
+void CBaseStage::WaterRender() {
+	//テクスチャの横幅からマップチップの縦オフセットを求める
+	int tcx = m_ChipTexture.GetWidth() / m_ChipSize;
+	//マップチップの描画
+	for (int y = 0; y < m_YCount; y++)
+	{
+		for (int x = 0; x < m_XCount; x++)
+		{
+			//描画するチップ番号
+			//チップ番号0は描画しない
+			char cn = m_pChipData[y * m_XCount + x] - 1;
+			if (cn < 0)
+			{
+				continue;
+			}
+
+			if (cn != WATER) {
+				continue;
+			}
+
+			//マップチップの短径
+			CRectangle cr(m_ChipSize * (cn % tcx), m_ChipSize * (cn / tcx), m_ChipSize * (cn % tcx + 1), m_ChipSize * (cn / tcx + 1));
+			//マップチップの描画
 			m_ChipTexture.Render(-m_ScrollX + x * m_ChipSize, -m_ScrollY + y * m_ChipSize, cr);
 		}
 	}
