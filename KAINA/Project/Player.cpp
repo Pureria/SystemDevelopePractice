@@ -494,11 +494,11 @@ void CPlayer::UpdateMove(){
 	//d—Í‚É‚æ‚è­‚µ‚¸‚Â‰º‚ª‚é
 	if (IsJump())
 	{
-		m_MoveY += GRAVITY;
+		m_MoveY += PLAYER_GRAVITY;
 	}
 	else
 	{
-		m_MoveY += GRAVITY + 0.2f;
+		m_MoveY += PLAYER_GRAVITY + 0.2f;
 	}
 
 	if (m_MoveY >= 20.0f)
