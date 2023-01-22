@@ -127,7 +127,10 @@ private:
 	CTexture				m_Fr2Tex;
 	CTexture				m_Fi2Tex;
 
-	int						m_UiWait;
+
+	CTexture				m_SPRedTex;
+	int						m_SPRedWait;
+	bool					m_bRedShow;
 
 public:
 	CPlayer();

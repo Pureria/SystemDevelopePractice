@@ -31,7 +31,6 @@ m_bNextBossScene(false),
 m_SpWait(0),
 m_SEManager(),
 m_bShow(false),
-m_UiWait(0),
 m_UIAnimationTimer(0),
 m_bUIAnimation(false),
 m_bUIAnimationEnd(false)
@@ -88,6 +87,8 @@ bool CPlayer::Load(){
 	if (!m_FireLaserUpDownTexture.Load("Player/laser3.png"))		{		return false;		}
 
 	if (!m_FrostLaserUpDownTexture.Load("Player/bluelaser3.png"))	{		return false;		}
+
+	if (!m_SPRedTex.Load("Player/spred.png"))						{		return false;		}
 
 
 	for (int i = 0; i < PLAYERSHOT_COUNT; i++)	
@@ -416,8 +417,8 @@ void CPlayer::Update() {
 	{
 		m_DamageWait--;
 	}
-	if (m_UiWait > 0) {
-		m_UiWait--;
+	if (m_SPRedWait > 0) {
+		m_SPRedWait--;
 	}
 	
 }
@@ -1689,6 +1690,8 @@ void CPlayer::Release(){
 	m_Fr2Tex.Release();
 
 	m_Fi2Tex.Release();
+
+	m_SPRedTex.Release();
 }
 
 #pragma endregion
