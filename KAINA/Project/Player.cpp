@@ -1420,7 +1420,7 @@ bool CPlayer::ColisionItem(CItem& itm)
 	CRectangle irec = itm.GetRect();
 	if (prec.CollisionRect(irec))
 	{
-		itm.Effect(IsJump(),m_bNextBossScene,m_MoveX,m_MoveY);
+		itm.Effect(canUseDoor(), m_bNextBossScene, m_MoveX, m_MoveY);
 		return true;
 	}
 	return false;
@@ -1498,6 +1498,14 @@ void CPlayer::CollisionStage(float ox, float oy)
 bool CPlayer::IsJump()
 {
 	if (m_MoveY < 0)
+		return true;
+	else
+		return false;
+}
+
+bool CPlayer::canUseDoor()
+{
+	if (m_MoveY == 0)
 		return true;
 	else
 		return false;
