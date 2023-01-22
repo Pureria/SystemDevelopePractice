@@ -487,10 +487,11 @@ void CEnemy_Stage1_Boss::Update() {
 		}
 		break;
 	}
-	AbStateMoveDec();
 	//d—Í‚É‚æ‚è‰º‚É­‚µ‚¸‚Â‰º‚ª‚é
 	m_Move.y += GRAVITY;
 	if (m_Move.y >= 20.0f) { m_Move.y = 20.0f; }
+
+	AbStateMoveDec();
 
 	m_Pos.x += m_Move.x;
 	m_Pos.y += m_Move.y;

@@ -96,7 +96,6 @@ void CSE_Manager::GameLoad() {
 	}
 
 	m_Sound[SE_BURNER][0].Load("SE/SE_burner.wav");
-	//m_Sound[SE_BURNER][0].SetVolume(m_Volume * 0.5f);
 }
 
 //É{ÉXÇ÷
@@ -153,11 +152,10 @@ void CSE_Manager::StageLoad() {
 	for (int j = 0; j < SE_TYPE; j++)
 	{
 		m_Sound[SE_DIVEWATER][j].Load("SE/SE_Divewater.mp3");
-		m_Sound[SE_DIVEWATER][j].SetVolume(m_Volume * 1.5f);
+		m_Sound[SE_DIVEWATER][j].SetVolume(m_Volume);
 		m_Sound[SE_FIRE_ICE][j].Load("SE/SE_Fire_Ice.mp3");
 	}
 	m_Sound[SE_BURNER][0].Load("SE/SE_burner.wav");
-	//m_Sound[SE_BURNER][0].SetVolume(m_Volume * 0.5f);
 }
 
 //ìG1Ç÷
