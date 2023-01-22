@@ -634,17 +634,18 @@ void CPlayer::TypeChange() {
 	if (m_ShotType == NORMAL) {
 		m_ShotType = LASER;
 		m_NatuType = (GetNatu() == HEAVY) ? FROST : FIRE;
+		m_SEManager.SEPlayer((GetNatu() == FROST) ? SE_ICE : SE_FIRE);
 	}
 	else {
 		m_ShotType = NORMAL;
 		m_NatuType = (GetNatu() == FROST) ? HEAVY : HEAL;
+		m_SEManager.SEPlayer((GetNatu() == HEAVY) ? SE_HEAVY : SE_HEAL);
 	}
 }
 
 void CPlayer::NatuChange() {
 	if (g_pInput->IsKeyPush(MOFKEY_O)) {
 		SEBltChange();
-		//m_UiWait = UI_WAIT;
 		m_bUIAnimation = true;
 		m_UIAnimationAlpha = 0;
 		m_UIAnimationTimer = 0;
@@ -773,8 +774,6 @@ void CPlayer::FireShot() {
 				if (m_PlShotAry[i].GetShow())	{		continue;		}
 				m_SPInterval = PLAYERSHOT_INTERVAL;
 				
-				m_SEManager.SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_ATTACK_REFLECTION : SE_ATTACK_HEAVY);
-
 				m_ShotWait = (m_PlShotAry[i].GetNatu() == HEAL) ? PLAYERSHOT_HEALWAIT : PLAYERSHOT_HEAVYWAIT;
 				ShotRev(i);
 				break;
@@ -793,7 +792,7 @@ void CPlayer::ShotRev(int i) {
 	if (m_SP <= 0) {		
 		return;
 	}
-
+	m_SEManager.SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_ATTACK_REFLECTION : SE_ATTACK_HEAVY);
 	if (!m_bReverse) {
 		if (m_bTop) {
 			m_PlShotAry[i].Fire(SetStartPos(), RIGHTTOP, m_NatuType,NORMAL);
@@ -861,7 +860,6 @@ void CPlayer::FireShotLaser() {
 			DirecMotionChange();
 
 			m_SPInterval = PLAYERSHOT_INTERVAL;
-			m_SEManager.SEPlayer(SE_ATTACK_THROUGH);
 			m_ShotWait = LASER_WAIT;
 			ShotRevLaser();
 		}
@@ -877,6 +875,7 @@ void CPlayer::ShotRevLaser() {
 	if (m_SP <= 0) {
 		return;
 	}
+	m_SEManager.SEPlayer(SE_ATTACK_THROUGH);
 	if (!m_bReverse) {
 		if (m_bTop) {
 			m_Laser.Fire(SetStartPos().x - 10, SetStartPos().y - 24, RIGHTTOP, m_NatuType,LASER);
@@ -896,11 +895,11 @@ void CPlayer::ShotRevLaser() {
 				(GetNatuLaser() == FIRE) ? EFC_FIRE_HAND_TB : EFC_FROST_HAND_TB);
 		}
 		else {
-			m_Laser.Fire(SetStartPos().x + 32, SetStartPos().y + 10, RIGHT, m_NatuType, LASER);
+			m_Laser.Fire(SetStartPos().x + 32, SetStartPos().y + 25, RIGHT, m_NatuType, LASER);
 			m_SpWait = PLAYER_SPWAIT;
 			m_SP -= (m_Laser.GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 
-			m_pEndEffect = m_pEffectManager->Start(SetStartPos().x + 24, SetStartPos().y,
+			m_pEndEffect = m_pEffectManager->Start(SetStartPos().x + 24, SetStartPos().y + 15,
 				(GetNatuLaser() == FIRE) ? EFC_FIRE_HAND_LR : EFC_FROST_HAND_LR);
 		}
 	}
@@ -922,11 +921,11 @@ void CPlayer::ShotRevLaser() {
 				(GetNatuLaser() == FIRE) ? EFC_FIRE_HAND_TB : EFC_FROST_HAND_TB);
 		}
 		else {
-			m_Laser.Fire(SetStartPos().x - 10, SetStartPos().y + 10, LEFT, m_NatuType, LASER);
+			m_Laser.Fire(SetStartPos().x - 5, SetStartPos().y + 25, LEFT, m_NatuType, LASER);
 			m_SpWait = PLAYER_SPWAIT;
 			m_SP -= (m_Laser.GetNatu() == FIRE) ? FIRE_DECREASE : FROST_DECREASE;
 
-			m_pEndEffect = m_pEffectManager->Start(SetStartPos().x - 24, SetStartPos().y,
+			m_pEndEffect = m_pEffectManager->Start(SetStartPos().x - 24, SetStartPos().y + 15,
 				(GetNatuLaser() == FIRE) ? EFC_FIRE_HAND_LR : EFC_FROST_HAND_LR);
 		}
 	}
@@ -1553,33 +1552,33 @@ void CPlayer::RenderStatus() {
 	{
 	case HEAL:
 		m_HealTex.Render(0, 0);
-		m_Heal2Tex.RenderScale(100, 75, 0.7f);
-		m_Heavy2Tex.RenderScale(250, 75, 0.7f, MOF_XRGB(125, 125, 125));
-		m_Fire2Tex.RenderScale(400, 75, 0.7f, MOF_XRGB(125, 125, 125));
-		m_Frost2Tex.RenderScale(550, 75, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Heal2Tex.RenderScale(100, 80, 0.7f);
+		m_Heavy2Tex.RenderScale(250, 80, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Fire2Tex.RenderScale(400, 80, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Frost2Tex.RenderScale(550, 80, 0.7f, MOF_XRGB(125, 125, 125));
 		break;
 	case HEAVY:
 		m_HeavyTex.Render(0, 0);
-		m_Heal2Tex.RenderScale(100, 75, 0.7f, MOF_XRGB(125, 125, 125));
-		m_Heavy2Tex.RenderScale(250, 75, 0.7f);
-		m_Fire2Tex.RenderScale(400, 75, 0.7f, MOF_XRGB(125, 125, 125));
-		m_Frost2Tex.RenderScale(550, 75, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Heal2Tex.RenderScale(100, 80, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Heavy2Tex.RenderScale(250, 80, 0.7f);
+		m_Fire2Tex.RenderScale(400, 80, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Frost2Tex.RenderScale(550, 80, 0.7f, MOF_XRGB(125, 125, 125));
 
 		break;
 	case FIRE:
 		m_FireTex.Render(0, 0);
-		m_Heal2Tex.RenderScale(100, 75, 0.7f, MOF_XRGB(125, 125, 125));
-		m_Heavy2Tex.RenderScale(250, 75, 0.7f, MOF_XRGB(125, 125, 125));
-		m_Fire2Tex.RenderScale(400, 75, 0.7f);
-		m_Frost2Tex.RenderScale(550, 75, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Heal2Tex.RenderScale(100, 80, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Heavy2Tex.RenderScale(250, 80, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Fire2Tex.RenderScale(400, 80, 0.7f);
+		m_Frost2Tex.RenderScale(550, 80, 0.7f, MOF_XRGB(125, 125, 125));
 
 		break;
 	case FROST:
 		m_FrostTex.Render(0, 0);
-		m_Heal2Tex.RenderScale(100, 75, 0.7f, MOF_XRGB(125, 125, 125));
-		m_Heavy2Tex.RenderScale(250, 75, 0.7f, MOF_XRGB(125, 125, 125));
-		m_Fire2Tex.RenderScale(400, 75,0.7f,MOF_XRGB(125, 125, 125));
-		m_Frost2Tex.RenderScale(550, 75, 0.7f);
+		m_Heal2Tex.RenderScale(100, 80, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Heavy2Tex.RenderScale(250, 80, 0.7f, MOF_XRGB(125, 125, 125));
+		m_Fire2Tex.RenderScale(400, 80,0.7f,MOF_XRGB(125, 125, 125));
+		m_Frost2Tex.RenderScale(550, 80, 0.7f);
 
 		break;
 	}

@@ -487,10 +487,11 @@ void CEnemy_Stage1_Boss::Update() {
 		}
 		break;
 	}
-	AbStateMoveDec();
 	//d—Í‚É‚æ‚è‰º‚É­‚µ‚¸‚Â‰º‚ª‚é
 	m_Move.y += GRAVITY;
 	if (m_Move.y >= 20.0f) { m_Move.y = 20.0f; }
+
+	AbStateMoveDec();
 
 	m_Pos.x += m_Move.x;
 	m_Pos.y += m_Move.y;
@@ -606,7 +607,12 @@ void CEnemy_Stage1_Boss::DeffenceProc(int dmg,int deff) {
 }
 //TODO : AbStateMoveDec
 void	CEnemy_Stage1_Boss::AbStateMoveDec() {
-
+	switch (GetAbStateNo())
+	{
+	case STATE_FROST:
+		m_Move.x *= 0.5f;
+		break;
+	}
 }
 /**
  * •`‰æ

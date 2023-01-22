@@ -90,7 +90,7 @@ public:
 		switch (GetAbStateNo())
 		{
 		case STATE_FROST:
-			m_Move.x *= 0.8f;
+			m_Move.x *= 0.5f;
 			break;
 		}
 	}
