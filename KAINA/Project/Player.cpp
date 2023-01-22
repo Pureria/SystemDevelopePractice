@@ -772,8 +772,6 @@ void CPlayer::FireShot() {
 
 				if (m_PlShotAry[i].GetShow())	{		continue;		}
 				m_SPInterval = PLAYERSHOT_INTERVAL;
-				
-				m_SEManager.SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_ATTACK_REFLECTION : SE_ATTACK_HEAVY);
 
 				m_ShotWait = (m_PlShotAry[i].GetNatu() == HEAL) ? PLAYERSHOT_HEALWAIT : PLAYERSHOT_HEAVYWAIT;
 				ShotRev(i);
@@ -791,8 +789,11 @@ void CPlayer::FireShot() {
 //弾の向きを撃つ瞬間にセット
 void CPlayer::ShotRev(int i) {
 	if (m_SP <= 0) {		
+		m_SEManager.SEPlayer(SE_OUTOFBULLETS);
 		return;
 	}
+
+	m_SEManager.SEPlayer((m_PlShotAry[i].GetNatu() == HEAL) ? SE_ATTACK_REFLECTION : SE_ATTACK_HEAVY);
 
 	if (!m_bReverse) {
 		if (m_bTop) {
@@ -861,7 +862,6 @@ void CPlayer::FireShotLaser() {
 			DirecMotionChange();
 
 			m_SPInterval = PLAYERSHOT_INTERVAL;
-			m_SEManager.SEPlayer(SE_ATTACK_THROUGH);
 			m_ShotWait = LASER_WAIT;
 			ShotRevLaser();
 		}
@@ -875,8 +875,12 @@ void CPlayer::FireShotLaser() {
 //弾の向きを撃つ瞬間にセット
 void CPlayer::ShotRevLaser() {
 	if (m_SP <= 0) {
+		m_SEManager.SEPlayer(SE_OUTOFBULLETS);
 		return;
 	}
+
+	m_SEManager.SEPlayer(SE_ATTACK_THROUGH);
+
 	if (!m_bReverse) {
 		if (m_bTop) {
 			m_Laser.Fire(SetStartPos().x - 10, SetStartPos().y - 24, RIGHTTOP, m_NatuType,LASER);
