@@ -211,7 +211,7 @@ void CStage1_Boss::StgCollBullet()
 		//è„ÇÃîªíË
 		psrec.Bottom = psrec.Top + 1;
 		psrec.Expansion(-15, 0);
-		if (m_Stage.Collision(psrec))
+		if (m_Stage.Collision(psrec, ox, oy))
 		{
 			m_Player.ShotRefTop(i);
 			m_SEManager.SEPlayer(SE_WALL_CONTACT);
@@ -221,7 +221,7 @@ void CStage1_Boss::StgCollBullet()
 		psrec = m_Player.GetNormalRect(i);
 		psrec.Top = psrec.Bottom - 1;
 		psrec.Expansion(-15, 0);
-		if (m_Stage.Collision(psrec))
+		if (m_Stage.Collision(psrec, ox, oy))
 		{
 			m_Player.ShotRefBottom(i);
 			m_SEManager.SEPlayer(SE_WALL_CONTACT);
@@ -231,7 +231,7 @@ void CStage1_Boss::StgCollBullet()
 		psrec = m_Player.GetNormalRect(i);
 		psrec.Right = psrec.Left + 1;
 		psrec.Expansion(0, -15);
-		if (m_Stage.Collision(psrec))
+		if (m_Stage.Collision(psrec, ox, oy))
 		{
 			m_Player.ShotRefLeft(i);
 			m_SEManager.SEPlayer(SE_WALL_CONTACT);
@@ -241,7 +241,7 @@ void CStage1_Boss::StgCollBullet()
 		psrec = m_Player.GetNormalRect(i);
 		psrec.Left = psrec.Right - 1;
 		psrec.Expansion(0, -15);
-		if (m_Stage.Collision(psrec))
+		if (m_Stage.Collision(psrec, ox, oy))
 		{
 			m_Player.ShotRefRight(i);
 			m_SEManager.SEPlayer(SE_WALL_CONTACT);

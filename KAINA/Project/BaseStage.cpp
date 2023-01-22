@@ -515,19 +515,12 @@ bool CBaseStage::Collision(CRectangle r) {
 				continue;
 			}
 
-			//リフトの当たり判定
-			//if (cn == LIFT)
-				//continue;
-
 			if (cn == WATER)
 				continue;
 
-			/*
-			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
-			{
+			if (cn == CRACK_STONE) {
 				continue;
 			}
-			*/
 
 			//マップチップの短径
 			CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
@@ -641,10 +634,6 @@ bool CBaseStage::Collision(CRectangle r, float& ox, float& oy) {
 				continue;
 			}
 
-			if (cn == CRACK_STONE) {
-				continue;
-			}
-
 			//ボタンの当たり判定
 			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
 			{
@@ -655,6 +644,7 @@ bool CBaseStage::Collision(CRectangle r, float& ox, float& oy) {
 			if (cn == LIFT)
 				continue;
 			
+
 			//マップチップの短径
 			CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
 			//当たり判定用のキャラクタ短径
@@ -781,13 +771,13 @@ bool CBaseStage::StageAttackCollision(CRectangle r)
 				continue;
 			}
 			//マップチップの短径
-			CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
 
 			if (cn == WATER)
 			{
 				continue;
 			}
 
+			CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
 
 			if (cn == BUTTON_RED || cn == BUTTON_BLUE || cn == BUTTON_YELLOW)
 			{				
@@ -839,8 +829,6 @@ void CBaseStage::CollisionCrack(CRectangle r) {
 				if (cr.CollisionRect(r))
 				{
 					return;
-					//TODO: 必要なら外す。
-					//m_pChipData[y * m_XCount + x] = 0;
 				}
 			}
 		}
