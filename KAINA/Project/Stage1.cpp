@@ -154,12 +154,6 @@ void CStage1::Update(void){
 		}
 		return;
 	}
-	/*
-	m_Player.SetUp();
-	
-	Vector2 xy = m_BaseStage.GetMapChipPos(m_Player.GetLaserSearchRect(), false);
-	m_Player.SetMapChipPos(xy);
-	*/
 	//プレイヤーの更新
 	m_Player.Update();
 	float wx = m_BaseStage.GetScrollX();
@@ -538,13 +532,13 @@ void CStage1::Render(void){
 		}
 	}
 
-	m_Player.UIRender(m_BaseStage.GetScrollX(),m_BaseStage.GetScrollY());
 
 	//エフェクトの描画
 	m_EffectManager.Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 	//プレイヤーの描画
 	m_Player.Render(m_BaseStage.GetScrollX(),m_BaseStage.GetScrollY());
 	m_Player.ShotRender(x, y);
+	
 	m_BaseStage.Render();
 
 	//敵の描画
@@ -571,6 +565,7 @@ void CStage1::Render(void){
 
 	//プレイヤーの状態描画
 	m_Player.RenderStatus();
+	m_Player.UIRender(m_BaseStage.GetScrollX(),m_BaseStage.GetScrollY());
 
 	if (m_Menu.IsShow()) {
 		m_Menu.Render();

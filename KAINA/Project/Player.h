@@ -130,7 +130,6 @@ private:
 
 	CTexture				m_SPRedTex;
 	int						m_SPRedWait;
-	bool					m_bRedShow;
 
 public:
 	CPlayer();

@@ -509,7 +509,6 @@ void CStage2::Render(void){
 		}
 	}
 
-	m_Player.UIRender(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 
 	//エフェクトの描画
 	m_EffectManager.Render(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
@@ -542,6 +541,7 @@ void CStage2::Render(void){
 
 	//プレイヤーの状態描画
 	m_Player.RenderStatus();
+	m_Player.UIRender(m_BaseStage.GetScrollX(), m_BaseStage.GetScrollY());
 
 	if (m_Menu.IsShow()) {
 		m_Menu.Render();
