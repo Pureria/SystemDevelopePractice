@@ -64,10 +64,6 @@ void CMenu::Create(char* pTitle, char** pText, int cnt) {
 
 }
 
-void CMenu::InitSE() {
-	return;
-}
-
 
 void CMenu::Update() {
 	if (!m_bShow) {
@@ -140,8 +136,8 @@ void CMenu::Render() {
 		py += trec.Bottom + m_VSpace;
 	}
 
-	m_TutorialTex.RenderScale(200, 50, 0.5f);
 }
+
 
 void CMenu::Release() {
 

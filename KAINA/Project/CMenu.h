@@ -127,7 +127,5 @@ public:
 	*/
 	int GetCount()  { return m_Count; }
 
-	void InitSE();
-
 };
 
