@@ -255,6 +255,8 @@ public:
 	bool IsEnd(void)											{		return m_bDead;											}
 	//è„è∏íÜÅ@: true
 	bool IsJump();
+
+	bool canUseDoor();
 	
 	bool IsLaser()												{		return m_ShotType == LASER;								}
 	
