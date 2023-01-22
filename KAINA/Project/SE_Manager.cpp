@@ -142,6 +142,8 @@ void CSE_Manager::PlayerLoad() {
 		m_Sound[SE_FIRE][j].Load("SE/SE_Fire.mp3");
 		
 		m_Sound[SE_FIRE_SPIDERWEB][j].Load("SE/SE_Fire_Spiderweb.mp3");
+
+		m_Sound[SE_OUTOFBULLETS][j].Load("SE/SE_OutOfBullets.mp3");
 	}
 }
 
