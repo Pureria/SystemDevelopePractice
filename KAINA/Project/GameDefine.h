@@ -139,6 +139,8 @@ enum tag_LaserAnimation {
 #define		PLAYER_UI_STOP					1.0f
 #define		PLAYER_UI_DOWN					0.5f
 
+#define		SP_RED_WAIT						60
+
 //************************メニュー表示で使うDefine*************************//
 
 

@@ -344,7 +344,6 @@ void CStage1_Boss::Render(void) {
 			m_ItemArray[i].Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
 		}
 	}
-	m_Player.UIRender(0, 0);
 
 	//エフェクトの描画
 	m_EffectManager.Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
@@ -355,6 +354,7 @@ void CStage1_Boss::Render(void) {
 	
 	//ステージの描画
 	m_Stage.Render();
+	
 	//敵の描画
 	m_Boss.Render(m_Stage.GetScrollX(), m_Stage.GetScrollY());
 
@@ -369,6 +369,7 @@ void CStage1_Boss::Render(void) {
 
 	//プレイヤーの状態描画
 	m_Player.RenderStatus();
+	m_Player.UIRender(m_Stage.GetScrollX(), m_Stage.GetScrollY());
 	m_Boss.RenderStatus();
 	if (m_Menu.IsShow()) {
 		m_Menu.Render();

@@ -97,7 +97,7 @@ void CItem::Effect(bool jump, bool& BScene,float& PMoveX,float& PMoveY) {
 	switch (GetType())
 	{
 	case BOSS_DOOR:
-		if (g_pInput->IsKeyPush(MOFKEY_W) && jump && m_bBossEliminated)
+		if (g_pInput->IsKeyPush(MOFKEY_P) && jump && m_bBossEliminated)
 			BScene = true;
 		break;
 	case ITEM_SPIDERWEB:

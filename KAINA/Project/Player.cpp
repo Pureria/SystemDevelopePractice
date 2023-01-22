@@ -789,7 +789,8 @@ void CPlayer::FireShot() {
 
 //íeÇÃå¸Ç´ÇåÇÇ¬èuä‘Ç…ÉZÉbÉg
 void CPlayer::ShotRev(int i) {
-	if (m_SP <= 0) {		
+	if (m_SP <= 0) {	
+		m_SPRedWait = SP_RED_WAIT;
 		m_SEManager.SEPlayer(SE_OUTOFBULLETS);
 		return;
 	}
@@ -874,6 +875,7 @@ void CPlayer::FireShotLaser() {
 //íeÇÃå¸Ç´ÇåÇÇ¬èuä‘Ç…ÉZÉbÉg
 void CPlayer::ShotRevLaser() {
 	if (m_SP <= 0) {
+		m_SPRedWait = SP_RED_WAIT;
 		m_SEManager.SEPlayer(SE_OUTOFBULLETS);
 		return;
 	}
@@ -1558,6 +1560,16 @@ void CPlayer::RenderStatus() {
 	//ÉtÉåÅ[ÉÄÇè„ïîÇ…ï`âÊ
 	m_FrameTexture.Render(0, 0);
 
+	if (m_SPRedWait % 16 >= 8)
+	{
+		m_SPRedTex.Render(80, 51);
+		return;
+	}
+	
+}
+
+void  CPlayer::UIRender(float wx, float wy) {
+
 	switch (GetNatu())
 	{
 	case HEAL:
@@ -1566,6 +1578,9 @@ void CPlayer::RenderStatus() {
 		m_Heavy2Tex.RenderScale(250, 80, 0.7f, MOF_XRGB(125, 125, 125));
 		m_Fire2Tex.RenderScale(400, 80, 0.7f, MOF_XRGB(125, 125, 125));
 		m_Frost2Tex.RenderScale(550, 80, 0.7f, MOF_XRGB(125, 125, 125));
+		if (m_bUIAnimation) {
+			m_HeTex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f - wx, SetStartPos().y - 100 - wy, 0.5, MOF_ARGB(m_UIAnimationAlpha, 255, 255, 255), TEXALIGN_CENTERCENTER);
+		}
 		break;
 	case HEAVY:
 		m_HeavyTex.Render(0, 0);
@@ -1573,7 +1588,9 @@ void CPlayer::RenderStatus() {
 		m_Heavy2Tex.RenderScale(250, 80, 0.7f);
 		m_Fire2Tex.RenderScale(400, 80, 0.7f, MOF_XRGB(125, 125, 125));
 		m_Frost2Tex.RenderScale(550, 80, 0.7f, MOF_XRGB(125, 125, 125));
-
+		if (m_bUIAnimation) {
+			m_H2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f - wx, SetStartPos().y - 100 - wy, 0.5, MOF_ARGB(m_UIAnimationAlpha, 255, 255, 255), TEXALIGN_CENTERCENTER);
+		}
 		break;
 	case FIRE:
 		m_FireTex.Render(0, 0);
@@ -1581,55 +1598,22 @@ void CPlayer::RenderStatus() {
 		m_Heavy2Tex.RenderScale(250, 80, 0.7f, MOF_XRGB(125, 125, 125));
 		m_Fire2Tex.RenderScale(400, 80, 0.7f);
 		m_Frost2Tex.RenderScale(550, 80, 0.7f, MOF_XRGB(125, 125, 125));
-
+		if (m_bUIAnimation) {
+			m_Fi2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f - wx, SetStartPos().y - 100 - wy, 0.5, MOF_ARGB(m_UIAnimationAlpha, 255, 255, 255), TEXALIGN_CENTERCENTER);
+			break;
+		}
 		break;
 	case FROST:
 		m_FrostTex.Render(0, 0);
 		m_Heal2Tex.RenderScale(100, 80, 0.7f, MOF_XRGB(125, 125, 125));
 		m_Heavy2Tex.RenderScale(250, 80, 0.7f, MOF_XRGB(125, 125, 125));
-		m_Fire2Tex.RenderScale(400, 80,0.7f,MOF_XRGB(125, 125, 125));
+		m_Fire2Tex.RenderScale(400, 80, 0.7f, MOF_XRGB(125, 125, 125));
 		m_Frost2Tex.RenderScale(550, 80, 0.7f);
+		if (m_bUIAnimation) {
+			m_Fr2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f - wx, SetStartPos().y - 100 - wy, 0.5, MOF_ARGB(m_UIAnimationAlpha, 255, 255, 255), TEXALIGN_CENTERCENTER);
 
+		}
 		break;
-	}
-	
-}
-
-void  CPlayer::UIRender(float wx, float wy) {
-	switch (GetNatu())
-	{
-		case HEAL:
-		{
-			if (m_bUIAnimation) {
-				m_HeTex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f - wx, SetStartPos().y - 100 - wy, 0.5, MOF_ARGB(m_UIAnimationAlpha,255,255,255), TEXALIGN_CENTERCENTER);
-			}
-			break;
-
-		}
-
-		case HEAVY:
-		{
-			if (m_bUIAnimation) {
-				m_H2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f - wx, SetStartPos().y - 100 - wy, 0.5, MOF_ARGB(m_UIAnimationAlpha, 255, 255, 255), TEXALIGN_CENTERCENTER);
-			}
-			break;
-		}
-
-		case FIRE:
-		{
-			if (m_bUIAnimation) {
-				m_Fi2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f - wx, SetStartPos().y - 100 - wy, 0.5, MOF_ARGB(m_UIAnimationAlpha, 255, 255, 255), TEXALIGN_CENTERCENTER);
-				break;
-			}
-		}
-		case FROST:
-		{
-			if (m_bUIAnimation) {
-				m_Fr2Tex.RenderScale(SetStartPos().x - 85 + m_HeTex.GetWidth() * 0.5f - wx, SetStartPos().y - 100 - wy, 0.5, MOF_ARGB(m_UIAnimationAlpha, 255, 255, 255), TEXALIGN_CENTERCENTER);
-
-			}
-			break;
-		}
 	}
 }
 

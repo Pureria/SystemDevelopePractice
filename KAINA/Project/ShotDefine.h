@@ -5,7 +5,7 @@
 #define		REFLECTION_COUNT		5	
 
 //’e‚Ì‘¬‚³
-#define	    PLAYERSHOT_SPEED		10
+#define	    PLAYERSHOT_SPEED		15
 
 //ƒŒ[ƒU[‚ÌL‚Ñ‚é’·‚³
 #define     LASER_ATTACKWIDTH		64
