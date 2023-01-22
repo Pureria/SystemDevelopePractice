@@ -3,7 +3,7 @@
 
 
 /**
- * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+ * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
  *
  */
 CEnemy_Stage1_Boss::CEnemy_Stage1_Boss() :
@@ -17,7 +17,7 @@ CEnemy_Stage1_Boss::CEnemy_Stage1_Boss() :
 {};
 
 /**
- * ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+ * ƒfƒXƒgƒ‰ƒNƒ^
  *
  */
 CEnemy_Stage1_Boss::~CEnemy_Stage1_Boss() {
@@ -43,15 +43,15 @@ bool CEnemy_Stage1_Boss::Load()
 		m_ShotArray[i].SetTexture(&m_ShotTexture);
 	}
 
-	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ä½œæˆ
+	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ğì¬
 	SpriteAnimationCreate anim[] = {
 		{
-			"ã‚¢ã‚¤ãƒ‰ãƒ«",
+			"ƒAƒCƒhƒ‹",
 			0,0,320,320,TRUE,
 			{{5,0,0}}
 		},
 		{
-			"ç§»å‹•",
+			"ˆÚ“®",
 			0,0,320,320,TRUE,
 			{ { 5,0,0 },{ 5,1,0 },{ 5,2,0 },{ 5,3,0 }, { 5,4,0 },{ 5,5,0 },
 			  { 5,6,0 },{ 5,7,0 },{ 5,8,0 },{ 5,9,0 },{ 5,10,0 },{ 5,11,0 }, 
@@ -60,52 +60,52 @@ bool CEnemy_Stage1_Boss::Load()
 			  { 5,24,0 },{ 5,25,0 },{ 5,26,0 },{ 5,27,0 }, { 5,28,0 },{ 5,29,0 } }
 		},
 		{
-			"ã‚¸ãƒ£ãƒ³ãƒ—",
+			"ƒWƒƒƒ“ƒv",
 			0,0,320,320,TRUE,
 			{{5,0,3}}
 		},
 		{
-			"ãƒ€ãƒƒã‚·ãƒ¥æ”»æ’ƒ",
+			"ƒ_ƒbƒVƒ…UŒ‚",
 			0,0,320,320,FALSE,
 			{{5,6,4}, {5,7,4}, {5,8,4}, {5,9,4}, {5,10,4}}
 		},
 		{
-			"ã‚¸ãƒ£ãƒ³ãƒ—æ”»æ’ƒ",
+			"ƒWƒƒƒ“ƒvUŒ‚",
 			0,0,320,320,FALSE,
 			{{5,0,3}}
 		},
 		{
-			"æ–¬æ’ƒæ”»æ’ƒ",
+			"aŒ‚UŒ‚",
 			0,0,320,320,FALSE,
 			{{2,13,2}, {2,14,2}, {2,15,2}, {2,16,2}, {2,17,2}, {2,18,2}}
 		},
 		{
-			"æ–¬æ’ƒæ”»æ’ƒãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†",
+			"aŒ‚UŒ‚ƒ‚[ƒVƒ‡ƒ“I—¹",
 			0,0,320,320,FALSE,
 			{{5,19,2}, {5,20,2}, {5,21,2}, {5,22,2}, {5,23,2}, {5,24,2}, {5,25,2}, {5,26,2}, {5,27,2}, {5,28,2}, {5,29,2}, {5,30,2}}
 		},
 		{
-			"ç€åœ°",
+			"’…’n",
 			0,0,320,320,FALSE,
 			{{2,1,3}, {2,2,3}, {2,3,3}, {2,4,3}, {2,5,3}, {2,6,3}, {2,7,3}}
 		},
 		{
-			"æ–¬æ’ƒå‰ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³",
+			"aŒ‚‘Oƒ‚[ƒVƒ‡ƒ“",
 			0,0,320,320,FALSE,
 			{{5,0,2}, {5,1,2}, {5,2,2}, {5,3,2}, {5,4,2}, {5,5,2}, {5,6,2}, {5,7,2}, {5,8,2}, {5,9,2}, {5,10,2}, {5,11,2}, {5,12,2}}
 		},
 		{
-			"ãƒ€ãƒƒã‚·ãƒ¥æ”»æ’ƒå‰ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³",
+			"ƒ_ƒbƒVƒ…UŒ‚‘Oƒ‚[ƒVƒ‡ƒ“",
 			0,0,320,320,FALSE,
 			{{20,0,4},{5,1,4}, {5,2,4}, {5,3,4}, {5,4,4}, {35,5,4}}
 		},
 		{
-			"ãƒ€ãƒƒã‚·ãƒ¥æ”»æ’ƒå¾Œãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³",
+			"ƒ_ƒbƒVƒ…UŒ‚Œãƒ‚[ƒVƒ‡ƒ“",
 			0,0,320,320,FALSE,
 			{{5,11,4}, {5,12,4}, {5,13,4}, {5,14,4}, {5,15,4}, {5,16,4}, {5,17,4}, {5,18,4}, {5,19,4}, {5,20,4}, {5,21,4}}
 		},
 		{
-			"æ’ƒç ´æ™‚ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³",
+			"Œ‚”jƒ‚[ƒVƒ‡ƒ“",
 			0,0,320,320,FALSE,
 			{{5,0,5},{5,1,5},{5,2,5},{5,3,5},{5,4,5},{5,5,5},
 			{5,6,5},{5,7,5},{5,8,5},{5,9,5},{5,10,5},{5,11,5},
@@ -121,13 +121,13 @@ bool CEnemy_Stage1_Boss::Load()
 }
 
 /**
- * åˆæœŸåŒ–
- * ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã‚„åº§æ¨™ã‚’åˆæœŸåŒ–ã™ã‚‹ã€‚
+ * ‰Šú‰»
+ * ƒpƒ‰ƒ[ƒ^[‚âÀ•W‚ğ‰Šú‰»‚·‚éB
  *
- * å¼•æ•°
- * [in]			px					Xåº§æ¨™
- * [in]			py					Yåº§æ¨™
- * [in]			type				æ•µã‚¿ã‚¤ãƒ—
+ * ˆø”
+ * [in]			px					XÀ•W
+ * [in]			py					YÀ•W
+ * [in]			type				“Gƒ^ƒCƒv
  */
 void CEnemy_Stage1_Boss::Initialize() {
 	this->Load();
@@ -157,7 +157,7 @@ void CEnemy_Stage1_Boss::Initialize() {
 }
 
 /**
- * æ›´æ–°
+ * XV
  *
  */
 void CEnemy_Stage1_Boss::Update() {
@@ -182,13 +182,13 @@ void CEnemy_Stage1_Boss::Update() {
 
 	switch (m_Motion.GetMotionNo())
 	{
-		//å¾…æ©ŸçŠ¶æ…‹
+		//‘Ò‹@ó‘Ô
 	case MOTION_Idle:
 		if (m_MotionWait <= 0)
 		{
 			if (m_bIsOnLift)
 			{
-				//ãƒªãƒ•ãƒˆä¸Šã«ã„ã‚‹ã¨ãã®å‡¦ç†
+				//ƒŠƒtƒgã‚É‚¢‚é‚Æ‚«‚Ìˆ—
 				if (!m_bReverse)
 				{
 					m_Move.x = -ENEMY_ATTACKDASH_SPEED;
@@ -202,10 +202,10 @@ void CEnemy_Stage1_Boss::Update() {
 			}
 			else
 			{
-				//ãƒªãƒ•ãƒˆã«ä¹—ã£ã¦ãªã„ã¨ãã®å‡¦ç†
-				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒè‡ªåˆ†ã‚ˆã‚Šä¸Šã«ã„ã‚‹ã¨ãã«60%ã®ç¢ºç‡ã§ã€Œã‚¸ãƒ£ãƒ³ãƒ—æ”»æ’ƒã€ã€ã€Œãƒªãƒ•ãƒˆä¸Šã«ã‚¸ãƒ£ãƒ³ãƒ—ã€çŠ¶æ…‹ã«ç§»è¡Œã™ã‚‹
+				//ƒŠƒtƒg‚Éæ‚Á‚Ä‚È‚¢‚Æ‚«‚Ìˆ—
+				//ƒvƒŒƒCƒ„[‚ª©•ª‚æ‚èã‚É‚¢‚é‚Æ‚«‚É60%‚ÌŠm—¦‚ÅuƒWƒƒƒ“ƒvUŒ‚vAuƒŠƒtƒgã‚ÉƒWƒƒƒ“ƒvvó‘Ô‚ÉˆÚs‚·‚é
 				int rand = CUtilities::Random(100);
-				//ä¸€ç•ªä¸Šã®ãƒªãƒ•ãƒˆã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã„ã‚‹ã¨ã60%ã®ç¢ºç‡ã§ã€Œã‚¸ãƒ£ãƒ³ãƒ—æ”»æ’ƒã€çŠ¶æ…‹ã«ç§»è¡Œ
+				//ˆê”Ôã‚ÌƒŠƒtƒg‚ÉƒvƒŒƒCƒ„[‚ª‚¢‚é‚Æ‚«60%‚ÌŠm—¦‚ÅuƒWƒƒƒ“ƒvUŒ‚vó‘Ô‚ÉˆÚs
 				if (m_TargetPosY <= PLAYER_Lift_2 && rand < 60)
 				{
 					if (!m_bReverse)
@@ -221,7 +221,7 @@ void CEnemy_Stage1_Boss::Update() {
 						m_Motion.ChangeMotion(MOTION_ATTACK_JUMP);
 					}
 				}
-				//çœŸã‚“ä¸­ã®ãƒªãƒ•ãƒˆã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã„ã‚‹ã¨ã60%ã®ç¢ºç‡ã§ã€Œãƒªãƒ•ãƒˆä¸Šã«ã‚¸ãƒ£ãƒ³ãƒ—ã€çŠ¶æ…‹ã«ç§»è¡Œ
+				//^‚ñ’†‚ÌƒŠƒtƒg‚ÉƒvƒŒƒCƒ„[‚ª‚¢‚é‚Æ‚«60%‚ÌŠm—¦‚ÅuƒŠƒtƒgã‚ÉƒWƒƒƒ“ƒvvó‘Ô‚ÉˆÚs
 				else if (m_TargetPosY <= PLAYER_Lift_1 && rand < 60)
 				{
 					m_Move.y = ENEMY_JUMP;
@@ -230,7 +230,7 @@ void CEnemy_Stage1_Boss::Update() {
 				}
 				else
 				{
-					//ãƒ©ãƒ³ãƒ€ãƒ ã§ãƒ€ãƒƒã‚·ãƒ¥æ”»æ’ƒã€ã‚¸ãƒ£ãƒ³ãƒ—æ”»æ’ƒã€æ–¬æ’ƒæ”»æ’ƒã€ãƒªãƒ•ãƒˆä¸Šã«ã‚¸ãƒ£ãƒ³ãƒ—ã«ç§»è¡Œ
+					//ƒ‰ƒ“ƒ_ƒ€‚Åƒ_ƒbƒVƒ…UŒ‚AƒWƒƒƒ“ƒvUŒ‚AaŒ‚UŒ‚AƒŠƒtƒgã‚ÉƒWƒƒƒ“ƒv‚ÉˆÚs
 					int rand = CUtilities::Random(4);
 					if (rand == 0)
 					{
@@ -240,7 +240,7 @@ void CEnemy_Stage1_Boss::Update() {
 					}
 					else if (rand == 1)
 					{
-						//ã‚¸ãƒ£ãƒ³ãƒ—æ”»æ’ƒã«ç§»è¡Œ
+						//ƒWƒƒƒ“ƒvUŒ‚‚ÉˆÚs
 						if (!m_bReverse)
 						{
 							m_Move.x = -ENEMY_ATTACKDASH_SPEED;
@@ -256,13 +256,13 @@ void CEnemy_Stage1_Boss::Update() {
 					}
 					else if (rand == 2)
 					{
-						//æ–¬æ’ƒæ”»æ’ƒã«ç§»è¡Œ
+						//aŒ‚UŒ‚‚ÉˆÚs
 						m_Motion.ChangeMotion(MOTION_ATTACK_SLASH_READY);
 					}
 
 					else if (rand == 3)
 					{
-						//ãƒªãƒ•ãƒˆä¸Šã«ã‚¸ãƒ£ãƒ³ãƒ—
+						//ƒŠƒtƒgã‚ÉƒWƒƒƒ“ƒv
 						m_Move.y = ENEMY_JUMP;
 						m_bIsOnLift = true;
 						m_Motion.ChangeMotion(MOTION_JUMP);
@@ -278,7 +278,7 @@ void CEnemy_Stage1_Boss::Update() {
 		m_OldMotionNo = MOTION_Idle;
 		break;
 
-		//MOTION_MOVEã®çŠ¶æ…‹
+		//MOTION_MOVE‚Ìó‘Ô
 	case MOTION_MOVE:
 
 		if (m_OldMotionNo == MOTION_ATTACK_JUMP)
@@ -316,7 +316,7 @@ void CEnemy_Stage1_Boss::Update() {
 		m_OldMotionNo = MOTION_MOVE;
 		break;
 
-		//MOTION_JUMPã®çŠ¶æ…‹
+		//MOTION_JUMP‚Ìó‘Ô
 	case MOTION_JUMP:
 		if (!m_bJump)
 		{
@@ -335,7 +335,7 @@ void CEnemy_Stage1_Boss::Update() {
 		m_OldMotionNo = MOTION_JUMP;
 		break;
 
-		//ç€åœ°ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³
+		//’…’nƒ‚[ƒVƒ‡ƒ“
 	case MOTION_FALL:
 	{
 		m_Move.x = 0;
@@ -359,7 +359,7 @@ void CEnemy_Stage1_Boss::Update() {
 	case MOTION_ATTACK_DASH_READY:
 		if (m_Motion.IsEndMotion())
 		{
-			//ãƒ€ãƒƒã‚·ãƒ¥æ”»æ’ƒã«ç§»è¡Œ
+			//ƒ_ƒbƒVƒ…UŒ‚‚ÉˆÚs
 			if (!m_bReverse)
 			{
 				m_Move.x = -ENEMY_ATTACKDASH_SPEED;
@@ -374,7 +374,7 @@ void CEnemy_Stage1_Boss::Update() {
 		}
 		break;
 
-		//ãƒ€ãƒƒã‚·ãƒ¥æ”»æ’ƒã®çŠ¶æ…‹
+		//ƒ_ƒbƒVƒ…UŒ‚‚Ìó‘Ô
 	case MOTION_ATTACK_DASH:
 		if (!m_bReverse)
 		{
@@ -389,7 +389,7 @@ void CEnemy_Stage1_Boss::Update() {
 		m_OldMotionNo = MOTION_ATTACK_DASH;
 		break;
 
-		//ã‚¸ãƒ£ãƒ³ãƒ—æ”»æ’ƒã®çŠ¶æ…‹
+		//ƒWƒƒƒ“ƒvUŒ‚‚Ìó‘Ô
 	case MOTION_ATTACK_JUMP:
 		if (!m_bJump)
 		{
@@ -411,7 +411,7 @@ void CEnemy_Stage1_Boss::Update() {
 		m_OldMotionNo = MOTION_ATTACK_JUMP;
 		break;
 
-		//æ–¬æ’ƒæ”»æ’ƒå‰è¡Œå‹•
+		//aŒ‚UŒ‚‘Os“®
 	case MOTION_ATTACK_SLASH_READY:
 		m_OldMotionNo = MOTION_ATTACK_SLASH_READY;
 		if (m_Motion.IsEndMotion())
@@ -420,7 +420,7 @@ void CEnemy_Stage1_Boss::Update() {
 		}
 		break;
 
-		//æ–¬æ’ƒæ”»æ’ƒã®çŠ¶æ…‹
+		//aŒ‚UŒ‚‚Ìó‘Ô
 	case MOTION_ATTACK_SLASH_START:
 		if (!m_AttackSlash)
 		{
@@ -453,7 +453,7 @@ void CEnemy_Stage1_Boss::Update() {
 			m_AttackSlash = true;
 			m_SEManager.SEPlayer(SE_BOSS_ATTACK01);
 		}
-		//æ”»æ’ƒãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã®çµ‚äº†
+		//UŒ‚ƒ‚[ƒVƒ‡ƒ“‚ÌI—¹
 		if (m_Motion.IsEndMotion())
 		{
 			m_AttackSlash = false;
@@ -463,7 +463,7 @@ void CEnemy_Stage1_Boss::Update() {
 		m_OldMotionNo = MOTION_ATTACK_SLASH_START;
 		break;
 
-		//ç´åˆ€ã®çŠ¶æ…‹
+		//”[“‚Ìó‘Ô
 	case MOTION_ATTACK_SLASH_END:
 		if (m_Motion.IsEndMotion())
 		{
@@ -472,7 +472,7 @@ void CEnemy_Stage1_Boss::Update() {
 		m_OldMotionNo = MOTION_ATTACK_SLASH_END;
 		break;
 
-		//ã‚¢ã‚¿ãƒƒã‚¯ãƒ€ãƒƒã‚·ãƒ¥çµ‚äº†ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³
+		//ƒAƒ^ƒbƒNƒ_ƒbƒVƒ…I—¹ƒ‚[ƒVƒ‡ƒ“
 	case MOTION_ATTACK_DASH_END:
 		m_OldMotionNo = MOTION_ATTACK_DASH_END;
 		m_Move.x = 0;
@@ -487,7 +487,7 @@ void CEnemy_Stage1_Boss::Update() {
 		}
 		break;
 	}
-	//é‡åŠ›ã«ã‚ˆã‚Šä¸‹ã«å°‘ã—ãšã¤ä¸‹ãŒã‚‹
+	//d—Í‚É‚æ‚è‰º‚É­‚µ‚¸‚Â‰º‚ª‚é
 	m_Move.y += GRAVITY;
 	if (m_Move.y >= 20.0f) { m_Move.y = 20.0f; }
 
@@ -504,22 +504,22 @@ void CEnemy_Stage1_Boss::Update() {
 	*/
 
 
-	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®æ›´æ–°
+	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌXV
 	m_Motion.AddTimer(CUtilities::GetFrameSecond());
 	m_SrcRect = m_Motion.GetSrcRect();
 }
 
 /**
- * ã‚¹ãƒ†ãƒ¼ã‚¸ã¨ã®å½“ãŸã‚Š
+ * ƒXƒe[ƒW‚Æ‚Ì“–‚½‚è
  *
- * å¼•æ•°
- * [in]			ox					XåŸ‹ã¾ã‚Šé‡
- * [in]			oy					YåŸ‹ã¾ã‚Šé‡
+ * ˆø”
+ * [in]			ox					X–„‚Ü‚è—Ê
+ * [in]			oy					Y–„‚Ü‚è—Ê
  */
 void CEnemy_Stage1_Boss::CollisionStage(float ox, float oy) {
 	m_Pos.x += ox;
 	m_Pos.y += oy;
-	//è½ä¸‹ä¸­ã®ä¸‹åŸ‹ã¾ã‚Šã€ã‚¸ãƒ£ãƒ³ãƒ—ä¸­ã®ä¸ŠåŸ‹ã¾ã‚Šã®å ´åˆã¯ç§»å‹•ã‚’åˆæœŸåŒ–ã™ã‚‹ã€‚
+	//—‰º’†‚Ì‰º–„‚Ü‚èAƒWƒƒƒ“ƒv’†‚Ìã–„‚Ü‚è‚Ìê‡‚ÍˆÚ“®‚ğ‰Šú‰»‚·‚éB
 	if (oy < 0 && m_Move.y > 0)
 	{
 		m_Move.y = 0;
@@ -528,7 +528,7 @@ void CEnemy_Stage1_Boss::CollisionStage(float ox, float oy) {
 	{
 		m_Move.y = 0;
 	}
-	//å·¦ç§»å‹•ä¸­ã®å·¦åŸ‹ã¾ã‚Šã€å³ç§»å‹•ä¸­ã®å³åŸ‹ã¾ã‚Šã®å ´åˆã¯ç§»å‹•ã‚’åˆæœŸåŒ–ã™ã‚‹ã€‚
+	//¶ˆÚ“®’†‚Ì¶–„‚Ü‚èA‰EˆÚ“®’†‚Ì‰E–„‚Ü‚è‚Ìê‡‚ÍˆÚ“®‚ğ‰Šú‰»‚·‚éB
 	if (ox < 0 && m_Move.x > 0)
 	{
 		m_Move.x *= -1;
@@ -570,7 +570,7 @@ void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 
 	if (m_HP <= 0)
 	{
-		//çˆ†ç™ºã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ç™ºç”Ÿã•ã›ã‚‹
+		//”š”­ƒGƒtƒFƒNƒg‚ğ”­¶‚³‚¹‚é
 		//m_pEndEffect = m_pEffectManager->Start(SetStartPos(), EFC_EXPLOSION02);
 		m_SEManager.SEPlayer(SE_ENEMY_DIE);
 		m_Move.x = 0;
@@ -580,7 +580,7 @@ void CEnemy_Stage1_Boss::Damage(int dmg, bool direction) {
 	else
 	{
 		m_SEManager.SEPlayer((direction) ? SE_BOSS_SHIELD : SE_BOSS_DAMAGE);
-		//ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ç™ºç”Ÿã•ã›ã‚‹
+		//ƒ_ƒ[ƒWƒGƒtƒFƒNƒg‚ğ”­¶‚³‚¹‚é
 		m_pEffectManager->Start(SetStartPos(), (direction) ? EFC_SHIELD : EFC_WEAK);
 	}
 }
@@ -619,11 +619,11 @@ void	CEnemy_Stage1_Boss::AbStateMoveDec() {
 	}
 }
 /**
- * æç”»
+ * •`‰æ
  *
- * å¼•æ•°
- * [in]			wx					ãƒ¯ãƒ¼ãƒ«ãƒ‰ã®å¤‰åŒ–
- * [in]			wy					ãƒ¯ãƒ¼ãƒ«ãƒ‰ã®å¤‰åŒ–
+ * ˆø”
+ * [in]			wx					ƒ[ƒ‹ƒh‚Ì•Ï‰»
+ * [in]			wy					ƒ[ƒ‹ƒh‚Ì•Ï‰»
  */
 void CEnemy_Stage1_Boss::Render(float wx, float wy) {
 	for (int i = 0; i < ENEMY_BOSS_SLASH_COUNT; i++)
@@ -631,28 +631,28 @@ void CEnemy_Stage1_Boss::Render(float wx, float wy) {
 		m_ShotArray[i].Render(wx, wy);
 	}
 
-	//éè¡¨ç¤º
+	//”ñ•\¦
 	if (!m_bShow)
 	{
 		return;
 	}
 
-	//ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«2ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã«æç”»ã‚’ã—ãªã„
+	//ƒCƒ“ƒ^[ƒoƒ‹2ƒtƒŒ[ƒ€‚²‚Æ‚É•`‰æ‚ğ‚µ‚È‚¢
 	if (m_DamageWait % 4 >= 2)
 	{
 		return;
 	}
 
-	//æç”»çŸ©å½¢
+	//•`‰æ‹éŒ`
 	CRectangle dr = m_SrcRect;
-	//åè»¢ãƒ•ãƒ©ã‚°ãŒONã®å ´åˆæç”»çŸ©å½¢ã‚’åè»¢ã•ã›ã‚‹
+	//”½“]ƒtƒ‰ƒO‚ªON‚Ìê‡•`‰æ‹éŒ`‚ğ”½“]‚³‚¹‚é
 	if (m_bReverse)
 	{
 		float tmp = dr.Right;
 		dr.Right = dr.Left;
 		dr.Left = tmp;
 	}
-	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æç”»
+	//ƒeƒNƒXƒ`ƒƒ‚Ì•`‰æ
 	(GetAbStateNo() == STATE_FROST) ? m_Texture.Render(m_Pos.x - wx, m_Pos.y - wy, dr, MOF_XRGB(0, 255, 255)) : m_Texture.Render(m_Pos.x - wx, m_Pos.y - wy, dr);
 }
 
@@ -670,7 +670,7 @@ void CEnemy_Stage1_Boss::RenderStatus() {
 	CRectangle hprec(822, 0, 0, 61);
 	m_HPTex.RenderScale(g_pGraphics->GetTargetWidth() * 0.465f + (822 - 822 * (m_HP * 0.01f)), 
 						g_pGraphics->GetTargetHeight() - 112, 
-						m_HP * 0.01f, 1.0f, hprec, MOF_COLOR_WHITE);//ç”»åƒã‚’åœ§ç¸®ã™ã‚‹è¡¨ç¤º*/
+						m_HP * 0.01f, 1.0f, hprec, MOF_COLOR_WHITE);//‰æ‘œ‚ğˆ³k‚·‚é•\¦*/
 
 	CRectangle frec(0, 0, 1024, 128);
 
@@ -684,29 +684,29 @@ void CEnemy_Stage1_Boss::RenderStatus() {
 
 }
 /**
- * ãƒ‡ãƒãƒƒã‚°æç”»
+ * ƒfƒoƒbƒO•`‰æ
  *
- * å¼•æ•°
- * [in]			wx					ãƒ¯ãƒ¼ãƒ«ãƒ‰ã®å¤‰åŒ–
- * [in]			wy					ãƒ¯ãƒ¼ãƒ«ãƒ‰ã®å¤‰åŒ–
+ * ˆø”
+ * [in]			wx					ƒ[ƒ‹ƒh‚Ì•Ï‰»
+ * [in]			wy					ƒ[ƒ‹ƒh‚Ì•Ï‰»
  */
 void CEnemy_Stage1_Boss::RenderDebug(float wx, float wy) {
-	//å¼¾ã®æç”»
+	//’e‚Ì•`‰æ
 	for (int i = 0; i < ENEMY_BOSS_SLASH_COUNT; i++)
 	{
 		m_ShotArray[i].RenderDebug(wx, wy);
 	}
 
-	//éè¡¨ç¤º
+	//”ñ•\¦
 	if (!m_bShow)
 	{
 		return;
 	}
-	//å½“ãŸã‚Šåˆ¤å®šã®è¡¨ç¤º
+	//“–‚½‚è”»’è‚Ì•\¦
 	CRectangle hr = GetRect();
 	CGraphicsUtilities::RenderRect(hr.Left - wx, hr.Top - wy, hr.Right - wx, hr.Bottom - wy, MOF_XRGB(255, 0, 255));
 
-	//PosX,PosYç¢ºèªç”¨
+	//PosX,PosYŠm”F—p
 	CGraphicsUtilities::RenderCircle(m_Pos.x - wx, m_Pos.y - wy, 2, MOF_XRGB(255, 0, 0));
 	CGraphicsUtilities::RenderFillRect(GetBossFrontRect(), MOF_XRGB(0, 0, 255));
 	//CGraphicsUtilities::RenderCircle(m_TargetPosX - wx, m_TargetPosY - wy, 2, MOF_XRGB(255, 0, 0));
@@ -721,7 +721,7 @@ void CEnemy_Stage1_Boss::RenderDebug(float wx, float wy) {
 }
 
 /**
- * è§£æ”¾
+ * ‰ğ•ú
  *
  */
 void CEnemy_Stage1_Boss::Release(void) {
