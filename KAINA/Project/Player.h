@@ -131,6 +131,8 @@ private:
 	CTexture				m_SPRedTex;
 	int						m_SPRedWait;
 
+ 	const int				m_ObjTag;
+
 public:
 	CPlayer();
 	~CPlayer() {};
@@ -225,7 +227,7 @@ public:
 																			m_PosY + m_SrcRect.GetHeight() - PLAYER_WATERDEC_HEIGHT);
 																}
 
-	//CRectangle	GetLaserSearchRect()							{		return m_Laser.GetSearchRect();								}
+	int	GetTag()												{		return m_ObjTag;										}
 	
 #pragma endregion
 

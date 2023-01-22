@@ -48,6 +48,11 @@ enum tag_LaserAnimation {
 	LASER_ANIMATION_COUNT,
 };
 
+enum tag_Object {
+	PLAYER,
+	ENEMY,
+};
+
 //FadeŽžŠÔ(•b)
 #define		FADE_TIME				2
 

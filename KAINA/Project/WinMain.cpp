@@ -9,7 +9,7 @@ int WINAPI _tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
 	Info.pApplication = new CGameApp();
 	Info.WindowCreateInfo.Width = 1920;
 	Info.WindowCreateInfo.Height = 1080;
-	Info.GraphicsCreateInfo.bWindowed = FALSE;//起動時にフルスクリーン*/
+	//Info.GraphicsCreateInfo.bWindowed = FALSE;//起動時にフルスクリーン*/
 	if ( pFrame->Initialize(&Info) )
 	{
 		pFrame->Run();
