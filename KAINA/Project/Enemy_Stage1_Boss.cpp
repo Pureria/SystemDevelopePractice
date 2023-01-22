@@ -604,9 +604,18 @@ void CEnemy_Stage1_Boss::DeffenceProc(int dmg,int deff) {
 
 	if (def < 0) { m_HP += def; }
 }
+
 //TODO : AbStateMoveDec
 void	CEnemy_Stage1_Boss::AbStateMoveDec() {
-
+	if (m_Motion.GetMotionNo() != MOTION_JUMP && m_Motion.GetMotionNo() != MOTION_ATTACK_JUMP)
+	{
+		switch (GetAbStateNo())
+		{
+		case STATE_FROST:
+			m_Move.x *= 0.5f;
+			break;
+		}
+	}
 }
 /**
  * •`‰æ
