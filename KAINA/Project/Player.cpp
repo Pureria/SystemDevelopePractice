@@ -33,7 +33,8 @@ m_SEManager(),
 m_bShow(false),
 m_UIAnimationTimer(0),
 m_bUIAnimation(false),
-m_bUIAnimationEnd(false)
+m_bUIAnimationEnd(false),
+m_ObjTag(PLAYER)
 {}
 
 #pragma endregion
