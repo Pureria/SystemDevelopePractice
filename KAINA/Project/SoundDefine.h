@@ -41,7 +41,7 @@ enum SECode{
 	SE_BOSS_SHIELD,				//í«â¡çœÇ›
 	SE_SELECT_CHANGE,			//í«â¡çœÇ›
 	SE_SELECT_OK,				//í«â¡çœÇ›
-	SE_OUTOFBULLETS,
+	SE_OUTOFBULLETS,			//í«â¡çœÇ›
 
 	SE_CNT,						
 };

@@ -85,6 +85,7 @@ public:
 	void Initialize(CItem* pItem);
 	void Update(CPlayer& pl);
 	void Render(void);
+	void WaterRender();
 	void RenderDebug(void);
 	void BackTexRender();
 	void Release(int nowscene);
