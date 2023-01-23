@@ -60,13 +60,7 @@ public:
 	int GetOldScene()			{ return m_OldSceneNo; }
 	bool IsEnd()				{ return m_bEnd; }
 
-	//TODO: 外すデバッグ
-	void UpdateExitkey() {
-		if (g_pInput->IsKeyPush(MOFKEY_ESCAPE)) {
-			exit(0);
-		}
-	}
-
+	
 	void SetTime(float time) {
 		m_Time += time;
 	}

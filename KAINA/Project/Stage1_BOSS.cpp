@@ -94,7 +94,6 @@ void CStage1_Boss::Update(void) {
 	}
 #pragma endregion
 
-	UpdateExitkey();
 	//ƒƒjƒ…[‰æ–Ê‚Ì•\¦
 	if (m_Menu.IsShow()) {
 		m_Menu.Update();

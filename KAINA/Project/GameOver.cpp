@@ -77,7 +77,6 @@ void CGameOver::UpdateMenu() {
  *
  */
 void CGameOver::Update(void){
-	UpdateExitkey();
 	UpdateMenu();
 	if (m_Menu.IsShow()) {
 		return;

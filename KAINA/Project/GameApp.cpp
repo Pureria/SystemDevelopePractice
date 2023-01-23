@@ -26,9 +26,6 @@
 
 Scene_Base*				g_pScene = NULL;
 
-//デバッグ表示フラグ
-bool					g_bDebug = false;
-
 float					gTimer = 0.0f;
 
 /*************************************************************************//*!
@@ -100,18 +97,6 @@ MofBool CGameApp::Update(void){
 		g_pScene->Initialize();
 		g_pScene->SetOldScene(Old);
 	}
-
-	//デバッグ表示の切り替え
-	if(g_pInput->IsKeyPush(MOFKEY_F1) && g_pInput->IsKeyHold(MOFKEY_LALT))
-	{
-		g_bDebug = ((g_bDebug) ? false : true);
-	}
-	//TODO: 外すデバッグ
-	if (g_pInput->IsKeyPush(MOFKEY_B) && g_pInput->IsKeyHold(MOFKEY_LALT)) {
-		delete  g_pScene;
-		g_pScene = new CGameOver();
-		g_pScene->Initialize();
-	}
 	
 	return TRUE;
 }
@@ -130,11 +115,6 @@ MofBool CGameApp::Render(void){
 	
 	
 	g_pScene->Render();
-	//デバッグ表示をする場合
-	if(g_bDebug)
-	{
-		g_pScene->RenderDebug();
-	}
 
 	//描画の終了
 	g_pGraphics->RenderEnd();

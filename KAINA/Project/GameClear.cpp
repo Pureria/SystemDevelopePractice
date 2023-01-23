@@ -50,7 +50,6 @@ void CGameClear::Initialize(void){
  *
  */
 void CGameClear::Update(void){
-	UpdateExitkey();
 #pragma region Fade
 	if (m_bFadeIn)
 	{
@@ -68,7 +67,7 @@ void CGameClear::Update(void){
 		if (m_Alpha >= 255)
 		{
 			m_bEnd = true;
-			m_SceneNo = SCENENO_SELECT;
+			m_SceneNo = SCENENO_TITLE;
 			SetOldScene(SCENENO_GAMECLEAR);
 		}
 
