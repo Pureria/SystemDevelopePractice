@@ -65,7 +65,6 @@ void CTitle::Initialize(void){
  *
  */
 void CTitle::Update(void){
-	UpdateExitkey();
 	if (m_FlashCount > 0) {
 		m_FlashCount--;
 	}

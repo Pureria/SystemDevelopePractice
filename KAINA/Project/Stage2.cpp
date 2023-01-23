@@ -109,7 +109,6 @@ void CStage2::Update(void){
 	}
 #pragma endregion
 
-	UpdateExitkey();
 
 	if (m_Menu.IsShow()) {
 		m_Menu.Update();

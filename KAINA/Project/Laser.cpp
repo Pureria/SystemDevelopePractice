@@ -86,8 +86,12 @@ bool Laser::GetRev() {
 }
 
 void Laser::ShotLaser() {
+	
 	if (!m_bHitWall) {
 		m_LaserRange += LASER_ATTACKWIDTH;
+		if (GetRect().Bottom > g_pGraphics->GetTargetHeight() + 200) {
+			m_bHitWall = true;
+		}
 		return;
 	}
 	

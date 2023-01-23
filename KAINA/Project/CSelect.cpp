@@ -28,7 +28,6 @@ void CSelect::Initialize() {
 	m_FlashCount = 0;
 }
 void CSelect::Update() {
-	UpdateExitkey();
 
 	if (m_FlashCount > 0) {
 		m_FlashCount--;
