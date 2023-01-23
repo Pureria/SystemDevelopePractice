@@ -102,12 +102,12 @@ MofBool CGameApp::Update(void){
 	}
 
 	//デバッグ表示の切り替え
-	if(g_pInput->IsKeyPush(MOFKEY_F1))
+	if(g_pInput->IsKeyPush(MOFKEY_F1) && g_pInput->IsKeyHold(MOFKEY_LALT))
 	{
 		g_bDebug = ((g_bDebug) ? false : true);
 	}
 	//TODO: 外すデバッグ
-	if (g_pInput->IsKeyPush(MOFKEY_B)) {
+	if (g_pInput->IsKeyPush(MOFKEY_B) && g_pInput->IsKeyHold(MOFKEY_LALT)) {
 		delete  g_pScene;
 		g_pScene = new CGameOver();
 		g_pScene->Initialize();
