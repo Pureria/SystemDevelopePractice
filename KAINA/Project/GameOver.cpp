@@ -68,7 +68,7 @@ void CGameOver::UpdateMenu() {
 	else if (g_pInput->IsKeyPush(MOFKEY_RETURN)) {
 
 		m_SEManager.SEPlayer(SE_SELECT_OK);
-		m_Menu.Show(Vector2(g_pGraphics->GetTargetWidth() * 0.5f, g_pGraphics->GetTargetHeight() * 0.5f));
+		m_Menu.Show(Vector2(g_pGraphics->GetTargetWidth() * 0.5f, g_pGraphics->GetTargetHeight() * 0.5f + 150));
 	}
 }
 
@@ -102,9 +102,12 @@ void CGameOver::Update(void){
  */
 void CGameOver::Render(void){
 	m_BackImage.Render(0, 0);
+
 	if (m_Menu.IsShow()) {
 		m_Menu.Render();
+		return;
 	}
+
 	if (m_FlashCount % 4 >= 2)
 	{
 		return;

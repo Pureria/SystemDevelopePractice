@@ -231,19 +231,19 @@ void CStage1::StgCollPlayer() {
 		m_BaseStage.CollisionCrack(m_Player.GetLaserRect());
 	}
 
-	//TODO: 水と弾の判定
+	//水と弾の判定
 	if (m_Player.GetNatuLaser() == FROST)
 	{
 		m_BaseStage.CollisionFreezeWater(m_Player.GetLaserRect(), m_Player.GetRect());
 	}
 
-	//TODO: 氷と弾の判定
+	//氷と弾の判定
 	if (m_Player.GetNatuLaser() == FIRE)
 	{
 		m_BaseStage.CollisionIceFroe(m_Player.GetLaserRect());
 	}
 
-	//TODO: 砲台とプレイヤーの当たり判定
+	//砲台とプレイヤーの当たり判定
 	for (int i = 0; i < m_BaseStage.GetEnemy1Count(); i++)
 	{
 		ox = 0; oy = 0;
@@ -391,7 +391,7 @@ void CStage1::StgCollEne() {
 		{
 			m_EnemyArray[i].CollisionStage(ox, oy);
 
-			//TODO: 敵の弾とステージの当たり判定
+			// 敵の弾とステージの当たり判定
 			for (int j = 0; j < ENEMY_SHOT_COUNT; j++)
 			{
 				if (m_BaseStage.Collision(m_EnemyArray[i].ShotArrayRect(j)))
@@ -421,7 +421,7 @@ void CStage1::StgCollEne() {
 		{
 			m_Enemy2Array[i].CollisionStage(ox, oy);
 
-			//TODO: 敵の弾とステージの当たり判定
+			//敵の弾とステージの当たり判定
 			for (int j = 0; j < ENEMY_SHOT_COUNT; j++)
 			{
 				if (m_BaseStage.Collision(m_Enemy2Array[i].ShotArrayRect(j)))
@@ -462,7 +462,7 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
 	CRectangle brec = playerRect;
 	brec.Top = brec.Bottom - 1;
 	brec.Expansion(-6, -0);
-	//TODO: 下と当たり判定
+	// 下と当たり判定
 	if (eneRect.CollisionRect(brec))
 	{
 		re = true;
@@ -471,7 +471,7 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
 		playerRect.Bottom += eneRect.Top - brec.Bottom;
 	}
 
-	//TODO: 上の当たり判定
+	// 上の当たり判定
 	CRectangle trec = playerRect;
 	trec.Bottom = trec.Top + 1;
 	trec.Expansion(-12, 0);
@@ -483,7 +483,7 @@ bool CStage1::EnemyOnPlayer(CRectangle eneRect, CRectangle playerRect, float& ox
 		playerRect.Bottom += eneRect.Bottom - trec.Top;
 	}
 
-	//TODO: 左右の当たり判定
+	//左右の当たり判定
 	CRectangle lrec = playerRect;
 	lrec.Right = lrec.Left + 1;
 	lrec.Expansion(0, -12);

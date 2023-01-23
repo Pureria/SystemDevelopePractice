@@ -7,7 +7,7 @@ CEnemy_2::CEnemy_2() :
 
 CEnemy_2::~CEnemy_2(){}
 
-//TODO::Enemy_2の処理
+//Enemy_2の処理
 
 void CEnemy_2::Initialize(float px, float py, int type)
 {
@@ -92,7 +92,6 @@ void CEnemy_2::Update(float wx)
 
 	if (m_bKnockback)
 	{
-		//TODO::ノックバック中の処理
 		KnockBack();
 		return;
 	}
@@ -115,7 +114,6 @@ void CEnemy_2::Update(float wx)
 				m_pEffectManager->Start(m_Pos.x + m_SrcRect.GetWidth() * 0.5f, m_Pos.y + m_SrcRect.GetHeight() * 0.5f, EFC_EXPLOSION01);
 			}
 		}
-		//TODO::余裕があればダメージ中のノックバック
 	}
 
 	//ダメージのインターバルを減らす

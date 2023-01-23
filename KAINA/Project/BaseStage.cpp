@@ -96,8 +96,6 @@ bool CBaseStage::Load(char* pName , int nowscene){
 
 	//マップチップ用のメモリ確保
 	m_pChipData = (char*)malloc(m_XCount * m_YCount);
-	//上も下も同じ意味
-	//m_pChipData = new char[(m_XCount * m_YCount)];
 
 	//チップデータの読み込み
 	for (int y = 0; y < m_YCount; y++)
@@ -158,10 +156,7 @@ bool CBaseStage::Load(char* pName , int nowscene){
 			}
 		}
 	}
-	else if (nowscene == SCENENO_GAME_STAGE1_BOSS)
-	{
-
-	}
+	
 
 	//アイテムのテクスチャ読み込み
 	pstr = strtok(NULL, ",");
@@ -858,7 +853,7 @@ void CBaseStage::CollisionFreezeWater(CRectangle r, CRectangle prec)
 				CRectangle cr(x * m_ChipSize, y * m_ChipSize, x * m_ChipSize + m_ChipSize, y * m_ChipSize + m_ChipSize);
 				if (!cr.CollisionRect(prec))
 				{
-					//TODO: 修正が必要
+					
 					if (cr.CollisionRect(r)) {
 						m_pChipData[y * m_XCount + x] = 12;
 

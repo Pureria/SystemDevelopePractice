@@ -9,7 +9,9 @@ Laser::Laser() :
 	m_bRev(false),
 	m_SrcRect(),
 	m_pFireLaserUpDownTexture(),
-	m_pFrostLaserUpDownTexture()
+	m_pFrostLaserUpDownTexture(),
+	m_ScrollX(0.0f),
+	m_ScrollY(0.0f)
 {}
 
 
@@ -46,16 +48,7 @@ void Laser::Initialize() {
 	return;
 }
 
-void Laser::SetUp() {
-	return;
-}
-
 void Laser::Update() {
-	/*while (m_HitRange < g_pGraphics->GetTargetWidth())
-	{
-		m_HitRange++;
-		m_bShow = false;
-	}*/
 
 	if (!m_bShow) { return; }
 
@@ -200,12 +193,6 @@ void Laser::OutRange() {
 	{
 		m_StopCount -= CUtilities::GetFrameSecond();
 	}
-
-	/*if (m_ShotPos.x < 0 - m_ScrollX || GetRect().Right > g_pGraphics->GetTargetWidth() + 200 - m_ScrollX ||
-		GetRect().Bottom > g_pGraphics->GetTargetHeight() + 200 - m_ScrollY) {
-		m_bShow = false;
-	}*/
-
 }
 
 void Laser::Render(float wx, float wy) {
@@ -216,19 +203,6 @@ void Laser::Render(float wx, float wy) {
 	lzrec.Top -= wy;
 	lzrec.Right -=wx;
 	lzrec.Bottom -= wy;
-	/*/MofU32 Color = 0;
-
-	switch (GetNatu())
-	{
-	case FIRE:
-		Color = MOF_COLOR_RED;
-		break;
-	case FROST:
-		Color = MOF_XRGB(0, 255, 255);
-		break;
-	}
-	//CGraphicsUtilities::RenderFillRect(lzrec, Color,MOF_COLOR_WHITE, MOF_COLOR_WHITE,Color);*/
-	
 
 	switch (GetDirec())
 	{
@@ -249,7 +223,6 @@ void Laser::Render(float wx, float wy) {
 
 		default:
 			m_SrcRect.Bottom = m_SrcRect.Top + (lzrec.Bottom - lzrec.Top);
-			//m_pShotTex->Render(lzrec.Left, lzrec.Top - 45.0f, m_SrcRect);
 			if (GetNatu() == FIRE)
 				m_pFireLaserUpDownTexture->Render(lzrec.Left - 15.0f, lzrec.Top, m_SrcRect);
 			else

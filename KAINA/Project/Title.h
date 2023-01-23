@@ -12,8 +12,6 @@ private:
 	CTexture				m_StartImage;
 	CTexture				m_ExitImage;
 
-	//ゲーム終了確認画面
-	
 	int						m_SelectNo;
 
 public:

@@ -157,7 +157,6 @@ public:
 	CRectangle	ShotArrayRect(int i) override { return m_ShotArray[i].GetRect(); }
 	void		SetShotShow(bool flg, int i) override { m_ShotArray[i].SetShow(flg); }
 
-	//TODO: ‚Ç‚¤‚É‚©‚µ‚æ‚¤
 	void Initialize(float px, float py, int type) {};
 	void Update(float wx) {};
 

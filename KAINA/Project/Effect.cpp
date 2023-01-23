@@ -215,7 +215,7 @@ void CEffect::Initialize(int type){
 			m_Motion.Create(anim, 1);
 			break;
 		}
-		//TODO:　レーザーの手元
+
 		case EFC_FIRE_HAND_LR:
 		{
 			//アニメーションを作成

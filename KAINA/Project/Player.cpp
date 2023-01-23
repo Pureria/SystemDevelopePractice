@@ -32,8 +32,12 @@ m_SpWait(0),
 m_SEManager(),
 m_bShow(false),
 m_UIAnimationTimer(0),
+m_UIAnimationAlpha(0),
 m_bUIAnimation(false),
 m_bUIAnimationEnd(false),
+m_bFall(false),
+m_SPInterval(0),
+m_SPRedWait(0),
 m_ObjTag(PLAYER)
 {}
 
@@ -319,10 +323,9 @@ void CPlayer::Update() {
 	UpdateShot();
 	UIAnimationUpdate();
 
-	//HPが無くなると爆発の終了を待機して終了
 	if (PlayerEnd())	{			return;				}
-	if (!m_bShow)
-		return;
+
+	if (!m_bShow)		{			return;				}
 
 	//移動フラグ、このフレームでの移動があったかを保存
 	m_bMove = false;
@@ -346,7 +349,6 @@ void CPlayer::Update() {
 	}
 	else if(m_Motion.GetMotionNo() == MOTION_DAMAGE)
 	{
-		//終了で待機に戻す
 		if (m_Motion.IsEndMotion())
 		{
 			if (m_bTop) {
@@ -375,7 +377,7 @@ void CPlayer::Update() {
 
 	//移動更新
 	UpdateMove();
-	//実際に座標を移動させる
+
 	m_PosX += m_MoveX;
 	m_PosY += m_MoveY;
 
@@ -414,7 +416,6 @@ void CPlayer::Update() {
 		m_SP = 0;
 	}
 
-	//ダメージのインターバルを減らす
 	if (m_DamageWait > 0) {
 		m_DamageWait--;
 	}
@@ -847,14 +848,6 @@ void CPlayer::ShotRev(int i) {
 	}
 }
 
-void  CPlayer::ShotRender(float wx,float wy) {
-	//弾の描画
-	m_Laser.Render(wx, wy);
-	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
-	{
-		m_PlShotAry[i].Render(wx, wy);
-	}
-}
 
 
 #pragma endregion
@@ -1627,6 +1620,15 @@ void  CPlayer::UIRender(float wx, float wy) {
 
 		}
 		break;
+	}
+}
+
+void  CPlayer::ShotRender(float wx,float wy) {
+	//弾の描画
+	m_Laser.Render(wx, wy);
+	for (int i = 0; i < PLAYERSHOT_COUNT; i++)
+	{
+		m_PlShotAry[i].Render(wx, wy);
 	}
 }
 
