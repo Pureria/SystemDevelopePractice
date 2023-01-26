@@ -61,7 +61,7 @@ MofBool CGameApp::Update(void){
 	g_pScene->SetTime(gTimer);
 
 	if (g_pScene->IsEnd()) {
-		g_pScene->Release();
+		//g_pScene->Release();
 
 		int Change = g_pScene->GetNextScene();
 
@@ -97,7 +97,7 @@ MofBool CGameApp::Update(void){
 		g_pScene->Initialize();
 		g_pScene->SetOldScene(Old);
 	}
-	
+
 	return TRUE;
 }
 /*************************************************************************//*!

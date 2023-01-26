@@ -680,22 +680,22 @@ void CPlayer::NatuChange() {
 
 void CPlayer::DirecTpBtmChange() {
 
-	if (g_pInput->IsKeyPush(MOFKEY_W) && !m_bTop) {
+	if (g_pInput->IsKeyPush(MOFKEY_W) && !m_bBottom && !m_bTop) {
 		m_bTop = true;
 		m_bBottom = false;
 		m_Motion.ChangeMotion((IsLaser()) ? MOTION_LASER_MUZZLETOP : MOTION_NORMAL_MUZZLETOP);
 	}
-	else if (g_pInput->IsKeyPush(MOFKEY_W) && m_bTop) {
+	else if (g_pInput->IsKeyPush(MOFKEY_W) && m_bBottom) {
 		m_bTop = false;
 		m_bBottom = false;
-		m_Motion.ChangeMotion(MOTION_RETURN_MUZZLE);		
+		m_Motion.ChangeMotion(MOTION_RETURN_MUZZLE);	
 	}
-	if (g_pInput->IsKeyPush(MOFKEY_S) && !m_bBottom) {
+	if (g_pInput->IsKeyPush(MOFKEY_S) && !m_bBottom && !m_bTop) {
 		m_bBottom = true;
 		m_bTop = false;
 		m_Motion.ChangeMotion((IsLaser()) ? MOTION_LASER_MUZZLEBOTTOM : MOTION_NORMAL_MUZZLEBOTTOM);
 	}
-	else if (g_pInput->IsKeyPush(MOFKEY_S) && m_bBottom) {
+	else if (g_pInput->IsKeyPush(MOFKEY_S) && m_bTop) {
 		m_bBottom = false;
 		m_bTop = false;
 		m_Motion.ChangeMotion(MOTION_RETURN_MUZZLE);
