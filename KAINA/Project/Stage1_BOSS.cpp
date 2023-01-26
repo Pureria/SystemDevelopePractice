@@ -9,6 +9,7 @@
  *
  */
 CStage1_Boss::~CStage1_Boss() {
+	Release();
 }
 
 /**
@@ -209,7 +210,7 @@ void CStage1_Boss::StgCollBullet()
 		CRectangle psrec = m_Player.GetNormalRect(i);
 		//è„ÇÃîªíË
 		psrec.Bottom = psrec.Top + 1;
-		psrec.Expansion(-15, 0);
+		psrec.Expansion(-20, 0);
 		if (m_Stage.Collision(psrec, ox, oy))
 		{
 			m_Player.ShotRefTop(i);
@@ -219,7 +220,7 @@ void CStage1_Boss::StgCollBullet()
 		//â∫ÇÃîªíË
 		psrec = m_Player.GetNormalRect(i);
 		psrec.Top = psrec.Bottom - 1;
-		psrec.Expansion(-15, 0);
+		psrec.Expansion(-20, 0);
 		if (m_Stage.Collision(psrec, ox, oy))
 		{
 			m_Player.ShotRefBottom(i);
@@ -229,7 +230,7 @@ void CStage1_Boss::StgCollBullet()
 		//ç∂ÇÃîªíË
 		psrec = m_Player.GetNormalRect(i);
 		psrec.Right = psrec.Left + 1;
-		psrec.Expansion(0, -15);
+		psrec.Expansion(0, -20);
 		if (m_Stage.Collision(psrec, ox, oy))
 		{
 			m_Player.ShotRefLeft(i);
@@ -239,7 +240,7 @@ void CStage1_Boss::StgCollBullet()
 		//âEÇÃîªíË
 		psrec = m_Player.GetNormalRect(i);
 		psrec.Left = psrec.Right - 1;
-		psrec.Expansion(0, -15);
+		psrec.Expansion(0, -20);
 		if (m_Stage.Collision(psrec, ox, oy))
 		{
 			m_Player.ShotRefRight(i);
